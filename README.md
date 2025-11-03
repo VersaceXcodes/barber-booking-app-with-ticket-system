@@ -1,2 +1,3 @@
-# barber-booking-app-with-ticket-system
-Project barber-booking-app-with-ticket-system generated.
+app generated from cofounder/boilerplate
+
+instructions here on how to start api and frontend , whether in parallel or separately

@@ -1,0 +1,15 @@
+{
+  "timestamp": 1762211919849,
+  "operation": {
+    "id": "backend:specifications:asyncapi"
+  },
+  "projectId": "barber-booking-app-with-ticket-system",
+  "files": [
+    {
+      "path": "/mnt/data/barber-booking-app-with-ticket-system/backend/asyncapi.yaml",
+      "type": "text",
+      "size": 24382,
+      "dependencies": false
+    }
+  ]
+}

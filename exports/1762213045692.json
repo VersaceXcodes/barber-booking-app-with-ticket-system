@@ -1,0 +1,21 @@
+{
+  "timestamp": 1762213045692,
+  "operation": {
+    "id": "backend:tests:main"
+  },
+  "projectId": "barber-booking-app-with-ticket-system",
+  "files": [
+    {
+      "path": "/mnt/data/barber-booking-app-with-ticket-system/backend/server.test.ts",
+      "type": "text",
+      "size": 32626,
+      "dependencies": false
+    },
+    {
+      "path": "/mnt/data/barber-booking-app-with-ticket-system/backend/jest.config.ts",
+      "type": "text",
+      "size": 968,
+      "dependencies": false
+    }
+  ]
+}

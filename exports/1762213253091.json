@@ -1,0 +1,19 @@
+{
+  "timestamp": 1762213253091,
+  "operation": {
+    "id": "webapp:react:views",
+    "refs": {
+      "id": "UV_BookingFlow_ServiceSelect",
+      "version": "latest"
+    }
+  },
+  "projectId": "barber-booking-app-with-ticket-system",
+  "files": [
+    {
+      "path": "/mnt/data/barber-booking-app-with-ticket-system/vitereact/src/components/views/UV_BookingFlow_ServiceSelect.tsx",
+      "type": "text",
+      "size": 15089,
+      "dependencies": false
+    }
+  ]
+}

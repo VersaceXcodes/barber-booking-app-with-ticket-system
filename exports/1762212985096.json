@@ -1,0 +1,19 @@
+{
+  "timestamp": 1762212985096,
+  "operation": {
+    "id": "webapp:react:store",
+    "refs": {
+      "id": "redux",
+      "version": "latest"
+    }
+  },
+  "projectId": "barber-booking-app-with-ticket-system",
+  "files": [
+    {
+      "path": "/mnt/data/barber-booking-app-with-ticket-system/vitereact/src/store/main.tsx",
+      "type": "text",
+      "size": 18790,
+      "dependencies": false
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "timestamp": 1762212987056,
+  "operation": {
+    "id": "settings:config:package"
+  },
+  "projectId": "barber-booking-app-with-ticket-system",
+  "files": [
+    {
+      "path": "/mnt/data/barber-booking-app-with-ticket-system/vitereact/package.json",
+      "type": "text",
+      "size": 2949,
+      "dependencies": true
+    }
+  ]
+}

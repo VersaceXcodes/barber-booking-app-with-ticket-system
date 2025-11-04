@@ -185,7 +185,7 @@ export const useAppStore = create<AppState>()(
           const { user, token } = response.data;
           const mapped_user = map_backend_user_to_frontend(user);
 
-          set((state) => ({
+          set(() => ({
             authentication_state: {
               current_user: mapped_user,
               auth_token: token,
@@ -200,7 +200,7 @@ export const useAppStore = create<AppState>()(
         } catch (error: any) {
           const error_message = error.response?.data?.error?.message || error.message || 'Login failed';
 
-          set((state) => ({
+          set(() => ({
             authentication_state: {
               current_user: null,
               auth_token: null,
@@ -259,7 +259,7 @@ export const useAppStore = create<AppState>()(
           const { user, token } = response.data;
           const mapped_user = map_backend_user_to_frontend(user);
 
-          set((state) => ({
+          set(() => ({
             authentication_state: {
               current_user: mapped_user,
               auth_token: token,
@@ -276,7 +276,7 @@ export const useAppStore = create<AppState>()(
         } catch (error: any) {
           const error_message = error.response?.data?.error?.message || error.message || 'Admin login failed';
 
-          set((state) => ({
+          set(() => ({
             authentication_state: {
               current_user: null,
               auth_token: null,
@@ -306,16 +306,12 @@ export const useAppStore = create<AppState>()(
         }));
 
         try {
-          const response = await axios.post(
+          await axios.post(
             `${get_api_base_url()}/api/auth/register`,
             { email, password, name, phone },
             { headers: { 'Content-Type': 'application/json' } }
           );
 
-          const { user } = response.data;
-          const mapped_user = map_backend_user_to_frontend(user);
-
-          // User registered but not verified - don't auto-login, just return success
           set((state) => ({
             authentication_state: {
               ...state.authentication_state,
@@ -401,10 +397,9 @@ export const useAppStore = create<AppState>()(
           const { user } = response.data;
           const mapped_user = map_backend_user_to_frontend(user);
 
-          // Determine user type based on endpoint or user role
           const user_type = authentication_state.authentication_status.user_type || 'user';
 
-          set((state) => ({
+          set(() => ({
             authentication_state: {
               current_user: mapped_user,
               auth_token: token,
@@ -416,8 +411,7 @@ export const useAppStore = create<AppState>()(
               error_message: null,
             },
           }));
-        } catch (error) {
-          // Token is invalid - clear auth state
+        } catch {
           set({
             authentication_state: {
               current_user: null,

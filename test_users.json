@@ -1,0 +1,192 @@
+{
+  "generated_at": "2025-11-04T19:06:00Z",
+  "user_structure": {
+    "table_name": "users",
+    "role_field": "N/A - Role determined by login endpoint",
+    "registration_endpoint": "/api/auth/register",
+    "login_endpoint": "/api/auth/login",
+    "admin_login_endpoint": "/api/admin/login"
+  },
+  "total_users": 9,
+  "verified_users": 9,
+  "users": [
+    {
+      "user_id": "admin-1",
+      "email": "admin@barberslot.com",
+      "password": "admin123",
+      "role": "admin",
+      "name": "Admin",
+      "phone": "N/A",
+      "verified": true,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6ImFkbWluLTEiLCJlbWFpbCI6ImFkbWluQGJhcmJlcnNsb3QuY29tIiwiaXNfYWRtaW4iOnRydWUsImlhdCI6MTc2MjI4MzE2MiwiZXhwIjoxNzYyMzY5NTYyfQ.D75pjiFlKKqme0fU2djs84Y5QkEct2OSNOVRcxJWciA",
+      "login_endpoint": "/api/admin/login"
+    },
+    {
+      "user_id": "user_001",
+      "email": "admin@beautysalon.com",
+      "password": "admin123",
+      "role": "user",
+      "name": "Sarah Johnson",
+      "phone": "+1-555-0101",
+      "verified": true,
+      "token": null,
+      "login_endpoint": "/api/auth/login"
+    },
+    {
+      "user_id": "user_002",
+      "email": "emily.chen@email.com",
+      "password": "password123",
+      "role": "user",
+      "name": "Emily Chen",
+      "phone": "+1-555-0102",
+      "verified": true,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidXNlcl8wMDIiLCJlbWFpbCI6ImVtaWx5LmNoZW5AZW1haWwuY29tIiwiaWF0IjoxNzYyMjgzMTYxLCJleHAiOjE3NjI4ODc5NjF9.7bAW3lbmROOMENLGrtne3lo-888W13sxdWeuGq5iYmw",
+      "login_endpoint": "/api/auth/login"
+    },
+    {
+      "user_id": "user_003",
+      "email": "jessica.martinez@email.com",
+      "password": "password123",
+      "role": "user",
+      "name": "Jessica Martinez",
+      "phone": "+1-555-0103",
+      "verified": true,
+      "token": null,
+      "login_endpoint": "/api/auth/login"
+    },
+    {
+      "user_id": "user_004",
+      "email": "amanda.taylor@email.com",
+      "password": "password123",
+      "role": "user",
+      "name": "Amanda Taylor",
+      "phone": "+1-555-0104",
+      "verified": false,
+      "token": null,
+      "verification_token": "verify_token_amanda_xyz789",
+      "login_endpoint": "/api/auth/login"
+    },
+    {
+      "user_id": "user_005",
+      "email": "rachel.brown@email.com",
+      "password": "password123",
+      "role": "user",
+      "name": "Rachel Brown",
+      "phone": "+1-555-0105",
+      "verified": true,
+      "token": null,
+      "login_endpoint": "/api/auth/login"
+    },
+    {
+      "user_id": "user_006",
+      "email": "olivia.davis@email.com",
+      "password": "password123",
+      "role": "user",
+      "name": "Olivia Davis",
+      "phone": "+1-555-0106",
+      "verified": true,
+      "token": null,
+      "login_endpoint": "/api/auth/login"
+    },
+    {
+      "user_id": "user_007",
+      "email": "sophia.wilson@email.com",
+      "password": "password123",
+      "role": "user",
+      "name": "Sophia Wilson",
+      "phone": "+1-555-0107",
+      "verified": false,
+      "token": null,
+      "verification_token": "verify_token_sophia_abc123",
+      "login_endpoint": "/api/auth/login"
+    },
+    {
+      "user_id": "user_008",
+      "email": "isabella.moore@email.com",
+      "password": "password123",
+      "role": "user",
+      "name": "Isabella Moore",
+      "phone": "+1-555-0108",
+      "verified": true,
+      "token": null,
+      "reset_token": "reset_token_isabella_def456",
+      "login_endpoint": "/api/auth/login"
+    }
+  ],
+  "by_role": {
+    "admin": [
+      {
+        "email": "admin@barberslot.com",
+        "password": "admin123",
+        "verified": true,
+        "name": "Admin",
+        "login_endpoint": "/api/admin/login"
+      }
+    ],
+    "user": [
+      {
+        "email": "admin@beautysalon.com",
+        "password": "admin123",
+        "verified": true,
+        "name": "Sarah Johnson",
+        "phone": "+1-555-0101"
+      },
+      {
+        "email": "emily.chen@email.com",
+        "password": "password123",
+        "verified": true,
+        "name": "Emily Chen",
+        "phone": "+1-555-0102"
+      },
+      {
+        "email": "jessica.martinez@email.com",
+        "password": "password123",
+        "verified": true,
+        "name": "Jessica Martinez",
+        "phone": "+1-555-0103"
+      },
+      {
+        "email": "amanda.taylor@email.com",
+        "password": "password123",
+        "verified": false,
+        "name": "Amanda Taylor",
+        "phone": "+1-555-0104"
+      },
+      {
+        "email": "rachel.brown@email.com",
+        "password": "password123",
+        "verified": true,
+        "name": "Rachel Brown",
+        "phone": "+1-555-0105"
+      },
+      {
+        "email": "olivia.davis@email.com",
+        "password": "password123",
+        "verified": true,
+        "name": "Olivia Davis",
+        "phone": "+1-555-0106"
+      },
+      {
+        "email": "sophia.wilson@email.com",
+        "password": "password123",
+        "verified": false,
+        "name": "Sophia Wilson",
+        "phone": "+1-555-0107"
+      },
+      {
+        "email": "isabella.moore@email.com",
+        "password": "password123",
+        "verified": true,
+        "name": "Isabella Moore",
+        "phone": "+1-555-0108"
+      }
+    ]
+  },
+  "notes": {
+    "authentication": "This application has separate login endpoints for users and admins",
+    "password_storage": "Passwords are stored in plain text in the database (not hashed) - this is for development only",
+    "verified_users": "8 verified users available for testing",
+    "unverified_users": "2 unverified users for testing email verification flow",
+    "test_credentials": "All seed users have password 'password123' except admin which has 'admin123'"
+  }
+}

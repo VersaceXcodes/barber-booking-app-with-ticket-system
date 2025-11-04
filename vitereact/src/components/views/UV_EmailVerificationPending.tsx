@@ -116,11 +116,14 @@ const UV_EmailVerificationPending: React.FC = () => {
 
   useEffect(() => {
     if (resendVerificationMutation.isSuccess) {
-      setResendSuccess('Verification email sent!');
+      // Reset cooldown timer
       setResendCooldown(60);
       setCanResend(false);
-      setResendAttempts(prev => prev + 1);
-      
+      setResendAttempts((prev) => prev + 1);
+
+      // Show success message
+      setResendSuccess('Verification email sent! Check your inbox.');
+
       // Clear success message after 5 seconds
       setTimeout(() => {
         setResendSuccess(null);
@@ -130,7 +133,7 @@ const UV_EmailVerificationPending: React.FC = () => {
     if (resendVerificationMutation.isError) {
       console.error('Resend verification failed:', resendVerificationMutation.error);
     }
-  }, [resendVerificationMutation.isSuccess, resendVerificationMutation.isError]);
+  }, [resendVerificationMutation.isSuccess, resendVerificationMutation.isError, resendVerificationMutation.error]);
 
   // ==========================================================================
   // CHANGE EMAIL MUTATION
@@ -190,7 +193,7 @@ const UV_EmailVerificationPending: React.FC = () => {
     if (changeEmailMutation.isError) {
       console.error('Change email failed:', changeEmailMutation.error);
     }
-  }, [changeEmailMutation.isSuccess, changeEmailMutation.isError, changeEmailMutation.data, updateCurrentUser]);
+  }, [changeEmailMutation.isSuccess, changeEmailMutation.isError, changeEmailMutation.error, changeEmailMutation.data, updateCurrentUser]);
 
   // ==========================================================================
   // EVENT HANDLERS

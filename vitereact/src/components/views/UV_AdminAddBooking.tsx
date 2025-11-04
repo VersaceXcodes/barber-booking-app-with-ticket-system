@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
@@ -202,7 +202,7 @@ const UV_AdminAddBooking: React.FC = () => {
     retry: 1,
   });
 
-  const availableSlots = availabilityData?.slots || [];
+  const availableSlots = useMemo(() => availabilityData?.slots || [], [availabilityData?.slots]);
 
   // ====================================================================
   // API CALLS - CREATE BOOKING MUTATION
@@ -309,7 +309,7 @@ const UV_AdminAddBooking: React.FC = () => {
     if (dateParam && !formData.appointment_date) {
       setFormData(prev => ({ ...prev, appointment_date: dateParam }));
     }
-  }, [dateParam]);
+  }, [dateParam, formData.appointment_date]);
 
   // Pre-select time from URL param (only if slot is available)
   useEffect(() => {

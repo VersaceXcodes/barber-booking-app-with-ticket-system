@@ -71,6 +71,7 @@ export const LoadingOverlayProvider: React.FC<{ children: React.ReactNode }> = (
 // CUSTOM HOOK
 // ============================================================================
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useLoadingOverlay = () => {
   const context = useContext(LoadingOverlayContext);
   if (!context) {
@@ -222,4 +223,5 @@ const GV_LoadingOverlay: React.FC = () => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export default GV_LoadingOverlay;

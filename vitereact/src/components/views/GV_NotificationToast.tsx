@@ -204,11 +204,11 @@ const GV_NotificationToast: React.FC = () => {
 
     window.addEventListener(TOAST_EVENT, handleToastEvent);
 
+    const timers = timersRef.current;
     return () => {
       window.removeEventListener(TOAST_EVENT, handleToastEvent);
-      // Cleanup all timers on unmount
-      timersRef.current.forEach((timer) => clearTimeout(timer));
-      timersRef.current.clear();
+      timers.forEach((timer) => clearTimeout(timer));
+      timers.clear();
     };
   }, [addToast]);
 

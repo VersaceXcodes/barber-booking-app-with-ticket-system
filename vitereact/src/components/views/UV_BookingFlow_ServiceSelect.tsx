@@ -52,7 +52,7 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
     if (bookingContext.service_id) {
       setSelectedServiceId(bookingContext.service_id);
     }
-  }, []);
+  }, [bookingContext.service_id]);
 
   // ============================================================================
   // DATA FETCHING - React Query

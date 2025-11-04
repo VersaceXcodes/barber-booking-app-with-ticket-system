@@ -52,7 +52,7 @@ const formatLongDate = (dateString: string): string => {
       day: 'numeric'
     };
     return date.toLocaleDateString('en-US', options);
-  } catch (error) {
+  } catch {
     return dateString;
   }
 };
@@ -63,7 +63,7 @@ const formatTime12Hour = (time24: string): string => {
     const period = hours >= 12 ? 'PM' : 'AM';
     const hours12 = hours % 12 || 12;
     return `${hours12}:${minutes.toString().padStart(2, '0')} ${period}`;
-  } catch (error) {
+  } catch {
     return time24;
   }
 };
@@ -75,7 +75,7 @@ const calculateEndTime = (startTime: string, durationMinutes: number): string =>
     const endHours = Math.floor(totalMinutes / 60) % 24;
     const endMinutes = totalMinutes % 60;
     return `${endHours.toString().padStart(2, '0')}:${endMinutes.toString().padStart(2, '0')}`;
-  } catch (error) {
+  } catch {
     return startTime;
   }
 };

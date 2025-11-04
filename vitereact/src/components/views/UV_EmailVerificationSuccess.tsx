@@ -165,10 +165,9 @@ const UV_EmailVerificationSuccess: React.FC = () => {
     if (verification_token) {
       verifyEmailMutation.mutate({ verification_token });
     } else {
-      // No token provided - treat as error
       verifyEmailMutation.mutate({ verification_token: 'invalid' });
     }
-  }, [verification_token]);
+  }, [verification_token, verifyEmailMutation]);
 
   // ========================================================================
   // COMPUTED VALUES

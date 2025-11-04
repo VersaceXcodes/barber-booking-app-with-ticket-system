@@ -266,7 +266,7 @@ const UV_AdminGalleryUpload: React.FC = () => {
         URL.revokeObjectURL(item.preview_url);
       });
     };
-  }, []);
+  }, [uploadQueue]);
 
   const hasFilesInQueue = uploadQueue.length > 0;
   const allUploaded = uploadQueue.every(item => item.upload_status === 'success');

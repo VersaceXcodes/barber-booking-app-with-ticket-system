@@ -59,6 +59,41 @@ const GV_MobileNav: React.FC = () => {
   const logout = useAppStore(state => state.logout);
   
   // ========================================================================
+  // HANDLERS
+  // ========================================================================
+  
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+    setExpandedSections(new Set());
+  }, []);
+  
+  const handleBackdropClick = useCallback(() => {
+    handleClose();
+  }, [handleClose]);
+  
+  const toggleSection = useCallback((section: string) => {
+    setExpandedSections(prev => {
+      const next = new Set(prev);
+      if (next.has(section)) {
+        next.delete(section);
+      } else {
+        next.add(section);
+      }
+      return next;
+    });
+  }, []);
+  
+  const handleLogout = useCallback(() => {
+    logout();
+    handleClose();
+    navigate('/');
+  }, [logout, navigate, handleClose]);
+  
+  const isCurrentPage = useCallback((path: string) => {
+    return location.pathname === path;
+  }, [location.pathname]);
+  
+  // ========================================================================
   // EFFECTS
   // ========================================================================
   
@@ -80,7 +115,7 @@ const GV_MobileNav: React.FC = () => {
       document.addEventListener('keydown', handleEscape);
       return () => document.removeEventListener('keydown', handleEscape);
     }
-  }, [isOpen]);
+  }, [isOpen, handleClose]);
   
   // Focus trap implementation
   useEffect(() => {
@@ -160,42 +195,7 @@ const GV_MobileNav: React.FC = () => {
     
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [isOpen]);
-  
-  // ========================================================================
-  // HANDLERS
-  // ========================================================================
-  
-  const handleClose = useCallback(() => {
-    setIsOpen(false);
-    setExpandedSections(new Set());
-  }, []);
-  
-  const handleBackdropClick = useCallback(() => {
-    handleClose();
-  }, [handleClose]);
-  
-  const toggleSection = useCallback((section: string) => {
-    setExpandedSections(prev => {
-      const next = new Set(prev);
-      if (next.has(section)) {
-        next.delete(section);
-      } else {
-        next.add(section);
-      }
-      return next;
-    });
-  }, []);
-  
-  const handleLogout = useCallback(() => {
-    logout();
-    handleClose();
-    navigate('/');
-  }, [logout, navigate, handleClose]);
-  
-  const isCurrentPage = useCallback((path: string) => {
-    return location.pathname === path;
-  }, [location.pathname]);
+  }, [isOpen, handleClose]);
   
   // ========================================================================
   // RENDER PROTECTION

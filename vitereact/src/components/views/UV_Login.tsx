@@ -62,7 +62,7 @@ const UV_Login: React.FC = () => {
     if (errorMessage) {
       clearAuthError();
     }
-  }, [form_data.email, form_data.password]);
+  }, [form_data.email, form_data.password, errorMessage, clearAuthError]);
 
   // ============================================================================
   // VALIDATION

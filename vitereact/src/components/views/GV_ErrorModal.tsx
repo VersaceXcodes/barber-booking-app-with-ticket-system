@@ -296,7 +296,7 @@ export const hideErrorModal = () => {
     return null;
   }
 
-  const { type, title, message, details, onRetry, showContactSupport, criticalError } = errorDetails;
+  const { type, title, message, details, showContactSupport, criticalError } = errorDetails;
   const modalTitle = title || getDefaultTitle();
 
   // ========================================================================

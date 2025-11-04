@@ -201,7 +201,10 @@ const UV_BookingFlow_Review: React.FC = () => {
   const getErrorMessage = (): string => {
     if (!createBookingMutation.error) return '';
 
-    const err = createBookingMutation.error as any;
+    const err = createBookingMutation.error as {
+      response?: { data?: { error?: { message?: string } } };
+      message?: string;
+    };
     const errorMessage = err.response?.data?.error?.message || err.message || '';
 
     if (errorMessage.toLowerCase().includes('slot') && errorMessage.toLowerCase().includes('available')) {

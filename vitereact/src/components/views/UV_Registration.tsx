@@ -63,6 +63,7 @@ const UV_Registration: React.FC = () => {
   const error_message = useAppStore(state => state.authentication_state.error_message);
   const register_user = useAppStore(state => state.register_user);
   const clear_auth_error = useAppStore(state => state.clear_auth_error);
+  const errorMessage = error_message;
 
   // ============================================================================
   // PASSWORD STRENGTH CALCULATION
@@ -109,10 +110,8 @@ const UV_Registration: React.FC = () => {
         return data.exists || false;
       }
       
-      // Endpoint might not exist yet - assume email is available
       return false;
-    } catch (error) {
-      // Gracefully handle missing endpoint
+    } catch {
       console.warn('Email uniqueness check endpoint not available');
       return false;
     } finally {
@@ -133,7 +132,8 @@ const UV_Registration: React.FC = () => {
         }));
       } else {
         setValidationErrors(prev => {
-          const { email: _email, ...rest } = prev;
+          const { email, ...rest } = prev;
+          void email;
           return rest;
         });
       }
@@ -171,7 +171,8 @@ const UV_Registration: React.FC = () => {
       return false;
     } else {
       setValidationErrors(prev => {
-        const { password_confirm: _password_confirm, ...rest } = prev;
+        const { password_confirm, ...rest } = prev;
+        void password_confirm;
         return rest;
       });
       return true;
@@ -196,18 +197,34 @@ const UV_Registration: React.FC = () => {
   // ============================================================================
 
   useEffect(() => {
-    if (password_confirm) {
-      validatePasswordMatch();
+    if (password_confirm && form_data.password) {
+      const matches = form_data.password === password_confirm;
+      setPasswordsMatch(matches);
+      
+      if (password_confirm && !matches) {
+        setValidationErrors(prev => ({
+          ...prev,
+          password_confirm: 'Passwords don\'t match'
+        }));
+      } else {
+        setValidationErrors(prev => {
+          const { password_confirm, ...rest } = prev;
+          void password_confirm;
+          return rest;
+        });
+      }
     }
-  }, [form_data.password, password_confirm, validatePasswordMatch]);
-
-  // ============================================================================
-  // EFFECT: CLEAR AUTH ERROR ON MOUNT
-  // ============================================================================
+  }, [form_data.password, password_confirm]);
 
   useEffect(() => {
     clear_auth_error();
   }, [clear_auth_error]);
+
+  useEffect(() => {
+    if (errorMessage) {
+      console.log('Auth error:', errorMessage);
+    }
+  }, [errorMessage]);
 
   // ============================================================================
   // EVENT HANDLERS
@@ -216,9 +233,9 @@ const UV_Registration: React.FC = () => {
   const handleInputChange = (field: keyof typeof form_data, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     
-    // Clear error when user starts typing
     setValidationErrors(prev => {
-      const { [field]: _field, ...rest } = prev;
+      const { [field]: removedField, ...rest } = prev;
+      void removedField;
       return rest;
     });
     
@@ -236,7 +253,8 @@ const UV_Registration: React.FC = () => {
       setValidationErrors(prev => ({ ...prev, [field]: error }));
     } else {
       setValidationErrors(prev => {
-        const { [field]: _field, ...rest } = prev;
+        const { [field]: removedField, ...rest } = prev;
+        void removedField;
         return rest;
       });
     }
@@ -245,9 +263,9 @@ const UV_Registration: React.FC = () => {
   const handlePasswordConfirmChange = (value: string) => {
     setPasswordConfirm(value);
     
-    // Clear error when user starts typing
     setValidationErrors(prev => {
-      const { password_confirm: _password_confirm, ...rest } = prev;
+      const { password_confirm, ...rest } = prev;
+      void password_confirm;
       return rest;
     });
   };
@@ -257,7 +275,8 @@ const UV_Registration: React.FC = () => {
     
     if (checked) {
       setValidationErrors(prev => {
-        const { terms: _terms, ...rest } = prev;
+        const { terms, ...rest } = prev;
+        void terms;
         return rest;
       });
     }

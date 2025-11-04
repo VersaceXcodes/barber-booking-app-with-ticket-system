@@ -1,4 +1,4 @@
-VALIDATION FAILURE - Lint Project (Attempt 1/100)
+VALIDATION FAILURE - Lint Project (Attempt 2/100)
 
 The project validation failed at the "Lint Project" step. You need to analyze the error and fix it.
 
@@ -9,12 +9,7 @@ The project validation failed at the "Lint Project" step. You need to analyze th
 
 
 /app/vitereact/src/components/views/GV_ErrorModal.tsx
-  188:9  warning  The 'handleDismiss' function makes the dependencies of useEffect Hook (at line 215) change on every render. To fix this, wrap the definition of 'handleDismiss' in its own useCallback() Hook  react-hooks/exhaustive-deps
-  206:3  error    React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?    react-hooks/rules-of-hooks
-  218:3  error    React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?    react-hooks/rules-of-hooks
-  255:3  error    React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?    react-hooks/rules-of-hooks
-  265:3  error    React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?    react-hooks/rules-of-hooks
-  282:6  warning  React Hook useEffect has a missing dependency: 'getDefaultTitle'. Either include it or remove the dependency array                                                                             react-hooks/exhaustive-deps
+  299:42  error  'onRetry' is assigned a value but never used  @typescript-eslint/no-unused-vars
 
 /app/vitereact/src/components/views/GV_LoadingOverlay.tsx
    74:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
@@ -35,19 +30,6 @@ The project validation failed at the "Lint Project" step. You need to analyze th
 /app/vitereact/src/components/views/UV_AdminGalleryUpload.tsx
   269:6  warning  React Hook useEffect has a missing dependency: 'uploadQueue'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
-/app/vitereact/src/components/views/UV_AdminReports.tsx
-   81:7  error    Unexpected lexical declaration in case block                                                                 no-case-declarations
-   86:7  error    Unexpected lexical declaration in case block                                                                 no-case-declarations
-  276:6  warning  React Hook useMemo has a missing dependency: 'reportData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
-
-/app/vitereact/src/components/views/UV_AdminSettings.tsx
-  390:24  error  'removed' is assigned a value but never used        @typescript-eslint/no-unused-vars
-  493:15  error  'service_id' is assigned a value but never used     @typescript-eslint/no-unused-vars
-  493:27  error  'display_order' is assigned a value but never used  @typescript-eslint/no-unused-vars
-
-/app/vitereact/src/components/views/UV_BookingConfirmation.tsx
-  265:14  error  'err' is defined but never used  @typescript-eslint/no-unused-vars
-
 /app/vitereact/src/components/views/UV_BookingFlow_Review.tsx
   55:12  error  'error' is defined but never used  @typescript-eslint/no-unused-vars
   66:12  error  'error' is defined but never used  @typescript-eslint/no-unused-vars
@@ -67,32 +49,32 @@ The project validation failed at the "Lint Project" step. You need to analyze th
   65:6  warning  React Hook useEffect has missing dependencies: 'clearAuthError' and 'errorMessage'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
 
 /app/vitereact/src/components/views/UV_PasswordResetForm.tsx
-  217:17  error  'confirm_password' is assigned a value but never used  @typescript-eslint/no-unused-vars
-  342:35  error  'new_password' is assigned a value but never used      @typescript-eslint/no-unused-vars
-  434:35  error  'confirm_password' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  217:35  error  '_confirm_password' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  342:49  error  '_new_password' is assigned a value but never used      @typescript-eslint/no-unused-vars
+  434:53  error  '_confirm_password' is assigned a value but never used  @typescript-eslint/no-unused-vars
 
 /app/vitereact/src/components/views/UV_Registration.tsx
-  114:14  error    'error' is defined but never used                                                                                         @typescript-eslint/no-unused-vars
-  136:19  error    'email' is assigned a value but never used                                                                                @typescript-eslint/no-unused-vars
-  174:17  error    'password_confirm' is assigned a value but never used                                                                     @typescript-eslint/no-unused-vars
-  202:6   warning  React Hook useEffect has a missing dependency: 'validatePasswordMatch'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
-  221:24  error    '_' is assigned a value but never used                                                                                    @typescript-eslint/no-unused-vars
-  239:26  error    '_' is assigned a value but never used                                                                                    @typescript-eslint/no-unused-vars
-  250:15  error    'password_confirm' is assigned a value but never used                                                                     @typescript-eslint/no-unused-vars
-  260:17  error    'terms' is assigned a value but never used                                                                                @typescript-eslint/no-unused-vars
+  114:14  error    'error' is defined but never used                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  136:26  error    '_email' is assigned a value but never used                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  162:9   warning  The 'validatePasswordMatch' function makes the dependencies of useEffect Hook (at line 202) change on every render. To fix this, wrap the definition of 'validatePasswordMatch' in its own useCallback() Hook  react-hooks/exhaustive-deps
+  174:35  error    '_password_confirm' is assigned a value but never used                                                                                                                                                         @typescript-eslint/no-unused-vars
+  221:24  error    '_field' is assigned a value but never used                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  239:26  error    '_field' is assigned a value but never used                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  250:33  error    '_password_confirm' is assigned a value but never used                                                                                                                                                         @typescript-eslint/no-unused-vars
+  260:24  error    '_terms' is assigned a value but never used                                                                                                                                                                    @typescript-eslint/no-unused-vars
 
-✖ 41 problems (23 errors, 18 warnings)
+✖ 29 problems (14 errors, 15 warnings)
 
 
 
 ## Validation Context:
 - Step: Lint Project
 - Working Directory: /app/vitereact
-- Attempt: 1/100
-- Previous failures for this step: 1
+- Attempt: 2/100
+- Previous failures for this step: 2
 
 ## Project Memory Summary:
-- Total validation attempts: 7
+- Total validation attempts: 8
 - Common issues encountered: None
 - Known dependencies: @hookform/resolvers, @radix-ui/react-accordion, @radix-ui/react-alert-dialog, @radix-ui/react-aspect-ratio, @radix-ui/react-avatar, @radix-ui/react-checkbox, @radix-ui/react-collapsible, @radix-ui/react-context-menu, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu
 - Missing dependencies: None
@@ -119,11 +101,11 @@ PROJECT DIRECTORIES:
 /app/.git/objects/9b
 /app/.git/objects/aa
 /app/.git/objects/3e
-/app/.git/logs
-/app/.git/logs/refs
-/app/backend
-/app/backend/dist
-/app/backend/public
+/app/.git/objects/93
+/app/.git/objects/b1
+/app/.git/objects/58
+/app/.git/objects/b4
+/app/.git/objects/ec
 
 
 KEY PROJECT FILES:
@@ -212,6 +194,7 @@ PROTECTED DIRECTORIES (DO NOT MODIFY):
 
 ## Previous Validation Failures for Lint Project:
 - 11:42:09 PM: 
+- 11:45:22 PM: 
 
 ## Your Task:
 1. **Analyze the Error**: Understand what specifically went wrong in the Lint Project step

@@ -1,0 +1,373 @@
+{
+  "generated_at": "2025-11-04T19:06:00Z",
+  "project_name": "Beauty Salon Booking System",
+  "description": "A full-stack beauty salon appointment booking system with ticket-based booking management, admin dashboard, and user authentication",
+  "tech_stack": [
+    "React 18.3.1",
+    "TypeScript 5.5.3",
+    "Vite 5.4.0",
+    "React Router 6.26.0",
+    "Zustand (State Management)",
+    "Redux Toolkit 2.2.7",
+    "React Query (TanStack Query)",
+    "Tailwind CSS 3.4.8",
+    "Radix UI Components",
+    "Node.js",
+    "Express.js 4.19.2",
+    "PostgreSQL",
+    "JWT Authentication",
+    "Axios",
+    "Zod (Schema Validation)",
+    "date-fns",
+    "Framer Motion",
+    "Lucide React Icons"
+  ],
+  "backend": {
+    "framework": "Express.js",
+    "database": "PostgreSQL",
+    "port": 3000,
+    "api_base_url": "https://123barber-booking-app-with-ticket-system.launchpulse.ai",
+    "authentication": "JWT with separate user and admin flows",
+    "file_structure": [
+      "backend/server.ts - Main Express server",
+      "backend/schema.ts - Zod validation schemas",
+      "backend/db.sql - Database schema and seed data",
+      "backend/initdb.js - Database initialization script"
+    ]
+  },
+  "frontend": {
+    "framework": "React + Vite",
+    "port": 5173,
+    "base_url": "https://123barber-booking-app-with-ticket-system.launchpulse.ai",
+    "state_management": "Zustand with persistence",
+    "styling": "Tailwind CSS with Radix UI components",
+    "file_structure": [
+      "vitereact/src/App.tsx - Main application with routing",
+      "vitereact/src/store/main.tsx - Zustand store",
+      "vitereact/src/components/views/ - All page components",
+      "vitereact/src/components/ui/ - Reusable UI components"
+    ]
+  },
+  "features": [
+    {
+      "name": "Public Booking System",
+      "description": "5-step booking flow for customers to book appointments with ticket numbers",
+      "routes": [
+        "/book/service - Service selection",
+        "/book/date - Date selection",
+        "/book/time - Time slot selection",
+        "/book/details - Customer information",
+        "/book/review - Review and confirm",
+        "/booking/confirmation - Booking confirmation with ticket"
+      ],
+      "api_endpoints": [
+        "GET /api/services",
+        "GET /api/availability/:date",
+        "POST /api/bookings",
+        "GET /api/bookings/:ticket_number",
+        "GET /api/bookings/search"
+      ],
+      "files": [
+        "src/components/views/UV_BookingFlow_ServiceSelect.tsx",
+        "src/components/views/UV_BookingFlow_DateSelect.tsx",
+        "src/components/views/UV_BookingFlow_TimeSelect.tsx",
+        "src/components/views/UV_BookingFlow_Details.tsx",
+        "src/components/views/UV_BookingFlow_Review.tsx",
+        "src/components/views/UV_BookingConfirmation.tsx"
+      ]
+    },
+    {
+      "name": "Booking Management",
+      "description": "Search, view, cancel, and reschedule bookings using ticket numbers or phone/date",
+      "routes": [
+        "/search - Search for bookings",
+        "/booking/:ticket_number - View booking details"
+      ],
+      "api_endpoints": [
+        "GET /api/bookings/search",
+        "GET /api/bookings/:ticket_number",
+        "PATCH /api/bookings/:ticket_number/cancel",
+        "POST /api/bookings/:ticket_number/reschedule"
+      ],
+      "files": [
+        "src/components/views/UV_BookingSearch.tsx",
+        "src/components/views/UV_BookingDetails.tsx"
+      ]
+    },
+    {
+      "name": "User Authentication",
+      "description": "User registration, login, email verification, and profile management",
+      "routes": [
+        "/register - User registration",
+        "/login - User login",
+        "/verify-email - Email verification pending",
+        "/verify-email/success - Email verification success",
+        "/dashboard - User dashboard",
+        "/profile - User profile"
+      ],
+      "api_endpoints": [
+        "POST /api/auth/register",
+        "POST /api/auth/login",
+        "POST /api/auth/verify-email",
+        "GET /api/auth/me",
+        "PATCH /api/auth/me",
+        "GET /api/user/bookings"
+      ],
+      "files": [
+        "src/components/views/UV_Registration.tsx",
+        "src/components/views/UV_Login.tsx",
+        "src/components/views/UV_EmailVerificationPending.tsx",
+        "src/components/views/UV_EmailVerificationSuccess.tsx",
+        "src/components/views/UV_UserDashboard.tsx",
+        "src/components/views/UV_UserProfile.tsx"
+      ]
+    },
+    {
+      "name": "Admin Dashboard",
+      "description": "Complete admin panel for managing bookings, services, capacity, and customers",
+      "routes": [
+        "/admin/login - Admin login",
+        "/admin - Admin dashboard home",
+        "/admin/bookings - Bookings list",
+        "/admin/bookings/calendar - Calendar view",
+        "/admin/bookings/new - Add manual booking",
+        "/admin/bookings/:ticket_number - Booking details",
+        "/admin/capacity - Capacity settings",
+        "/admin/blocking - Block time slots",
+        "/admin/customers - Customer list",
+        "/admin/customers/:customer_id - Customer details",
+        "/admin/gallery - Gallery management",
+        "/admin/settings - Admin settings",
+        "/admin/reports - Reports"
+      ],
+      "api_endpoints": [
+        "POST /api/admin/login",
+        "GET /api/admin/bookings",
+        "POST /api/admin/bookings",
+        "GET /api/admin/services",
+        "POST /api/admin/services",
+        "PATCH /api/admin/services/:service_id",
+        "GET /api/admin/capacity-overrides",
+        "POST /api/admin/capacity-overrides",
+        "DELETE /api/admin/capacity-overrides/:override_id",
+        "GET /api/admin/dashboard/stats"
+      ],
+      "files": [
+        "src/components/views/UV_AdminLogin.tsx",
+        "src/components/views/UV_AdminDashboardHome.tsx",
+        "src/components/views/UV_AdminBookingsList.tsx",
+        "src/components/views/UV_AdminBookingsCalendar.tsx",
+        "src/components/views/UV_AdminAddBooking.tsx",
+        "src/components/views/UV_AdminBookingDetail.tsx",
+        "src/components/views/UV_AdminCapacitySettings.tsx",
+        "src/components/views/UV_AdminBlockingSettings.tsx",
+        "src/components/views/UV_AdminCustomerList.tsx",
+        "src/components/views/UV_AdminCustomerDetail.tsx",
+        "src/components/views/UV_AdminGalleryManage.tsx",
+        "src/components/views/UV_AdminSettings.tsx",
+        "src/components/views/UV_AdminReports.tsx"
+      ]
+    },
+    {
+      "name": "Service Management",
+      "description": "Display and manage beauty salon services with pricing and duration",
+      "api_endpoints": [
+        "GET /api/services",
+        "POST /api/admin/services",
+        "PATCH /api/admin/services/:service_id"
+      ],
+      "database_tables": ["services"]
+    },
+    {
+      "name": "Capacity Management",
+      "description": "Configure base capacity and create date-specific overrides",
+      "routes": [
+        "/admin/capacity - Base capacity settings",
+        "/admin/blocking - Block specific dates/times"
+      ],
+      "api_endpoints": [
+        "GET /api/admin/capacity-overrides",
+        "POST /api/admin/capacity-overrides",
+        "DELETE /api/admin/capacity-overrides/:override_id"
+      ],
+      "database_tables": ["capacity_overrides"]
+    },
+    {
+      "name": "Gallery",
+      "description": "Photo gallery of salon work and inspiration photos",
+      "routes": [
+        "/gallery - Public gallery view",
+        "/admin/gallery - Gallery management",
+        "/admin/gallery/upload - Upload photos"
+      ],
+      "files": [
+        "src/components/views/UV_Gallery.tsx",
+        "src/components/views/UV_AdminGalleryManage.tsx",
+        "src/components/views/UV_AdminGalleryUpload.tsx"
+      ]
+    },
+    {
+      "name": "Password Reset",
+      "description": "Forgot password and password reset flow",
+      "routes": [
+        "/reset-password - Request password reset",
+        "/reset-password/confirm - Enter new password",
+        "/reset-password/success - Reset success confirmation"
+      ],
+      "files": [
+        "src/components/views/UV_PasswordResetRequest.tsx",
+        "src/components/views/UV_PasswordResetForm.tsx",
+        "src/components/views/UV_PasswordResetSuccess.tsx"
+      ]
+    }
+  ],
+  "database_tables": [
+    {
+      "name": "users",
+      "description": "Customer user accounts with authentication",
+      "columns": ["user_id", "email", "password_hash", "name", "phone", "is_verified", "verification_token", "verification_token_expiry", "reset_token", "reset_token_expiry", "created_at", "updated_at"]
+    },
+    {
+      "name": "services",
+      "description": "Beauty salon services offered",
+      "columns": ["service_id", "name", "description", "image_url", "duration", "price", "is_active", "display_order", "created_at", "updated_at"]
+    },
+    {
+      "name": "bookings",
+      "description": "Appointment bookings with ticket numbers",
+      "columns": ["booking_id", "ticket_number", "user_id", "status", "appointment_date", "appointment_time", "slot_duration", "customer_name", "customer_email", "customer_phone", "booking_for_name", "service_id", "special_request", "inspiration_photos", "created_at", "updated_at", "confirmed_at", "reminder_sent_at", "completed_at", "cancelled_at", "cancellation_reason", "cancelled_by", "admin_notes", "original_booking_id"]
+    },
+    {
+      "name": "capacity_overrides",
+      "description": "Custom capacity settings for specific dates/times",
+      "columns": ["override_id", "override_date", "time_slot", "capacity", "is_active", "created_at", "updated_at"]
+    }
+  ],
+  "api_endpoints_summary": {
+    "public": [
+      "GET /api/health",
+      "GET /api/services",
+      "GET /api/availability/:date",
+      "POST /api/bookings",
+      "GET /api/bookings/search",
+      "GET /api/bookings/:ticket_number",
+      "PATCH /api/bookings/:ticket_number/cancel",
+      "POST /api/bookings/:ticket_number/reschedule",
+      "POST /api/auth/register",
+      "POST /api/auth/login",
+      "POST /api/auth/verify-email"
+    ],
+    "user_protected": [
+      "GET /api/auth/me",
+      "PATCH /api/auth/me",
+      "GET /api/user/bookings"
+    ],
+    "admin_protected": [
+      "POST /api/admin/login",
+      "GET /api/admin/bookings",
+      "POST /api/admin/bookings",
+      "GET /api/admin/services",
+      "POST /api/admin/services",
+      "PATCH /api/admin/services/:service_id",
+      "GET /api/admin/capacity-overrides",
+      "POST /api/admin/capacity-overrides",
+      "DELETE /api/admin/capacity-overrides/:override_id",
+      "GET /api/admin/dashboard/stats"
+    ]
+  },
+  "key_business_logic": {
+    "ticket_numbers": "Format: TKT-YYYYMMDD-XXX (e.g., TKT-20240320-001)",
+    "booking_statuses": ["pending", "confirmed", "completed", "cancelled"],
+    "capacity_rules": {
+      "monday_wednesday": 2,
+      "thursday_sunday": 3,
+      "can_be_overridden": true
+    },
+    "time_slots": ["10:00", "10:40", "11:20", "12:00", "12:40", "13:20", "14:00", "14:20"],
+    "slot_duration": "40 minutes (configurable per service)"
+  },
+  "authentication": {
+    "user_auth": {
+      "method": "JWT",
+      "registration_required": "Yes, with email verification",
+      "token_expiry": "7 days",
+      "password_storage": "Plain text (DEVELOPMENT ONLY - should be hashed)"
+    },
+    "admin_auth": {
+      "method": "JWT",
+      "hardcoded_credentials": {
+        "email": "admin@barberslot.com",
+        "password": "admin123"
+      },
+      "token_expiry": "1 day"
+    }
+  },
+  "global_components": [
+    {
+      "name": "GV_TopNav",
+      "description": "Global navigation bar with logo, menu, and auth buttons",
+      "file": "src/components/views/GV_TopNav.tsx"
+    },
+    {
+      "name": "GV_Footer",
+      "description": "Global footer with links and contact info",
+      "file": "src/components/views/GV_Footer.tsx"
+    },
+    {
+      "name": "GV_MobileNav",
+      "description": "Mobile navigation drawer",
+      "file": "src/components/views/GV_MobileNav.tsx"
+    },
+    {
+      "name": "GV_NotificationToast",
+      "description": "Toast notifications for user feedback",
+      "file": "src/components/views/GV_NotificationToast.tsx"
+    },
+    {
+      "name": "GV_LoadingOverlay",
+      "description": "Loading overlay for async operations",
+      "file": "src/components/views/GV_LoadingOverlay.tsx"
+    },
+    {
+      "name": "GV_ErrorModal",
+      "description": "Error modal for displaying errors",
+      "file": "src/components/views/GV_ErrorModal.tsx"
+    }
+  ],
+  "environment_variables": {
+    "backend": {
+      "DATABASE_URL": "PostgreSQL connection string",
+      "PGHOST": "PostgreSQL host",
+      "PGDATABASE": "Database name",
+      "PGUSER": "Database user",
+      "PGPASSWORD": "Database password",
+      "PGPORT": "Database port (default: 5432)",
+      "JWT_SECRET": "JWT signing secret (default: dev-secret-key-change-in-production)",
+      "PORT": "Server port (default: 3000)"
+    },
+    "frontend": {
+      "VITE_API_BASE_URL": "Backend API URL"
+    }
+  },
+  "testing": {
+    "backend": {
+      "framework": "Jest",
+      "commands": {
+        "test": "npm test",
+        "test:watch": "npm run test:watch",
+        "test:coverage": "npm run test:coverage"
+      }
+    },
+    "frontend": {
+      "framework": "Vitest + Testing Library",
+      "commands": {
+        "test": "npm test",
+        "test:watch": "npm run test:watch"
+      }
+    }
+  },
+  "deployment": {
+    "platform": "Fly.io",
+    "url": "https://123barber-booking-app-with-ticket-system.launchpulse.ai"
+  }
+}

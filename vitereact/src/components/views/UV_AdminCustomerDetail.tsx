@@ -67,7 +67,7 @@ const calculateFavoriteService = (bookings: CustomerBooking[]): string | null =>
   });
 
   let maxCount = 0;
-  let favorite = null;
+  let favorite: string | null = null;
   for (const [name, count] of Object.entries(frequency)) {
     if (count > maxCount) {
       maxCount = count;

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppStore } from '@/store/main';
-import { Search, Filter, Download, Eye, Calendar, Mail, Phone, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, Download, Eye, Calendar, Mail, Phone, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // ============================================================================
 // TYPE DEFINITIONS

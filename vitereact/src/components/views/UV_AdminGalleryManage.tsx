@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppStore } from '@/store/main';
-import { Camera, Edit2, Trash2, X, GripVertical, Search, Grid, List, Check, Upload } from 'lucide-react';
+import { Camera, Edit2, Trash2, X, GripVertical, Grid, List, Upload } from 'lucide-react';
 
 // ============================================================================
 // TYPE DEFINITIONS

@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppStore } from '@/store/main';
-import { ChevronLeft, ChevronRight, Calendar, CheckCircle2, XCircle, AlertCircle, Clock } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckCircle2, XCircle } from 'lucide-react';
 
 // ============================================================================
 // TYPE DEFINITIONS
@@ -119,7 +119,6 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
   const serviceId = useAppStore(state => state.booking_context.service_id);
   const serviceName = useAppStore(state => state.booking_context.service_name);
   const bookingWindowDays = useAppStore(state => state.app_settings.booking_window_days);
-  const sameDayCutoffHours = useAppStore(state => state.app_settings.same_day_cutoff_hours);
   const updateBookingContext = useAppStore(state => state.update_booking_context);
 
   // ============================================================================

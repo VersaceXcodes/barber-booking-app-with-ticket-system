@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppStore } from '@/store/main';
 
@@ -119,10 +119,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
     capacity: number;
   } | null>(null);
 
-  // ====================================
-  // REACT QUERY CLIENT
-  // ====================================
-  const queryClient = useQueryClient();
+
 
   // ====================================
   // API BASE URL

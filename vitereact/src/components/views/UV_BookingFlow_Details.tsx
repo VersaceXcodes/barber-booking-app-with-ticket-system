@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppStore } from '@/store/main';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
-import { ChevronDown, ChevronUp, Upload, X, Check, AlertCircle, User, Mail, Phone, FileText, Image, Calendar, Clock } from 'lucide-react';
+import { ChevronDown, ChevronUp, X, Check, AlertCircle, User, Mail, Phone, FileText, Image, Calendar, Clock } from 'lucide-react';
 import { z } from 'zod';
 
 // ============================================================================
@@ -47,7 +47,6 @@ const UV_BookingFlow_Details: React.FC = () => {
   // ZUSTAND STORE ACCESS - CRITICAL: Individual selectors only!
   // ============================================================================
   
-  const currentUser = useAppStore(state => state.authentication_state.current_user);
   const isAuthenticated = useAppStore(state => state.authentication_state.authentication_status.is_authenticated);
   const authToken = useAppStore(state => state.authentication_state.auth_token);
   const bookingContext = useAppStore(state => state.booking_context);
@@ -68,7 +67,6 @@ const UV_BookingFlow_Details: React.FC = () => {
   });
 
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
-  const [uploadingPhotos, setUploadingPhotos] = useState(false);
   const [useProfileDetails, setUseProfileDetails] = useState(true);
   const [updateProfileWithChanges, setUpdateProfileWithChanges] = useState(false);
   const [characterCount, setCharacterCount] = useState(0);
@@ -90,7 +88,7 @@ const UV_BookingFlow_Details: React.FC = () => {
   // FETCH USER PROFILE (if authenticated)
   // ============================================================================
 
-  const { isLoading: isLoadingProfile } = useQuery({
+  const { data: profileData, isLoading: isLoadingProfile } = useQuery({
     queryKey: ['userProfile'],
     queryFn: async () => {
       if (!isAuthenticated || !authToken) {
@@ -110,17 +108,18 @@ const UV_BookingFlow_Details: React.FC = () => {
     },
     enabled: isAuthenticated && !!authToken && useProfileDetails,
     staleTime: 60000,
-    onSuccess: (data) => {
-      if (data && useProfileDetails) {
-        setFormData(prev => ({
-          ...prev,
-          customer_name: data.name || '',
-          customer_email: data.email || '',
-          customer_phone: data.phone || '',
-        }));
-      }
-    },
   });
+
+  useEffect(() => {
+    if (profileData && useProfileDetails) {
+      setFormData(prev => ({
+        ...prev,
+        customer_name: profileData.name || '',
+        customer_email: profileData.email || '',
+        customer_phone: profileData.phone || '',
+      }));
+    }
+  }, [profileData, useProfileDetails]);
 
   // ============================================================================
   // UPDATE USER PROFILE MUTATION
@@ -848,10 +847,10 @@ const UV_BookingFlow_Details: React.FC = () => {
             </Link>
             <button
               onClick={handleContinue}
-              disabled={!isFormValid || updateProfileMutation.isLoading}
+              disabled={!isFormValid || updateProfileMutation.isPending}
               className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all focus:outline-none focus:ring-4 focus:ring-blue-100"
             >
-              {updateProfileMutation.isLoading ? (
+              {updateProfileMutation.isPending ? (
                 <span className="flex items-center justify-center">
                   <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

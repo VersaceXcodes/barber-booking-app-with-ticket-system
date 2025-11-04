@@ -53,6 +53,9 @@ interface AppSettings {
   reminder_hours_before: number;
   services_enabled: boolean;
   gallery_enabled: boolean;
+  social_facebook?: string;
+  social_instagram?: string;
+  social_twitter?: string;
 }
 
 interface AppState {

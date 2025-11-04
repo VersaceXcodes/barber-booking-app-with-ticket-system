@@ -86,16 +86,7 @@ interface FormData {
 // CONSTANTS
 // ============================================================================
 
-const TIME_SLOTS = [
-  '10:00',
-  '10:40',
-  '11:20',
-  '12:00',
-  '12:40',
-  '13:20',
-  '14:00',
-  '14:20',
-];
+
 
 const SESSION_STORAGE_KEY = 'admin_booking_form_draft';
 const DRAFT_EXPIRY_HOURS = 1;
@@ -112,9 +103,6 @@ const UV_AdminAddBooking: React.FC = () => {
   // GLOBAL STATE (ZUSTAND) - Individual selectors
   // ====================================================================
   const authToken = useAppStore(state => state.authentication_state.auth_token);
-  const isAdmin = useAppStore(
-    state => state.authentication_state.authentication_status.user_type === 'admin'
-  );
 
   // ====================================================================
   // LOCAL STATE
@@ -156,7 +144,6 @@ const UV_AdminAddBooking: React.FC = () => {
   const {
     data: servicesData,
     isLoading: isLoadingServices,
-    error: servicesError,
   } = useQuery({
     queryKey: ['services', 'active'],
     queryFn: async () => {
@@ -200,7 +187,6 @@ const UV_AdminAddBooking: React.FC = () => {
   const {
     data: availabilityData,
     isLoading: isLoadingAvailability,
-    refetch: refetchAvailability,
   } = useQuery({
     queryKey: ['availability', formData.appointment_date, formData.service_id],
     queryFn: async () => {
@@ -288,7 +274,7 @@ const UV_AdminAddBooking: React.FC = () => {
       } else {
         clearFormDraft();
       }
-    } catch (error) {
+    } catch {
       clearFormDraft();
     }
   }, []);

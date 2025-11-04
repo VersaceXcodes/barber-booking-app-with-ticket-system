@@ -112,7 +112,10 @@ const UV_EmailVerificationPending: React.FC = () => {
       );
       return response.data;
     },
-    onSuccess: (data) => {
+  });
+
+  useEffect(() => {
+    if (resendVerificationMutation.isSuccess) {
       setResendSuccess('Verification email sent!');
       setResendCooldown(60);
       setCanResend(false);
@@ -122,11 +125,12 @@ const UV_EmailVerificationPending: React.FC = () => {
       setTimeout(() => {
         setResendSuccess(null);
       }, 5000);
-    },
-    onError: (error: any) => {
-      console.error('Resend verification failed:', error);
-    },
-  });
+    }
+
+    if (resendVerificationMutation.isError) {
+      console.error('Resend verification failed:', resendVerificationMutation.error);
+    }
+  }, [resendVerificationMutation.isSuccess, resendVerificationMutation.isError]);
 
   // ==========================================================================
   // CHANGE EMAIL MUTATION
@@ -154,10 +158,13 @@ const UV_EmailVerificationPending: React.FC = () => {
       );
       return response.data;
     },
-    onSuccess: (data) => {
+  });
+
+  useEffect(() => {
+    if (changeEmailMutation.isSuccess && changeEmailMutation.data) {
       // Update global state with new email
       updateCurrentUser({
-        email: data.user.email,
+        email: changeEmailMutation.data.user.email,
       });
 
       // Close modal
@@ -167,7 +174,7 @@ const UV_EmailVerificationPending: React.FC = () => {
       setNewEmail('');
 
       // Show success message
-      setResendSuccess(`Verification email sent to new address: ${data.user.email}`);
+      setResendSuccess(`Verification email sent to new address: ${changeEmailMutation.data.user.email}`);
 
       // Reset cooldown timer
       setResendCooldown(60);
@@ -178,11 +185,12 @@ const UV_EmailVerificationPending: React.FC = () => {
       setTimeout(() => {
         setResendSuccess(null);
       }, 5000);
-    },
-    onError: (error: any) => {
-      console.error('Change email failed:', error);
-    },
-  });
+    }
+
+    if (changeEmailMutation.isError) {
+      console.error('Change email failed:', changeEmailMutation.error);
+    }
+  }, [changeEmailMutation.isSuccess, changeEmailMutation.isError, changeEmailMutation.data, updateCurrentUser]);
 
   // ==========================================================================
   // EVENT HANDLERS

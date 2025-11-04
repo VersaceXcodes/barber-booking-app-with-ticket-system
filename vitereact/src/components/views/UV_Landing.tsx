@@ -3,7 +3,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppStore } from '@/store/main';
-import type { Service } from '@/../../shared/zodSchemas';
+interface Service {
+  service_id: string;
+  name: string;
+  description: string;
+  image_url: string | null;
+  duration: number;
+  price: number | null;
+  is_active: boolean;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
 
 // ============================================================================
 // TYPE DEFINITIONS
@@ -122,7 +133,6 @@ const UV_Landing: React.FC = () => {
 
   const {
     data: shop_info,
-    isLoading: loading_settings,
     error: settings_error,
   } = useQuery({
     queryKey: ['shop-settings'],

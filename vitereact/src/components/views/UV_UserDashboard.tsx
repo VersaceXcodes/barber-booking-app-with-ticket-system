@@ -127,7 +127,7 @@ const UV_UserDashboard: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<TabType>(
     (searchParams.get('tab') as TabType) || 'upcoming'
   );
-  const [highlightedBookingId, setHighlightedBookingId] = useState<string | null>(
+  const [highlightedBookingId] = useState<string | null>(
     searchParams.get('highlight_booking')
   );
   const [cancelModalState, setCancelModalState] = useState<CancelModalState>({

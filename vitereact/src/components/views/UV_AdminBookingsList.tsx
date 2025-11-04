@@ -180,7 +180,6 @@ const UV_AdminBookingsList: React.FC = () => {
 
   // CRITICAL: Individual selectors from Zustand store
   const authToken = useAppStore(state => state.authentication_state.auth_token);
-  const currentUser = useAppStore(state => state.authentication_state.current_user);
 
   // Initialize filters from URL params or defaults
   const weekDates = getCurrentWeekDates();

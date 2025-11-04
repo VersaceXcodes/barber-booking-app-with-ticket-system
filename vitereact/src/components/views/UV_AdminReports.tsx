@@ -104,7 +104,7 @@ const calculateDateRangeDays = (startDate: string, endDate: string): number => {
 
 const UV_AdminReports: React.FC = () => {
   // URL Params
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   
   // Global State - CRITICAL: Individual selectors only!
   const authToken = useAppStore(state => state.authentication_state.auth_token);
@@ -133,9 +133,9 @@ const UV_AdminReports: React.FC = () => {
   const [dateRange, setDateRange] = useState(initialRange);
   const [customStartDate, setCustomStartDate] = useState(initialRange.start_date);
   const [customEndDate, setCustomEndDate] = useState(initialRange.end_date);
-  const [groupBy, setGroupBy] = useState<string>(urlGroupBy);
-  const [serviceFilter, setServiceFilter] = useState<string>('');
-  const [statusFilter, setStatusFilter] = useState<string>('');
+  const [groupBy] = useState<string>(urlGroupBy);
+  const [serviceFilter] = useState<string>('');
+  const [statusFilter] = useState<string>('');
   const [showExportModal, setShowExportModal] = useState(false);
   const [exportConfig, setExportConfig] = useState<ExportConfig>({
     include_fields: ['ticket_number', 'customer_name', 'appointment_date', 'appointment_time', 'service_name', 'status', 'special_request'],

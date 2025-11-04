@@ -22,7 +22,7 @@ const requestPasswordResetInputSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
 });
 
-type RequestPasswordResetInput = z.infer<typeof requestPasswordResetInputSchema>;
+
 
 // ============================================================================
 // API FUNCTIONS

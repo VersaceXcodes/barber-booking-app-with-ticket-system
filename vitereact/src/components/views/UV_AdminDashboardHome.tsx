@@ -16,8 +16,7 @@ import {
   Phone,
   Clock,
   TrendingUp,
-  TrendingDown,
-  Minus
+  TrendingDown
 } from 'lucide-react';
 
 // ============================================================================
@@ -105,8 +104,6 @@ const UV_AdminDashboardHome: React.FC = () => {
   // CRITICAL: Individual Zustand selectors, no object destructuring
   const authToken = useAppStore(state => state.authentication_state.auth_token);
   const currentUser = useAppStore(state => state.authentication_state.current_user);
-  const shopName = useAppStore(state => state.app_settings.shop_name);
-  const logout = useAppStore(state => state.logout);
 
   // Local state
   const [selectedDateRange, setSelectedDateRange] = useState<DateRangeOption>('today');
@@ -290,9 +287,7 @@ const UV_AdminDashboardHome: React.FC = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout();
-  };
+
 
   // ============================================================================
   // RENDER

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
@@ -162,7 +162,6 @@ const UV_BookingConfirmation: React.FC = () => {
   const [booking, setBooking] = useState<Booking | null>(null);
   const [serviceDetails, setServiceDetails] = useState<ServiceDetails | null>(null);
   const [qrCodeURL, setQrCodeURL] = useState<string>('');
-  const [calendarFileBlob, setCalendarFileBlob] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [resendSuccess, setResendSuccess] = useState<string | null>(null);
   
@@ -278,7 +277,6 @@ const UV_BookingConfirmation: React.FC = () => {
       shopInfo.shop_name,
       shopInfo.shop_address
     );
-    setCalendarFileBlob(blobURL);
     
     // Trigger download
     const link = document.createElement('a');

@@ -1,5 +1,7 @@
-   {customer_phone.startsWith('+') && (
-     <a href={`https://wa.me/${customer_phone.replace(/[^0-9]/g, '')}`}>
-       <MessageCircle className="size-4" />
-     </a>
-   )}
+import React from 'react';
+
+const UV_AdminBookingDetail: React.FC = () => {
+  return <div className="min-h-screen bg-gray-50"><p>Admin Booking Detail</p></div>;
+};
+
+export default UV_AdminBookingDetail;

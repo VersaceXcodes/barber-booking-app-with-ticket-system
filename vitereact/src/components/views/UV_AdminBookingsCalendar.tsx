@@ -641,7 +641,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
         
         {/* Time slot grid */}
         <div className="grid grid-cols-8">
-          {TIME_SLOTS.map((time, timeIndex) => (
+          {TIME_SLOTS.map((time) => (
             <React.Fragment key={time}>
               {/* Time label */}
               <div className="px-4 py-4 text-sm font-medium text-gray-600 bg-gray-50 border-b border-gray-200">

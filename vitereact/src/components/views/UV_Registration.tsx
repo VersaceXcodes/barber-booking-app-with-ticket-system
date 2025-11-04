@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppStore } from '@/store/main';
 import { z } from 'zod';
-import { Eye, EyeOff, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { Eye, EyeOff, CheckCircle, XCircle } from 'lucide-react';
 
 // Import Zod schema for validation
 const createUserInputSchema = z.object({

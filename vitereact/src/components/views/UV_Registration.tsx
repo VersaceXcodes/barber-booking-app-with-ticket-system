@@ -133,7 +133,7 @@ const UV_Registration: React.FC = () => {
         }));
       } else {
         setValidationErrors(prev => {
-          const { email, ...rest } = prev;
+          const { email: _email, ...rest } = prev;
           return rest;
         });
       }
@@ -171,7 +171,7 @@ const UV_Registration: React.FC = () => {
       return false;
     } else {
       setValidationErrors(prev => {
-        const { password_confirm, ...rest } = prev;
+        const { password_confirm: _password_confirm, ...rest } = prev;
         return rest;
       });
       return true;
@@ -199,7 +199,7 @@ const UV_Registration: React.FC = () => {
     if (password_confirm) {
       validatePasswordMatch();
     }
-  }, [form_data.password, password_confirm]);
+  }, [form_data.password, password_confirm, validatePasswordMatch]);
 
   // ============================================================================
   // EFFECT: CLEAR AUTH ERROR ON MOUNT
@@ -218,7 +218,7 @@ const UV_Registration: React.FC = () => {
     
     // Clear error when user starts typing
     setValidationErrors(prev => {
-      const { [field]: _, ...rest } = prev;
+      const { [field]: _field, ...rest } = prev;
       return rest;
     });
     
@@ -236,7 +236,7 @@ const UV_Registration: React.FC = () => {
       setValidationErrors(prev => ({ ...prev, [field]: error }));
     } else {
       setValidationErrors(prev => {
-        const { [field]: _, ...rest } = prev;
+        const { [field]: _field, ...rest } = prev;
         return rest;
       });
     }
@@ -247,7 +247,7 @@ const UV_Registration: React.FC = () => {
     
     // Clear error when user starts typing
     setValidationErrors(prev => {
-      const { password_confirm, ...rest } = prev;
+      const { password_confirm: _password_confirm, ...rest } = prev;
       return rest;
     });
   };
@@ -257,7 +257,7 @@ const UV_Registration: React.FC = () => {
     
     if (checked) {
       setValidationErrors(prev => {
-        const { terms, ...rest } = prev;
+        const { terms: _terms, ...rest } = prev;
         return rest;
       });
     }

@@ -54,44 +54,37 @@ export const hideErrorModal = () => {
   }
 };
 
-// ============================================================================
-// MAIN COMPONENT
-// ============================================================================
+  // ============================================================================
+  // MAIN COMPONENT
+  // ============================================================================
 
-const GV_ErrorModal: React.FC = () => {
-  const navigate = useNavigate();
-  const [errorDetails, setErrorDetails] = useState<ErrorDetails | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const GV_ErrorModal: React.FC = () => {
+    const navigate = useNavigate();
+    const [errorDetails, setErrorDetails] = useState<ErrorDetails | null>(null);
+    const [isVisible, setIsVisible] = useState(false);
 
-  const modalRef = useRef<HTMLDivElement>(null);
-  const primaryActionRef = useRef<HTMLButtonElement>(null);
-  const dismissButtonRef = useRef<HTMLButtonElement>(null);
+    const modalRef = useRef<HTMLDivElement>(null);
+    const primaryActionRef = useRef<HTMLButtonElement>(null);
+    const dismissButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Register global show/hide functions
-  useEffect(() => {
-    globalShowError = (error: ErrorDetails) => {
-      setErrorDetails(error);
-      setIsVisible(true);
-    };
+    // Register global show/hide functions
+    useEffect(() => {
+      globalShowError = (error: ErrorDetails) => {
+        setErrorDetails(error);
+        setIsVisible(true);
+      };
 
-    globalHideError = () => {
-      setIsVisible(false);
-      // Clear error details after animation
-      setTimeout(() => setErrorDetails(null), 200);
-    };
+      globalHideError = () => {
+        setIsVisible(false);
+        // Clear error details after animation
+        setTimeout(() => setErrorDetails(null), 200);
+      };
 
-    return () => {
-      globalShowError = null;
-      globalHideError = null;
-    };
-  }, []);
-
-  // If no error, render nothing
-  if (!errorDetails || !isVisible) {
-    return null;
-  }
-
-  const { type, title, message, details, onRetry, onDismiss, showContactSupport, criticalError } = errorDetails;
+      return () => {
+        globalShowError = null;
+        globalHideError = null;
+      };
+    }, []);
 
   // ========================================================================
   // ERROR ICON RENDERING
@@ -121,7 +114,9 @@ const GV_ErrorModal: React.FC = () => {
   // DEFAULT TITLE BY ERROR TYPE
   // ========================================================================
 
-  const getDefaultTitle = () => {
+  const getDefaultTitle = React.useCallback(() => {
+    if (!errorDetails) return 'Error';
+    const { type } = errorDetails;
     switch (type) {
       case 'network':
         return 'Connection Error';
@@ -138,13 +133,15 @@ const GV_ErrorModal: React.FC = () => {
       default:
         return 'Error';
     }
-  };
+  }, [errorDetails]);
 
   // ========================================================================
   // PRIMARY ACTION BUTTON TEXT
   // ========================================================================
 
-  const getPrimaryActionText = () => {
+  const getPrimaryActionText = React.useCallback(() => {
+    if (!errorDetails) return 'OK';
+    const { type, onRetry } = errorDetails;
     switch (type) {
       case 'network':
         return 'Try Again';
@@ -161,13 +158,18 @@ const GV_ErrorModal: React.FC = () => {
       default:
         return 'OK';
     }
-  };
+  }, [errorDetails]);
 
   // ========================================================================
   // EVENT HANDLERS
   // ========================================================================
 
-  const handlePrimaryAction = () => {
+  const handlePrimaryAction = React.useCallback(() => {
+    if (!errorDetails) {
+      hideErrorModal();
+      return;
+    }
+    const { type, onRetry } = errorDetails;
     if (type === 'auth') {
       navigate('/login');
       hideErrorModal();
@@ -183,20 +185,20 @@ const GV_ErrorModal: React.FC = () => {
     } else {
       hideErrorModal();
     }
-  };
+  }, [errorDetails, navigate]);
 
-  const handleDismiss = () => {
-    if (onDismiss) {
-      onDismiss();
+  const handleDismiss = React.useCallback(() => {
+    if (errorDetails?.onDismiss) {
+      errorDetails.onDismiss();
     }
     hideErrorModal();
-  };
+  }, [errorDetails]);
 
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget && !criticalError) {
+  const handleBackdropClick = React.useCallback((e: React.MouseEvent) => {
+    if (e.target === e.currentTarget && !errorDetails?.criticalError) {
       handleDismiss();
     }
-  };
+  }, [errorDetails, handleDismiss]);
 
   // ========================================================================
   // EFFECTS
@@ -204,18 +206,22 @@ const GV_ErrorModal: React.FC = () => {
 
   // ESC key handler
   useEffect(() => {
+    if (!isVisible || !errorDetails) return;
+    
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && !criticalError) {
+      if (e.key === 'Escape' && !errorDetails.criticalError) {
         handleDismiss();
       }
     };
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [criticalError, handleDismiss]);
+  }, [isVisible, errorDetails, handleDismiss]);
 
   // Focus trap and auto-focus
   useEffect(() => {
+    if (!isVisible || !errorDetails) return;
+    
     const modal = modalRef.current;
     if (!modal) return;
 
@@ -249,22 +255,26 @@ const GV_ErrorModal: React.FC = () => {
     }
 
     return () => modal.removeEventListener('keydown', handleTabKey);
-  }, []);
+  }, [isVisible, errorDetails]);
 
   // Prevent body scroll while modal is open
   useEffect(() => {
+    if (!isVisible || !errorDetails) return;
+    
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
     return () => {
       document.body.style.overflow = originalOverflow;
     };
-  }, []);
+  }, [isVisible, errorDetails]);
 
   // Screen reader announcement
   useEffect(() => {
-    const modalTitle = title || getDefaultTitle();
-    const announcement = `${modalTitle}: ${message}`;
+    if (!isVisible || !errorDetails) return;
+    
+    const modalTitle = errorDetails.title || getDefaultTitle();
+    const announcement = `${modalTitle}: ${errorDetails.message}`;
     
     const liveRegion = document.createElement('div');
     liveRegion.setAttribute('role', 'alert');
@@ -279,8 +289,14 @@ const GV_ErrorModal: React.FC = () => {
         document.body.removeChild(liveRegion);
       }
     };
-  }, [title, message]);
+  }, [isVisible, errorDetails, getDefaultTitle]);
 
+  // If no error, render nothing
+  if (!errorDetails || !isVisible) {
+    return null;
+  }
+
+  const { type, title, message, details, onRetry, showContactSupport, criticalError } = errorDetails;
   const modalTitle = title || getDefaultTitle();
 
   // ========================================================================

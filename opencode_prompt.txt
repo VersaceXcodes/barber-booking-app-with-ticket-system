@@ -1,84 +1,98 @@
-VALIDATION FAILURE - Frontend TypeScript Compilation (Attempt 1/100)
+VALIDATION FAILURE - Lint Project (Attempt 1/100)
 
-The project validation failed at the "Frontend TypeScript Compilation" step. You need to analyze the error and fix it.
+The project validation failed at the "Lint Project" step. You need to analyze the error and fix it.
 
 ## Error Details:
-src/App.tsx(39,8): error TS1192: Module '"/app/vitereact/src/components/views/UV_UserProfile"' has no default export.
-src/App.tsx(46,8): error TS1192: Module '"/app/vitereact/src/components/views/UV_AdminBookingDetail"' has no default export.
-src/components/views/GV_ErrorModal.tsx(1,46): error TS6133: 'useCallback' is declared but its value is never read.
-src/components/views/GV_Footer.tsx(15,66): error TS2339: Property 'social_facebook' does not exist on type 'AppSettings'.
-src/components/views/GV_Footer.tsx(16,67): error TS2339: Property 'social_instagram' does not exist on type 'AppSettings'.
-src/components/views/GV_Footer.tsx(17,65): error TS2339: Property 'social_twitter' does not exist on type 'AppSettings'.
-src/components/views/UV_AdminAddBooking.tsx(89,7): error TS6133: 'TIME_SLOTS' is declared but its value is never read.
-src/components/views/UV_AdminAddBooking.tsx(115,9): error TS6133: 'isAdmin' is declared but its value is never read.
-src/components/views/UV_AdminAddBooking.tsx(159,12): error TS6133: 'servicesError' is declared but its value is never read.
-src/components/views/UV_AdminAddBooking.tsx(203,14): error TS6133: 'refetchAvailability' is declared but its value is never read.
-src/components/views/UV_AdminBookingDetail.tsx(1,5): error TS2304: Cannot find name 'customer_phone'.
-src/components/views/UV_AdminBookingDetail.tsx(2,32): error TS2304: Cannot find name 'customer_phone'.
-src/components/views/UV_AdminBookingDetail.tsx(3,9): error TS2304: Cannot find name 'MessageCircle'.
-src/components/views/UV_AdminBookingsCalendar.tsx(644,34): error TS6133: 'timeIndex' is declared but its value is never read.
-src/components/views/UV_AdminBookingsList.tsx(183,9): error TS6133: 'currentUser' is declared but its value is never read.
-src/components/views/UV_AdminCapacitySettings.tsx(1,27): error TS6133: 'useEffect' is declared but its value is never read.
-src/components/views/UV_AdminCapacitySettings.tsx(125,9): error TS6133: 'queryClient' is declared but its value is never read.
-src/components/views/UV_AdminCustomerDetail.tsx(74,7): error TS2322: Type 'string' is not assignable to type 'null'.
-src/components/views/UV_AdminCustomerList.tsx(2,10): error TS6133: 'Link' is declared but its value is never read.
-src/components/views/UV_AdminCustomerList.tsx(6,18): error TS6133: 'Filter' is declared but its value is never read.
-src/components/views/UV_AdminDashboardHome.tsx(20,3): error TS6133: 'Minus' is declared but its value is never read.
-src/components/views/UV_AdminDashboardHome.tsx(108,9): error TS6133: 'shopName' is declared but its value is never read.
-src/components/views/UV_AdminDashboardHome.tsx(293,9): error TS6133: 'handleLogout' is declared but its value is never read.
-src/components/views/UV_AdminGalleryManage.tsx(6,50): error TS6133: 'Search' is declared but its value is never read.
-src/components/views/UV_AdminGalleryManage.tsx(6,70): error TS6133: 'Check' is declared but its value is never read.
-src/components/views/UV_AdminReports.tsx(107,24): error TS6133: 'setSearchParams' is declared but its value is never read.
-src/components/views/UV_AdminReports.tsx(136,19): error TS6133: 'setGroupBy' is declared but its value is never read.
-src/components/views/UV_AdminReports.tsx(137,25): error TS6133: 'setServiceFilter' is declared but its value is never read.
-src/components/views/UV_AdminReports.tsx(138,24): error TS6133: 'setStatusFilter' is declared but its value is never read.
-src/components/views/UV_BookingConfirmation.tsx(1,38): error TS6133: 'useRef' is declared but its value is never read.
-src/components/views/UV_BookingConfirmation.tsx(165,10): error TS6133: 'calendarFileBlob' is declared but its value is never read.
-src/components/views/UV_BookingFlow_DateSelect.tsx(1,27): error TS6133: 'useEffect' is declared but its value is never read.
-src/components/views/UV_BookingFlow_DateSelect.tsx(6,37): error TS6133: 'Calendar' is declared but its value is never read.
-src/components/views/UV_BookingFlow_DateSelect.tsx(6,70): error TS6133: 'AlertCircle' is declared but its value is never read.
-src/components/views/UV_BookingFlow_DateSelect.tsx(6,83): error TS6133: 'Clock' is declared but its value is never read.
-src/components/views/UV_BookingFlow_DateSelect.tsx(122,9): error TS6133: 'sameDayCutoffHours' is declared but its value is never read.
-src/components/views/UV_BookingFlow_Details.tsx(6,34): error TS6133: 'Upload' is declared but its value is never read.
-src/components/views/UV_BookingFlow_Details.tsx(50,9): error TS6133: 'currentUser' is declared but its value is never read.
-src/components/views/UV_BookingFlow_Details.tsx(71,10): error TS6133: 'uploadingPhotos' is declared but its value is never read.
-src/components/views/UV_BookingFlow_Details.tsx(71,27): error TS6133: 'setUploadingPhotos' is declared but its value is never read.
-src/components/views/UV_BookingFlow_Details.tsx(113,5): error TS2769: No overload matches this call.
-  Overload 1 of 3, '(options: DefinedInitialDataOptions<unknown, Error, unknown, string[]>, queryClient?: QueryClient | undefined): DefinedUseQueryResult<unknown, Error>', gave the following error.
-    Object literal may only specify known properties, and 'onSuccess' does not exist in type 'DefinedInitialDataOptions<unknown, Error, unknown, string[]>'.
-  Overload 2 of 3, '(options: UndefinedInitialDataOptions<any, Error, any, string[]>, queryClient?: QueryClient | undefined): UseQueryResult<any, Error>', gave the following error.
-    Object literal may only specify known properties, and 'onSuccess' does not exist in type 'UndefinedInitialDataOptions<any, Error, any, string[]>'.
-  Overload 3 of 3, '(options: UseQueryOptions<any, Error, any, string[]>, queryClient?: QueryClient | undefined): UseQueryResult<any, Error>', gave the following error.
-    Object literal may only specify known properties, and 'onSuccess' does not exist in type 'UseQueryOptions<any, Error, any, string[]>'.
-src/components/views/UV_BookingFlow_Details.tsx(851,63): error TS2339: Property 'isLoading' does not exist on type 'UseMutationResult<any, Error, { name: string; email: string; phone: string; }, unknown>'.
-  Property 'isLoading' does not exist on type 'Override<MutationObserverIdleResult<any, Error, { name: string; email: string; phone: string; }, unknown>, { mutate: UseMutateFunction<any, Error, { name: string; email: string; phone: string; }, unknown>; }> & { ...; }'.
-src/components/views/UV_BookingFlow_Details.tsx(854,38): error TS2339: Property 'isLoading' does not exist on type 'UseMutationResult<any, Error, { name: string; email: string; phone: string; }, unknown>'.
-  Property 'isLoading' does not exist on type 'Override<MutationObserverIdleResult<any, Error, { name: string; email: string; phone: string; }, unknown>, { mutate: UseMutateFunction<any, Error, { name: string; email: string; phone: string; }, unknown>; }> & { ...; }'.
-src/components/views/UV_Dashboard.tsx(10,49): error TS2339: Property 'logout_user' does not exist on type 'AppState'.
-src/components/views/UV_EmailVerificationPending.tsx(115,17): error TS6133: 'data' is declared but its value is never read.
-src/components/views/UV_Landing.tsx(6,30): error TS2307: Cannot find module '@/../../shared/zodSchemas' or its corresponding type declarations.
-src/components/views/UV_Landing.tsx(125,16): error TS6133: 'loading_settings' is declared but its value is never read.
-src/components/views/UV_PasswordResetRequest.tsx(25,6): error TS6196: 'RequestPasswordResetInput' is declared but never used.
-src/components/views/UV_Registration.tsx(5,45): error TS6133: 'AlertCircle' is declared but its value is never read.
-src/components/views/UV_UserDashboard.tsx(130,32): error TS6133: 'setHighlightedBookingId' is declared but its value is never read.
-src/components/views/UV_UserProfile.tsx(1,10): error TS6133: 'currentUser' is declared but its value is never read.
-src/components/views/UV_UserProfile.tsx(1,24): error TS2304: Cannot find name 'useAppStore'.
-src/components/views/UV_UserProfile.tsx(3,10): error TS6133: 'authToken' is declared but its value is never read.
-src/components/views/UV_UserProfile.tsx(3,22): error TS2304: Cannot find name 'useAppStore'.
-src/components/views/UV_UserProfile.tsx(4,10): error TS6133: 'updateCurrentUser' is declared but its value is never read.
-src/components/views/UV_UserProfile.tsx(4,30): error TS2304: Cannot find name 'useAppStore'.
-src/components/views/UV_UserProfile.tsx(5,10): error TS6133: 'logout' is declared but its value is never read.
-src/components/views/UV_UserProfile.tsx(5,19): error TS2304: Cannot find name 'useAppStore'.
+
+> conductor@0.0.0 lint
+> eslint .
+
+
+/app/vitereact/src/components/views/GV_ErrorModal.tsx
+  188:9  warning  The 'handleDismiss' function makes the dependencies of useEffect Hook (at line 215) change on every render. To fix this, wrap the definition of 'handleDismiss' in its own useCallback() Hook  react-hooks/exhaustive-deps
+  206:3  error    React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?    react-hooks/rules-of-hooks
+  218:3  error    React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?    react-hooks/rules-of-hooks
+  255:3  error    React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?    react-hooks/rules-of-hooks
+  265:3  error    React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?    react-hooks/rules-of-hooks
+  282:6  warning  React Hook useEffect has a missing dependency: 'getDefaultTitle'. Either include it or remove the dependency array                                                                             react-hooks/exhaustive-deps
+
+/app/vitereact/src/components/views/GV_LoadingOverlay.tsx
+   74:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+  225:16  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/app/vitereact/src/components/views/GV_MobileNav.tsx
+   83:6  warning  React Hook useEffect has a missing dependency: 'handleClose'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  163:6  warning  React Hook useEffect has a missing dependency: 'handleClose'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/app/vitereact/src/components/views/GV_NotificationToast.tsx
+  211:17  warning  The ref value 'timersRef.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'timersRef.current' to a variable inside the effect, and use that variable in the cleanup function  react-hooks/exhaustive-deps
+
+/app/vitereact/src/components/views/UV_AdminAddBooking.tsx
+  205:9  warning  The 'availableSlots' logical expression could make the dependencies of useEffect Hook (at line 322) change on every render. To fix this, wrap the initialization of 'availableSlots' in its own useMemo() Hook  react-hooks/exhaustive-deps
+  205:9  warning  The 'availableSlots' logical expression could make the dependencies of useEffect Hook (at line 345) change on every render. To fix this, wrap the initialization of 'availableSlots' in its own useMemo() Hook  react-hooks/exhaustive-deps
+  312:6  warning  React Hook useEffect has a missing dependency: 'formData.appointment_date'. Either include it or remove the dependency array                                                                                    react-hooks/exhaustive-deps
+
+/app/vitereact/src/components/views/UV_AdminGalleryUpload.tsx
+  269:6  warning  React Hook useEffect has a missing dependency: 'uploadQueue'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/app/vitereact/src/components/views/UV_AdminReports.tsx
+   81:7  error    Unexpected lexical declaration in case block                                                                 no-case-declarations
+   86:7  error    Unexpected lexical declaration in case block                                                                 no-case-declarations
+  276:6  warning  React Hook useMemo has a missing dependency: 'reportData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/app/vitereact/src/components/views/UV_AdminSettings.tsx
+  390:24  error  'removed' is assigned a value but never used        @typescript-eslint/no-unused-vars
+  493:15  error  'service_id' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  493:27  error  'display_order' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/app/vitereact/src/components/views/UV_BookingConfirmation.tsx
+  265:14  error  'err' is defined but never used  @typescript-eslint/no-unused-vars
+
+/app/vitereact/src/components/views/UV_BookingFlow_Review.tsx
+  55:12  error  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  66:12  error  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  78:12  error  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+/app/vitereact/src/components/views/UV_BookingFlow_ServiceSelect.tsx
+  55:6  warning  React Hook useEffect has a missing dependency: 'bookingContext.service_id'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/app/vitereact/src/components/views/UV_EmailVerificationPending.tsx
+  133:6  warning  React Hook useEffect has a missing dependency: 'resendVerificationMutation.error'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  193:6  warning  React Hook useEffect has a missing dependency: 'changeEmailMutation.error'. Either include it or remove the dependency array         react-hooks/exhaustive-deps
+
+/app/vitereact/src/components/views/UV_EmailVerificationSuccess.tsx
+  171:6  warning  React Hook useEffect has a missing dependency: 'verifyEmailMutation'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/app/vitereact/src/components/views/UV_Login.tsx
+  65:6  warning  React Hook useEffect has missing dependencies: 'clearAuthError' and 'errorMessage'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/app/vitereact/src/components/views/UV_PasswordResetForm.tsx
+  217:17  error  'confirm_password' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  342:35  error  'new_password' is assigned a value but never used      @typescript-eslint/no-unused-vars
+  434:35  error  'confirm_password' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/app/vitereact/src/components/views/UV_Registration.tsx
+  114:14  error    'error' is defined but never used                                                                                         @typescript-eslint/no-unused-vars
+  136:19  error    'email' is assigned a value but never used                                                                                @typescript-eslint/no-unused-vars
+  174:17  error    'password_confirm' is assigned a value but never used                                                                     @typescript-eslint/no-unused-vars
+  202:6   warning  React Hook useEffect has a missing dependency: 'validatePasswordMatch'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  221:24  error    '_' is assigned a value but never used                                                                                    @typescript-eslint/no-unused-vars
+  239:26  error    '_' is assigned a value but never used                                                                                    @typescript-eslint/no-unused-vars
+  250:15  error    'password_confirm' is assigned a value but never used                                                                     @typescript-eslint/no-unused-vars
+  260:17  error    'terms' is assigned a value but never used                                                                                @typescript-eslint/no-unused-vars
+
+✖ 41 problems (23 errors, 18 warnings)
+
 
 
 ## Validation Context:
-- Step: Frontend TypeScript Compilation
+- Step: Lint Project
 - Working Directory: /app/vitereact
 - Attempt: 1/100
 - Previous failures for this step: 1
 
 ## Project Memory Summary:
-- Total validation attempts: 4
+- Total validation attempts: 7
 - Common issues encountered: None
 - Known dependencies: @hookform/resolvers, @radix-ui/react-accordion, @radix-ui/react-alert-dialog, @radix-ui/react-aspect-ratio, @radix-ui/react-avatar, @radix-ui/react-checkbox, @radix-ui/react-collapsible, @radix-ui/react-context-menu, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu
 - Missing dependencies: None
@@ -196,11 +210,11 @@ PROTECTED DIRECTORIES (DO NOT MODIFY):
 
 
 
-## Previous Validation Failures for Frontend TypeScript Compilation:
-- 11:33:18 PM: 
+## Previous Validation Failures for Lint Project:
+- 11:42:09 PM: 
 
 ## Your Task:
-1. **Analyze the Error**: Understand what specifically went wrong in the Frontend TypeScript Compilation step
+1. **Analyze the Error**: Understand what specifically went wrong in the Lint Project step
 2. **Check Previous Attempts**: Consider if this is a recurring issue based on validation history
 3. **Locate the Problem**: Identify which files need to be modified
 4. **Apply Fixes**: Use the available tools to fix the specific issues

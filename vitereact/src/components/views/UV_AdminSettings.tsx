@@ -387,8 +387,9 @@ const UV_AdminSettings: React.FC = () => {
     });
     setHasUnsavedChanges(true);
     setValidationErrors((prev) => {
-      const { [field]: removed, ...rest } = prev;
-      return rest;
+      const newErrors = { ...prev };
+      delete newErrors[field];
+      return newErrors;
     });
   }, []);
 
@@ -490,6 +491,7 @@ const UV_AdminSettings: React.FC = () => {
 
     setValidationErrors({});
     if (serviceModalMode === 'add') {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { service_id, display_order, ...createData } = serviceFormData;
       createServiceMutation.mutate(createData);
     } else {

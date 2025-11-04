@@ -153,7 +153,6 @@ const UV_BookingFlow_Review: React.FC = () => {
     if (!bookingContext.selected_date || !bookingContext.selected_time || 
         !bookingContext.customer_name || !bookingContext.customer_email || 
         !bookingContext.customer_phone) {
-      createBookingMutation.mutate({ error: 'Missing required booking information' } as any);
       return;
     }
 
@@ -202,8 +201,8 @@ const UV_BookingFlow_Review: React.FC = () => {
   const getErrorMessage = (): string => {
     if (!createBookingMutation.error) return '';
 
-    const error = createBookingMutation.error as any;
-    const errorMessage = error.response?.data?.error?.message || error.message || '';
+    const err = createBookingMutation.error as any;
+    const errorMessage = err.response?.data?.error?.message || err.message || '';
 
     if (errorMessage.toLowerCase().includes('slot') && errorMessage.toLowerCase().includes('available')) {
       return 'Sorry, this time slot was just booked. Please choose another time.';

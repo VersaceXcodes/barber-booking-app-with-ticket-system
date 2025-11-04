@@ -70,21 +70,24 @@ const formatDate = (date: Date): string => {
   return date.toISOString().split('T')[0];
 };
 
-const calculatePresetRange = (preset: string): { start_date: string; end_date: string } => {
+  const calculatePresetRange = (preset: string): { start_date: string; end_date: string } => {
   const today = new Date();
   
   switch(preset) {
-    case 'today':
+    case 'today': {
       return { start_date: formatDate(today), end_date: formatDate(today) };
+    }
     
-    case 'this_week':
+    case 'this_week': {
       const weekStart = new Date(today);
       weekStart.setDate(today.getDate() - today.getDay());
       return { start_date: formatDate(weekStart), end_date: formatDate(today) };
+    }
     
-    case 'this_month':
+    case 'this_month': {
       const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
       return { start_date: formatDate(monthStart), end_date: formatDate(today) };
+    }
     
     default:
       return { start_date: formatDate(today), end_date: formatDate(today) };
@@ -273,7 +276,7 @@ const UV_AdminReports: React.FC = () => {
         percentage: (summaryStats.no_shows / summaryStats.total_bookings) * 100,
       },
     ].filter(item => item.count > 0);
-  }, [summaryStats]);
+  }, [reportData, summaryStats]);
   
   // Export CSV Mutation
   const exportMutation = useMutation({

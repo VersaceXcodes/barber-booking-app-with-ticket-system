@@ -214,7 +214,7 @@ const UV_PasswordResetForm: React.FC = () => {
       }));
     } else {
       setValidationErrors((prev) => {
-        const { confirm_password, ...rest } = prev;
+        const { confirm_password: _confirm_password, ...rest } = prev;
         return rest;
       });
     }
@@ -339,7 +339,7 @@ const UV_PasswordResetForm: React.FC = () => {
                         setNewPassword(e.target.value);
                         // Clear error on change
                         setValidationErrors((prev) => {
-                          const { new_password, ...rest } = prev;
+                          const { new_password: _new_password, ...rest } = prev;
                           return rest;
                         });
                       }}
@@ -431,7 +431,7 @@ const UV_PasswordResetForm: React.FC = () => {
                         setConfirmPassword(e.target.value);
                         // Clear error on change
                         setValidationErrors((prev) => {
-                          const { confirm_password, ...rest } = prev;
+                          const { confirm_password: _confirm_password, ...rest } = prev;
                           return rest;
                         });
                       }}

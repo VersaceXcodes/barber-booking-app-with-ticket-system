@@ -262,7 +262,7 @@ const UV_BookingConfirmation: React.FC = () => {
       await navigator.clipboard.writeText(booking.ticket_number);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
+    } catch {
       // Fallback for older browsers
       alert(`Your ticket number: ${booking.ticket_number}`);
     }

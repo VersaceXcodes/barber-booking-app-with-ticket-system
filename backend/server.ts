@@ -33,7 +33,7 @@ const pool = new Pool(
   DATABASE_URL
     ? { 
         connectionString: DATABASE_URL, 
-        ssl: { require: true } 
+        ssl: { rejectUnauthorized: false } 
       }
     : {
         host: PGHOST,
@@ -41,7 +41,7 @@ const pool = new Pool(
         user: PGUSER,
         password: PGPASSWORD,
         port: Number(PGPORT),
-        ssl: { require: true },
+        ssl: { rejectUnauthorized: false },
       }
 );
 
@@ -52,15 +52,18 @@ app.use(express.json({ limit: '10mb' }));
 app.use(morgan('combined'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-function createErrorResponse(message, error = null, errorCode = null) {
-  const response = {
+function createErrorResponse(message: string, error: any = null, errorCode: string | null = null) {
+  const response: any = {
     success: false,
     message,
     timestamp: new Date().toISOString()
   };
-  if (errorCode) response.error_code = errorCode;
+  if (errorCode) {
+    response.error = { code: errorCode };
+  }
   if (error) {
-    response.details = {
+    response.error = response.error || {};
+    response.error.details = {
       name: error.name,
       message: error.message,
       stack: error.stack
@@ -69,14 +72,14 @@ function createErrorResponse(message, error = null, errorCode = null) {
   return response;
 }
 
-const authenticateToken = async (req, res, next) => {
+const authenticateToken = async (req: any, res: any, next: any) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
   if (!token) {
     return res.status(401).json(createErrorResponse('Access token required', null, 'AUTH_TOKEN_REQUIRED'));
   }
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded: any = jwt.verify(token, JWT_SECRET);
     const result = await pool.query('SELECT user_id, email, name, is_verified FROM users WHERE user_id = $1', [decoded.user_id]);
     if (result.rows.length === 0) {
       return res.status(401).json(createErrorResponse('Invalid token', null, 'AUTH_TOKEN_INVALID'));
@@ -88,14 +91,14 @@ const authenticateToken = async (req, res, next) => {
   }
 };
 
-const authenticateAdmin = async (req, res, next) => {
+const authenticateAdmin = async (req: any, res: any, next: any) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
   if (!token) {
     return res.status(401).json(createErrorResponse('Admin access token required', null, 'ADMIN_AUTH_REQUIRED'));
   }
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded: any = jwt.verify(token, JWT_SECRET);
     if (!decoded.is_admin) {
       return res.status(403).json(createErrorResponse('Admin access required', null, 'ADMIN_ACCESS_DENIED'));
     }
@@ -114,7 +117,7 @@ app.get('/api/services', async (req, res) => {
   try {
     const { is_active, sort_by = 'display_order' } = req.query;
     let query = 'SELECT * FROM services';
-    const params = [];
+    const params: any[] = [];
     if (is_active !== undefined) {
       query += ' WHERE is_active = $1';
       params.push(is_active === 'true');
@@ -122,7 +125,8 @@ app.get('/api/services', async (req, res) => {
       query += ' WHERE is_active = TRUE';
     }
     const validSortFields = ['name', 'price', 'duration', 'display_order'];
-    const sortField = validSortFields.includes(sort_by) ? sort_by : 'display_order';
+    const sortByStr = String(sort_by);
+    const sortField = validSortFields.includes(sortByStr) ? sortByStr : 'display_order';
     query += ` ORDER BY ${sortField} ASC`;
     const result = await pool.query(query, params);
     res.json({ services: result.rows });
@@ -232,7 +236,7 @@ app.post('/api/bookings', async (req, res) => {
     const ticketNumber = `TKT-${dateStr}-${String(nextSeq).padStart(3, '0')}`;
 
     const booking_id = uuidv4();
-    const user_id = req.user ? req.user.user_id : null;
+    const user_id = (req as any).user ? (req as any).user.user_id : null;
     const now = new Date().toISOString();
 
     const insertResult = await pool.query(
@@ -339,7 +343,7 @@ app.patch('/api/bookings/:ticket_number/cancel', async (req, res) => {
     }
 
     const now = new Date().toISOString();
-    const cancelled_by = req.admin ? 'admin' : 'customer';
+    const cancelled_by = (req as any).admin ? 'admin' : 'customer';
 
     const updateResult = await pool.query(
       `UPDATE bookings
@@ -561,15 +565,15 @@ app.post('/api/auth/verify-email', async (req, res) => {
   }
 });
 
-app.get('/api/auth/me', authenticateToken, (req, res) => {
+app.get('/api/auth/me', authenticateToken, (req: any, res) => {
   res.json({ user: req.user });
 });
 
-app.patch('/api/auth/me', authenticateToken, async (req, res) => {
+app.patch('/api/auth/me', authenticateToken, async (req: any, res) => {
   try {
     const { name, email, phone } = req.body;
-    const updates = [];
-    const params = [];
+    const updates: string[] = [];
+    const params: any[] = [];
     let paramCount = 1;
 
     if (name) {
@@ -609,11 +613,11 @@ app.patch('/api/auth/me', authenticateToken, async (req, res) => {
   }
 });
 
-app.get('/api/user/bookings', authenticateToken, async (req, res) => {
+app.get('/api/user/bookings', authenticateToken, async (req: any, res) => {
   try {
     const { status } = req.query;
     let query = 'SELECT * FROM bookings WHERE user_id = $1';
-    const params = [req.user.user_id];
+    const params: any[] = [req.user.user_id];
 
     if (status) {
       query += ' AND status = $2';
@@ -654,7 +658,7 @@ app.get('/api/admin/bookings', authenticateAdmin, async (req, res) => {
   try {
     const { status, service_id, appointment_date_from, appointment_date_to, limit = 50, offset = 0 } = req.query;
     let query = 'SELECT b.*, s.name as service_name FROM bookings b LEFT JOIN services s ON b.service_id = s.service_id WHERE 1=1';
-    const params = [];
+    const params: any[] = [];
     let paramCount = 1;
 
     if (status) {
@@ -676,7 +680,7 @@ app.get('/api/admin/bookings', authenticateAdmin, async (req, res) => {
 
     query += ' ORDER BY b.appointment_date DESC, b.appointment_time DESC';
     query += ` LIMIT $${paramCount++} OFFSET $${paramCount++}`;
-    params.push(parseInt(limit), parseInt(offset));
+    params.push(parseInt(String(limit)), parseInt(String(offset)));
 
     const result = await pool.query(query, params);
     res.json({ bookings: result.rows, total: result.rows.length });
@@ -760,8 +764,8 @@ app.post('/api/admin/services', authenticateAdmin, async (req, res) => {
 app.patch('/api/admin/services/:service_id', authenticateAdmin, async (req, res) => {
   try {
     const { service_id } = req.params;
-    const updates = [];
-    const params = [];
+    const updates: string[] = [];
+    const params: any[] = [];
     let paramCount = 1;
 
     const allowedFields = ['name', 'description', 'image_url', 'duration', 'price', 'is_active', 'display_order'];
@@ -886,6 +890,7 @@ app.get(/^(?!\/api).*/, (req, res) => {
 
 export { app, pool };
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT} and listening on 0.0.0.0`);
+const portNumber = typeof PORT === 'string' ? parseInt(PORT) : PORT;
+app.listen(portNumber, '0.0.0.0', () => {
+  console.log(`Server running on port ${portNumber} and listening on 0.0.0.0`);
 });

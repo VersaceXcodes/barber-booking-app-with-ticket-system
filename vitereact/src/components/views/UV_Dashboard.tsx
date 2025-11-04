@@ -7,7 +7,7 @@ import { useAppStore } from '@/store/main';
 const UV_Dashboard: React.FC = () => {
   // CRITICAL: Individual selectors, no object destructuring
   const currentUser = useAppStore(state => state.authentication_state.current_user);
-  const logoutUser = useAppStore(state => state.logout);
+  const logoutUser = useAppStore(state => state.logout_user);
 
   const handleLogout = () => {
     logoutUser();

@@ -25,7 +25,7 @@ export const createUserInputSchema = z.object({
   email: z.string().email().min(1).max(255),
   password: z.string().min(8).max(100),
   name: z.string().min(1).max(255),
-  phone: z.string().min(10).max(20).regex(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number format')
+  phone: z.string().min(10).max(20).regex(/^\+?[0-9\s\-().]+$/, 'Invalid phone number format')
 });
 
 // Input schema for user updates
@@ -33,7 +33,7 @@ export const updateUserInputSchema = z.object({
   user_id: z.string(),
   email: z.string().email().min(1).max(255).optional(),
   name: z.string().min(1).max(255).optional(),
-  phone: z.string().min(10).max(20).regex(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number format').optional(),
+  phone: z.string().min(10).max(20).regex(/^\+?[0-9\s\-().]+$/, 'Invalid phone number format').optional(),
   is_verified: z.boolean().optional()
 });
 
@@ -184,7 +184,7 @@ export const createBookingInputSchema = z.object({
   slot_duration: z.number().int().positive().default(40),
   customer_name: z.string().min(1).max(255),
   customer_email: z.string().email().max(255),
-  customer_phone: z.string().min(10).max(20).regex(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number format'),
+  customer_phone: z.string().min(10).max(20).regex(/^\+?[0-9\s\-().]+$/, 'Invalid phone number format'),
   booking_for_name: z.string().max(255).nullable(),
   service_id: z.string().nullable(),
   special_request: z.string().max(1000).nullable(),
@@ -200,7 +200,7 @@ export const updateBookingInputSchema = z.object({
   slot_duration: z.number().int().positive().optional(),
   customer_name: z.string().min(1).max(255).optional(),
   customer_email: z.string().email().max(255).optional(),
-  customer_phone: z.string().min(10).max(20).regex(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number format').optional(),
+  customer_phone: z.string().min(10).max(20).regex(/^\+?[0-9\s\-().]+$/, 'Invalid phone number format').optional(),
   booking_for_name: z.string().max(255).nullable().optional(),
   service_id: z.string().nullable().optional(),
   special_request: z.string().max(1000).nullable().optional(),

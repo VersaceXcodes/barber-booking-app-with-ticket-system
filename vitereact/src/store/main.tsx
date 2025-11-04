@@ -198,7 +198,7 @@ export const useAppStore = create<AppState>()(
             },
           }));
         } catch (error: any) {
-          const error_message = error.response?.data?.error?.message || error.message || 'Login failed';
+          const error_message = error.response?.data?.message || error.message || 'Login failed';
 
           set(() => ({
             authentication_state: {
@@ -274,7 +274,7 @@ export const useAppStore = create<AppState>()(
 
           return { requires_2fa: false };
         } catch (error: any) {
-          const error_message = error.response?.data?.error?.message || error.message || 'Admin login failed';
+          const error_message = error.response?.data?.message || error.message || 'Admin login failed';
 
           set(() => ({
             authentication_state: {
@@ -323,7 +323,7 @@ export const useAppStore = create<AppState>()(
             },
           }));
         } catch (error: any) {
-          const error_message = error.response?.data?.error?.message || error.message || 'Registration failed';
+          const error_message = error.response?.data?.message || error.message || 'Registration failed';
 
           set((state) => ({
             authentication_state: {

@@ -1,6 +1,7 @@
 module.exports = {
-  "preset": "ts-jest",
+  "preset": "ts-jest/presets/default-esm",
   "testEnvironment": "node",
+  "extensionsToTreatAsEsm": [".ts"],
   "roots": [
     "<rootDir>"
   ],
@@ -23,7 +24,7 @@ module.exports = {
     "!**/tests/**",
     "!**/dist/**"
   ],
-  "coverageThresholds": {
+  "coverageThreshold": {
     "global": {
       "statements": 80,
       "branches": 75,
@@ -31,9 +32,6 @@ module.exports = {
       "lines": 80
     }
   },
-  "setupFilesAfterEnv": [
-    "<rootDir>/tests/setup.ts"
-  ],
   "testTimeout": 10000,
   "maxWorkers": 1,
   "verbose": true,
@@ -43,12 +41,19 @@ module.exports = {
   "clearMocks": true,
   "resetMocks": true,
   "restoreMocks": true,
-  "globals": {
-    "ts-jest": {
-      "tsconfig": {
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true
+  "transform": {
+    "^.+\\.ts$": [
+      "ts-jest",
+      {
+        "useESM": true,
+        "tsconfig": {
+          "esModuleInterop": true,
+          "allowSyntheticDefaultImports": true
+        }
       }
-    }
+    ]
+  },
+  "moduleNameMapper": {
+    "^(\\.{1,2}/.*)\\.js$": "$1"
   }
 };

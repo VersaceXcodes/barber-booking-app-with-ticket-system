@@ -1,0 +1,820 @@
+{
+  "generated_at": "2025-11-05T00:05:00Z",
+  "application_name": "Barber/Beauty Salon Booking System",
+  "base_url": "https://123barber-booking-app-with-ticket-system.launchpulse.ai",
+  "total_test_cases": 45,
+  "categories": [
+    "functionality",
+    "authentication",
+    "booking_flow",
+    "admin_panel",
+    "interface",
+    "content",
+    "navigation",
+    "data_validation",
+    "error_handling"
+  ],
+  "testCases": [
+    {
+      "id": "functional-app-test",
+      "name": "Functional Application Test",
+      "category": "functionality",
+      "priority": "critical",
+      "description": "Verify the application has actual functionality beyond basic placeholder",
+      "steps": [
+        "Navigate to application at https://123barber-booking-app-with-ticket-system.launchpulse.ai",
+        "Verify multiple interactive elements exist (buttons, forms, links)",
+        "Check for proper navigation structure",
+        "Verify application shows booking system, not just 'Vite + React' text",
+        "Look for service listings, booking buttons, and navigation menu"
+      ],
+      "expectedOutcome": "Application displays a functional beauty salon booking system with services, navigation, and booking capabilities",
+      "failureCondition": "If page only shows 'Vite + React' placeholder or has no interactive booking features"
+    },
+    {
+      "id": "landing-page-content",
+      "name": "Landing Page Content Test",
+      "category": "content",
+      "priority": "high",
+      "description": "Verify landing page displays appropriate content",
+      "steps": [
+        "Navigate to /",
+        "Check for hero section with call-to-action",
+        "Verify service previews are displayed",
+        "Look for 'Book Now' or similar buttons",
+        "Check for navigation menu with Login, Register, Gallery links"
+      ],
+      "expectedOutcome": "Landing page displays professional beauty salon content with clear booking options",
+      "test_data": null
+    },
+    {
+      "id": "services-display",
+      "name": "Services Display Test",
+      "category": "functionality",
+      "priority": "high",
+      "description": "Verify services are loaded and displayed correctly",
+      "steps": [
+        "Navigate to /book/service or home page",
+        "Verify at least 10 services are displayed",
+        "Check each service shows: name, description, price, duration",
+        "Verify service images load correctly",
+        "Confirm services like 'Classic Haircut', 'Balayage Highlights', 'Keratin Treatment' are shown"
+      ],
+      "expectedOutcome": "All 12 services from database are displayed with complete information",
+      "test_data": {
+        "expected_services": [
+          "Classic Haircut",
+          "Balayage Highlights",
+          "Full Color Treatment",
+          "Keratin Treatment",
+          "Bridal Updo"
+        ]
+      }
+    },
+    {
+      "id": "navigation-test",
+      "name": "Main Navigation Test",
+      "category": "navigation",
+      "priority": "high",
+      "description": "Test navigation menu functionality",
+      "steps": [
+        "Verify top navigation bar is visible",
+        "Check for links: Home, Book Now, Gallery, Login, Register",
+        "Click each navigation link and verify correct page loads",
+        "Test mobile hamburger menu (if on mobile viewport)"
+      ],
+      "expectedOutcome": "All navigation links work correctly and load appropriate pages",
+      "test_data": {
+        "expected_links": [
+          "/",
+          "/book/service",
+          "/gallery",
+          "/login",
+          "/register"
+        ]
+      }
+    },
+    {
+      "id": "user-registration",
+      "name": "User Registration Test",
+      "category": "authentication",
+      "priority": "high",
+      "description": "Test user registration flow",
+      "steps": [
+        "Navigate to /register",
+        "Fill in registration form: name, email, phone, password",
+        "Submit the form",
+        "Verify success message appears",
+        "Check if redirected to verification page or dashboard"
+      ],
+      "expectedOutcome": "User successfully registers and receives confirmation",
+      "test_data": {
+        "name": "Test User",
+        "email": "testuser_{{timestamp}}@test.com",
+        "phone": "+1-555-9999",
+        "password": "TestPass123!"
+      }
+    },
+    {
+      "id": "user-login",
+      "name": "User Login Test",
+      "category": "authentication",
+      "priority": "critical",
+      "description": "Test user login functionality with seeded user",
+      "steps": [
+        "Navigate to /login",
+        "Enter email: emily.chen@email.com",
+        "Enter password: password123",
+        "Click login button",
+        "Verify successful login and redirect to dashboard"
+      ],
+      "expectedOutcome": "User successfully logs in and is redirected to /dashboard",
+      "test_data": {
+        "email": "emily.chen@email.com",
+        "password": "password123"
+      }
+    },
+    {
+      "id": "user-login-invalid",
+      "name": "Invalid Login Test",
+      "category": "authentication",
+      "priority": "medium",
+      "description": "Test login with invalid credentials",
+      "steps": [
+        "Navigate to /login",
+        "Enter email: invalid@test.com",
+        "Enter password: wrongpassword",
+        "Click login button",
+        "Verify error message is displayed"
+      ],
+      "expectedOutcome": "Error message 'Invalid email or password' is displayed",
+      "test_data": {
+        "email": "invalid@test.com",
+        "password": "wrongpassword"
+      }
+    },
+    {
+      "id": "admin-login",
+      "name": "Admin Login Test",
+      "category": "authentication",
+      "priority": "critical",
+      "description": "Test admin login functionality",
+      "steps": [
+        "Navigate to /admin/login",
+        "Enter email: admin@barberslot.com",
+        "Enter password: admin123",
+        "Click login button",
+        "Verify redirect to /admin dashboard"
+      ],
+      "expectedOutcome": "Admin successfully logs in and accesses admin panel",
+      "test_data": {
+        "email": "admin@barberslot.com",
+        "password": "admin123"
+      }
+    },
+    {
+      "id": "booking-flow-step1",
+      "name": "Booking Flow - Service Selection",
+      "category": "booking_flow",
+      "priority": "critical",
+      "description": "Test first step of booking flow - service selection",
+      "steps": [
+        "Navigate to /book/service",
+        "Verify list of services is displayed",
+        "Select 'Classic Haircut' service",
+        "Click 'Next' or 'Continue' button",
+        "Verify navigation to /book/date"
+      ],
+      "expectedOutcome": "User can select a service and proceed to date selection",
+      "test_data": {
+        "service": "Classic Haircut",
+        "service_id": "service_001"
+      }
+    },
+    {
+      "id": "booking-flow-step2",
+      "name": "Booking Flow - Date Selection",
+      "category": "booking_flow",
+      "priority": "critical",
+      "description": "Test second step of booking flow - date selection",
+      "steps": [
+        "Navigate to /book/date (after selecting service)",
+        "Verify calendar is displayed",
+        "Select a future date (e.g., tomorrow or next week)",
+        "Click 'Next' or 'Continue' button",
+        "Verify navigation to /book/time"
+      ],
+      "expectedOutcome": "User can select a date and proceed to time selection",
+      "test_data": {
+        "date_offset_days": 7
+      }
+    },
+    {
+      "id": "booking-flow-step3",
+      "name": "Booking Flow - Time Selection",
+      "category": "booking_flow",
+      "priority": "critical",
+      "description": "Test third step of booking flow - time slot selection",
+      "steps": [
+        "Navigate to /book/time (after selecting date)",
+        "Verify available time slots are displayed",
+        "Select an available time slot (e.g., 10:00 AM)",
+        "Click 'Next' or 'Continue' button",
+        "Verify navigation to /book/details"
+      ],
+      "expectedOutcome": "User can select a time slot and proceed to details entry",
+      "test_data": {
+        "time_slot": "10:00"
+      }
+    },
+    {
+      "id": "booking-flow-step4",
+      "name": "Booking Flow - Customer Details",
+      "category": "booking_flow",
+      "priority": "critical",
+      "description": "Test fourth step of booking flow - entering customer details",
+      "steps": [
+        "Navigate to /book/details (after selecting time)",
+        "Fill in customer name: John Doe",
+        "Fill in email: johndoe@test.com",
+        "Fill in phone: +1-555-1234",
+        "Optionally add special requests",
+        "Click 'Next' or 'Continue' button",
+        "Verify navigation to /book/review"
+      ],
+      "expectedOutcome": "User can enter customer details and proceed to review",
+      "test_data": {
+        "customer_name": "John Doe",
+        "customer_email": "johndoe_test@example.com",
+        "customer_phone": "+1-555-1234"
+      }
+    },
+    {
+      "id": "booking-flow-step5",
+      "name": "Booking Flow - Review and Confirm",
+      "category": "booking_flow",
+      "priority": "critical",
+      "description": "Test fifth step of booking flow - review and confirmation",
+      "steps": [
+        "Navigate to /book/review (after entering details)",
+        "Verify all booking details are displayed correctly",
+        "Check service, date, time, customer info",
+        "Click 'Confirm Booking' button",
+        "Wait for booking to be created",
+        "Verify navigation to /booking/confirmation"
+      ],
+      "expectedOutcome": "Booking is successfully created and confirmation page is shown",
+      "test_data": null
+    },
+    {
+      "id": "booking-confirmation",
+      "name": "Booking Confirmation Display",
+      "category": "booking_flow",
+      "priority": "high",
+      "description": "Test booking confirmation page displays ticket number",
+      "steps": [
+        "Complete a booking flow",
+        "Verify confirmation page displays ticket number (TKT-YYYY-XXX format)",
+        "Check that booking details are shown",
+        "Verify 'View Booking' or 'Print' buttons are available"
+      ],
+      "expectedOutcome": "Confirmation page displays ticket number and booking details",
+      "test_data": null
+    },
+    {
+      "id": "booking-search-ticket",
+      "name": "Search Booking by Ticket Number",
+      "category": "functionality",
+      "priority": "high",
+      "description": "Test booking search functionality using ticket number",
+      "steps": [
+        "Navigate to /search",
+        "Enter ticket number: TKT-2024-003",
+        "Click 'Search' button",
+        "Verify booking details are displayed",
+        "Check customer name, date, time, service are shown"
+      ],
+      "expectedOutcome": "Booking is found and details are displayed correctly",
+      "test_data": {
+        "ticket_number": "TKT-2024-003"
+      }
+    },
+    {
+      "id": "booking-search-phone",
+      "name": "Search Booking by Phone and Date",
+      "category": "functionality",
+      "priority": "high",
+      "description": "Test booking search using phone number and date",
+      "steps": [
+        "Navigate to /search",
+        "Enter phone: +1-555-0105",
+        "Enter date: 2024-04-20",
+        "Click 'Search' button",
+        "Verify matching bookings are displayed"
+      ],
+      "expectedOutcome": "All bookings matching phone and date are shown",
+      "test_data": {
+        "phone": "+1-555-0105",
+        "date": "2024-04-20"
+      }
+    },
+    {
+      "id": "booking-details-view",
+      "name": "View Booking Details",
+      "category": "functionality",
+      "priority": "high",
+      "description": "Test viewing booking details page",
+      "steps": [
+        "Navigate to /booking/TKT-2024-003",
+        "Verify booking information is displayed",
+        "Check for: ticket number, status, customer info, service, date, time",
+        "Verify 'Cancel' and 'Reschedule' buttons are present"
+      ],
+      "expectedOutcome": "Complete booking details are displayed with action buttons",
+      "test_data": {
+        "ticket_number": "TKT-2024-003"
+      }
+    },
+    {
+      "id": "booking-cancel",
+      "name": "Cancel Booking Test",
+      "category": "functionality",
+      "priority": "high",
+      "description": "Test cancellation of a booking",
+      "steps": [
+        "Navigate to booking details page of a confirmed booking",
+        "Click 'Cancel Booking' button",
+        "Enter cancellation reason in modal/form",
+        "Confirm cancellation",
+        "Verify success message is displayed",
+        "Check that booking status changes to 'cancelled'"
+      ],
+      "expectedOutcome": "Booking is successfully cancelled and status is updated",
+      "test_data": {
+        "cancellation_reason": "Schedule conflict"
+      }
+    },
+    {
+      "id": "user-dashboard-access",
+      "name": "User Dashboard Access",
+      "category": "authentication",
+      "priority": "high",
+      "description": "Test authenticated user can access dashboard",
+      "steps": [
+        "Login as user (emily.chen@email.com / password123)",
+        "Navigate to /dashboard",
+        "Verify dashboard loads successfully",
+        "Check for: user name, booking history, quick actions"
+      ],
+      "expectedOutcome": "Authenticated user can view their dashboard",
+      "test_data": {
+        "email": "emily.chen@email.com",
+        "password": "password123"
+      }
+    },
+    {
+      "id": "user-dashboard-bookings",
+      "name": "User Booking History",
+      "category": "functionality",
+      "priority": "high",
+      "description": "Test user can view their booking history",
+      "steps": [
+        "Login as emily.chen@email.com",
+        "Navigate to /dashboard",
+        "Look for bookings section",
+        "Verify past bookings are displayed",
+        "Check for TKT-2024-001 (completed) and TKT-2024-014 (confirmed)"
+      ],
+      "expectedOutcome": "User's booking history is displayed with correct statuses",
+      "test_data": {
+        "email": "emily.chen@email.com",
+        "expected_bookings": [
+          "TKT-2024-001",
+          "TKT-2024-014"
+        ]
+      }
+    },
+    {
+      "id": "user-profile-view",
+      "name": "User Profile View",
+      "category": "functionality",
+      "priority": "medium",
+      "description": "Test user can view their profile",
+      "steps": [
+        "Login as user",
+        "Navigate to /profile",
+        "Verify profile information is displayed",
+        "Check: name, email, phone number"
+      ],
+      "expectedOutcome": "User profile displays correct information",
+      "test_data": null
+    },
+    {
+      "id": "user-profile-edit",
+      "name": "User Profile Edit",
+      "category": "functionality",
+      "priority": "medium",
+      "description": "Test user can edit their profile",
+      "steps": [
+        "Login as user",
+        "Navigate to /profile",
+        "Click 'Edit' button",
+        "Change name or phone number",
+        "Save changes",
+        "Verify success message and updated information"
+      ],
+      "expectedOutcome": "User profile is successfully updated",
+      "test_data": null
+    },
+    {
+      "id": "gallery-view",
+      "name": "Gallery Page Test",
+      "category": "functionality",
+      "priority": "medium",
+      "description": "Test gallery page displays work samples",
+      "steps": [
+        "Navigate to /gallery",
+        "Verify gallery page loads",
+        "Check for images or placeholders",
+        "Test image lightbox/modal if clicking on images"
+      ],
+      "expectedOutcome": "Gallery page displays images of past work",
+      "test_data": null
+    },
+    {
+      "id": "admin-dashboard-access",
+      "name": "Admin Dashboard Access",
+      "category": "admin_panel",
+      "priority": "critical",
+      "description": "Test admin can access admin dashboard",
+      "steps": [
+        "Login as admin (admin@barberslot.com / admin123)",
+        "Navigate to /admin",
+        "Verify admin dashboard loads",
+        "Check for: statistics, quick actions, navigation menu"
+      ],
+      "expectedOutcome": "Admin dashboard displays with all sections",
+      "test_data": {
+        "email": "admin@barberslot.com",
+        "password": "admin123"
+      }
+    },
+    {
+      "id": "admin-dashboard-stats",
+      "name": "Admin Dashboard Statistics",
+      "category": "admin_panel",
+      "priority": "high",
+      "description": "Test admin dashboard displays statistics",
+      "steps": [
+        "Login as admin",
+        "Navigate to /admin",
+        "Verify statistics are displayed",
+        "Check for: total bookings, completed, cancelled, revenue"
+      ],
+      "expectedOutcome": "Dashboard shows accurate statistics from database",
+      "test_data": null
+    },
+    {
+      "id": "admin-bookings-list",
+      "name": "Admin Bookings List View",
+      "category": "admin_panel",
+      "priority": "high",
+      "description": "Test admin can view all bookings in list format",
+      "steps": [
+        "Login as admin",
+        "Navigate to /admin/bookings",
+        "Verify bookings list is displayed",
+        "Check for columns: ticket, customer, date, time, status",
+        "Test filtering by status (confirmed, completed, cancelled)"
+      ],
+      "expectedOutcome": "All bookings are displayed with filtering options",
+      "test_data": null
+    },
+    {
+      "id": "admin-bookings-calendar",
+      "name": "Admin Bookings Calendar View",
+      "category": "admin_panel",
+      "priority": "high",
+      "description": "Test admin calendar view of bookings",
+      "steps": [
+        "Login as admin",
+        "Navigate to /admin/bookings/calendar",
+        "Verify calendar is displayed",
+        "Check that bookings appear on correct dates",
+        "Test navigation between months"
+      ],
+      "expectedOutcome": "Calendar displays bookings on appropriate dates",
+      "test_data": null
+    },
+    {
+      "id": "admin-booking-detail",
+      "name": "Admin View Booking Details",
+      "category": "admin_panel",
+      "priority": "high",
+      "description": "Test admin can view booking details",
+      "steps": [
+        "Login as admin",
+        "Navigate to /admin/bookings/TKT-2024-007",
+        "Verify all booking details are displayed",
+        "Check for admin notes section",
+        "Verify admin action buttons (cancel, complete, add notes)"
+      ],
+      "expectedOutcome": "Admin sees detailed booking information with admin actions",
+      "test_data": {
+        "ticket_number": "TKT-2024-007"
+      }
+    },
+    {
+      "id": "admin-create-booking",
+      "name": "Admin Create Booking",
+      "category": "admin_panel",
+      "priority": "high",
+      "description": "Test admin can create booking on behalf of customer",
+      "steps": [
+        "Login as admin",
+        "Navigate to /admin/bookings/new",
+        "Fill in all booking details",
+        "Submit the form",
+        "Verify booking is created successfully"
+      ],
+      "expectedOutcome": "Admin successfully creates a booking",
+      "test_data": null
+    },
+    {
+      "id": "admin-capacity-settings",
+      "name": "Admin Capacity Settings",
+      "category": "admin_panel",
+      "priority": "medium",
+      "description": "Test admin capacity management interface",
+      "steps": [
+        "Login as admin",
+        "Navigate to /admin/capacity",
+        "Verify capacity settings are displayed",
+        "Check default capacity for different days",
+        "Test updating capacity settings"
+      ],
+      "expectedOutcome": "Admin can view and modify capacity settings",
+      "test_data": null
+    },
+    {
+      "id": "admin-capacity-override",
+      "name": "Admin Capacity Override",
+      "category": "admin_panel",
+      "priority": "medium",
+      "description": "Test admin can set capacity overrides for specific dates",
+      "steps": [
+        "Login as admin",
+        "Navigate to /admin/capacity or /admin/blocking",
+        "Create a capacity override for a future date",
+        "Set custom capacity or block time slots",
+        "Save the override",
+        "Verify override is displayed in list"
+      ],
+      "expectedOutcome": "Capacity override is successfully created",
+      "test_data": null
+    },
+    {
+      "id": "admin-customer-list",
+      "name": "Admin Customer List",
+      "category": "admin_panel",
+      "priority": "medium",
+      "description": "Test admin can view customer list",
+      "steps": [
+        "Login as admin",
+        "Navigate to /admin/customers",
+        "Verify customer list is displayed",
+        "Check for: name, email, phone, total bookings",
+        "Test search/filter functionality"
+      ],
+      "expectedOutcome": "All customers are displayed with basic information",
+      "test_data": null
+    },
+    {
+      "id": "admin-customer-detail",
+      "name": "Admin View Customer Details",
+      "category": "admin_panel",
+      "priority": "medium",
+      "description": "Test admin can view individual customer details",
+      "steps": [
+        "Login as admin",
+        "Navigate to /admin/customers/user_002",
+        "Verify customer information is displayed",
+        "Check booking history for this customer",
+        "Verify customer notes section (if exists)"
+      ],
+      "expectedOutcome": "Customer details and history are displayed",
+      "test_data": {
+        "customer_id": "user_002"
+      }
+    },
+    {
+      "id": "admin-reports",
+      "name": "Admin Reports Access",
+      "category": "admin_panel",
+      "priority": "low",
+      "description": "Test admin can access reports page",
+      "steps": [
+        "Login as admin",
+        "Navigate to /admin/reports",
+        "Verify reports page loads",
+        "Check for: revenue reports, booking trends, customer stats"
+      ],
+      "expectedOutcome": "Reports page displays various business metrics",
+      "test_data": null
+    },
+    {
+      "id": "admin-gallery-manage",
+      "name": "Admin Gallery Management",
+      "category": "admin_panel",
+      "priority": "low",
+      "description": "Test admin gallery management interface",
+      "steps": [
+        "Login as admin",
+        "Navigate to /admin/gallery",
+        "Verify gallery items are displayed",
+        "Check for add/edit/delete buttons"
+      ],
+      "expectedOutcome": "Admin can manage gallery images",
+      "test_data": null
+    },
+    {
+      "id": "admin-settings",
+      "name": "Admin Settings Page",
+      "category": "admin_panel",
+      "priority": "low",
+      "description": "Test admin settings page",
+      "steps": [
+        "Login as admin",
+        "Navigate to /admin/settings",
+        "Verify settings page loads",
+        "Check for: business info, operating hours, notification settings"
+      ],
+      "expectedOutcome": "Settings page displays configuration options",
+      "test_data": null
+    },
+    {
+      "id": "protected-route-redirect",
+      "name": "Protected Route Redirect Test",
+      "category": "authentication",
+      "priority": "high",
+      "description": "Test unauthenticated users are redirected from protected routes",
+      "steps": [
+        "Ensure you are logged out",
+        "Try to navigate to /dashboard",
+        "Verify redirect to /login page",
+        "Try to navigate to /admin",
+        "Verify redirect to /admin/login"
+      ],
+      "expectedOutcome": "Unauthenticated users cannot access protected routes",
+      "test_data": null
+    },
+    {
+      "id": "logout-functionality",
+      "name": "User Logout Test",
+      "category": "authentication",
+      "priority": "high",
+      "description": "Test user can logout successfully",
+      "steps": [
+        "Login as any user",
+        "Click logout button (usually in navigation)",
+        "Verify redirect to home page or login page",
+        "Try to access /dashboard",
+        "Verify redirect to login (confirming logout)"
+      ],
+      "expectedOutcome": "User successfully logs out and session is cleared",
+      "test_data": null
+    },
+    {
+      "id": "responsive-mobile-view",
+      "name": "Mobile Responsive Design",
+      "category": "interface",
+      "priority": "medium",
+      "description": "Test application works on mobile viewport",
+      "steps": [
+        "Set viewport to mobile size (375x667)",
+        "Navigate to home page",
+        "Verify mobile navigation menu appears",
+        "Test hamburger menu functionality",
+        "Navigate through booking flow on mobile",
+        "Verify all elements are properly sized and clickable"
+      ],
+      "expectedOutcome": "Application is fully functional on mobile devices",
+      "test_data": null
+    },
+    {
+      "id": "form-validation",
+      "name": "Form Validation Test",
+      "category": "data_validation",
+      "priority": "medium",
+      "description": "Test form validation works correctly",
+      "steps": [
+        "Navigate to registration form",
+        "Try to submit with empty fields",
+        "Verify validation errors are displayed",
+        "Enter invalid email format",
+        "Verify email validation error",
+        "Enter mismatched passwords (if confirm password exists)",
+        "Verify password validation"
+      ],
+      "expectedOutcome": "All form fields are properly validated",
+      "test_data": null
+    },
+    {
+      "id": "api-error-handling",
+      "name": "API Error Handling",
+      "category": "error_handling",
+      "priority": "medium",
+      "description": "Test application handles API errors gracefully",
+      "steps": [
+        "Navigate to booking search",
+        "Search for non-existent ticket number: TKT-9999-999",
+        "Verify friendly error message is displayed",
+        "Test with invalid date formats",
+        "Verify appropriate error messages"
+      ],
+      "expectedOutcome": "Application displays user-friendly error messages",
+      "test_data": {
+        "invalid_ticket": "TKT-9999-999"
+      }
+    },
+    {
+      "id": "toast-notifications",
+      "name": "Toast Notification System",
+      "category": "interface",
+      "priority": "low",
+      "description": "Test toast notifications appear for user actions",
+      "steps": [
+        "Perform various actions (login, create booking, etc.)",
+        "Verify toast notifications appear",
+        "Check that success messages are green/positive",
+        "Check that error messages are red/negative",
+        "Verify toasts auto-dismiss after a few seconds"
+      ],
+      "expectedOutcome": "Toast notifications provide feedback for all user actions",
+      "test_data": null
+    },
+    {
+      "id": "loading-states",
+      "name": "Loading States Test",
+      "category": "interface",
+      "priority": "low",
+      "description": "Test loading indicators appear during async operations",
+      "steps": [
+        "Perform actions that trigger API calls",
+        "Verify loading spinner or skeleton appears",
+        "Check that buttons are disabled during loading",
+        "Verify loading state clears after completion"
+      ],
+      "expectedOutcome": "Loading indicators provide feedback during async operations",
+      "test_data": null
+    },
+    {
+      "id": "accessibility-basics",
+      "name": "Basic Accessibility Test",
+      "category": "interface",
+      "priority": "low",
+      "description": "Test basic accessibility features",
+      "steps": [
+        "Navigate through site using keyboard only (Tab key)",
+        "Verify all interactive elements are reachable",
+        "Check for proper focus indicators",
+        "Test form labels are associated with inputs",
+        "Verify buttons have descriptive text"
+      ],
+      "expectedOutcome": "Basic accessibility standards are met",
+      "test_data": null
+    },
+    {
+      "id": "date-validation",
+      "name": "Date Selection Validation",
+      "category": "data_validation",
+      "priority": "medium",
+      "description": "Test date selection prevents invalid dates",
+      "steps": [
+        "Start booking flow",
+        "Navigate to date selection",
+        "Verify past dates are disabled",
+        "Verify dates beyond booking window are disabled",
+        "Test that only valid future dates can be selected"
+      ],
+      "expectedOutcome": "Only valid future dates can be selected for bookings",
+      "test_data": null
+    },
+    {
+      "id": "time-slot-availability",
+      "name": "Time Slot Availability Test",
+      "category": "functionality",
+      "priority": "high",
+      "description": "Test time slot availability is accurate",
+      "steps": [
+        "Select a date with existing bookings",
+        "Check which time slots are shown as available",
+        "Verify fully booked slots are disabled",
+        "Select a different date",
+        "Verify availability changes accordingly"
+      ],
+      "expectedOutcome": "Time slot availability accurately reflects current bookings",
+      "test_data": null
+    }
+  ]
+}

@@ -39,7 +39,7 @@ const formatTicketNumber = (value: string): string => {
 const isValidTicketFormat = (ticket: string): boolean => {
   if (!ticket || ticket.length < 5) return false;
   
-  const standardPattern = /^TKT-\d{4,8}-\d{1,3}$/;
+  const standardPattern = /^TKT-\d{4}-\d{1,3}$/;
   if (standardPattern.test(ticket)) return true;
   
   const relaxedPattern = /^TKT-\d+-\d+$/;
@@ -294,13 +294,13 @@ const UV_BookingSearch: React.FC = () => {
                       aria-label="Ticket number"
                       value={ticketNumber}
                       onChange={handleTicketChange}
-                      placeholder="TKT-20240115-001"
+                      placeholder="TKT-2024-003"
                       autoComplete="off"
                       className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base"
                       autoFocus
                     />
                     <p className="mt-2 text-sm text-gray-600">
-                      Format: TKT-YYYYMMDD-XXX
+                      Format: TKT-YYYY-XXX (e.g., TKT-2024-003)
                     </p>
                   </div>
                 </div>

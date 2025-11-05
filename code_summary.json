@@ -1,0 +1,510 @@
+{
+  "generated_at": "2025-11-05T00:05:00Z",
+  "application_name": "Barber/Beauty Salon Booking System with Ticket Management",
+  "description": "A full-stack booking application for a beauty salon/barbershop that allows customers to book appointments, manage bookings with ticket numbers, and provides an admin panel for business management.",
+  "urls": {
+    "frontend": "https://123barber-booking-app-with-ticket-system.launchpulse.ai",
+    "backend": "https://123barber-booking-app-with-ticket-system.launchpulse.ai/api",
+    "health_check": "https://123barber-booking-app-with-ticket-system.launchpulse.ai/api/health"
+  },
+  "tech_stack": {
+    "frontend": [
+      "React 18.3.1",
+      "TypeScript 5.5.3",
+      "Vite 5.4.0",
+      "React Router DOM 6.26.0",
+      "TailwindCSS 3.4.8",
+      "Radix UI Components (full suite)",
+      "Zustand (state management)",
+      "Redux Toolkit 2.2.7",
+      "React Query (TanStack Query) 5.0.0",
+      "Axios 1.7.7",
+      "Framer Motion 11.5.4",
+      "date-fns 3.0.0",
+      "Zod 3.23.8 (validation)",
+      "React Hook Form 7.53.0"
+    ],
+    "backend": [
+      "Node.js",
+      "Express 4.19.2",
+      "TypeScript 5.8.2",
+      "PostgreSQL (Neon Database)",
+      "JWT (jsonwebtoken 9.0.2)",
+      "Zod 3.24.2 (validation)",
+      "UUID",
+      "CORS",
+      "Morgan (logging)",
+      "TSX 4.7.1 (TypeScript execution)",
+      "Jest 29.7.0 (testing)"
+    ],
+    "deployment": [
+      "Concurrently (multi-process management)",
+      "Fly.io Dockerfile"
+    ]
+  },
+  "database_tables": [
+    {
+      "name": "users",
+      "description": "Customer accounts with email verification and password reset support",
+      "key_fields": [
+        "user_id (PK)",
+        "email (unique)",
+        "password_hash",
+        "name",
+        "phone",
+        "is_verified",
+        "verification_token",
+        "reset_token"
+      ]
+    },
+    {
+      "name": "services",
+      "description": "Beauty/salon services offered (haircuts, coloring, treatments, etc.)",
+      "key_fields": [
+        "service_id (PK)",
+        "name",
+        "description",
+        "image_url",
+        "duration",
+        "price",
+        "is_active",
+        "display_order"
+      ]
+    },
+    {
+      "name": "bookings",
+      "description": "Customer appointments with ticket tracking system",
+      "key_fields": [
+        "booking_id (PK)",
+        "ticket_number (unique)",
+        "user_id (FK)",
+        "status",
+        "appointment_date",
+        "appointment_time",
+        "customer_name",
+        "customer_email",
+        "customer_phone",
+        "service_id (FK)",
+        "special_request",
+        "inspiration_photos"
+      ]
+    },
+    {
+      "name": "capacity_overrides",
+      "description": "Custom capacity settings for specific dates/time slots",
+      "key_fields": [
+        "override_id (PK)",
+        "override_date",
+        "time_slot",
+        "capacity",
+        "is_active"
+      ]
+    }
+  ],
+  "api_endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "auth": "none",
+      "description": "Health check endpoint"
+    },
+    {
+      "method": "GET",
+      "path": "/api/services",
+      "auth": "none",
+      "description": "List all active services"
+    },
+    {
+      "method": "GET",
+      "path": "/api/availability/:date",
+      "auth": "none",
+      "description": "Get available time slots for a specific date"
+    },
+    {
+      "method": "POST",
+      "path": "/api/bookings",
+      "auth": "none",
+      "description": "Create a new booking (guest or authenticated user)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/bookings/search",
+      "auth": "none",
+      "description": "Search bookings by ticket number or phone+date"
+    },
+    {
+      "method": "GET",
+      "path": "/api/bookings/:ticket_number",
+      "auth": "none",
+      "description": "Get booking details by ticket number"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/bookings/:ticket_number/cancel",
+      "auth": "none",
+      "description": "Cancel a booking"
+    },
+    {
+      "method": "POST",
+      "path": "/api/bookings/:ticket_number/reschedule",
+      "auth": "none",
+      "description": "Reschedule an existing booking"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/register",
+      "auth": "none",
+      "description": "Register a new user account"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "auth": "none",
+      "description": "User login"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/verify-email",
+      "auth": "none",
+      "description": "Verify user email with token"
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/me",
+      "auth": "user",
+      "description": "Get current user profile"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/auth/me",
+      "auth": "user",
+      "description": "Update user profile"
+    },
+    {
+      "method": "GET",
+      "path": "/api/user/bookings",
+      "auth": "user",
+      "description": "Get all bookings for authenticated user"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/login",
+      "auth": "none",
+      "description": "Admin login (hardcoded: admin@barberslot.com / admin123)"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/bookings",
+      "auth": "admin",
+      "description": "List all bookings with filters"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/bookings",
+      "auth": "admin",
+      "description": "Create a booking as admin"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/services",
+      "auth": "admin",
+      "description": "List all services (including inactive)"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/services",
+      "auth": "admin",
+      "description": "Create a new service"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/admin/services/:service_id",
+      "auth": "admin",
+      "description": "Update a service"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/capacity-overrides",
+      "auth": "admin",
+      "description": "List capacity overrides"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/capacity-overrides",
+      "auth": "admin",
+      "description": "Create capacity override"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/admin/capacity-overrides/:override_id",
+      "auth": "admin",
+      "description": "Delete capacity override"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/dashboard/stats",
+      "auth": "admin",
+      "description": "Get dashboard statistics"
+    }
+  ],
+  "features": [
+    {
+      "name": "Public Booking Flow",
+      "description": "Multi-step booking wizard for customers to book appointments",
+      "user_type": "public",
+      "files": [
+        "vitereact/src/components/views/UV_BookingFlow_ServiceSelect.tsx",
+        "vitereact/src/components/views/UV_BookingFlow_DateSelect.tsx",
+        "vitereact/src/components/views/UV_BookingFlow_TimeSelect.tsx",
+        "vitereact/src/components/views/UV_BookingFlow_Details.tsx",
+        "vitereact/src/components/views/UV_BookingFlow_Review.tsx",
+        "vitereact/src/components/views/UV_BookingConfirmation.tsx"
+      ],
+      "routes": [
+        "/book/service",
+        "/book/date",
+        "/book/time",
+        "/book/details",
+        "/book/review",
+        "/booking/confirmation"
+      ]
+    },
+    {
+      "name": "Booking Management",
+      "description": "Search, view, cancel, and reschedule bookings using ticket numbers",
+      "user_type": "public",
+      "files": [
+        "vitereact/src/components/views/UV_BookingSearch.tsx",
+        "vitereact/src/components/views/UV_BookingDetails.tsx"
+      ],
+      "routes": [
+        "/search",
+        "/booking/:ticket_number"
+      ]
+    },
+    {
+      "name": "User Authentication",
+      "description": "Registration, login, email verification, and password reset",
+      "user_type": "public",
+      "files": [
+        "vitereact/src/components/views/UV_Registration.tsx",
+        "vitereact/src/components/views/UV_Login.tsx",
+        "vitereact/src/components/views/UV_EmailVerificationPending.tsx",
+        "vitereact/src/components/views/UV_EmailVerificationSuccess.tsx",
+        "vitereact/src/components/views/UV_PasswordResetRequest.tsx",
+        "vitereact/src/components/views/UV_PasswordResetForm.tsx",
+        "vitereact/src/components/views/UV_PasswordResetSuccess.tsx"
+      ],
+      "routes": [
+        "/register",
+        "/login",
+        "/verify-email",
+        "/reset-password"
+      ]
+    },
+    {
+      "name": "User Dashboard",
+      "description": "Authenticated users can view profile and booking history",
+      "user_type": "user",
+      "files": [
+        "vitereact/src/components/views/UV_UserDashboard.tsx",
+        "vitereact/src/components/views/UV_UserProfile.tsx"
+      ],
+      "routes": [
+        "/dashboard",
+        "/profile"
+      ]
+    },
+    {
+      "name": "Admin Dashboard",
+      "description": "Admin home page with statistics and quick actions",
+      "user_type": "admin",
+      "files": [
+        "vitereact/src/components/views/UV_AdminDashboardHome.tsx",
+        "vitereact/src/components/views/UV_AdminReports.tsx",
+        "vitereact/src/components/views/UV_AdminSettings.tsx"
+      ],
+      "routes": [
+        "/admin",
+        "/admin/reports",
+        "/admin/settings"
+      ]
+    },
+    {
+      "name": "Admin Booking Management",
+      "description": "Calendar view, list view, create, and manage all bookings",
+      "user_type": "admin",
+      "files": [
+        "vitereact/src/components/views/UV_AdminBookingsCalendar.tsx",
+        "vitereact/src/components/views/UV_AdminBookingsList.tsx",
+        "vitereact/src/components/views/UV_AdminBookingDetail.tsx",
+        "vitereact/src/components/views/UV_AdminAddBooking.tsx"
+      ],
+      "routes": [
+        "/admin/bookings/calendar",
+        "/admin/bookings",
+        "/admin/bookings/new",
+        "/admin/bookings/:ticket_number"
+      ]
+    },
+    {
+      "name": "Admin Capacity Management",
+      "description": "Set capacity limits and block specific time slots",
+      "user_type": "admin",
+      "files": [
+        "vitereact/src/components/views/UV_AdminCapacitySettings.tsx",
+        "vitereact/src/components/views/UV_AdminBlockingSettings.tsx"
+      ],
+      "routes": [
+        "/admin/capacity",
+        "/admin/blocking"
+      ]
+    },
+    {
+      "name": "Admin Customer Management",
+      "description": "View and manage customer accounts",
+      "user_type": "admin",
+      "files": [
+        "vitereact/src/components/views/UV_AdminCustomerList.tsx",
+        "vitereact/src/components/views/UV_AdminCustomerDetail.tsx"
+      ],
+      "routes": [
+        "/admin/customers",
+        "/admin/customers/:customer_id"
+      ]
+    },
+    {
+      "name": "Gallery",
+      "description": "Public gallery and admin gallery management",
+      "user_type": "public/admin",
+      "files": [
+        "vitereact/src/components/views/UV_Gallery.tsx",
+        "vitereact/src/components/views/UV_AdminGalleryManage.tsx",
+        "vitereact/src/components/views/UV_AdminGalleryUpload.tsx"
+      ],
+      "routes": [
+        "/gallery",
+        "/admin/gallery",
+        "/admin/gallery/upload"
+      ]
+    },
+    {
+      "name": "Landing Page",
+      "description": "Home page with call-to-action and service highlights",
+      "user_type": "public",
+      "files": [
+        "vitereact/src/components/views/UV_Landing.tsx"
+      ],
+      "routes": [
+        "/"
+      ]
+    }
+  ],
+  "authentication": {
+    "user_auth": {
+      "method": "JWT",
+      "storage": "localStorage (via Zustand store)",
+      "token_expiry": "7 days",
+      "password_hashing": "None (plaintext storage - SECURITY ISSUE)",
+      "protected_routes": [
+        "/dashboard",
+        "/profile"
+      ]
+    },
+    "admin_auth": {
+      "method": "JWT",
+      "credentials": {
+        "email": "admin@barberslot.com",
+        "password": "admin123",
+        "hardcoded": true
+      },
+      "token_expiry": "1 day",
+      "protected_routes": [
+        "/admin/*"
+      ]
+    }
+  },
+  "state_management": {
+    "library": "Zustand",
+    "store_file": "vitereact/src/store/main.tsx",
+    "features": [
+      "Authentication state",
+      "Booking flow state",
+      "UI state (modals, toasts, loading)",
+      "App settings"
+    ]
+  },
+  "key_components": {
+    "global": [
+      "GV_TopNav - Navigation bar",
+      "GV_Footer - Footer component",
+      "GV_MobileNav - Mobile navigation drawer",
+      "GV_NotificationToast - Toast notifications",
+      "GV_LoadingOverlay - Loading spinner overlay",
+      "GV_ErrorModal - Error dialog"
+    ],
+    "ui": [
+      "44+ Shadcn UI components in vitereact/src/components/ui/",
+      "Full Radix UI component library integration"
+    ]
+  },
+  "testing": {
+    "frontend": {
+      "framework": "Vitest 3.2.4",
+      "utilities": "@testing-library/react 16.3.0",
+      "test_files": [
+        "vitereact/src/__tests__/auth.e2e.test.tsx"
+      ],
+      "commands": {
+        "run": "npm test",
+        "watch": "npm run test:watch"
+      }
+    },
+    "backend": {
+      "framework": "Jest 29.7.0",
+      "test_files": [
+        "backend/server.test.ts"
+      ],
+      "commands": {
+        "run": "npm test",
+        "watch": "npm run test:watch",
+        "coverage": "npm run test:coverage"
+      }
+    }
+  },
+  "configuration": {
+    "frontend_env": {
+      "VITE_API_BASE_URL": "https://123barber-booking-app-with-ticket-system.launchpulse.ai"
+    },
+    "backend_env": {
+      "DATABASE_URL": "postgresql://neondb_owner:***@ep-steep-pine-a4cw7wfv.us-east-1.aws.neon.tech/app_barber_booking_app_with_ticket_system_1762208134119?sslmode=require",
+      "JWT_SECRET": "dev-secret-key-change-in-production-12345678",
+      "PORT": "3000",
+      "FRONTEND_URL": "https://123barber-booking-app-with-ticket-system.launchpulse.ai"
+    }
+  },
+  "known_issues": [
+    {
+      "severity": "critical",
+      "issue": "Passwords stored in plaintext",
+      "description": "User passwords are stored directly in the database without hashing (bcryptjs is imported but not used)",
+      "affected_files": [
+        "backend/server.ts:502"
+      ]
+    },
+    {
+      "severity": "medium",
+      "issue": "Hardcoded admin credentials",
+      "description": "Admin credentials are hardcoded in the source code",
+      "affected_files": [
+        "backend/server.ts:641"
+      ]
+    }
+  ],
+  "seeded_data": {
+    "users": 8,
+    "services": 12,
+    "bookings": 20,
+    "capacity_overrides": 15
+  }
+}

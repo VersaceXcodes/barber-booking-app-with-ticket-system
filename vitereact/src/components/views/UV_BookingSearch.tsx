@@ -33,51 +33,17 @@ const formatTicketNumber = (value: string): string => {
   
   const cleaned = value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
   
-  if (/^TKT-\d+-\d+$/.test(cleaned)) {
-    return cleaned;
-  }
-  
-  const withoutHyphens = cleaned.replace(/-/g, '');
-  
-  if (!withoutHyphens) return '';
-  
-  if (!withoutHyphens.startsWith('TKT')) {
-    if (withoutHyphens.length <= 3) {
-      return withoutHyphens;
-    }
-    return 'TKT-' + withoutHyphens;
-  }
-  
-  const rest = withoutHyphens.slice(3);
-  
-  if (rest.length === 0) {
-    return 'TKT';
-  }
-  
-  if (rest.length <= 3) {
-    return `TKT-${rest}`;
-  }
-  
-  const parts = rest.match(/^(\d+?)(\d{1,3})$/);
-  if (parts && parts.length >= 3) {
-    return `TKT-${parts[1]}-${parts[2]}`;
-  }
-  
-  if (rest.length <= 8) {
-    return `TKT-${rest}`;
-  }
-  
-  const datePart = rest.slice(0, 8);
-  const seqPart = rest.slice(8);
-  return `TKT-${datePart}-${seqPart}`;
+  return cleaned;
 };
 
 const isValidTicketFormat = (ticket: string): boolean => {
-  const standardPattern = /^TKT-\d{8}-\d{1,3}$/;
+  if (!ticket || ticket.length < 5) return false;
+  
+  const standardPattern = /^TKT-\d{4,8}-\d{1,3}$/;
   if (standardPattern.test(ticket)) return true;
   
   const relaxedPattern = /^TKT-\d+-\d+$/;
-  return relaxedPattern.test(ticket) && ticket.length >= 8;
+  return relaxedPattern.test(ticket);
 };
 
 const isValidPhone = (phone: string): boolean => {
@@ -218,15 +184,6 @@ const UV_BookingSearch: React.FC = () => {
     setSearchError(null);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      if (canSearch) {
-        handleSearch(e as any);
-      }
-    }
-  };
-
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(e.target.value);
     setSearchError(null);
@@ -307,7 +264,16 @@ const UV_BookingSearch: React.FC = () => {
 
             {/* Search Form */}
             <form 
-              onSubmit={handleSearch} 
+              onSubmit={handleSearch}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && e.target instanceof HTMLInputElement) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (canSearch) {
+                    handleSearch(e as any);
+                  }
+                }
+              }}
               className="p-6 lg:p-8 space-y-6"
               data-testid="search-form"
               role="search"
@@ -328,7 +294,6 @@ const UV_BookingSearch: React.FC = () => {
                       aria-label="Ticket number"
                       value={ticketNumber}
                       onChange={handleTicketChange}
-                      onKeyDown={handleKeyDown}
                       placeholder="TKT-20240115-001"
                       autoComplete="off"
                       className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base"
@@ -358,7 +323,6 @@ const UV_BookingSearch: React.FC = () => {
                         aria-label="Phone number"
                         value={phone}
                         onChange={handlePhoneChange}
-                        onKeyDown={handleKeyDown}
                         placeholder="+1 (555) 123-4567"
                         autoComplete="tel"
                         className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base"
@@ -381,7 +345,6 @@ const UV_BookingSearch: React.FC = () => {
                         aria-label="Booking date"
                         value={date}
                         onChange={handleDateChange}
-                        onKeyDown={handleKeyDown}
                         className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base"
                       />
                     </div>

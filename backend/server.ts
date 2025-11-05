@@ -20,7 +20,7 @@ import {
   cancelBookingInputSchema,
   capacityOverrideSchema,
   createCapacityOverrideInputSchema
-} from './schema.ts';
+} from './schema.js';
 
 dotenv.config();
 
@@ -1091,7 +1091,10 @@ app.get('/api/gallery', async (req, res) => {
   }
 });
 
-app.get(/^(?!\/api).*/, (req, res) => {
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json(createErrorResponse('API endpoint not found', null, 'NOT_FOUND'));
+  }
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 

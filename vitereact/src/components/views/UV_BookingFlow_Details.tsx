@@ -848,6 +848,7 @@ const UV_BookingFlow_Details: React.FC = () => {
             <button
               onClick={handleContinue}
               disabled={!isFormValid || updateProfileMutation.isPending}
+              data-testid="continue-to-review-button"
               className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all focus:outline-none focus:ring-4 focus:ring-blue-100"
             >
               {updateProfileMutation.isPending ? (

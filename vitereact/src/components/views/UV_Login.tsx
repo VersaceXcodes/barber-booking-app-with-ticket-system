@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppStore } from '@/store/main';
 import { Eye, EyeOff, Mail, Lock, AlertCircle } from 'lucide-react';
+import { toast } from '@/components/views/GV_NotificationToast';
 
 /**
  * UV_Login - User Login and Authentication View
@@ -158,6 +159,8 @@ const UV_Login: React.FC = () => {
         await loginUser(form_data.email, form_data.password);
       } catch (error) {
         console.error('Login error:', error);
+        const errorMsg = error instanceof Error ? error.message : 'Login failed';
+        toast.error(errorMsg);
       }
     } else {
       // Validate registration fields
@@ -180,6 +183,8 @@ const UV_Login: React.FC = () => {
         await registerUser(form_data.email, form_data.password, form_data.name, form_data.phone);
       } catch (error) {
         console.error('Registration error:', error);
+        const errorMsg = error instanceof Error ? error.message : 'Registration failed';
+        toast.error(errorMsg);
       }
     }
   };

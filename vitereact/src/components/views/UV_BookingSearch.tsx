@@ -29,32 +29,42 @@ interface SearchResponse {
 // ============================================================================
 
 const formatTicketNumber = (value: string): string => {
-  // Remove all non-alphanumeric characters except hyphens
+  if (!value) return '';
+  
   const cleaned = value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
   
-  // Remove existing hyphens for reformatting
-  const withoutHyphens = cleaned.replace(/-/g, '');
-  
-  // Apply format: TKT-YYYYMMDD-XXX
-  if (withoutHyphens.startsWith('TKT')) {
-    const rest = withoutHyphens.slice(3);
-    if (rest.length === 0) {
-      return 'TKT';
-    } else if (rest.length <= 8) {
-      return `TKT-${rest}`;
-    } else {
-      return `TKT-${rest.slice(0, 8)}-${rest.slice(8, 11)}`;
-    }
-  } else if (cleaned.startsWith('TKT')) {
+  if (/^TKT-\d{8}-\d{1,3}$/.test(cleaned)) {
     return cleaned;
   }
   
-  // If doesn't start with TKT, try to add it
-  return withoutHyphens.length > 0 ? `TKT-${withoutHyphens.slice(0, 11)}` : '';
+  const withoutHyphens = cleaned.replace(/-/g, '');
+  
+  if (!withoutHyphens) return '';
+  
+  if (!withoutHyphens.startsWith('TKT')) {
+    if (withoutHyphens.length <= 3) {
+      return withoutHyphens;
+    }
+    return 'TKT-' + withoutHyphens;
+  }
+  
+  const rest = withoutHyphens.slice(3);
+  
+  if (rest.length === 0) {
+    return 'TKT';
+  }
+  
+  if (rest.length <= 8) {
+    return `TKT-${rest}`;
+  }
+  
+  const datePart = rest.slice(0, 8).padEnd(8, '0');
+  const seqPart = rest.slice(8, 11).padStart(3, '0');
+  return `TKT-${datePart}-${seqPart}`;
 };
 
 const isValidTicketFormat = (ticket: string): boolean => {
-  const pattern = /^TKT-\d{8}-\d{3}$/;
+  const pattern = /^TKT-\d{4,8}-\d{1,3}$/;
   return pattern.test(ticket);
 };
 
@@ -196,6 +206,15 @@ const UV_BookingSearch: React.FC = () => {
     setSearchError(null);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (canSearch) {
+        handleSearch(e as any);
+      }
+    }
+  };
+
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(e.target.value);
     setSearchError(null);
@@ -208,6 +227,8 @@ const UV_BookingSearch: React.FC = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+    
     if (!canSearch) return;
     
     setSearchError(null);
@@ -273,7 +294,13 @@ const UV_BookingSearch: React.FC = () => {
             </div>
 
             {/* Search Form */}
-            <form onSubmit={handleSearch} className="p-6 lg:p-8 space-y-6">
+            <form 
+              onSubmit={handleSearch} 
+              className="p-6 lg:p-8 space-y-6"
+              data-testid="search-form"
+              role="search"
+              aria-label="Booking search form"
+            >
               {/* Ticket Number Tab */}
               {searchMethod === 'ticket' && (
                 <div className="space-y-4">
@@ -284,9 +311,14 @@ const UV_BookingSearch: React.FC = () => {
                     <input
                       type="text"
                       id="ticket-number"
+                      name="ticket-number"
+                      data-testid="ticket-number-input"
+                      aria-label="Ticket number"
                       value={ticketNumber}
                       onChange={handleTicketChange}
+                      onKeyDown={handleKeyDown}
                       placeholder="TKT-20240115-001"
+                      autoComplete="off"
                       className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base"
                       autoFocus
                     />
@@ -309,9 +341,14 @@ const UV_BookingSearch: React.FC = () => {
                       <input
                         type="tel"
                         id="phone"
+                        name="phone"
+                        data-testid="phone-input"
+                        aria-label="Phone number"
                         value={phone}
                         onChange={handlePhoneChange}
+                        onKeyDown={handleKeyDown}
                         placeholder="+1 (555) 123-4567"
+                        autoComplete="tel"
                         className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base"
                         autoFocus
                       />
@@ -327,8 +364,12 @@ const UV_BookingSearch: React.FC = () => {
                       <input
                         type="date"
                         id="date"
+                        name="date"
+                        data-testid="date-input"
+                        aria-label="Booking date"
                         value={date}
                         onChange={handleDateChange}
+                        onKeyDown={handleKeyDown}
                         className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base"
                       />
                     </div>
@@ -347,6 +388,8 @@ const UV_BookingSearch: React.FC = () => {
               {/* Search Button */}
               <button
                 type="submit"
+                data-testid="search-button"
+                aria-label="Search for booking"
                 disabled={!canSearch || isLoading}
                 className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2"
               >

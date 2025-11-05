@@ -97,160 +97,7 @@ const UV_BookingDetails: React.FC = () => {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
 
   // ============================================================================
-  // FETCH BOOKING DETAILS
-  // ============================================================================
-
-  const { 
-    data: bookingData, 
-    isLoading, 
-    error 
-  } = useQuery({
-    queryKey: ['booking', ticket_number],
-    queryFn: async () => {
-      if (!ticket_number || !/^TKT-\d{4,8}-\d{3}$/.test(ticket_number)) {
-        throw new Error('Invalid ticket number format');
-      }
-
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/bookings/${ticket_number}`
-      );
-
-      return response.data;
-    },
-    enabled: !!ticket_number,
-    staleTime: 60000,
-    retry: 1,
-    select: (data) => {
-      const booking = data.booking || data;
-      
-      return {
-        booking: booking as Booking,
-        service_details: booking.service_id ? {
-          service_id: booking.service_id,
-          name: data.service_name || 'Haircut',
-          price: data.service_price ? Number(data.service_price) : null,
-          duration: data.service_duration || booking.slot_duration || 40
-        } as ServiceDetails : null
-      };
-    }
-  });
-
-  const booking = bookingData?.booking;
-  const serviceDetails = bookingData?.service_details;
-
-  // ============================================================================
-  // CANCEL BOOKING MUTATION
-  // ============================================================================
-
-  const cancelMutation = useMutation({
-    mutationFn: async (reason: string) => {
-      const response = await axios.patch(
-        `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/bookings/${ticket_number}/cancel`,
-        {
-          cancellation_reason: reason,
-          cancelled_by: 'customer'
-        }
-      );
-      return response.data;
-    },
-    onSuccess: (data) => {
-      queryClient.setQueryData(['booking', ticket_number], {
-        booking: data.booking || data,
-        service_details: serviceDetails
-      });
-      setShowCancellationModal(false);
-      setCancellationReason('');
-    }
-  });
-
-  // ============================================================================
-  // RESEND CONFIRMATION MUTATION
-  // ============================================================================
-
-  const resendMutation = useMutation({
-    mutationFn: async () => {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/bookings/${ticket_number}/resend-confirmation`
-      );
-      return response.data;
-    }
-  });
-
-  // ============================================================================
-  // COMPUTED VALUES
-  // ============================================================================
-
-  const canCancel = useMemo(() => {
-    if (!booking || booking.status !== 'confirmed') return false;
-
-    try {
-      const appointmentDateTime = new Date(`${booking.appointment_date}T${booking.appointment_time}`);
-      const now = new Date();
-      const cutoffTime = new Date(appointmentDateTime.getTime() - (sameDayCutoffHours * 60 * 60 * 1000));
-
-      return now < cutoffTime;
-    } catch {
-      return false;
-    }
-  }, [booking, sameDayCutoffHours]);
-
-  const timelineEvents = useMemo((): TimelineEvent[] => {
-    if (!booking) return [];
-
-    const events: TimelineEvent[] = [];
-
-    if (booking.created_at) {
-      events.push({
-        type: 'created',
-        timestamp: booking.created_at,
-        label: 'Booking Created',
-        description: `Created on ${formatTimestamp(booking.created_at)}`
-      });
-    }
-
-    if (booking.confirmed_at) {
-      events.push({
-        type: 'confirmed',
-        timestamp: booking.confirmed_at,
-        label: 'Confirmation Sent',
-        description: `Sent on ${formatTimestamp(booking.confirmed_at)}`
-      });
-    }
-
-    if (booking.reminder_sent_at) {
-      events.push({
-        type: 'reminder',
-        timestamp: booking.reminder_sent_at,
-        label: 'Reminder Sent',
-        description: `Sent on ${formatTimestamp(booking.reminder_sent_at)}`
-      });
-    }
-
-    if (booking.completed_at) {
-      events.push({
-        type: 'completed',
-        timestamp: booking.completed_at,
-        label: 'Completed',
-        description: `Completed on ${formatTimestamp(booking.completed_at)}`
-      });
-    }
-
-    if (booking.cancelled_at) {
-      events.push({
-        type: 'cancelled',
-        timestamp: booking.cancelled_at,
-        label: 'Cancelled',
-        description: booking.cancellation_reason 
-          ? `Cancelled on ${formatTimestamp(booking.cancelled_at)}: ${booking.cancellation_reason}`
-          : `Cancelled on ${formatTimestamp(booking.cancelled_at)}`
-      });
-    }
-
-    return events.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
-  }, [booking]);
-
-  // ============================================================================
-  // HELPER FUNCTIONS
+  // HELPER FUNCTIONS (Must be defined before useMemo)
   // ============================================================================
 
   const formatDate = (dateString: string): string => {
@@ -427,6 +274,159 @@ const UV_BookingDetails: React.FC = () => {
         return <Clock className="w-5 h-5 text-gray-600" />;
     }
   };
+
+  // ============================================================================
+  // FETCH BOOKING DETAILS
+  // ============================================================================
+
+  const { 
+    data: bookingData, 
+    isLoading, 
+    error 
+  } = useQuery({
+    queryKey: ['booking', ticket_number],
+    queryFn: async () => {
+      if (!ticket_number || !/^TKT-\d{4,8}-\d{3}$/.test(ticket_number)) {
+        throw new Error('Invalid ticket number format');
+      }
+
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/bookings/${ticket_number}`
+      );
+
+      return response.data;
+    },
+    enabled: !!ticket_number,
+    staleTime: 60000,
+    retry: 1,
+    select: (data) => {
+      const booking = data.booking || data;
+      
+      return {
+        booking: booking as Booking,
+        service_details: booking.service_id ? {
+          service_id: booking.service_id,
+          name: data.service_name || 'Haircut',
+          price: data.service_price ? Number(data.service_price) : null,
+          duration: data.service_duration || booking.slot_duration || 40
+        } as ServiceDetails : null
+      };
+    }
+  });
+
+  const booking = bookingData?.booking;
+  const serviceDetails = bookingData?.service_details;
+
+  // ============================================================================
+  // CANCEL BOOKING MUTATION
+  // ============================================================================
+
+  const cancelMutation = useMutation({
+    mutationFn: async (reason: string) => {
+      const response = await axios.patch(
+        `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/bookings/${ticket_number}/cancel`,
+        {
+          cancellation_reason: reason,
+          cancelled_by: 'customer'
+        }
+      );
+      return response.data;
+    },
+    onSuccess: (data) => {
+      queryClient.setQueryData(['booking', ticket_number], {
+        booking: data.booking || data,
+        service_details: serviceDetails
+      });
+      setShowCancellationModal(false);
+      setCancellationReason('');
+    }
+  });
+
+  // ============================================================================
+  // RESEND CONFIRMATION MUTATION
+  // ============================================================================
+
+  const resendMutation = useMutation({
+    mutationFn: async () => {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/bookings/${ticket_number}/resend-confirmation`
+      );
+      return response.data;
+    }
+  });
+
+  // ============================================================================
+  // COMPUTED VALUES
+  // ============================================================================
+
+  const canCancel = useMemo(() => {
+    if (!booking || booking.status !== 'confirmed') return false;
+
+    try {
+      const appointmentDateTime = new Date(`${booking.appointment_date}T${booking.appointment_time}`);
+      const now = new Date();
+      const cutoffTime = new Date(appointmentDateTime.getTime() - (sameDayCutoffHours * 60 * 60 * 1000));
+
+      return now < cutoffTime;
+    } catch {
+      return false;
+    }
+  }, [booking, sameDayCutoffHours]);
+
+  const timelineEvents = useMemo((): TimelineEvent[] => {
+    if (!booking) return [];
+
+    const events: TimelineEvent[] = [];
+
+    if (booking.created_at) {
+      events.push({
+        type: 'created',
+        timestamp: booking.created_at,
+        label: 'Booking Created',
+        description: `Created on ${formatTimestamp(booking.created_at)}`
+      });
+    }
+
+    if (booking.confirmed_at) {
+      events.push({
+        type: 'confirmed',
+        timestamp: booking.confirmed_at,
+        label: 'Confirmation Sent',
+        description: `Sent on ${formatTimestamp(booking.confirmed_at)}`
+      });
+    }
+
+    if (booking.reminder_sent_at) {
+      events.push({
+        type: 'reminder',
+        timestamp: booking.reminder_sent_at,
+        label: 'Reminder Sent',
+        description: `Sent on ${formatTimestamp(booking.reminder_sent_at)}`
+      });
+    }
+
+    if (booking.completed_at) {
+      events.push({
+        type: 'completed',
+        timestamp: booking.completed_at,
+        label: 'Completed',
+        description: `Completed on ${formatTimestamp(booking.completed_at)}`
+      });
+    }
+
+    if (booking.cancelled_at) {
+      events.push({
+        type: 'cancelled',
+        timestamp: booking.cancelled_at,
+        label: 'Cancelled',
+        description: booking.cancellation_reason 
+          ? `Cancelled on ${formatTimestamp(booking.cancelled_at)}: ${booking.cancellation_reason}`
+          : `Cancelled on ${formatTimestamp(booking.cancelled_at)}`
+      });
+    }
+
+    return events.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+  }, [booking]);
 
   // ============================================================================
   // LOADING STATE

@@ -327,8 +327,9 @@ const UV_Registration: React.FC = () => {
         form_data.phone
       );
       
-      // On success, navigate to email verification pending
+      // On success, navigate to email verification pending (replace to prevent back button issues)
       navigate('/verify-email', { 
+        replace: true,
         state: { 
           email: form_data.email,
           redirect_url: redirect_url || '/dashboard'

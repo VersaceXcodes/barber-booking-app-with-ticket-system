@@ -459,6 +459,25 @@ app.post('/api/bookings/:ticket_number/reschedule', async (req, res) => {
   }
 });
 
+app.get('/api/auth/check-email-exists', async (req, res) => {
+  try {
+    const { email } = req.query;
+    
+    if (!email || typeof email !== 'string') {
+      return res.status(400).json(createErrorResponse('Email parameter required', null, 'MISSING_EMAIL'));
+    }
+
+    const result = await pool.query('SELECT user_id FROM users WHERE LOWER(email) = LOWER($1)', [email]);
+    
+    res.json({
+      exists: result.rows.length > 0
+    });
+  } catch (error) {
+    console.error('Check email exists error:', error);
+    res.status(500).json(createErrorResponse('Failed to check email', error, 'INTERNAL_ERROR'));
+  }
+});
+
 app.post('/api/auth/register', async (req, res) => {
   try {
     const validationResult = createUserInputSchema.safeParse(req.body);

@@ -1,0 +1,227 @@
+{
+  "generated_at": "2025-11-05T00:05:00Z",
+  "user_structure": {
+    "table_name": "users",
+    "role_field": "none",
+    "registration_endpoint": "/api/auth/register",
+    "login_endpoint": "/api/auth/login",
+    "admin_login_endpoint": "/api/admin/login",
+    "notes": "This application has two separate authentication systems: 1) Regular users stored in the users table with email/password, 2) Admin access using hardcoded credentials (admin@barberslot.com / admin123). Passwords are stored in plaintext in the database (not hashed)."
+  },
+  "total_users": 9,
+  "verified_users": 9,
+  "users": [
+    {
+      "user_id": "user_001",
+      "email": "admin@beautysalon.com",
+      "password": "admin123",
+      "role": "user",
+      "name": "Sarah Johnson",
+      "phone": "+1-555-0101",
+      "verified": true,
+      "is_verified": true,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidXNlcl8wMDEiLCJlbWFpbCI6ImFkbWluQGJlYXV0eXNhbG9uLmNvbSIsImlhdCI6MTc2MjMwMTEzMiwiZXhwIjoxNzYyOTA1OTMyfQ.6IKTMvif-KGEvfKvO7t3vkLncyJm_ZjAs5nIE4iu294",
+      "notes": "This is a regular user account (not admin despite email name). Has existing bookings."
+    },
+    {
+      "user_id": "user_002",
+      "email": "emily.chen@email.com",
+      "password": "password123",
+      "role": "user",
+      "name": "Emily Chen",
+      "phone": "+1-555-0102",
+      "verified": true,
+      "is_verified": true,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidXNlcl8wMDIiLCJlbWFpbCI6ImVtaWx5LmNoZW5AZW1haWwuY29tIiwiaWF0IjoxNzYyMzAxMTMzLCJleHAiOjE3NjI5MDU5MzN9.7vF5DKdUJ7AT9cazIFgZ6uE05Fp2k8J_aF3YySWJ2uQ",
+      "notes": "Regular user with multiple bookings (completed and confirmed)"
+    },
+    {
+      "user_id": "user_003",
+      "email": "jessica.martinez@email.com",
+      "password": "password123",
+      "role": "user",
+      "name": "Jessica Martinez",
+      "phone": "+1-555-0103",
+      "verified": true,
+      "is_verified": true,
+      "notes": "Regular user with multiple bookings"
+    },
+    {
+      "user_id": "user_004",
+      "email": "amanda.taylor@email.com",
+      "password": "password123",
+      "role": "user",
+      "name": "Amanda Taylor",
+      "phone": "+1-555-0104",
+      "verified": false,
+      "is_verified": false,
+      "verification_token": "verify_token_amanda_xyz789",
+      "notes": "Unverified user account - can test email verification flow"
+    },
+    {
+      "user_id": "user_005",
+      "email": "rachel.brown@email.com",
+      "password": "password123",
+      "role": "user",
+      "name": "Rachel Brown",
+      "phone": "+1-555-0105",
+      "verified": true,
+      "is_verified": true,
+      "notes": "Regular user with multiple bookings"
+    },
+    {
+      "user_id": "user_006",
+      "email": "olivia.davis@email.com",
+      "password": "password123",
+      "role": "user",
+      "name": "Olivia Davis",
+      "phone": "+1-555-0106",
+      "verified": true,
+      "is_verified": true,
+      "notes": "Regular user with bookings"
+    },
+    {
+      "user_id": "user_007",
+      "email": "sophia.wilson@email.com",
+      "password": "password123",
+      "role": "user",
+      "name": "Sophia Wilson",
+      "phone": "+1-555-0107",
+      "verified": false,
+      "is_verified": false,
+      "verification_token": "verify_token_sophia_abc123",
+      "notes": "Unverified user account with pending booking"
+    },
+    {
+      "user_id": "user_008",
+      "email": "isabella.moore@email.com",
+      "password": "password123",
+      "role": "user",
+      "name": "Isabella Moore",
+      "phone": "+1-555-0108",
+      "verified": true,
+      "is_verified": true,
+      "reset_token": "reset_token_isabella_def456",
+      "notes": "Regular user with wedding booking (bridal updo)"
+    },
+    {
+      "admin_id": "admin-1",
+      "email": "admin@barberslot.com",
+      "password": "admin123",
+      "role": "admin",
+      "name": "Admin",
+      "verified": true,
+      "is_verified": true,
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6ImFkbWluLTEiLCJlbWFpbCI6ImFkbWluQGJhcmJlcnNsb3QuY29tIiwiaXNfYWRtaW4iOnRydWUsImlhdCI6MTc2MjMwMTEzNCwiZXhwIjoxNzYyMzg3NTM0fQ.xl5XrKW32iRCR0LgWJC3uCKq01thQyzi9DaYOHGwwIc",
+      "notes": "Hardcoded admin account - use /api/admin/login endpoint"
+    }
+  ],
+  "by_role": {
+    "admin": [
+      {
+        "email": "admin@barberslot.com",
+        "password": "admin123",
+        "verified": true,
+        "name": "Admin",
+        "login_endpoint": "/api/admin/login"
+      }
+    ],
+    "user": [
+      {
+        "email": "admin@beautysalon.com",
+        "password": "admin123",
+        "verified": true,
+        "name": "Sarah Johnson",
+        "phone": "+1-555-0101"
+      },
+      {
+        "email": "emily.chen@email.com",
+        "password": "password123",
+        "verified": true,
+        "name": "Emily Chen",
+        "phone": "+1-555-0102"
+      },
+      {
+        "email": "jessica.martinez@email.com",
+        "password": "password123",
+        "verified": true,
+        "name": "Jessica Martinez",
+        "phone": "+1-555-0103"
+      },
+      {
+        "email": "rachel.brown@email.com",
+        "password": "password123",
+        "verified": true,
+        "name": "Rachel Brown",
+        "phone": "+1-555-0105"
+      },
+      {
+        "email": "olivia.davis@email.com",
+        "password": "password123",
+        "verified": true,
+        "name": "Olivia Davis",
+        "phone": "+1-555-0106"
+      },
+      {
+        "email": "isabella.moore@email.com",
+        "password": "password123",
+        "verified": true,
+        "name": "Isabella Moore",
+        "phone": "+1-555-0108"
+      }
+    ],
+    "unverified_user": [
+      {
+        "email": "amanda.taylor@email.com",
+        "password": "password123",
+        "verified": false,
+        "name": "Amanda Taylor",
+        "phone": "+1-555-0104"
+      },
+      {
+        "email": "sophia.wilson@email.com",
+        "password": "password123",
+        "verified": false,
+        "name": "Sophia Wilson",
+        "phone": "+1-555-0107"
+      }
+    ]
+  },
+  "test_data": {
+    "sample_bookings": [
+      {
+        "ticket_number": "TKT-2024-001",
+        "status": "completed",
+        "customer_email": "emily.chen@email.com",
+        "customer_phone": "+1-555-0102"
+      },
+      {
+        "ticket_number": "TKT-2024-003",
+        "status": "confirmed",
+        "customer_email": "rachel.brown@email.com",
+        "customer_phone": "+1-555-0105"
+      },
+      {
+        "ticket_number": "TKT-2024-007",
+        "status": "confirmed",
+        "customer_email": "isabella.moore@email.com",
+        "customer_phone": "+1-555-0108",
+        "notes": "Wedding booking"
+      }
+    ],
+    "sample_services": [
+      {
+        "service_id": "service_001",
+        "name": "Classic Haircut",
+        "duration": 45,
+        "price": "65.00"
+      },
+      {
+        "service_id": "service_002",
+        "name": "Balayage Highlights",
+        "duration": 180,
+        "price": "225.00"
+      }
+    ]
+  }
+}

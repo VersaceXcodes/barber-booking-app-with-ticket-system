@@ -23,15 +23,18 @@ interface CreateBookingPayload {
 }
 
 interface BookingResponse {
-  booking_id: string;
-  ticket_number: string;
-  status: string;
-  appointment_date: string;
-  appointment_time: string;
-  customer_name: string;
-  customer_email: string;
-  customer_phone: string;
-  created_at: string;
+  booking: {
+    booking_id: string;
+    ticket_number: string;
+    status: string;
+    appointment_date: string;
+    appointment_time: string;
+    customer_name: string;
+    customer_email: string;
+    customer_phone: string;
+    created_at: string;
+  };
+  message: string;
 }
 
 // ============================================================================
@@ -129,10 +132,7 @@ const UV_BookingFlow_Review: React.FC = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      // Navigate to confirmation page with ticket number
-      navigate('/booking/confirmation', {
-        state: { ticketNumber: data.ticket_number, booking: data }
-      });
+      navigate(`/booking/confirmation?ticket_number=${data.booking.ticket_number}`);
     },
   });
 

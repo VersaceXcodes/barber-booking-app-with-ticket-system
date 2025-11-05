@@ -33,7 +33,7 @@ const formatTicketNumber = (value: string): string => {
   
   const cleaned = value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
   
-  if (/^TKT-\d{8}-\d{1,3}$/.test(cleaned)) {
+  if (/^TKT-\d+-\d+$/.test(cleaned)) {
     return cleaned;
   }
   
@@ -54,18 +54,30 @@ const formatTicketNumber = (value: string): string => {
     return 'TKT';
   }
   
+  if (rest.length <= 3) {
+    return `TKT-${rest}`;
+  }
+  
+  const parts = rest.match(/^(\d+?)(\d{1,3})$/);
+  if (parts && parts.length >= 3) {
+    return `TKT-${parts[1]}-${parts[2]}`;
+  }
+  
   if (rest.length <= 8) {
     return `TKT-${rest}`;
   }
   
-  const datePart = rest.slice(0, 8).padEnd(8, '0');
-  const seqPart = rest.slice(8, 11).padStart(3, '0');
+  const datePart = rest.slice(0, 8);
+  const seqPart = rest.slice(8);
   return `TKT-${datePart}-${seqPart}`;
 };
 
 const isValidTicketFormat = (ticket: string): boolean => {
-  const pattern = /^TKT-\d{4,8}-\d{1,3}$/;
-  return pattern.test(ticket);
+  const standardPattern = /^TKT-\d{8}-\d{1,3}$/;
+  if (standardPattern.test(ticket)) return true;
+  
+  const relaxedPattern = /^TKT-\d+-\d+$/;
+  return relaxedPattern.test(ticket) && ticket.length >= 8;
 };
 
 const isValidPhone = (phone: string): boolean => {

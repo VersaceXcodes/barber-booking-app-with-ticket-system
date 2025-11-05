@@ -150,6 +150,73 @@ app.get('/api/services', async (req, res) => {
   }
 });
 
+app.get('/api/availability', async (req, res) => {
+  try {
+    const { start_date, end_date, service_id } = req.query;
+    
+    if (!start_date || !end_date) {
+      return res.status(400).json(createErrorResponse('start_date and end_date are required', null, 'MISSING_DATES'));
+    }
+    
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(String(start_date)) || !/^\d{4}-\d{2}-\d{2}$/.test(String(end_date))) {
+      return res.status(400).json(createErrorResponse('Invalid date format. Use YYYY-MM-DD', null, 'INVALID_DATE_FORMAT'));
+    }
+
+    const settingsResult = await pool.query("SELECT * FROM (SELECT 'settings-main' as setting_id, 2 as capacity_mon_wed, 3 as capacity_thu_sun, 90 as booking_window_days, 2 as same_day_cutoff_hours) s LIMIT 1");
+    const settings = settingsResult.rows[0] || { capacity_mon_wed: 2, capacity_thu_sun: 3 };
+
+    const overridesResult = await pool.query(
+      'SELECT * FROM capacity_overrides WHERE override_date >= $1 AND override_date <= $2 AND is_active = TRUE',
+      [start_date, end_date]
+    );
+    const overrides = {};
+    overridesResult.rows.forEach(row => {
+      overrides[row.override_date] = row.capacity;
+    });
+
+    const bookingsResult = await pool.query(
+      'SELECT appointment_date, COUNT(*) as booked_count FROM bookings WHERE appointment_date >= $1 AND appointment_date <= $2 AND status = $3 GROUP BY appointment_date',
+      [start_date, end_date, 'confirmed']
+    );
+    const bookingsByDate = {};
+    bookingsResult.rows.forEach(row => {
+      bookingsByDate[row.appointment_date] = parseInt(row.booked_count);
+    });
+
+    const start = new Date(String(start_date));
+    const end = new Date(String(end_date));
+    const dates = [];
+    
+    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+      const dateStr = d.toISOString().split('T')[0];
+      const dayOfWeek = d.getDay();
+      const isMondayToWednesday = [1, 2, 3].includes(dayOfWeek);
+      let baseCapacity = isMondayToWednesday ? settings.capacity_mon_wed : settings.capacity_thu_sun;
+      
+      let effectiveCapacity = overrides[dateStr] !== undefined ? overrides[dateStr] : baseCapacity;
+      const bookedCount = bookingsByDate[dateStr] || 0;
+      const availableSpots = Math.max(0, effectiveCapacity - bookedCount);
+      
+      dates.push({
+        date: dateStr,
+        day_of_week: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dayOfWeek],
+        is_blocked: effectiveCapacity === 0,
+        base_capacity: baseCapacity,
+        override_capacity: overrides[dateStr] !== undefined ? overrides[dateStr] : null,
+        effective_capacity: effectiveCapacity,
+        booked_count: bookedCount,
+        available_spots: availableSpots,
+        is_available: availableSpots > 0 && effectiveCapacity > 0
+      });
+    }
+
+    res.json({ dates });
+  } catch (error) {
+    console.error('Get availability range error:', error);
+    res.status(500).json(createErrorResponse('Failed to check availability', error, 'INTERNAL_ERROR'));
+  }
+});
+
 app.get('/api/availability/:date', async (req, res) => {
   try {
     const { date } = req.params;

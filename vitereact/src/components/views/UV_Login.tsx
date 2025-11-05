@@ -63,13 +63,7 @@ const UV_Login: React.FC = () => {
     }
   }, [isAuthenticated, navigate, redirect_url]);
 
-  // Clear errors when user starts typing (but not during submission)
-  useEffect(() => {
-    if (errorMessage && !isLoading) {
-      clearAuthError();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form_data.email, form_data.password]);
+
 
   // ============================================================================
   // VALIDATION
@@ -424,6 +418,9 @@ const UV_Login: React.FC = () => {
                       onChange={(e) => {
                         setFormData(prev => ({ ...prev, email: e.target.value }));
                         setValidationErrors(prev => ({ ...prev, email: undefined }));
+                        if (errorMessage && !isLoading) {
+                          clearAuthError();
+                        }
                       }}
                       onBlur={handleEmailBlur}
                       placeholder="Email Address"
@@ -472,6 +469,9 @@ const UV_Login: React.FC = () => {
                       onChange={(e) => {
                         setFormData(prev => ({ ...prev, password: e.target.value }));
                         setValidationErrors(prev => ({ ...prev, password: undefined }));
+                        if (errorMessage && !isLoading) {
+                          clearAuthError();
+                        }
                       }}
                       onBlur={handlePasswordBlur}
                       placeholder="Password"

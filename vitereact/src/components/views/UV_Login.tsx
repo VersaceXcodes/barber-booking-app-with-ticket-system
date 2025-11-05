@@ -63,9 +63,9 @@ const UV_Login: React.FC = () => {
     }
   }, [isAuthenticated, navigate, redirect_url]);
 
-  // Clear errors when user starts typing
+  // Clear errors when user starts typing (but not during submission)
   useEffect(() => {
-    if (errorMessage) {
+    if (errorMessage && !isLoading) {
       clearAuthError();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

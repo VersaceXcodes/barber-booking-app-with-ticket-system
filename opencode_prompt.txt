@@ -1,1919 +1,226 @@
-VALIDATION FAILURE - Auth E2E Tests (Attempt 1/100)
 
-The project validation failed at the "Auth E2E Tests" step. You need to analyze the error and fix it.
+You are tasked with generating comprehensive test artifacts for a web application.
+📊 CONTEXT PROVIDED:
+
+PACKAGE.JSON ANALYSIS:
+Dependencies: concurrently
+Dev Dependencies: @flydotio/dockerfile
+Scripts: dev
+
+
+DATABASE SCHEMA AND SEED DATA (sample):
+-- Drop tables if they exist (for clean setup)
+DROP TABLE IF EXISTS capacity_overrides CASCADE;
+DROP TABLE IF EXISTS bookings CASCADE;
+DROP TABLE IF EXISTS services CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+
+-- Create users table
+CREATE TABLE users (
+    user_id TEXT PRIMARY KEY,
+    email TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    name TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    is_verified BOOLEAN NOT NULL DEFAULT false,
+    verification_token TEXT UNIQUE,
+    verification_token_expiry TEXT,
+    reset_token TEXT UNIQUE,
+    reset_token_expiry TEXT,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+
+-- Create services table
+CREATE TABLE services (
+    service_id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    image_url TEXT,
+    duration INTEGER NOT NULL DEFAULT 40,
+    price NUMERIC,
+    is_active BOOLEAN NOT NULL DEFAULT true,
+    display_order INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+
+-- Create bookings table
+CREATE TABLE bookings (
+    booking_id TEXT PRIMARY KEY,
+    ticket_number TEXT UNIQUE NOT NULL,
+    user_id TEXT,
+    status TEXT NOT NULL,
+    appointment_date TEXT NOT NULL,
+    appointment_time TEXT NOT NULL,
+    slot_duration INTEGER NOT NULL DEFAULT 40,
+    customer_name TEXT NOT NULL,
+    customer_email TEXT NOT NULL,
+    customer_phone TEXT NOT NULL,
+    booking_for_name TEXT,
+    service_id TEXT,
+    special_request TEXT,
+    inspiration_photos JSONB,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    confirmed_at TEXT,
+    reminder_sent_at TEXT,
+    completed_at TEXT,
+    cancelled_at TEXT,
+    cancellation_reason TEXT,
+    cancelled_by TEXT,
+    admin_notes TEXT,
+    original_booking_id TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE SET NULL,
+    FOREIGN KEY (service_id) REFERENCES services(service_id) ON DELETE SET NULL,
+    FOREIGN KEY (original_booking_id) REFERENCES bookings(booking_id) ON DELETE SET N...
+
+
+BACKEND API ENDPOINTS (extracted from server code):
+app.get('/api/health'
+app.get('/api/services'
+app.get('/api/availability/:date'
+app.post('/api/bookings'
+app.get('/api/bookings/search'
+app.get('/api/bookings/:ticket_number'
+app.patch('/api/bookings/:ticket_number/cancel'
+app.post('/api/bookings/:ticket_number/reschedule'
+app.post('/api/auth/register'
+app.post('/api/auth/login'
+app.post('/api/auth/verify-email'
+app.get('/api/auth/me'
+app.patch('/api/auth/me'
+app.get('/api/user/bookings'
+app.post('/api/admin/login'
+app.get('/api/admin/bookings'
+app.post('/api/admin/bookings'
+app.get('/api/admin/services'
+app.post('/api/admin/services'
+app.patch('/api/admin/services/:service_id'
+app.get('/api/admin/capacity-overrides'
+app.post('/api/admin/capacity-overrides'
+app.delete('/api/admin/capacity-overrides/:override_id'
+app.get('/api/admin/dashboard/stats'
+
+Frontend URL: https://123barber-booking-app-with-ticket-system.launchpulse.ai
+Backend URL: https://123barber-booking-app-with-ticket-system.launchpulse.ai
+🎯 YOUR CRITICAL TASKS - ANALYZE, FIX ISSUES, AND CREATE TEST FILES:
+STEP 2: Create test_users.json
+🔐 INTELLIGENT TEST USER CREATION:
+1. **ANALYZE DATABASE SCHEMA** (from db.sql):
+   - Find user table structure (users, user, accounts, etc.)
+   - Identify role/user_type field and possible values
+   - Detect required fields (name, email, password structure)
+   - Extract existing seed data if available
+2. **ANALYZE BACKEND API** (from server files):
+   - Find registration endpoint (/api/auth/register, /register, etc.)
+   - Find login endpoint (/api/auth/login, /login, etc.)
+   - Determine required payload structure
+   - Identify authentication flow
+3. **CREATE & VERIFY TEST USERS**:
+   - If seed data exists: extract credentials with known test passwords
+   - If no seed data: create users via API with curl commands
+   - Test login for each user to ensure credentials work
+   - Support different roles: admin, user, guest, host, customer etc. based on the database schema and seed data
+4. **GENERATE test_users.json**:
+{
+  "generated_at": "2024-01-20T10:30:00Z",
+  "user_structure": {
+    "table_name": "users",
+    "role_field": "role",
+    "registration_endpoint": "/api/auth/register",
+    "login_endpoint": "/api/auth/login"
+  },
+  "total_users": 4,
+  "verified_users": 4,
+  "users": [
+    {
+      "email": "admin@test.com",
+      "password": "AdminPass123!",
+      "role": "admin",
+      "name": "Admin User",
+      "verified": true,
+      "token": "jwt_token_here"
+    }
+    // ... create for each detected role
+  ],
+  "by_role": {
+    "admin": [{"email": "admin@test.com", "password": "AdminPass123!", "verified": true}],
+    "user": [{"email": "user@test.com", "password": "UserPass123!", "verified": true}]
+    // ... organize by role for easy browser agent access
+  }
+}
+**CRITICAL**: Use actual project structure, not template data!
+STEP 3: Create code_summary.json
+{
+  "tech_stack": ["React", "Vite", "TypeScript", "Express", "PostgreSQL", "Node.js"],
+  "features": [
+    {
+      "name": "User Authentication",
+      "description": "Login, logout, session management",
+      "files": ["src/components/Login.tsx", "src/api/auth.ts"]
+    },
+    {
+      "name": "Dashboard",
+      "description": "Main application dashboard",
+      "files": ["src/components/Dashboard.tsx"]
+    }
+  ],
+  "database_tables": ["users", "projects"],
+  "api_endpoints": ["/api/auth", "/api/users"]
+}
+STEP 4: test_cases.json 
+  "testCases": [
+    {
+      "id": "functional-app-test",
+      "name": "Functional Application Test",
+      "category": "functionality",
+      "priority": "high",
+      "description": "Verify the application has actual functionality beyond basic placeholder",
+      "steps": [
+        "Navigate to application",
+        "Verify multiple interactive elements exist (buttons, forms, links)",
+        "Check for proper navigation structure",
+        "Verify application has real features, not just 'Vite + React' text"
+      ],
+      "expectedOutcome": "Application shows functional features and interactivity",
+      "failureCondition": "If page only shows 'Vite + React' placeholder, this test should FAIL"
+    },
+    {
+      "id": "ui-components-test", 
+      "name": "UI Components Test",
+      "category": "interface",
+      "priority": "high",
+      "description": "Test that UI components are properly implemented",
+      "steps": [
+        "Check for buttons and verify they're clickable",
+        "Look for forms and input fields",
+        "Verify navigation menu exists",
+        "Test responsive design elements"
+      ],
+      "expectedOutcome": "Multiple interactive UI components found and functional"
+    },
+    {
+      "id": "content-quality-test",
+      "name": "Content Quality Test", 
+      "category": "content",
+      "priority": "high",
+      "description": "Verify application has meaningful content",
+      "steps": [
+        "Check page has substantial content beyond placeholder",
+        "Verify proper heading structure",
+        "Look for actual application features",
+        "Ensure professional appearance"
+      ],
+      "expectedOutcome": "Application demonstrates real functionality and professional design"
+    }
+  ]
+}
+CRITICAL REQUIREMENTS:
+1. You MUST FIRST analyze and fix any technical issues in the React application
+2. You MUST create all 3 JSON files: code_summary.json, test_cases.json, and test_users.json
+3. Each file must be valid JSON
+4. The test_cases.json and test_users.json files are especially important - do not skip them
+5. Focus on fixing broken functionality, not adding new features
+Start by checking if the application runs properly, fix any technical issues, then let Stagehand test the existing functionality.
 
-## Error Details:
-stderr | src/__tests__/auth.e2e.test.tsx > Auth E2E Flow (real API) > registers a new user, logs out, and signs in
-⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
-⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
-
-
-⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
-
- FAIL  src/__tests__/auth.e2e.test.tsx > Auth E2E Flow (real API) > registers a new user, logs out, and signs in
-TestingLibraryElementError: Unable to find role="button" and name `/sign in/i`
-
-Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div>[39m
-    [36m<div[39m
-      [33mclass[39m=[32m"min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8"[39m
-    [36m>[39m
-      [36m<div[39m
-        [33mclass[39m=[32m"max-w-md w-full space-y-8"[39m
-      [36m>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"text-center"[39m
-        [36m>[39m
-          [36m<h1[39m
-            [33mclass[39m=[32m"text-4xl font-bold text-gray-900 leading-tight"[39m
-          [36m>[39m
-            [0mWelcome Back[0m
-          [36m</h1>[39m
-          [36m<p[39m
-            [33mclass[39m=[32m"mt-2 text-base text-gray-600"[39m
-          [36m>[39m
-            [0mSign in to access your dashboard and bookings[0m
-          [36m</p>[39m
-        [36m</div>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden"[39m
-        [36m>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"px-8 py-8"[39m
-          [36m>[39m
-            [36m<form[39m
-              [33mclass[39m=[32m"space-y-6"[39m
-              [33mnovalidate[39m=[32m""[39m
-            [36m>[39m
-              [36m<div>[39m
-                [36m<label[39m
-                  [33mclass[39m=[32m"block text-sm font-medium text-gray-900 mb-2"[39m
-                  [33mfor[39m=[32m"email"[39m
-                [36m>[39m
-                  [0mEmail Address[0m
-                [36m</label>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"relative"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"[39m
-                  [36m>[39m
-                    [36m<svg[39m
-                      [33mclass[39m=[32m"lucide lucide-mail size-5 text-gray-400"[39m
-                      [33mfill[39m=[32m"none"[39m
-                      [33mheight[39m=[32m"24"[39m
-                      [33mstroke[39m=[32m"currentColor"[39m
-                      [33mstroke-linecap[39m=[32m"round"[39m
-                      [33mstroke-linejoin[39m=[32m"round"[39m
-                      [33mstroke-width[39m=[32m"2"[39m
-                      [33mviewBox[39m=[32m"0 0 24 24"[39m
-                      [33mwidth[39m=[32m"24"[39m
-                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                    [36m>[39m
-                      [36m<rect[39m
-                        [33mheight[39m=[32m"16"[39m
-                        [33mrx[39m=[32m"2"[39m
-                        [33mwidth[39m=[32m"20"[39m
-                        [33mx[39m=[32m"2"[39m
-                        [33my[39m=[32m"4"[39m
-                      [36m/>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"[39m
-                      [36m/>[39m
-                    [36m</svg>[39m
-                  [36m</div>[39m
-                  [36m<input[39m
-                    [33maria-invalid[39m=[32m"false"[39m
-                    [33mautocomplete[39m=[32m"email"[39m
-                    [33mclass[39m=[32m"block w-full pl-10 pr-4 py-3 rounded-lg border-2 transition-all duration-200 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-gray-900 placeholder-gray-400 focus:outline-none"[39m
-                    [33mid[39m=[32m"email"[39m
-                    [33mname[39m=[32m"email"[39m
-                    [33mplaceholder[39m=[32m"john@example.com"[39m
-                    [33mrequired[39m=[32m""[39m
-                    [33mtype[39m=[32m"email"[39m
-                    [33mvalue[39m=[32m""[39m
-                  [36m/>[39m
-                [36m</div>[39m
-              [36m</div>[39m
-              [36m<div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"flex items-center justify-between mb-2"[39m
-                [36m>[39m
-                  [36m<label[39m
-                    [33mclass[39m=[32m"block text-sm font-medium text-gray-900"[39m
-                    [33mfor[39m=[32m"password"[39m
-                  [36m>[39m
-                    [0mPassword[0m
-                  [36m</label>[39m
-                  [36m<a[39m
-                    [33mclass[39m=[32m"text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"[39m
-                    [33mhref[39m=[32m"/reset-password"[39m
-                  [36m>[39m
-                    [0mForgot password?[0m
-                  [36m</a>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"relative"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"[39m
-                  [36m>[39m
-                    [36m<svg[39m
-                      [33mclass[39m=[32m"lucide lucide-lock size-5 text-gray-400"[39m
-                      [33mfill[39m=[32m"none"[39m
-                      [33mheight[39m=[32m"24"[39m
-                      [33mstroke[39m=[32m"currentColor"[39m
-                      [33mstroke-linecap[39m=[32m"round"[39m
-                      [33mstroke-linejoin[39m=[32m"round"[39m
-                      [33mstroke-width[39m=[32m"2"[39m
-                      [33mviewBox[39m=[32m"0 0 24 24"[39m
-                      [33mwidth[39m=[32m"24"[39m
-                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                    [36m>[39m
-                      [36m<rect[39m
-                        [33mheight[39m=[32m"11"[39m
-                        [33mrx[39m=[32m"2"[39m
-                        [33mry[39m=[32m"2"[39m
-                        [33mwidth[39m=[32m"18"[39m
-                        [33mx[39m=[32m"3"[39m
-                        [33my[39m=[32m"11"[39m
-                      [36m/>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"M7 11V7a5 5 0 0 1 10 0v4"[39m
-                      [36m/>[39m
-                    [36m</svg>[39m
-                  [36m</div>[39m
-                  [36m<input[39m
-                    [33maria-invalid[39m=[32m"false"[39m
-                    [33mautocomplete[39m=[32m"current-password"[39m
-                    [33mclass[39m=[32m"block w-full pl-10 pr-12 py-3 rounded-lg border-2 transition-all duration-200 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-gray-900 placeholder-gray-400 focus:outline-none"[39m
-                    [33mid[39m=[32m"password"[39m
-                    [33mname[39m=[32m"password"[39m
-                    [33mplaceholder[39m=[32m"Enter your password"[39m
-                    [33mrequired[39m=[32m""[39m
-                    [33mtype[39m=[32m"password"[39m
-                    [33mvalue[39m=[32m""[39m
-                  [36m/>[39m
-                  [36m<button[39m
-                    [33maria-label[39m=[32m"Show password"[39m
-                    [33mclass[39m=[32m"absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"[39m
-                    [33mtype[39m=[32m"button"[39m
-                  [36m>[39m
-                    [36m<svg[39m
-                      [33mclass[39m=[32m"lucide lucide-eye size-5"[39m
-                      [33mfill[39m=[32m"none"[39m
-                      [33mheight[39m=[32m"24"[39m
-                      [33mstroke[39m=[32m"currentColor"[39m
-                      [33mstroke-linecap[39m=[32m"round"[39m
-                      [33mstroke-linejoin[39m=[32m"round"[39m
-                      [33mstroke-width[39m=[32m"2"[39m
-                      [33mviewBox[39m=[32m"0 0 24 24"[39m
-                      [33mwidth[39m=[32m"24"[39m
-                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                    [36m>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"[39m
-                      [36m/>[39m
-                      [36m<circle[39m
-                        [33mcx[39m=[32m"12"[39m
-                        [33mcy[39m=[32m"12"[39m
-                        [33mr[39m=[32m"3"[39m
-                      [36m/>[39m
-                    [36m</svg>[39m
-                  [36m</button>[39m
-                [36m</div>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"flex items-center"[39m
-              [36m>[39m
-                [36m<input[39m
-                  [33mclass[39m=[32m"h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition-colors cursor-pointer"[39m
-                  [33mid[39m=[32m"remember-me"[39m
-                  [33mname[39m=[32m"remember-me"[39m
-                  [33mtype[39m=[32m"checkbox"[39m
-                [36m/>[39m
-                [36m<label[39m
-                  [33mclass[39m=[32m"ml-2 block text-sm text-gray-700 cursor-pointer"[39m
-                  [33mfor[39m=[32m"remember-me"[39m
-                [36m>[39m
-                  [0mRemember me for 30 days[0m
-                [36m</label>[39m
-              [36m</div>[39m
-              [36m<button[39m
-                [33mclass[39m=[32m"w-full flex justify-center items-center px-6 py-3 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600 disabled:hover:shadow-lg"[39m
-                [33mdisabled[39m=[32m""[39m
-                [33mtype[39m=[32m"submit"[39m
-              [36m>[39m
-                [0mLog In[0m
-              [36m</button>[39m
-            [36m</form>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"mt-6"[39m
-            [36m>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"relative"[39m
-              [36m>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"absolute inset-0 flex items-center"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"w-full border-t border-gray-200"[39m
-                  [36m/>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"relative flex justify-center text-sm"[39m
-                [36m>[39m
-                  [36m<span[39m
-                    [33mclass[39m=[32m"px-2 bg-white text-gray-500"[39m
-                  [36m>[39m
-                    [0mOr log in with[0m
-                  [36m</span>[39m
-                [36m</div>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"mt-6 grid grid-cols-2 gap-3"[39m
-              [36m>[39m
-                [36m<button[39m
-                  [33mclass[39m=[32m"w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"[39m
-                  [33mdisabled[39m=[32m""[39m
-                  [33mtitle[39m=[32m"Coming soon"[39m
-                  [33mtype[39m=[32m"button"[39m
-                [36m>[39m
-                  [36m<svg[39m
-                    [33mclass[39m=[32m"w-5 h-5 mr-2"[39m
-                    [33mviewBox[39m=[32m"0 0 24 24"[39m
-                  [36m>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"[39m
-                      [33mfill[39m=[32m"#4285F4"[39m
-                    [36m/>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"[39m
-                      [33mfill[39m=[32m"#34A853"[39m
-                    [36m/>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"[39m
-                      [33mfill[39m=[32m"#FBBC05"[39m
-                    [36m/>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"[39m
-                      [33mfill[39m=[32m"#EA4335"[39m
-                    [36m/>[39m
-                  [36m</svg>[39m
-                  [0mGoogle[0m
-                [36m</button>[39m
-                [36m<button[39m
-                  [33mclass[39m=[32m"w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"[39m
-                  [33mdisabled[39m=[32m""[39m
-                  [33mtitle[39m=[32m"Coming soon"[39m
-                  [33mtype[39m=[32m"button"[39m
-                [36m>[39m
-                  [36m<svg[39m
-                    [33mclass[39m=[32m"w-5 h-5 mr-2"[39m
-                    [33mfill[39m=[32m"#1877F2"[39m
-                    [33mviewBox[39m=[32m"0 0 24 24"[39m
-                  [36m>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"[39m
-                    [36m/>[39m
-                  [36m</svg>[39m
-                  [0mFacebook[0m
-                [36m</button>[39m
-              [36m</div>[39m
-            [36m</div>[39m
-          [36m</div>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"px-8 py-4 bg-gray-50 border-t border-gray-100"[39m
-          [36m>[39m
-            [36m<p[39m
-              [33mclass[39m=[32m"text-center text-sm text-gray-600"[39m
-            [36m>[39m
-              [0mDon't have an account?[0m
-              [0m [0m
-              [36m<a[39m
-                [33mclass[39m=[32m"font-medium text-blue-600 hover:text-blue-700 transition-colors"[39m
-                [33mhref[39m=[32m"/register"[39m
-              [36m>[39m
-                [0mSign up[0m
-              [36m</a>[39m
-            [36m</p>[39m
-          [36m</div>[39m
-        [36m</div>[39m
-        [36m<p[39m
-          [33mclass[39m=[32m"text-center text-xs text-gray-500"[39m
-        [36m>[39m
-          [0mBy signing in, you agree to our[0m
-          [0m [0m
-          [36m<a[39m
-            [33mclass[39m=[32m"text-blue-600 hover:text-blue-700 underline"[39m
-            [33mhref[39m=[32m"#"[39m
-          [36m>[39m
-            [0mTerms of Service[0m
-          [36m</a>[39m
-          [0m [0m
-          [0mand[0m
-          [0m [0m
-          [36m<a[39m
-            [33mclass[39m=[32m"text-blue-600 hover:text-blue-700 underline"[39m
-            [33mhref[39m=[32m"#"[39m
-          [36m>[39m
-            [0mPrivacy Policy[0m
-          [36m</a>[39m
-        [36m</p>[39m
-      [36m</div>[39m
-    [36m</div>[39m
-  [36m</div>[39m
-[36m</body>[39m
-
-Ignored nodes: comments, script, style
-[36m<html>[39m
-  [36m<head />[39m
-  [36m<body>[39m
-    [36m<div>[39m
-      [36m<div[39m
-        [33mclass[39m=[32m"min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8"[39m
-      [36m>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"max-w-md w-full space-y-8"[39m
-        [36m>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"text-center"[39m
-          [36m>[39m
-            [36m<h1[39m
-              [33mclass[39m=[32m"text-4xl font-bold text-gray-900 leading-tight"[39m
-            [36m>[39m
-              [0mWelcome Back[0m
-            [36m</h1>[39m
-            [36m<p[39m
-              [33mclass[39m=[32m"mt-2 text-base text-gray-600"[39m
-            [36m>[39m
-              [0mSign in to access your dashboard and bookings[0m
-            [36m</p>[39m
-          [36m</div>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden"[39m
-          [36m>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"px-8 py-8"[39m
-            [36m>[39m
-              [36m<form[39m
-                [33mclass[39m=[32m"space-y-6"[39m
-                [33mnovalidate[39m=[32m""[39m
-              [36m>[39m
-                [36m<div>[39m
-                  [36m<label[39m
-                    [33mclass[39m=[32m"block text-sm font-medium text-gray-900 mb-2"[39m
-                    [33mfor[39m=[32m"email"[39m
-                  [36m>[39m
-                    [0mEmail Address[0m
-                  [36m</label>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"relative"[39m
-                  [36m>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"[39m
-                    [36m>[39m
-                      [36m<svg[39m
-                        [33mclass[39m=[32m"lucide lucide-mail size-5 text-gray-400"[39m
-                        [33mfill[39m=[32m"none"[39m
-                        [33mheight[39m=[32m"24"[39m
-                        [33mstroke[39m=[32m"currentColor"[39m
-                        [33mstroke-linecap[39m=[32m"round"[39m
-                        [33mstroke-linejoin[39m=[32m"round"[39m
-                        [33mstroke-width[39m=[32m"2"[39m
-                        [33mviewBox[39m=[32m"0 0 24 24"[39m
-                        [33mwidth[39m=[32m"24"[39m
-                        [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                      [36m>[39m
-                        [36m<rect[39m
-                          [33mheight[39m=[32m"16"[39m
-                          [33mrx[39m=[32m"2"[39m
-                          [33mwidth[39m=[32m"20"[39m
-                          [33mx[39m=[32m"2"[39m
-                          [33my[39m=[32m"4"[39m
-                        [36m/>[39m
-                        [36m<path[39m
-                          [33md[39m=[32m"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"[39m
-                        [36m/>[39m
-                      [36m</svg>[39m
-                    [36m</div>[39m
-                    [36m<input[39m
-                      [33maria-invalid[39m=[32m"false"[39m
-                      [33mautocomplete[39m=[32m"email"[39m
-                      [33mclass[39m=[32m"block w-full pl-10 pr-4 py-3 rounded-lg border-2 transition-all duration-200 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-gray-900 placeholder-gray-400 focus:outline-none"[39m
-                      [33mid[39m=[32m"email"[39m
-                      [33mname[39m=[32m"email"[39m
-                      [33mplaceholder[39m=[32m"john@example.com"[39m
-                      [33mrequired[39m=[32m""[39m
-                      [33mtype[39m=[32m"email"[39m
-                      [33mvalue[39m=[32m""[39m
-                    [36m/>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
-                [36m<div>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"flex items-center justify-between mb-2"[39m
-                  [36m>[39m
-                    [36m<label[39m
-                      [33mclass[39m=[32m"block text-sm font-medium text-gray-900"[39m
-                      [33mfor[39m=[32m"password"[39m
-                    [36m>[39m
-                      [0mPassword[0m
-                    [36m</label>[39m
-                    [36m<a[39m
-                      [33mclass[39m=[32m"text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"[39m
-                      [33mhref[39m=[32m"/reset-password"[39m
-                    [36m>[39m
-                      [0mForgot password?[0m
-                    [36m</a>[39m
-                  [36m</div>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"relative"[39m
-                  [36m>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"[39m
-                    [36m>[39m
-                      [36m<svg[39m
-                        [33mclass[39m=[32m"lucide lucide-lock size-5 text-gray-400"[39m
-                        [33mfill[39m=[32m"none"[39m
-                        [33mheight[39m=[32m"24"[39m
-                        [33mstroke[39m=[32m"currentColor"[39m
-                        [33mstroke-linecap[39m=[32m"round"[39m
-                        [33mstroke-linejoin[39m=[32m"round"[39m
-                        [33mstroke-width[39m=[32m"2"[39m
-                        [33mviewBox[39m=[32m"0 0 24 24"[39m
-                        [33mwidth[39m=[32m"24"[39m
-                        [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                      [36m>[39m
-                        [36m<rect[39m
-                          [33mheight[39m=[32m"11"[39m
-                          [33mrx[39m=[32m"2"[39m
-                          [33mry[39m=[32m"2"[39m
-                          [33mwidth[39m=[32m"18"[39m
-                          [33mx[39m=[32m"3"[39m
-                          [33my[39m=[32m"11"[39m
-                        [36m/>[39m
-                        [36m<path[39m
-                          [33md[39m=[32m"M7 11V7a5 5 0 0 1 10 0v4"[39m
-                        [36m/>[39m
-                      [36m</svg>[39m
-                    [36m</div>[39m
-                    [36m<input[39m
-                      [33maria-invalid[39m=[32m"false"[39m
-                      [33mautocomplete[39m=[32m"current-password"[39m
-                      [33mclass[39m=[32m"block w-full pl-10 pr-12 py-3 rounded-lg border-2 transition-all duration-200 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-gray-900 placeholder-gray-400 focus:outline-none"[39m
-                      [33mid[39m=[32m"password"[39m
-                      [33mname[39m=[32m"password"[39m
-                      [33mplaceholder[39m=[32m"Enter your password"[39m
-                      [33mrequired[39m=[32m""[39m
-                      [33mtype[39m=[32m"password"[39m
-                      [33mvalue[39m=[32m""[39m
-                    [36m/>[39m
-                    [36m<button[39m
-                      [33maria-label[39m=[32m"Show password"[39m
-                      [33mclass[39m=[32m"absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"[39m
-                      [33mtype[39m=[32m"button"[39m
-                    [36m>[39m
-                      [36m<svg[39m
-                        [33mclass[39m=[32m"lucide lucide-eye size-5"[39m
-                        [33mfill[39m=[32m"none"[39m
-                        [33mheight[39m=[32m"24"[39m
-                        [33mstroke[39m=[32m"currentColor"[39m
-                        [33mstroke-linecap[39m=[32m"round"[39m
-                        [33mstroke-linejoin[39m=[32m"round"[39m
-                        [33mstroke-width[39m=[32m"2"[39m
-                        [33mviewBox[39m=[32m"0 0 24 24"[39m
-                        [33mwidth[39m=[32m"24"[39m
-                        [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                      [36m>[39m
-                        [36m<path[39m
-                          [33md[39m=[32m"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"[39m
-                        [36m/>[39m
-                        [36m<circle[39m
-                          [33mcx[39m=[32m"12"[39m
-                          [33mcy[39m=[32m"12"[39m
-                          [33mr[39m=[32m"3"[39m
-                        [36m/>[39m
-                      [36m</svg>[39m
-                    [36m</button>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"flex items-center"[39m
-                [36m>[39m
-                  [36m<input[39m
-                    [33mclass[39m=[32m"h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition-colors cursor-pointer"[39m
-                    [33mid[39m=[32m"remember-me"[39m
-                    [33mname[39m=[32m"remember-me"[39m
-                    [33mtype[39m=[32m"checkbox"[39m
-                  [36m/>[39m
-                  [36m<label[39m
-                    [33mclass[39m=[32m"ml-2 block text-sm text-gray-700 cursor-pointer"[39m
-                    [33mfor[39m=[32m"remember-me"[39m
-                  [36m>[39m
-                    [0mRemember me for 30 days[0m
-                  [36m</label>[39m
-                [36m</div>[39m
-                [36m<button[39m
-                  [33mclass[39m=[32m"w-full flex justify-center items-center px-6 py-3 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600 disabled:hover:shadow-lg"[39m
-                  [33mdisabled[39m=[32m""[39m
-                  [33mtype[39m=[32m"submit"[39m
-                [36m>[39m
-                  [0mLog In[0m
-                [36m</button>[39m
-              [36m</form>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"mt-6"[39m
-              [36m>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"relative"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"absolute inset-0 flex items-center"[39m
-                  [36m>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m"w-full border-t border-gray-200"[39m
-                    [36m/>[39m
-                  [36m</div>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"relative flex justify-center text-sm"[39m
-                  [36m>[39m
-                    [36m<span[39m
-                      [33mclass[39m=[32m"px-2 bg-white text-gray-500"[39m
-                    [36m>[39m
-                      [0mOr log in with[0m
-                    [36m</span>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"mt-6 grid grid-cols-2 gap-3"[39m
-                [36m>[39m
-                  [36m<button[39m
-                    [33mclass[39m=[32m"w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"[39m
-                    [33mdisabled[39m=[32m""[39m
-                    [33mtitle[39m=[32m"Coming soon"[39m
-                    [33mtype[39m=[32m"button"[39m
-                  [36m>[39m
-                    [36m<svg[39m
-                      [33mclass[39m=[32m"w-5 h-5 mr-2"[39m
-                      [33mviewBox[39m=[32m"0 0 24 24"[39m
-                    [36m>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"[39m
-                        [33mfill[39m=[32m"#4285F4"[39m
-                      [36m/>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"[39m
-                        [33mfill[39m=[32m"#34A853"[39m
-                      [36m/>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"[39m
-                        [33mfill[39m=[32m"#FBBC05"[39m
-                      [36m/>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"[39m
-                        [33mfill[39m=[32m"#EA4335"[39m
-                      [36m/>[39m
-                    [36m</svg>[39m
-                    [0mGoogle[0m
-                  [36m</button>[39m
-                  [36m<button[39m
-                    [33mclass[39m=[32m"w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"[39m
-                    [33mdisabled[39m=[32m""[39m
-                    [33mtitle[39m=[32m"Coming soon"[39m
-                    [33mtype[39m=[32m"button"[39m
-                  [36m>[39m
-                    [36m<svg[39m
-                      [33mclass[39m=[32m"w-5 h-5 mr-2"[39m
-                      [33mfill[39m=[32m"#1877F2"[39m
-                      [33mviewBox[39m=[32m"0 0 24 24"[39m
-                    [36m>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"[39m
-                      [36m/>[39m
-                    [36m</svg>[39m
-                    [0mFacebook[0m
-                  [36m</button>[39m
-                [36m</div>[39m
-              [36m</div>[39m
-            [36m</div>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"px-8 py-4 bg-gray-50 border-t border-gray-100"[39m
-            [36m>[39m
-              [36m<p[39m
-                [33mclass[39m=[32m"text-center text-sm text-gray-600"[39m
-              [36m>[39m
-                [0mDon't have an account?[0m
-                [0m [0m
-                [36m<a[39m
-                  [33mclass[39m=[32m"font-medium text-blue-600 hover:text-blue-700 transition-colors"[39m
-                  [33mhref[39m=[32m"/register"[39m
-                [36m>[39m
-                  [0mSign up[0m
-                [36m</a>[39m
-              [36m</p>[39m
-            [36m</div>[39m
-          [36m</div>[39m
-          [36m<p[39m
-            [33mclass[39m=[32m"text-center text-xs text-gray-500"[39m
-          [36m>[39m
-            [0mBy signing in, you agree to our[0m
-            [0m [0m
-            [36m<a[39m
-              [33mclass[39m=[32m"text-blue-600 hover:text-blue-700 underline"[39m
-              [33mhref[39m=[32m"#"[39m
-            [36m>[39m
-              [0mTerms of Service[0m
-            [36m</a>[39m
-            [0m [0m
-            [0mand[0m
-            [0m [0m
-            [36m<a[39m
-              [33mclass[39m=[32m"text-blue-600 hover:text-blue-700 underline"[39m
-              [33mhref[39m=[32m"#"[39m
-            [36m>[39m
-              [0mPrivacy Policy[0m
-            [36m</a>[39m
-          [36m</p>[39m
-        [36m</div>[39m
-      [36m</div>[39m
-    [36m</div>[39m
-  [36m</body>[39m
-[36m</html>[39m
- ❯ Proxy.waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
- ❯ src/__tests__/auth.e2e.test.tsx:41:11
-     39|     render(<UV_Login />, { wrapper: Wrapper });
-     40| 
-     41|     await waitFor(() => {
-       |           ^
-     42|       expect(screen.getByRole('button', { name: /sign in/i })).toBeInT…
-     43|     });
-
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
-
- FAIL  src/__tests__/auth.e2e.test.tsx > Auth E2E Flow (real API) > shows error on invalid login credentials
-TestingLibraryElementError: Unable to find an element with the placeholder text of: /email address/i
-
-Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div>[39m
-    [36m<div[39m
-      [33mclass[39m=[32m"min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8"[39m
-    [36m>[39m
-      [36m<div[39m
-        [33mclass[39m=[32m"max-w-md w-full space-y-8"[39m
-      [36m>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"text-center"[39m
-        [36m>[39m
-          [36m<h1[39m
-            [33mclass[39m=[32m"text-4xl font-bold text-gray-900 leading-tight"[39m
-          [36m>[39m
-            [0mWelcome Back[0m
-          [36m</h1>[39m
-          [36m<p[39m
-            [33mclass[39m=[32m"mt-2 text-base text-gray-600"[39m
-          [36m>[39m
-            [0mSign in to access your dashboard and bookings[0m
-          [36m</p>[39m
-        [36m</div>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden"[39m
-        [36m>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"px-8 py-8"[39m
-          [36m>[39m
-            [36m<form[39m
-              [33mclass[39m=[32m"space-y-6"[39m
-              [33mnovalidate[39m=[32m""[39m
-            [36m>[39m
-              [36m<div>[39m
-                [36m<label[39m
-                  [33mclass[39m=[32m"block text-sm font-medium text-gray-900 mb-2"[39m
-                  [33mfor[39m=[32m"email"[39m
-                [36m>[39m
-                  [0mEmail Address[0m
-                [36m</label>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"relative"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"[39m
-                  [36m>[39m
-                    [36m<svg[39m
-                      [33mclass[39m=[32m"lucide lucide-mail size-5 text-gray-400"[39m
-                      [33mfill[39m=[32m"none"[39m
-                      [33mheight[39m=[32m"24"[39m
-                      [33mstroke[39m=[32m"currentColor"[39m
-                      [33mstroke-linecap[39m=[32m"round"[39m
-                      [33mstroke-linejoin[39m=[32m"round"[39m
-                      [33mstroke-width[39m=[32m"2"[39m
-                      [33mviewBox[39m=[32m"0 0 24 24"[39m
-                      [33mwidth[39m=[32m"24"[39m
-                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                    [36m>[39m
-                      [36m<rect[39m
-                        [33mheight[39m=[32m"16"[39m
-                        [33mrx[39m=[32m"2"[39m
-                        [33mwidth[39m=[32m"20"[39m
-                        [33mx[39m=[32m"2"[39m
-                        [33my[39m=[32m"4"[39m
-                      [36m/>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"[39m
-                      [36m/>[39m
-                    [36m</svg>[39m
-                  [36m</div>[39m
-                  [36m<input[39m
-                    [33maria-invalid[39m=[32m"false"[39m
-                    [33mautocomplete[39m=[32m"email"[39m
-                    [33mclass[39m=[32m"block w-full pl-10 pr-4 py-3 rounded-lg border-2 transition-all duration-200 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-gray-900 placeholder-gray-400 focus:outline-none"[39m
-                    [33mid[39m=[32m"email"[39m
-                    [33mname[39m=[32m"email"[39m
-                    [33mplaceholder[39m=[32m"john@example.com"[39m
-                    [33mrequired[39m=[32m""[39m
-                    [33mtype[39m=[32m"email"[39m
-                    [33mvalue[39m=[32m""[39m
-                  [36m/>[39m
-                [36m</div>[39m
-              [36m</div>[39m
-              [36m<div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"flex items-center justify-between mb-2"[39m
-                [36m>[39m
-                  [36m<label[39m
-                    [33mclass[39m=[32m"block text-sm font-medium text-gray-900"[39m
-                    [33mfor[39m=[32m"password"[39m
-                  [36m>[39m
-                    [0mPassword[0m
-                  [36m</label>[39m
-                  [36m<a[39m
-                    [33mclass[39m=[32m"text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"[39m
-                    [33mhref[39m=[32m"/reset-password"[39m
-                  [36m>[39m
-                    [0mForgot password?[0m
-                  [36m</a>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"relative"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"[39m
-                  [36m>[39m
-                    [36m<svg[39m
-                      [33mclass[39m=[32m"lucide lucide-lock size-5 text-gray-400"[39m
-                      [33mfill[39m=[32m"none"[39m
-                      [33mheight[39m=[32m"24"[39m
-                      [33mstroke[39m=[32m"currentColor"[39m
-                      [33mstroke-linecap[39m=[32m"round"[39m
-                      [33mstroke-linejoin[39m=[32m"round"[39m
-                      [33mstroke-width[39m=[32m"2"[39m
-                      [33mviewBox[39m=[32m"0 0 24 24"[39m
-                      [33mwidth[39m=[32m"24"[39m
-                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                    [36m>[39m
-                      [36m<rect[39m
-                        [33mheight[39m=[32m"11"[39m
-                        [33mrx[39m=[32m"2"[39m
-                        [33mry[39m=[32m"2"[39m
-                        [33mwidth[39m=[32m"18"[39m
-                        [33mx[39m=[32m"3"[39m
-                        [33my[39m=[32m"11"[39m
-                      [36m/>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"M7 11V7a5 5 0 0 1 10 0v4"[39m
-                      [36m/>[39m
-                    [36m</svg>[39m
-                  [36m</div>[39m
-                  [36m<input[39m
-                    [33maria-invalid[39m=[32m"false"[39m
-                    [33mautocomplete[39m=[32m"current-password"[39m
-                    [33mclass[39m=[32m"block w-full pl-10 pr-12 py-3 rounded-lg border-2 transition-all duration-200 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-gray-900 placeholder-gray-400 focus:outline-none"[39m
-                    [33mid[39m=[32m"password"[39m
-                    [33mname[39m=[32m"password"[39m
-                    [33mplaceholder[39m=[32m"Enter your password"[39m
-                    [33mrequired[39m=[32m""[39m
-                    [33mtype[39m=[32m"password"[39m
-                    [33mvalue[39m=[32m""[39m
-                  [36m/>[39m
-                  [36m<button[39m
-                    [33maria-label[39m=[32m"Show password"[39m
-                    [33mclass[39m=[32m"absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"[39m
-                    [33mtype[39m=[32m"button"[39m
-                  [36m>[39m
-                    [36m<svg[39m
-                      [33mclass[39m=[32m"lucide lucide-eye size-5"[39m
-                      [33mfill[39m=[32m"none"[39m
-                      [33mheight[39m=[32m"24"[39m
-                      [33mstroke[39m=[32m"currentColor"[39m
-                      [33mstroke-linecap[39m=[32m"round"[39m
-                      [33mstroke-linejoin[39m=[32m"round"[39m
-                      [33mstroke-width[39m=[32m"2"[39m
-                      [33mviewBox[39m=[32m"0 0 24 24"[39m
-                      [33mwidth[39m=[32m"24"[39m
-                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                    [36m>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"[39m
-                      [36m/>[39m
-                      [36m<circle[39m
-                        [33mcx[39m=[32m"12"[39m
-                        [33mcy[39m=[32m"12"[39m
-                        [33mr[39m=[32m"3"[39m
-                      [36m/>[39m
-                    [36m</svg>[39m
-                  [36m</button>[39m
-                [36m</div>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"flex items-center"[39m
-              [36m>[39m
-                [36m<input[39m
-                  [33mclass[39m=[32m"h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition-colors cursor-pointer"[39m
-                  [33mid[39m=[32m"remember-me"[39m
-                  [33mname[39m=[32m"remember-me"[39m
-                  [33mtype[39m=[32m"checkbox"[39m
-                [36m/>[39m
-                [36m<label[39m
-                  [33mclass[39m=[32m"ml-2 block text-sm text-gray-700 cursor-pointer"[39m
-                  [33mfor[39m=[32m"remember-me"[39m
-                [36m>[39m
-                  [0mRemember me for 30 days[0m
-                [36m</label>[39m
-              [36m</div>[39m
-              [36m<button[39m
-                [33mclass[39m=[32m"w-full flex justify-center items-center px-6 py-3 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600 disabled:hover:shadow-lg"[39m
-                [33mdisabled[39m=[32m""[39m
-                [33mtype[39m=[32m"submit"[39m
-              [36m>[39m
-                [0mLog In[0m
-              [36m</button>[39m
-            [36m</form>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"mt-6"[39m
-            [36m>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"relative"[39m
-              [36m>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"absolute inset-0 flex items-center"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"w-full border-t border-gray-200"[39m
-                  [36m/>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"relative flex justify-center text-sm"[39m
-                [36m>[39m
-                  [36m<span[39m
-                    [33mclass[39m=[32m"px-2 bg-white text-gray-500"[39m
-                  [36m>[39m
-                    [0mOr log in with[0m
-                  [36m</span>[39m
-                [36m</div>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"mt-6 grid grid-cols-2 gap-3"[39m
-              [36m>[39m
-                [36m<button[39m
-                  [33mclass[39m=[32m"w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"[39m
-                  [33mdisabled[39m=[32m""[39m
-                  [33mtitle[39m=[32m"Coming soon"[39m
-                  [33mtype[39m=[32m"button"[39m
-                [36m>[39m
-                  [36m<svg[39m
-                    [33mclass[39m=[32m"w-5 h-5 mr-2"[39m
-                    [33mviewBox[39m=[32m"0 0 24 24"[39m
-                  [36m>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"[39m
-                      [33mfill[39m=[32m"#4285F4"[39m
-                    [36m/>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"[39m
-                      [33mfill[39m=[32m"#34A853"[39m
-                    [36m/>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"[39m
-                      [33mfill[39m=[32m"#FBBC05"[39m
-                    [36m/>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"[39m
-                      [33mfill[39m=[32m"#EA4335"[39m
-                    [36m/>[39m
-                  [36m</svg>[39m
-                  [0mGoogle[0m
-                [36m</button>[39m
-                [36m<button[39m
-                  [33mclass[39m=[32m"w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"[39m
-                  [33mdisabled[39m=[32m""[39m
-                  [33mtitle[39m=[32m"Coming soon"[39m
-                  [33mtype[39m=[32m"button"[39m
-                [36m>[39m
-                  [36m<svg[39m
-                    [33mclass[39m=[32m"w-5 h-5 mr-2"[39m
-                    [33mfill[39m=[32m"#1877F2"[39m
-                    [33mviewBox[39m=[32m"0 0 24 24"[39m
-                  [36m>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"[39m
-                    [36m/>[39m
-                  [36m</svg>[39m
-                  [0mFacebook[0m
-                [36m</button>[39m
-              [36m</div>[39m
-            [36m</div>[39m
-          [36m</div>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"px-8 py-4 bg-gray-50 border-t border-gray-100"[39m
-          [36m>[39m
-            [36m<p[39m
-              [33mclass[39m=[32m"text-center text-sm text-gray-600"[39m
-            [36m>[39m
-              [0mDon't have an account?[0m
-              [0m [0m
-              [36m<a[39m
-                [33mclass[39m=[32m"font-medium text-blue-600 hover:text-blue-700 transition-colors"[39m
-                [33mhref[39m=[32m"/register"[39m
-              [36m>[39m
-                [0mSign up[0m
-              [36m</a>[39m
-            [36m</p>[39m
-          [36m</div>[39m
-        [36m</div>[39m
-        [36m<p[39m
-          [33mclass[39m=[32m"text-center text-xs text-gray-500"[39m
-        [36m>[39m
-          [0mBy signing in, you agree to our[0m
-          [0m [0m
-          [36m<a[39m
-            [33mclass[39m=[32m"text-blue-600 hover:text-blue-700 underline"[39m
-            [33mhref[39m=[32m"#"[39m
-          [36m>[39m
-            [0mTerms of Service[0m
-          [36m</a>[39m
-          [0m [0m
-          [0mand[0m
-          [0m [0m
-          [36m<a[39m
-            [33mclass[39m=[32m"text-blue-600 hover:text-blue-700 underline"[39m
-            [33mhref[39m=[32m"#"[39m
-          [36m>[39m
-            [0mPrivacy Policy[0m
-          [36m</a>[39m
-        [36m</p>[39m
-      [36m</div>[39m
-    [36m</div>[39m
-  [36m</div>[39m
-[36m</body>[39m
- ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
- ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
- ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
- ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
- ❯ src/__tests__/auth.e2e.test.tsx:125:31
-    123|     render(<UV_Login />, { wrapper: Wrapper });
-    124| 
-    125|     const emailInput = screen.getByPlaceholderText(/email address/i);
-       |                               ^
-    126|     const passwordInput = screen.getByPlaceholderText(/^password$/i);
-    127|     const signInButton = screen.getByRole('button', { name: /sign in/i…
-
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
-
- FAIL  src/__tests__/auth.e2e.test.tsx > Auth E2E Flow (real API) > prevents duplicate email registration
-TestingLibraryElementError: Unable to find an accessible element with the role "button" and name `/don't have an account/i`
-
-Here are the accessible roles:
-
-  heading:
-
-  Name "Welcome Back":
-  [36m<h1[39m
-    [33mclass[39m=[32m"text-4xl font-bold text-gray-900 leading-tight"[39m
-  [36m/>[39m
-
-  --------------------------------------------------
-  paragraph:
-
-  Name "":
-  [36m<p[39m
-    [33mclass[39m=[32m"mt-2 text-base text-gray-600"[39m
-  [36m/>[39m
-
-  Name "":
-  [36m<p[39m
-    [33mclass[39m=[32m"text-center text-sm text-gray-600"[39m
-  [36m/>[39m
-
-  Name "":
-  [36m<p[39m
-    [33mclass[39m=[32m"text-center text-xs text-gray-500"[39m
-  [36m/>[39m
-
-  --------------------------------------------------
-  textbox:
-
-  Name "Email Address":
-  [36m<input[39m
-    [33maria-invalid[39m=[32m"false"[39m
-    [33mautocomplete[39m=[32m"email"[39m
-    [33mclass[39m=[32m"block w-full pl-10 pr-4 py-3 rounded-lg border-2 transition-all duration-200 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-gray-900 placeholder-gray-400 focus:outline-none"[39m
-    [33mid[39m=[32m"email"[39m
-    [33mname[39m=[32m"email"[39m
-    [33mplaceholder[39m=[32m"john@example.com"[39m
-    [33mrequired[39m=[32m""[39m
-    [33mtype[39m=[32m"email"[39m
-    [33mvalue[39m=[32m""[39m
-  [36m/>[39m
-
-  --------------------------------------------------
-  link:
-
-  Name "Forgot password?":
-  [36m<a[39m
-    [33mclass[39m=[32m"text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"[39m
-    [33mhref[39m=[32m"/reset-password"[39m
-  [36m/>[39m
-
-  Name "Sign up":
-  [36m<a[39m
-    [33mclass[39m=[32m"font-medium text-blue-600 hover:text-blue-700 transition-colors"[39m
-    [33mhref[39m=[32m"/register"[39m
-  [36m/>[39m
-
-  Name "Terms of Service":
-  [36m<a[39m
-    [33mclass[39m=[32m"text-blue-600 hover:text-blue-700 underline"[39m
-    [33mhref[39m=[32m"#"[39m
-  [36m/>[39m
-
-  Name "Privacy Policy":
-  [36m<a[39m
-    [33mclass[39m=[32m"text-blue-600 hover:text-blue-700 underline"[39m
-    [33mhref[39m=[32m"#"[39m
-  [36m/>[39m
-
-  --------------------------------------------------
-  button:
-
-  Name "Show password":
-  [36m<button[39m
-    [33maria-label[39m=[32m"Show password"[39m
-    [33mclass[39m=[32m"absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"[39m
-    [33mtype[39m=[32m"button"[39m
-  [36m/>[39m
-
-  Name "Log In":
-  [36m<button[39m
-    [33mclass[39m=[32m"w-full flex justify-center items-center px-6 py-3 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600 disabled:hover:shadow-lg"[39m
-    [33mdisabled[39m=[32m""[39m
-    [33mtype[39m=[32m"submit"[39m
-  [36m/>[39m
-
-  Name "Google":
-  [36m<button[39m
-    [33mclass[39m=[32m"w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"[39m
-    [33mdisabled[39m=[32m""[39m
-    [33mtitle[39m=[32m"Coming soon"[39m
-    [33mtype[39m=[32m"button"[39m
-  [36m/>[39m
-
-  Name "Facebook":
-  [36m<button[39m
-    [33mclass[39m=[32m"w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"[39m
-    [33mdisabled[39m=[32m""[39m
-    [33mtitle[39m=[32m"Coming soon"[39m
-    [33mtype[39m=[32m"button"[39m
-  [36m/>[39m
-
-  --------------------------------------------------
-  checkbox:
-
-  Name "Remember me for 30 days":
-  [36m<input[39m
-    [33mclass[39m=[32m"h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition-colors cursor-pointer"[39m
-    [33mid[39m=[32m"remember-me"[39m
-    [33mname[39m=[32m"remember-me"[39m
-    [33mtype[39m=[32m"checkbox"[39m
-  [36m/>[39m
-
-  --------------------------------------------------
-
-Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div>[39m
-    [36m<div[39m
-      [33mclass[39m=[32m"min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8"[39m
-    [36m>[39m
-      [36m<div[39m
-        [33mclass[39m=[32m"max-w-md w-full space-y-8"[39m
-      [36m>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"text-center"[39m
-        [36m>[39m
-          [36m<h1[39m
-            [33mclass[39m=[32m"text-4xl font-bold text-gray-900 leading-tight"[39m
-          [36m>[39m
-            [0mWelcome Back[0m
-          [36m</h1>[39m
-          [36m<p[39m
-            [33mclass[39m=[32m"mt-2 text-base text-gray-600"[39m
-          [36m>[39m
-            [0mSign in to access your dashboard and bookings[0m
-          [36m</p>[39m
-        [36m</div>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden"[39m
-        [36m>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"px-8 py-8"[39m
-          [36m>[39m
-            [36m<form[39m
-              [33mclass[39m=[32m"space-y-6"[39m
-              [33mnovalidate[39m=[32m""[39m
-            [36m>[39m
-              [36m<div>[39m
-                [36m<label[39m
-                  [33mclass[39m=[32m"block text-sm font-medium text-gray-900 mb-2"[39m
-                  [33mfor[39m=[32m"email"[39m
-                [36m>[39m
-                  [0mEmail Address[0m
-                [36m</label>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"relative"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"[39m
-                  [36m>[39m
-                    [36m<svg[39m
-                      [33mclass[39m=[32m"lucide lucide-mail size-5 text-gray-400"[39m
-                      [33mfill[39m=[32m"none"[39m
-                      [33mheight[39m=[32m"24"[39m
-                      [33mstroke[39m=[32m"currentColor"[39m
-                      [33mstroke-linecap[39m=[32m"round"[39m
-                      [33mstroke-linejoin[39m=[32m"round"[39m
-                      [33mstroke-width[39m=[32m"2"[39m
-                      [33mviewBox[39m=[32m"0 0 24 24"[39m
-                      [33mwidth[39m=[32m"24"[39m
-                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                    [36m>[39m
-                      [36m<rect[39m
-                        [33mheight[39m=[32m"16"[39m
-                        [33mrx[39m=[32m"2"[39m
-                        [33mwidth[39m=[32m"20"[39m
-                        [33mx[39m=[32m"2"[39m
-                        [33my[39m=[32m"4"[39m
-                      [36m/>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"[39m
-                      [36m/>[39m
-                    [36m</svg>[39m
-                  [36m</div>[39m
-                  [36m<input[39m
-                    [33maria-invalid[39m=[32m"false"[39m
-                    [33mautocomplete[39m=[32m"email"[39m
-                    [33mclass[39m=[32m"block w-full pl-10 pr-4 py-3 rounded-lg border-2 transition-all duration-200 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-gray-900 placeholder-gray-400 focus:outline-none"[39m
-                    [33mid[39m=[32m"email"[39m
-                    [33mname[39m=[32m"email"[39m
-                    [33mplaceholder[39m=[32m"john@example.com"[39m
-                    [33mrequired[39m=[32m""[39m
-                    [33mtype[39m=[32m"email"[39m
-                    [33mvalue[39m=[32m""[39m
-                  [36m/>[39m
-                [36m</div>[39m
-              [36m</div>[39m
-              [36m<div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"flex items-center justify-between mb-2"[39m
-                [36m>[39m
-                  [36m<label[39m
-                    [33mclass[39m=[32m"block text-sm font-medium text-gray-900"[39m
-                    [33mfor[39m=[32m"password"[39m
-                  [36m>[39m
-                    [0mPassword[0m
-                  [36m</label>[39m
-                  [36m<a[39m
-                    [33mclass[39m=[32m"text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"[39m
-                    [33mhref[39m=[32m"/reset-password"[39m
-                  [36m>[39m
-                    [0mForgot password?[0m
-                  [36m</a>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"relative"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"[39m
-                  [36m>[39m
-                    [36m<svg[39m
-                      [33mclass[39m=[32m"lucide lucide-lock size-5 text-gray-400"[39m
-                      [33mfill[39m=[32m"none"[39m
-                      [33mheight[39m=[32m"24"[39m
-                      [33mstroke[39m=[32m"currentColor"[39m
-                      [33mstroke-linecap[39m=[32m"round"[39m
-                      [33mstroke-linejoin[39m=[32m"round"[39m
-                      [33mstroke-width[39m=[32m"2"[39m
-                      [33mviewBox[39m=[32m"0 0 24 24"[39m
-                      [33mwidth[39m=[32m"24"[39m
-                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                    [36m>[39m
-                      [36m<rect[39m
-                        [33mheight[39m=[32m"11"[39m
-                        [33mrx[39m=[32m"2"[39m
-                        [33mry[39m=[32m"2"[39m
-                        [33mwidth[39m=[32m"18"[39m
-                        [33mx[39m=[32m"3"[39m
-                        [33my[39m=[32m"11"[39m
-                      [36m/>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"M7 11V7a5 5 0 0 1 10 0v4"[39m
-                      [36m/>[39m
-                    [36m</svg>[39m
-                  [36m</div>[39m
-                  [36m<input[39m
-                    [33maria-invalid[39m=[32m"false"[39m
-                    [33mautocomplete[39m=[32m"current-password"[39m
-                    [33mclass[39m=[32m"block w-full pl-10 pr-12 py-3 rounded-lg border-2 transition-all duration-200 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-gray-900 placeholder-gray-400 focus:outline-none"[39m
-                    [33mid[39m=[32m"password"[39m
-                    [33mname[39m=[32m"password"[39m
-                    [33mplaceholder[39m=[32m"Enter your password"[39m
-                    [33mrequired[39m=[32m""[39m
-                    [33mtype[39m=[32m"password"[39m
-                    [33mvalue[39m=[32m""[39m
-                  [36m/>[39m
-                  [36m<button[39m
-                    [33maria-label[39m=[32m"Show password"[39m
-                    [33mclass[39m=[32m"absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"[39m
-                    [33mtype[39m=[32m"button"[39m
-                  [36m>[39m
-                    [36m<svg[39m
-                      [33mclass[39m=[32m"lucide lucide-eye size-5"[39m
-                      [33mfill[39m=[32m"none"[39m
-                      [33mheight[39m=[32m"24"[39m
-                      [33mstroke[39m=[32m"currentColor"[39m
-                      [33mstroke-linecap[39m=[32m"round"[39m
-                      [33mstroke-linejoin[39m=[32m"round"[39m
-                      [33mstroke-width[39m=[32m"2"[39m
-                      [33mviewBox[39m=[32m"0 0 24 24"[39m
-                      [33mwidth[39m=[32m"24"[39m
-                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                    [36m>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"[39m
-                      [36m/>[39m
-                      [36m<circle[39m
-                        [33mcx[39m=[32m"12"[39m
-                        [33mcy[39m=[32m"12"[39m
-                        [33mr[39m=[32m"3"[39m
-                      [36m/>[39m
-                    [36m</svg>[39m
-                  [36m</button>[39m
-                [36m</div>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"flex items-center"[39m
-              [36m>[39m
-                [36m<input[39m
-                  [33mclass[39m=[32m"h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition-colors cursor-pointer"[39m
-                  [33mid[39m=[32m"remember-me"[39m
-                  [33mname[39m=[32m"remember-me"[39m
-                  [33mtype[39m=[32m"checkbox"[39m
-                [36m/>[39m
-                [36m<label[39m
-                  [33mclass[39m=[32m"ml-2 block text-sm text-gray-700 cursor-pointer"[39m
-                  [33mfor[39m=[32m"remember-me"[39m
-                [36m>[39m
-                  [0mRemember me for 30 days[0m
-                [36m</label>[39m
-              [36m</div>[39m
-              [36m<button[39m
-                [33mclass[39m=[32m"w-full flex justify-center items-center px-6 py-3 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600 disabled:hover:shadow-lg"[39m
-                [33mdisabled[39m=[32m""[39m
-                [33mtype[39m=[32m"submit"[39m
-              [36m>[39m
-                [0mLog In[0m
-              [36m</button>[39m
-            [36m</form>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"mt-6"[39m
-            [36m>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"relative"[39m
-              [36m>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"absolute inset-0 flex items-center"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"w-full border-t border-gray-200"[39m
-                  [36m/>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"relative flex justify-center text-sm"[39m
-                [36m>[39m
-                  [36m<span[39m
-                    [33mclass[39m=[32m"px-2 bg-white text-gray-500"[39m
-                  [36m>[39m
-                    [0mOr log in with[0m
-                  [36m</span>[39m
-                [36m</div>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"mt-6 grid grid-cols-2 gap-3"[39m
-              [36m>[39m
-                [36m<button[39m
-                  [33mclass[39m=[32m"w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"[39m
-                  [33mdisabled[39m=[32m""[39m
-                  [33mtitle[39m=[32m"Coming soon"[39m
-                  [33mtype[39m=[32m"button"[39m
-                [36m>[39m
-                  [36m<svg[39m
-                    [33mclass[39m=[32m"w-5 h-5 mr-2"[39m
-                    [33mviewBox[39m=[32m"0 0 24 24"[39m
-                  [36m>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"[39m
-                      [33mfill[39m=[32m"#4285F4"[39m
-                    [36m/>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"[39m
-                      [33mfill[39m=[32m"#34A853"[39m
-                    [36m/>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"[39m
-                      [33mfill[39m=[32m"#FBBC05"[39m
-                    [36m/>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"[39m
-                      [33mfill[39m=[32m"#EA4335"[39m
-                    [36m/>[39m
-                  [36m</svg>[39m
-                  [0mGoogle[0m
-                [36m</button>[39m
-                [36m<button[39m
-                  [33mclass[39m=[32m"w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"[39m
-                  [33mdisabled[39m=[32m""[39m
-                  [33mtitle[39m=[32m"Coming soon"[39m
-                  [33mtype[39m=[32m"button"[39m
-                [36m>[39m
-                  [36m<svg[39m
-                    [33mclass[39m=[32m"w-5 h-5 mr-2"[39m
-                    [33mfill[39m=[32m"#1877F2"[39m
-                    [33mviewBox[39m=[32m"0 0 24 24"[39m
-                  [36m>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"[39m
-                    [36m/>[39m
-                  [36m</svg>[39m
-                  [0mFacebook[0m
-                [36m</button>[39m
-              [36m</div>[39m
-            [36m</div>[39m
-          [36m</div>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"px-8 py-4 bg-gray-50 border-t border-gray-100"[39m
-          [36m>[39m
-            [36m<p[39m
-              [33mclass[39m=[32m"text-center text-sm text-gray-600"[39m
-            [36m>[39m
-              [0mDon't have an account?[0m
-              [0m [0m
-              [36m<a[39m
-                [33mclass[39m=[32m"font-medium text-blue-600 hover:text-blue-700 transition-colors"[39m
-                [33mhref[39m=[32m"/register"[39m
-              [36m>[39m
-                [0mSign up[0m
-              [36m</a>[39m
-            [36m</p>[39m
-          [36m</div>[39m
-        [36m</div>[39m
-        [36m<p[39m
-          [33mclass[39m=[32m"text-center text-xs text-gray-500"[39m
-        [36m>[39m
-          [0mBy signing in, you agree to our[0m
-          [0m [0m
-          [36m<a[39m
-            [33mclass[39m=[32m"text-blue-600 hover:text-blue-700 underline"[39m
-            [33mhref[39m=[32m"#"[39m
-          [36m>[39m
-            [0mTerms of Service[0m
-          [36m</a>[39m
-          [0m [0m
-          [0mand[0m
-          [0m [0m
-          [36m<a[39m
-            [33mclass[39m=[32m"text-blue-600 hover:text-blue-700 underline"[39m
-            [33mhref[39m=[32m"#"[39m
-          [36m>[39m
-            [0mPrivacy Policy[0m
-          [36m</a>[39m
-        [36m</p>[39m
-      [36m</div>[39m
-    [36m</div>[39m
-  [36m</div>[39m
-[36m</body>[39m
- ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
- ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
- ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
- ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
- ❯ src/__tests__/auth.e2e.test.tsx:155:33
-    153|     render(<UV_Login />, { wrapper: Wrapper });
-    154| 
-    155|     const toggleButton = screen.getByRole('button', { name: /don't hav…
-       |                                 ^
-    156|     await user.click(toggleButton);
-    157| 
-
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
-
- FAIL  src/__tests__/auth.e2e.test.tsx > Auth E2E Flow (real API) > successfully logs in with existing credentials
-TestingLibraryElementError: Unable to find an element with the placeholder text of: /email address/i
-
-Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div>[39m
-    [36m<div[39m
-      [33mclass[39m=[32m"min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8"[39m
-    [36m>[39m
-      [36m<div[39m
-        [33mclass[39m=[32m"max-w-md w-full space-y-8"[39m
-      [36m>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"text-center"[39m
-        [36m>[39m
-          [36m<h1[39m
-            [33mclass[39m=[32m"text-4xl font-bold text-gray-900 leading-tight"[39m
-          [36m>[39m
-            [0mWelcome Back[0m
-          [36m</h1>[39m
-          [36m<p[39m
-            [33mclass[39m=[32m"mt-2 text-base text-gray-600"[39m
-          [36m>[39m
-            [0mSign in to access your dashboard and bookings[0m
-          [36m</p>[39m
-        [36m</div>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden"[39m
-        [36m>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"px-8 py-8"[39m
-          [36m>[39m
-            [36m<form[39m
-              [33mclass[39m=[32m"space-y-6"[39m
-              [33mnovalidate[39m=[32m""[39m
-            [36m>[39m
-              [36m<div>[39m
-                [36m<label[39m
-                  [33mclass[39m=[32m"block text-sm font-medium text-gray-900 mb-2"[39m
-                  [33mfor[39m=[32m"email"[39m
-                [36m>[39m
-                  [0mEmail Address[0m
-                [36m</label>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"relative"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"[39m
-                  [36m>[39m
-                    [36m<svg[39m
-                      [33mclass[39m=[32m"lucide lucide-mail size-5 text-gray-400"[39m
-                      [33mfill[39m=[32m"none"[39m
-                      [33mheight[39m=[32m"24"[39m
-                      [33mstroke[39m=[32m"currentColor"[39m
-                      [33mstroke-linecap[39m=[32m"round"[39m
-                      [33mstroke-linejoin[39m=[32m"round"[39m
-                      [33mstroke-width[39m=[32m"2"[39m
-                      [33mviewBox[39m=[32m"0 0 24 24"[39m
-                      [33mwidth[39m=[32m"24"[39m
-                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                    [36m>[39m
-                      [36m<rect[39m
-                        [33mheight[39m=[32m"16"[39m
-                        [33mrx[39m=[32m"2"[39m
-                        [33mwidth[39m=[32m"20"[39m
-                        [33mx[39m=[32m"2"[39m
-                        [33my[39m=[32m"4"[39m
-                      [36m/>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"[39m
-                      [36m/>[39m
-                    [36m</svg>[39m
-                  [36m</div>[39m
-                  [36m<input[39m
-                    [33maria-invalid[39m=[32m"false"[39m
-                    [33mautocomplete[39m=[32m"email"[39m
-                    [33mclass[39m=[32m"block w-full pl-10 pr-4 py-3 rounded-lg border-2 transition-all duration-200 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-gray-900 placeholder-gray-400 focus:outline-none"[39m
-                    [33mid[39m=[32m"email"[39m
-                    [33mname[39m=[32m"email"[39m
-                    [33mplaceholder[39m=[32m"john@example.com"[39m
-                    [33mrequired[39m=[32m""[39m
-                    [33mtype[39m=[32m"email"[39m
-                    [33mvalue[39m=[32m""[39m
-                  [36m/>[39m
-                [36m</div>[39m
-              [36m</div>[39m
-              [36m<div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"flex items-center justify-between mb-2"[39m
-                [36m>[39m
-                  [36m<label[39m
-                    [33mclass[39m=[32m"block text-sm font-medium text-gray-900"[39m
-                    [33mfor[39m=[32m"password"[39m
-                  [36m>[39m
-                    [0mPassword[0m
-                  [36m</label>[39m
-                  [36m<a[39m
-                    [33mclass[39m=[32m"text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"[39m
-                    [33mhref[39m=[32m"/reset-password"[39m
-                  [36m>[39m
-                    [0mForgot password?[0m
-                  [36m</a>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"relative"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"[39m
-                  [36m>[39m
-                    [36m<svg[39m
-                      [33mclass[39m=[32m"lucide lucide-lock size-5 text-gray-400"[39m
-                      [33mfill[39m=[32m"none"[39m
-                      [33mheight[39m=[32m"24"[39m
-                      [33mstroke[39m=[32m"currentColor"[39m
-                      [33mstroke-linecap[39m=[32m"round"[39m
-                      [33mstroke-linejoin[39m=[32m"round"[39m
-                      [33mstroke-width[39m=[32m"2"[39m
-                      [33mviewBox[39m=[32m"0 0 24 24"[39m
-                      [33mwidth[39m=[32m"24"[39m
-                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                    [36m>[39m
-                      [36m<rect[39m
-                        [33mheight[39m=[32m"11"[39m
-                        [33mrx[39m=[32m"2"[39m
-                        [33mry[39m=[32m"2"[39m
-                        [33mwidth[39m=[32m"18"[39m
-                        [33mx[39m=[32m"3"[39m
-                        [33my[39m=[32m"11"[39m
-                      [36m/>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"M7 11V7a5 5 0 0 1 10 0v4"[39m
-                      [36m/>[39m
-                    [36m</svg>[39m
-                  [36m</div>[39m
-                  [36m<input[39m
-                    [33maria-invalid[39m=[32m"false"[39m
-                    [33mautocomplete[39m=[32m"current-password"[39m
-                    [33mclass[39m=[32m"block w-full pl-10 pr-12 py-3 rounded-lg border-2 transition-all duration-200 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-gray-900 placeholder-gray-400 focus:outline-none"[39m
-                    [33mid[39m=[32m"password"[39m
-                    [33mname[39m=[32m"password"[39m
-                    [33mplaceholder[39m=[32m"Enter your password"[39m
-                    [33mrequired[39m=[32m""[39m
-                    [33mtype[39m=[32m"password"[39m
-                    [33mvalue[39m=[32m""[39m
-                  [36m/>[39m
-                  [36m<button[39m
-                    [33maria-label[39m=[32m"Show password"[39m
-                    [33mclass[39m=[32m"absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"[39m
-                    [33mtype[39m=[32m"button"[39m
-                  [36m>[39m
-                    [36m<svg[39m
-                      [33mclass[39m=[32m"lucide lucide-eye size-5"[39m
-                      [33mfill[39m=[32m"none"[39m
-                      [33mheight[39m=[32m"24"[39m
-                      [33mstroke[39m=[32m"currentColor"[39m
-                      [33mstroke-linecap[39m=[32m"round"[39m
-                      [33mstroke-linejoin[39m=[32m"round"[39m
-                      [33mstroke-width[39m=[32m"2"[39m
-                      [33mviewBox[39m=[32m"0 0 24 24"[39m
-                      [33mwidth[39m=[32m"24"[39m
-                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                    [36m>[39m
-                      [36m<path[39m
-                        [33md[39m=[32m"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"[39m
-                      [36m/>[39m
-                      [36m<circle[39m
-                        [33mcx[39m=[32m"12"[39m
-                        [33mcy[39m=[32m"12"[39m
-                        [33mr[39m=[32m"3"[39m
-                      [36m/>[39m
-                    [36m</svg>[39m
-                  [36m</button>[39m
-                [36m</div>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"flex items-center"[39m
-              [36m>[39m
-                [36m<input[39m
-                  [33mclass[39m=[32m"h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition-colors cursor-pointer"[39m
-                  [33mid[39m=[32m"remember-me"[39m
-                  [33mname[39m=[32m"remember-me"[39m
-                  [33mtype[39m=[32m"checkbox"[39m
-                [36m/>[39m
-                [36m<label[39m
-                  [33mclass[39m=[32m"ml-2 block text-sm text-gray-700 cursor-pointer"[39m
-                  [33mfor[39m=[32m"remember-me"[39m
-                [36m>[39m
-                  [0mRemember me for 30 days[0m
-                [36m</label>[39m
-              [36m</div>[39m
-              [36m<button[39m
-                [33mclass[39m=[32m"w-full flex justify-center items-center px-6 py-3 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600 disabled:hover:shadow-lg"[39m
-                [33mdisabled[39m=[32m""[39m
-                [33mtype[39m=[32m"submit"[39m
-              [36m>[39m
-                [0mLog In[0m
-              [36m</button>[39m
-            [36m</form>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"mt-6"[39m
-            [36m>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"relative"[39m
-              [36m>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"absolute inset-0 flex items-center"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m"w-full border-t border-gray-200"[39m
-                  [36m/>[39m
-                [36m</div>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m"relative flex justify-center text-sm"[39m
-                [36m>[39m
-                  [36m<span[39m
-                    [33mclass[39m=[32m"px-2 bg-white text-gray-500"[39m
-                  [36m>[39m
-                    [0mOr log in with[0m
-                  [36m</span>[39m
-                [36m</div>[39m
-              [36m</div>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m"mt-6 grid grid-cols-2 gap-3"[39m
-              [36m>[39m
-                [36m<button[39m
-                  [33mclass[39m=[32m"w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"[39m
-                  [33mdisabled[39m=[32m""[39m
-                  [33mtitle[39m=[32m"Coming soon"[39m
-                  [33mtype[39m=[32m"button"[39m
-                [36m>[39m
-                  [36m<svg[39m
-                    [33mclass[39m=[32m"w-5 h-5 mr-2"[39m
-                    [33mviewBox[39m=[32m"0 0 24 24"[39m
-                  [36m>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"[39m
-                      [33mfill[39m=[32m"#4285F4"[39m
-                    [36m/>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"[39m
-                      [33mfill[39m=[32m"#34A853"[39m
-                    [36m/>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"[39m
-                      [33mfill[39m=[32m"#FBBC05"[39m
-                    [36m/>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"[39m
-                      [33mfill[39m=[32m"#EA4335"[39m
-                    [36m/>[39m
-                  [36m</svg>[39m
-                  [0mGoogle[0m
-                [36m</button>[39m
-                [36m<button[39m
-                  [33mclass[39m=[32m"w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"[39m
-                  [33mdisabled[39m=[32m""[39m
-                  [33mtitle[39m=[32m"Coming soon"[39m
-                  [33mtype[39m=[32m"button"[39m
-                [36m>[39m
-                  [36m<svg[39m
-                    [33mclass[39m=[32m"w-5 h-5 mr-2"[39m
-                    [33mfill[39m=[32m"#1877F2"[39m
-                    [33mviewBox[39m=[32m"0 0 24 24"[39m
-                  [36m>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"[39m
-                    [36m/>[39m
-                  [36m</svg>[39m
-                  [0mFacebook[0m
-                [36m</button>[39m
-              [36m</div>[39m
-            [36m</div>[39m
-          [36m</div>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"px-8 py-4 bg-gray-50 border-t border-gray-100"[39m
-          [36m>[39m
-            [36m<p[39m
-              [33mclass[39m=[32m"text-center text-sm text-gray-600"[39m
-            [36m>[39m
-              [0mDon't have an account?[0m
-              [0m [0m
-              [36m<a[39m
-                [33mclass[39m=[32m"font-medium text-blue-600 hover:text-blue-700 transition-colors"[39m
-                [33mhref[39m=[32m"/register"[39m
-              [36m>[39m
-                [0mSign up[0m
-              [36m</a>[39m
-            [36m</p>[39m
-          [36m</div>[39m
-        [36m</div>[39m
-        [36m<p[39m
-          [33mclass[39m=[32m"text-center text-xs text-gray-500"[39m
-        [36m>[39m
-          [0mBy signing in, you agree to our[0m
-          [0m [0m
-          [36m<a[39m
-            [33mclass[39m=[32m"text-blue-600 hover:text-blue-700 underline"[39m
-            [33mhref[39m=[32m"#"[39m
-          [36m>[39m
-            [0mTerms of Service[0m
-          [36m</a>[39m
-          [0m [0m
-          [0mand[0m
-          [0m [0m
-          [36m<a[39m
-            [33mclass[39m=[32m"text-blue-600 hover:text-blue-700 underline"[39m
-            [33mhref[39m=[32m"#"[39m
-          [36m>[39m
-            [0mPrivacy Policy[0m
-          [36m</a>[39m
-        [36m</p>[39m
-      [36m</div>[39m
-    [36m</div>[39m
-  [36m</div>[39m
-[36m</body>[39m
- ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
- ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
- ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
- ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
- ❯ src/__tests__/auth.e2e.test.tsx:193:31
-    191|     render(<UV_Login />, { wrapper: Wrapper });
-    192| 
-    193|     const emailInput = screen.getByPlaceholderText(/email address/i);
-       |                               ^
-    194|     const passwordInput = screen.getByPlaceholderText(/^password$/i);
-    195|     const signInButton = screen.getByRole('button', { name: /sign in/i…
-
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
-
-
-
-## Validation Context:
-- Step: Auth E2E Tests
-- Working Directory: /app/vitereact
-- Attempt: 1/100
-- Previous failures for this step: 1
-
-## Project Memory Summary:
-- Total validation attempts: 12
-- Common issues encountered: None
-- Known dependencies: @hookform/resolvers, @radix-ui/react-accordion, @radix-ui/react-alert-dialog, @radix-ui/react-aspect-ratio, @radix-ui/react-avatar, @radix-ui/react-checkbox, @radix-ui/react-collapsible, @radix-ui/react-context-menu, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu
-- Missing dependencies: None
-
-## Project Structure:
-FULL PROJECT STRUCTURE CONTEXT for Agent:
-=====================================
-
-Working Directory: /app/vitereact
-
-PROJECT DIRECTORIES:
-/app
-/app/.git
-/app/.git/info
-/app/.git/hooks
-/app/.git/branches
-/app/.git/refs
-/app/.git/refs/heads
-/app/.git/refs/tags
-/app/.git/refs/remotes
-/app/.git/objects
-/app/.git/objects/pack
-/app/.git/objects/info
-/app/.git/objects/9b
-/app/.git/objects/aa
-/app/.git/objects/3e
-/app/.git/objects/93
-/app/.git/objects/b1
-/app/.git/objects/58
-/app/.git/objects/b4
-/app/.git/objects/ec
-
-
-KEY PROJECT FILES:
-/app/README.md
-/app/TEST_ARTIFACTS_README.md
-/app/backend/initdb.js
-/app/backend/package-lock.json
-/app/backend/package.json
-/app/backend/public/assets/index-BgFVou9-.js
-/app/backend/public/assets/index-DFgWqocl.js
-/app/backend/schema.ts
-/app/backend/server.test.ts
-/app/backend/server.ts
-/app/backend/tsconfig.json
-/app/exports/1762211365540.json
-/app/exports/1762211842268.json
-/app/exports/1762211904074.json
-/app/exports/1762211906456.json
-/app/exports/1762211910848.json
-/app/exports/1762211913605.json
-/app/exports/1762211915507.json
-/app/exports/1762211917538.json
-/app/exports/1762211919849.json
-/app/exports/1762211926895.json
-/app/exports/1762211931888.json
-/app/exports/1762211938662.json
-/app/exports/1762211960240.json
-/app/exports/1762211962775.json
-/app/exports/1762212604708.json
-/app/exports/1762212701299.json
-/app/exports/1762212985096.json
-/app/exports/1762212985179.json
-/app/exports/1762212987056.json
-/app/exports/1762213045692.json
-/app/exports/1762213047857.json
-/app/exports/1762213119296.json
-/app/exports/1762213119399.json
-/app/exports/1762213210525.json
-/app/exports/1762213210652.json
-/app/exports/1762213212582.json
-/app/exports/1762213213225.json
-/app/exports/1762213216635.json
-/app/exports/1762213217087.json
-/app/exports/1762213222735.json
-/app/exports/1762213223638.json
-/app/exports/1762213223730.json
-/app/exports/1762213223779.json
-/app/exports/1762213225719.json
-/app/exports/1762213225838.json
-/app/exports/1762213225861.json
-/app/exports/1762213226521.json
-/app/exports/1762213227736.json
-/app/exports/1762213227790.json
-
-
-FRONTEND (vitereact) PACKAGE.JSON:
-  Scripts: dev, build, lint, preview, test, test:watch
-  Dependencies: 63 packages
-  DevDependencies: 22 packages
-  Key Dependencies: @hookform/resolvers, @radix-ui/react-accordion, @radix-ui/react-alert-dialog, @radix-ui/react-aspect-ratio, @radix-ui/react-avatar, @radix-ui/react-checkbox, @radix-ui/react-collapsible, @radix-ui/react-context-menu, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu
-
-BACKEND PACKAGE.JSON:
-  Scripts: start, build, dev, test, test:watch, test:coverage
-  Dependencies: 13 packages
-  Key Dependencies: @electric-sql/pglite, @types/bcryptjs, bcryptjs, cors, dotenv, express, jsonwebtoken, morgan, pg, ts-node
-
-ROOT PACKAGE.JSON:
-  Scripts: dev
-
-BACKEND SCHEMA AVAILABLE:
-  Location: /app/backend/schema.ts
-  Size: 15275 characters
-  Contains Zod schemas for type validation
-
-BACKEND SERVER AVAILABLE:
-  Location: /app/backend/server.ts
-  Size: 34230 characters
-  Contains actual API endpoints and implementations
-
-PROTECTED DIRECTORIES (DO NOT MODIFY):
-  - /app/vitereact/src/components/ui/** (UI library)
-  - /app/node_modules/** (Dependencies)
-  - /app/.git/** (Version control)
-
-
-
-## Previous Validation Failures for Auth E2E Tests:
-- 11:53:56 PM: 
-
-## Your Task:
-1. **Analyze the Error**: Understand what specifically went wrong in the Auth E2E Tests step
-2. **Check Previous Attempts**: Consider if this is a recurring issue based on validation history
-3. **Locate the Problem**: Identify which files need to be modified
-4. **Apply Fixes**: Use the available tools to fix the specific issues
-5. **Focus on Root Cause**: Don't just suppress errors, fix the underlying problems
-
-
-
-
-
-## Important Notes:
-- You are working in a Modal Sandbox environment at /app/vitereact
-- Make changes to the actual project files that will be used in the next validation attempt
-- Always check packages are installed correctly, if not, install them, npm install
-- For TypeScript errors: Fix type issues, missing imports, etc.
-- For Build errors: Fix configuration issues, missing dependencies, syntax errors
-- For Lint errors: Fix code style issues, unused variables, missing dependencies, etc.
-- For Install errors: Fix package.json issues, dependency conflicts, etc.
-- For SQL errors: Fix syntax issues, schema problems, foreign key constraints, etc.
-- Use your memory context to avoid repeating failed approaches
-
-after you have fixed the issues, run the following commands to make sure there are no errors left:
-for typescript errors, run: cd /app/vitereact && npx tsc -b in /app/vitereact, it is important to run this command with -b so npx tsc -b in /app/vitereact
-for lint errors run npm run lint in vitereact
-for test errors, run: npm test in the appropriate directory (backend or vitereact)
-for SQL errors, run: node initdb.js in the backend directory to test database initialization
-
-MAKE SURE TO FIX ALL ERRORS! SMALL AND BIG!
-
-
-The validation will retry this step after your fixes. Make sure to address the specific error shown above.

@@ -295,14 +295,24 @@ app.get('/api/bookings/search', async (req, res) => {
 app.get('/api/bookings/:ticket_number', async (req, res) => {
     try {
         const { ticket_number } = req.params;
-        const result = await pool.query(`SELECT b.*, s.name as service_name, s.price as service_price
+        const result = await pool.query(`SELECT b.*, s.name as service_name, s.duration as service_duration, s.price as service_price
        FROM bookings b
        LEFT JOIN services s ON b.service_id = s.service_id
        WHERE UPPER(b.ticket_number) = UPPER($1)`, [ticket_number]);
         if (result.rows.length === 0) {
             return res.status(404).json(createErrorResponse('Booking not found', null, 'BOOKING_NOT_FOUND'));
         }
-        res.json({ booking: result.rows[0] });
+        const row = result.rows[0];
+        const booking = { ...row };
+        delete booking.service_name;
+        delete booking.service_duration;
+        delete booking.service_price;
+        res.json({
+            booking,
+            service_name: row.service_name,
+            service_duration: row.service_duration,
+            service_price: row.service_price
+        });
     }
     catch (error) {
         console.error('Get booking error:', error);

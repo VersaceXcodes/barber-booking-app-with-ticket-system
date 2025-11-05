@@ -171,7 +171,7 @@ const UV_BookingConfirmation: React.FC = () => {
   // DATA FETCHING
   // ========================================================================
   
-  const { data: apiBooking, isLoading: isFetchingBooking } = useQuery({
+  const { data: apiBooking, isLoading: isFetchingBooking, isError: isQueryError } = useQuery({
     queryKey: ['booking', ticketNumberFromURL],
     queryFn: async () => {
       if (!ticketNumberFromURL) return null;
@@ -181,9 +181,9 @@ const UV_BookingConfirmation: React.FC = () => {
       );
       return response.data;
     },
-    enabled: !!ticketNumberFromURL && !booking,
+    enabled: !!ticketNumberFromURL,
     staleTime: 60000,
-    retry: 1
+    retry: 2
   });
   
   // Resend confirmation mutation
@@ -208,26 +208,9 @@ const UV_BookingConfirmation: React.FC = () => {
   // EFFECTS
   // ========================================================================
   
-  // Initialize booking from context or API
+  // Initialize booking from API
   useEffect(() => {
-    // Priority 1: Check if we have booking in context (from booking flow)
-    if (bookingContext.customer_email && bookingContext.selected_date && bookingContext.selected_time) {
-      // This is a fresh booking from the flow - we need the actual booking object
-      // In real implementation, the booking_context would have the created booking
-      // For now, we check URL params or fetch
-      if (ticketNumberFromURL && apiBooking) {
-        setBooking(apiBooking.booking);
-        if (apiBooking.service_name && apiBooking.booking.service_id) {
-          setServiceDetails({
-            service_id: apiBooking.booking.service_id,
-            name: apiBooking.service_name,
-            duration: apiBooking.service_duration || 40,
-            price: apiBooking.service_price || null
-          });
-        }
-      }
-    } else if (ticketNumberFromURL && apiBooking) {
-      // Direct URL access - use fetched booking
+    if (apiBooking) {
       setBooking(apiBooking.booking);
       if (apiBooking.service_name && apiBooking.booking.service_id) {
         setServiceDetails({
@@ -237,11 +220,8 @@ const UV_BookingConfirmation: React.FC = () => {
           price: apiBooking.service_price || null
         });
       }
-    } else if (!ticketNumberFromURL && !bookingContext.customer_email) {
-      // No booking data - redirect to search
-      navigate('/search');
     }
-  }, [bookingContext, apiBooking, ticketNumberFromURL, navigate]);
+  }, [apiBooking]);
   
   // Generate QR code when booking is set
   useEffect(() => {
@@ -305,6 +285,30 @@ const UV_BookingConfirmation: React.FC = () => {
   // LOADING STATE
   // ========================================================================
   
+  if (!ticketNumberFromURL) {
+    return (
+      <>
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+          <div className="text-center max-w-md">
+            <div className="text-red-600 mb-4">
+              <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">No Ticket Number</h2>
+            <p className="text-gray-600 mb-6">Please provide a valid ticket number.</p>
+            <Link 
+              to="/search"
+              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Search Your Bookings
+            </Link>
+          </div>
+        </div>
+      </>
+    );
+  }
+  
   if (isFetchingBooking) {
     return (
       <>
@@ -318,7 +322,7 @@ const UV_BookingConfirmation: React.FC = () => {
     );
   }
   
-  if (!booking) {
+  if (isQueryError || !booking) {
     return (
       <>
         <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">

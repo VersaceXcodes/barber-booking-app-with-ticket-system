@@ -30,20 +30,26 @@ const UV_Login: React.FC = () => {
     state => state.authentication_state.authentication_status.is_authenticated
   );
   const loginUser = useAppStore(state => state.login_user);
+  const registerUser = useAppStore(state => state.register_user);
   const clearAuthError = useAppStore(state => state.clear_auth_error);
 
   // ============================================================================
   // LOCAL STATE
   // ============================================================================
+  const [isLoginMode, setIsLoginMode] = useState(true);
   const [form_data, setFormData] = useState({
     email: '',
     password: '',
+    name: '',
+    phone: '',
   });
   const [remember_me, setRememberMe] = useState(false);
   const [show_password, setShowPassword] = useState(false);
   const [validation_errors, setValidationErrors] = useState<{
     email?: string;
     password?: string;
+    name?: string;
+    phone?: string;
   }>({});
 
   // ============================================================================
@@ -62,7 +68,8 @@ const UV_Login: React.FC = () => {
     if (errorMessage) {
       clearAuthError();
     }
-  }, [form_data.email, form_data.password, errorMessage, clearAuthError]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form_data.email, form_data.password]);
 
   // ============================================================================
   // VALIDATION
@@ -83,6 +90,29 @@ const UV_Login: React.FC = () => {
     if (!password) {
       return 'Password is required';
     }
+    if (!isLoginMode && password.length < 8) {
+      return 'Password must be at least 8 characters';
+    }
+    return undefined;
+  };
+
+  const validateName = (name: string): string | undefined => {
+    if (!name) {
+      return 'Name is required';
+    }
+    if (name.length < 2) {
+      return 'Name must be at least 2 characters';
+    }
+    return undefined;
+  };
+
+  const validatePhone = (phone: string): string | undefined => {
+    if (!phone) {
+      return 'Phone is required';
+    }
+    if (phone.length < 10) {
+      return 'Invalid phone number';
+    }
     return undefined;
   };
 
@@ -100,6 +130,16 @@ const UV_Login: React.FC = () => {
     setValidationErrors(prev => ({ ...prev, password: error }));
   };
 
+  const handleNameBlur = () => {
+    const error = validateName(form_data.name);
+    setValidationErrors(prev => ({ ...prev, name: error }));
+  };
+
+  const handlePhoneBlur = () => {
+    const error = validatePhone(form_data.phone);
+    setValidationErrors(prev => ({ ...prev, phone: error }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -107,26 +147,46 @@ const UV_Login: React.FC = () => {
     clearAuthError();
     setValidationErrors({});
 
-    // Validate all fields
-    const emailError = validateEmail(form_data.email);
-    const passwordError = validatePassword(form_data.password);
+    if (isLoginMode) {
+      // Validate login fields
+      const emailError = validateEmail(form_data.email);
+      const passwordError = validatePassword(form_data.password);
 
-    if (emailError || passwordError) {
-      setValidationErrors({
-        email: emailError,
-        password: passwordError,
-      });
-      return;
-    }
+      if (emailError || passwordError) {
+        setValidationErrors({
+          email: emailError,
+          password: passwordError,
+        });
+        return;
+      }
 
-    try {
-      // Call Zustand store action (handles API call and state updates)
-      await loginUser(form_data.email, form_data.password);
-      
-      // Navigation handled by useEffect when isAuthenticated becomes true
-    } catch (error) {
-      // Error is already in store.error_message, displayed in UI
-      console.error('Login error:', error);
+      try {
+        await loginUser(form_data.email, form_data.password);
+      } catch (error) {
+        console.error('Login error:', error);
+      }
+    } else {
+      // Validate registration fields
+      const emailError = validateEmail(form_data.email);
+      const passwordError = validatePassword(form_data.password);
+      const nameError = validateName(form_data.name);
+      const phoneError = validatePhone(form_data.phone);
+
+      if (emailError || passwordError || nameError || phoneError) {
+        setValidationErrors({
+          email: emailError,
+          password: passwordError,
+          name: nameError,
+          phone: phoneError,
+        });
+        return;
+      }
+
+      try {
+        await registerUser(form_data.email, form_data.password, form_data.name, form_data.phone);
+      } catch (error) {
+        console.error('Registration error:', error);
+      }
     }
   };
 
@@ -136,10 +196,29 @@ const UV_Login: React.FC = () => {
   };
 
   // ============================================================================
+  // MODE TOGGLE
+  // ============================================================================
+
+  const toggleMode = () => {
+    setIsLoginMode(!isLoginMode);
+    setValidationErrors({});
+    clearAuthError();
+    setFormData({
+      email: '',
+      password: '',
+      name: '',
+      phone: '',
+    });
+  };
+
+  // ============================================================================
   // COMPUTED VALUES
   // ============================================================================
 
-  const isFormValid = form_data.email && form_data.password && !validation_errors.email && !validation_errors.password;
+  const isFormValid = isLoginMode 
+    ? form_data.email && form_data.password && !validation_errors.email && !validation_errors.password
+    : form_data.email && form_data.password && form_data.name && form_data.phone && 
+      !validation_errors.email && !validation_errors.password && !validation_errors.name && !validation_errors.phone;
   const canSubmit = isFormValid && !isLoading;
 
   // Determine error banner type and message
@@ -192,10 +271,12 @@ const UV_Login: React.FC = () => {
           {/* Header */}
           <div className="text-center">
             <h1 className="text-4xl font-bold text-gray-900 leading-tight">
-              Welcome Back
+              {isLoginMode ? 'Welcome Back' : 'Create Your Account'}
             </h1>
             <p className="mt-2 text-base text-gray-600">
-              Sign in to access your dashboard and bookings
+              {isLoginMode 
+                ? 'Sign in to access your dashboard and bookings'
+                : 'Register to book faster and view your history'}
             </p>
           </div>
 
@@ -254,6 +335,76 @@ const UV_Login: React.FC = () => {
           <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
             <div className="px-8 py-8">
               <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                {/* Name Field (Registration only) */}
+                {!isLoginMode && (
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-2">
+                      Full Name
+                    </label>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      autoComplete="name"
+                      required
+                      value={form_data.name}
+                      onChange={(e) => {
+                        setFormData(prev => ({ ...prev, name: e.target.value }));
+                        setValidationErrors(prev => ({ ...prev, name: undefined }));
+                      }}
+                      onBlur={handleNameBlur}
+                      placeholder="Full Name"
+                      className={`block w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
+                        validation_errors.name
+                          ? 'border-red-500 focus:border-red-500 focus:ring-4 focus:ring-red-100'
+                          : 'border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
+                      } text-gray-900 placeholder-gray-400 focus:outline-none`}
+                      aria-invalid={validation_errors.name ? 'true' : 'false'}
+                      aria-describedby={validation_errors.name ? 'name-error' : undefined}
+                    />
+                    {validation_errors.name && (
+                      <p id="name-error" className="mt-2 text-sm text-red-600" role="alert">
+                        {validation_errors.name}
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                {/* Phone Field (Registration only) */}
+                {!isLoginMode && (
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-900 mb-2">
+                      Phone Number
+                    </label>
+                    <input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      autoComplete="tel"
+                      required
+                      value={form_data.phone}
+                      onChange={(e) => {
+                        setFormData(prev => ({ ...prev, phone: e.target.value }));
+                        setValidationErrors(prev => ({ ...prev, phone: undefined }));
+                      }}
+                      onBlur={handlePhoneBlur}
+                      placeholder="Phone Number"
+                      className={`block w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
+                        validation_errors.phone
+                          ? 'border-red-500 focus:border-red-500 focus:ring-4 focus:ring-red-100'
+                          : 'border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
+                      } text-gray-900 placeholder-gray-400 focus:outline-none`}
+                      aria-invalid={validation_errors.phone ? 'true' : 'false'}
+                      aria-describedby={validation_errors.phone ? 'phone-error' : undefined}
+                    />
+                    {validation_errors.phone && (
+                      <p id="phone-error" className="mt-2 text-sm text-red-600" role="alert">
+                        {validation_errors.phone}
+                      </p>
+                    )}
+                  </div>
+                )}
+
                 {/* Email Field */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
@@ -275,7 +426,7 @@ const UV_Login: React.FC = () => {
                         setValidationErrors(prev => ({ ...prev, email: undefined }));
                       }}
                       onBlur={handleEmailBlur}
-                      placeholder="john@example.com"
+                      placeholder="Email Address"
                       className={`block w-full pl-10 pr-4 py-3 rounded-lg border-2 transition-all duration-200 ${
                         validation_errors.email
                           ? 'border-red-500 focus:border-red-500 focus:ring-4 focus:ring-red-100'
@@ -298,12 +449,14 @@ const UV_Login: React.FC = () => {
                     <label htmlFor="password" className="block text-sm font-medium text-gray-900">
                       Password
                     </label>
-                    <Link
-                      to="/reset-password"
-                      className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
-                    >
-                      Forgot password?
-                    </Link>
+                    {isLoginMode && (
+                      <Link
+                        to="/reset-password"
+                        className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                      >
+                        Forgot password?
+                      </Link>
+                    )}
                   </div>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -313,7 +466,7 @@ const UV_Login: React.FC = () => {
                       id="password"
                       name="password"
                       type={show_password ? 'text' : 'password'}
-                      autoComplete="current-password"
+                      autoComplete={isLoginMode ? 'current-password' : 'new-password'}
                       required
                       value={form_data.password}
                       onChange={(e) => {
@@ -321,7 +474,7 @@ const UV_Login: React.FC = () => {
                         setValidationErrors(prev => ({ ...prev, password: undefined }));
                       }}
                       onBlur={handlePasswordBlur}
-                      placeholder="Enter your password"
+                      placeholder="Password"
                       className={`block w-full pl-10 pr-12 py-3 rounded-lg border-2 transition-all duration-200 ${
                         validation_errors.password
                           ? 'border-red-500 focus:border-red-500 focus:ring-4 focus:ring-red-100'
@@ -350,20 +503,22 @@ const UV_Login: React.FC = () => {
                   )}
                 </div>
 
-                {/* Remember Me Checkbox */}
-                <div className="flex items-center">
-                  <input
-                    id="remember-me"
-                    name="remember-me"
-                    type="checkbox"
-                    checked={remember_me}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition-colors cursor-pointer"
-                  />
-                  <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700 cursor-pointer">
-                    Remember me for 30 days
-                  </label>
-                </div>
+                {/* Remember Me Checkbox (Login only) */}
+                {isLoginMode && (
+                  <div className="flex items-center">
+                    <input
+                      id="remember-me"
+                      name="remember-me"
+                      type="checkbox"
+                      checked={remember_me}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition-colors cursor-pointer"
+                    />
+                    <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700 cursor-pointer">
+                      Remember me for 30 days
+                    </label>
+                  </div>
+                )}
 
                 {/* Submit Button */}
                 <button
@@ -393,10 +548,10 @@ const UV_Login: React.FC = () => {
                           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                         ></path>
                       </svg>
-                      Logging in...
+                      {isLoginMode ? 'Signing in...' : 'Creating account...'}
                     </>
                   ) : (
-                    'Log In'
+                    isLoginMode ? 'Sign In' : 'Create Account'
                   )}
                 </button>
               </form>
@@ -457,17 +612,18 @@ const UV_Login: React.FC = () => {
               </div>
             </div>
 
-            {/* Sign Up Link */}
+            {/* Toggle Mode Link */}
             <div className="px-8 py-4 bg-gray-50 border-t border-gray-100">
-              <p className="text-center text-sm text-gray-600">
-                Don't have an account?{' '}
-                <Link
-                  to="/register"
+              <div className="text-center text-sm text-gray-600">
+                <button
+                  type="button"
+                  onClick={toggleMode}
                   className="font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                  aria-label={isLoginMode ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
                 >
-                  Sign up
-                </Link>
-              </p>
+                  {isLoginMode ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
+                </button>
+              </div>
             </div>
           </div>
 

@@ -40,7 +40,7 @@ const formatTicketNumber = (value: string): string => {
 const isValidTicketFormat = (ticket: string): boolean => {
   if (!ticket || ticket.length < 5) return false;
   
-  const standardPattern = /^TKT-\d{8}-\d{3}$/;
+  const standardPattern = /^TKT-\d{4,8}-\d{3}$/;
   if (standardPattern.test(ticket)) return true;
   
   const relaxedPattern = /^TKT-\d+-\d+$/;

@@ -107,7 +107,7 @@ const UV_BookingDetails: React.FC = () => {
   } = useQuery({
     queryKey: ['booking', ticket_number],
     queryFn: async () => {
-      if (!ticket_number || !/^TKT-\d{8}-\d{3}$/.test(ticket_number)) {
+      if (!ticket_number || !/^TKT-\d{4,8}-\d{3}$/.test(ticket_number)) {
         throw new Error('Invalid ticket number format');
       }
 

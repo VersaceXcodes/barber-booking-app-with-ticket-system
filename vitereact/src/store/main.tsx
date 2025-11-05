@@ -317,18 +317,23 @@ export const useAppStore = create<AppState>()(
         }));
 
         try {
-          await axios.post(
+          const response = await axios.post(
             `${get_api_base_url()}/api/auth/register`,
             { email, password, name, phone },
             { headers: { 'Content-Type': 'application/json' } }
           );
 
-          set((state) => ({
+          const { user, token } = response.data;
+          const mapped_user = map_backend_user_to_frontend(user);
+
+          set(() => ({
             authentication_state: {
-              ...state.authentication_state,
+              current_user: mapped_user,
+              auth_token: token,
               authentication_status: {
-                ...state.authentication_state.authentication_status,
+                is_authenticated: true,
                 is_loading: false,
+                user_type: 'user',
               },
               error_message: null,
             },

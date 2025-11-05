@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useAppStore } from '@/store/main';
 import { Mail, CheckCircle, AlertCircle, X, RefreshCw } from 'lucide-react';
@@ -45,12 +46,22 @@ const getApiBaseUrl = (): string => {
 
 const UV_EmailVerificationPending: React.FC = () => {
   // ==========================================================================
+  // LOCATION STATE
+  // ==========================================================================
+  
+  const location = useLocation();
+  const locationEmail = (location.state as any)?.email;
+  
+  // ==========================================================================
   // ZUSTAND STORE ACCESS (Individual selectors - CRITICAL for avoiding loops)
   // ==========================================================================
   
-  const userEmail = useAppStore(state => state.authentication_state.current_user?.email);
+  const storeEmail = useAppStore(state => state.authentication_state.current_user?.email);
   const authToken = useAppStore(state => state.authentication_state.auth_token);
   const updateCurrentUser = useAppStore(state => state.update_current_user);
+  
+  // Use email from store first, fallback to location state
+  const userEmail = storeEmail || locationEmail;
 
   // ==========================================================================
   // LOCAL STATE

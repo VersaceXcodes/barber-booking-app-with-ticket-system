@@ -337,9 +337,9 @@ const UV_Landing: React.FC = () => {
                         <span className="text-sm text-gray-500">
                           {service.duration} minutes
                         </span>
-                        {service.price && (
+                        {service.price !== null && service.price !== undefined && (
                           <span className="text-lg font-semibold text-blue-600">
-                            ${Number(service.price).toFixed(2)}
+                            ${typeof service.price === 'number' ? service.price.toFixed(2) : parseFloat(String(service.price)).toFixed(2)}
                           </span>
                         )}
                       </div>

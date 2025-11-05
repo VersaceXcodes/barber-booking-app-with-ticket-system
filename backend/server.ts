@@ -884,6 +884,109 @@ app.get('/api/admin/dashboard/stats', authenticateAdmin, async (req, res) => {
   }
 });
 
+app.get('/api/settings', async (req, res) => {
+  try {
+    const settings = {
+      shop_name: 'BarberSlot',
+      shop_address: '123 Main St, City, State 12345',
+      shop_phone: '(555) 123-4567',
+      shop_email: 'info@barberslot.com',
+      operating_hours: '10:00 AM - 3:00 PM',
+      capacity_mon_wed: 2,
+      capacity_thu_sun: 3,
+      booking_window_days: 90,
+      same_day_cutoff_hours: 2,
+      reminder_hours_before: 2,
+      services_enabled: true,
+      gallery_enabled: true,
+      social_facebook: '',
+      social_instagram: '',
+      social_twitter: ''
+    };
+    res.json(settings);
+  } catch (error) {
+    console.error('Get settings error:', error);
+    res.status(500).json(createErrorResponse('Failed to retrieve settings', error, 'INTERNAL_ERROR'));
+  }
+});
+
+app.get('/api/gallery', async (req, res) => {
+  try {
+    const { limit = 20, offset = 0, sort_by = 'created_at', sort_order = 'desc' } = req.query;
+    
+    const mockGalleryImages = [
+      {
+        image_id: 'img-1',
+        image_url: 'https://picsum.photos/seed/haircut1/800/600',
+        thumbnail_url: 'https://picsum.photos/seed/haircut1/400/300',
+        caption: 'Classic Haircut',
+        service_id: null,
+        display_order: 1,
+        uploaded_at: new Date().toISOString()
+      },
+      {
+        image_id: 'img-2',
+        image_url: 'https://picsum.photos/seed/balayage2/800/600',
+        thumbnail_url: 'https://picsum.photos/seed/balayage2/400/300',
+        caption: 'Balayage Style',
+        service_id: null,
+        display_order: 2,
+        uploaded_at: new Date().toISOString()
+      },
+      {
+        image_id: 'img-3',
+        image_url: 'https://picsum.photos/seed/color3/800/600',
+        thumbnail_url: 'https://picsum.photos/seed/color3/400/300',
+        caption: 'Color Treatment',
+        service_id: null,
+        display_order: 3,
+        uploaded_at: new Date().toISOString()
+      },
+      {
+        image_id: 'img-4',
+        image_url: 'https://picsum.photos/seed/keratin4/800/600',
+        thumbnail_url: 'https://picsum.photos/seed/keratin4/400/300',
+        caption: 'Keratin Treatment',
+        service_id: null,
+        display_order: 4,
+        uploaded_at: new Date().toISOString()
+      },
+      {
+        image_id: 'img-5',
+        image_url: 'https://picsum.photos/seed/conditioning5/800/600',
+        thumbnail_url: 'https://picsum.photos/seed/conditioning5/400/300',
+        caption: 'Deep Conditioning',
+        service_id: null,
+        display_order: 5,
+        uploaded_at: new Date().toISOString()
+      },
+      {
+        image_id: 'img-6',
+        image_url: 'https://picsum.photos/seed/bridal6/800/600',
+        thumbnail_url: 'https://picsum.photos/seed/bridal6/400/300',
+        caption: 'Bridal Hair',
+        service_id: null,
+        display_order: 6,
+        uploaded_at: new Date().toISOString()
+      }
+    ];
+
+    const limitNum = parseInt(String(limit));
+    const offsetNum = parseInt(String(offset));
+    const slicedImages = mockGalleryImages.slice(offsetNum, offsetNum + limitNum);
+    
+    res.json({
+      images: slicedImages,
+      total: mockGalleryImages.length,
+      limit: limitNum,
+      offset: offsetNum
+    });
+  } catch (error) {
+    console.error('Get gallery error:', error);
+    res.status(500).json(createErrorResponse('Failed to retrieve gallery images', error, 'INTERNAL_ERROR'));
+  }
+});
+
 app.get(/^(?!\/api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

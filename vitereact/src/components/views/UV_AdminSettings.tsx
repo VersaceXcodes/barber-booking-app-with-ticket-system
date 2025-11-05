@@ -1359,7 +1359,7 @@ const UV_AdminSettings: React.FC = () => {
                                 <div className="flex items-center mt-2 space-x-4 text-sm text-gray-500">
                                   <span>{service.duration} min</span>
                                   {service.price !== null && (
-                                    <span>${service.price.toFixed(2)}</span>
+                                    <span>${typeof service.price === 'number' ? service.price.toFixed(2) : parseFloat(String(service.price)).toFixed(2)}</span>
                                   )}
                                 </div>
                               </div>

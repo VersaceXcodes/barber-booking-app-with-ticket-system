@@ -275,9 +275,9 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
                     </div>
 
                     {/* Price */}
-                    {service.price !== null && (
+                    {service.price !== null && service.price !== undefined && (
                       <div className="text-xs md:text-sm font-semibold text-blue-600">
-                        From ${service.price.toFixed(2)}
+                        From ${typeof service.price === 'number' ? service.price.toFixed(2) : parseFloat(String(service.price)).toFixed(2)}
                       </div>
                     )}
                   </div>

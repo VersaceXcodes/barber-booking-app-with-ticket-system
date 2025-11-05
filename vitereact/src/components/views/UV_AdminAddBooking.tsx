@@ -581,7 +581,7 @@ const UV_AdminAddBooking: React.FC = () => {
                       <option value="">None / General Haircut</option>
                       {services.map(service => (
                         <option key={service.service_id} value={service.service_id}>
-                          {service.name} {service.price ? `- $${service.price.toFixed(2)}` : ''}
+                          {service.name} {service.price ? `- $${typeof service.price === 'number' ? service.price.toFixed(2) : parseFloat(String(service.price)).toFixed(2)}` : ''}
                         </option>
                       ))}
                     </select>

@@ -259,12 +259,20 @@ export const useAppStore = create<AppState>()(
             return { requires_2fa: true };
           }
 
-          const { user, token } = response.data;
-          const mapped_user = map_backend_user_to_frontend(user);
+          const { admin, token } = response.data;
+          
+          const mapped_admin: User = {
+            id: admin.admin_id,
+            email: admin.email,
+            name: admin.name || 'Admin',
+            phone: admin.phone || '',
+            is_verified: true,
+            created_at: admin.created_at || new Date().toISOString(),
+          };
 
           set(() => ({
             authentication_state: {
-              current_user: mapped_user,
+              current_user: mapped_admin,
               auth_token: token,
               authentication_status: {
                 is_authenticated: true,

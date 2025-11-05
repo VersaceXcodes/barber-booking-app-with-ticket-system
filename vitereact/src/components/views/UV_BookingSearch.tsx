@@ -180,7 +180,8 @@ const UV_BookingSearch: React.FC = () => {
   };
 
   const handleTicketChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatTicketNumber(e.target.value);
+    const rawValue = e.target.value;
+    const formatted = formatTicketNumber(rawValue);
     setTicketNumber(formatted);
     setSearchError(null);
   };
@@ -295,8 +296,22 @@ const UV_BookingSearch: React.FC = () => {
                       aria-label="Ticket number"
                       value={ticketNumber}
                       onChange={handleTicketChange}
+                      onPaste={(e) => {
+                        e.preventDefault();
+                        const pastedText = e.clipboardData.getData('text');
+                        const formatted = formatTicketNumber(pastedText);
+                        setTicketNumber(formatted);
+                      }}
+
                       placeholder="TKT-20241105-003"
                       autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      inputMode="text"
+                      data-form-type="other"
+                      data-lpignore="true"
+                      data-1p-ignore="true"
                       className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base"
                       autoFocus
                     />
@@ -326,6 +341,7 @@ const UV_BookingSearch: React.FC = () => {
                         onChange={handlePhoneChange}
                         placeholder="+1 (555) 123-4567"
                         autoComplete="tel"
+                        data-form-type="other"
                         className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base"
                         autoFocus
                       />
@@ -346,6 +362,8 @@ const UV_BookingSearch: React.FC = () => {
                         aria-label="Booking date"
                         value={date}
                         onChange={handleDateChange}
+                        autoComplete="off"
+                        data-form-type="other"
                         className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base"
                       />
                     </div>

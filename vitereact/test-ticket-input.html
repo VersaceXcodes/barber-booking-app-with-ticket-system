@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ticket Input Test</title>
+</head>
+<body>
+    <h1>Test Ticket Number Input</h1>
+    <input 
+        type="text" 
+        id="ticket-input"
+        placeholder="TKT-20241105-003"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        inputMode="text"
+        data-form-type="other"
+        data-lpignore="true"
+        data-1p-ignore="true"
+        style="padding: 10px; font-size: 16px; width: 300px;"
+    />
+    <p>Current value: <span id="value-display"></span></p>
+    
+    <script>
+        const input = document.getElementById('ticket-input');
+        const display = document.getElementById('value-display');
+        
+        const formatTicketNumber = (value) => {
+            if (!value) return '';
+            return value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
+        };
+        
+        input.addEventListener('input', (e) => {
+            const formatted = formatTicketNumber(e.target.value);
+            input.value = formatted;
+            display.textContent = formatted;
+            console.log('Input value:', formatted);
+        });
+        
+        input.addEventListener('paste', (e) => {
+            e.preventDefault();
+            const pastedText = e.clipboardData.getData('text');
+            const formatted = formatTicketNumber(pastedText);
+            input.value = formatted;
+            display.textContent = formatted;
+            console.log('Pasted value:', formatted);
+        });
+    </script>
+</body>
+</html>

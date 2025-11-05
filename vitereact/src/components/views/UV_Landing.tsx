@@ -50,7 +50,6 @@ const fetchServicesPreview = async (): Promise<Service[]> => {
   const response = await axios.get(`${getApiBaseUrl()}/api/services`, {
     params: {
       is_active: true,
-      limit: 6,
       sort_by: 'display_order',
       sort_order: 'asc',
     },
@@ -311,7 +310,7 @@ const UV_Landing: React.FC = () => {
             ) : (
               /* Services Grid */
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {services_preview.slice(0, 6).map((service) => (
+                {services_preview.map((service) => (
                   <div
                     key={service.service_id}
                     className="bg-white rounded-xl shadow-lg hover:shadow-xl overflow-hidden border border-gray-100 transition-all duration-200 transform hover:scale-105"

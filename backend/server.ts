@@ -115,7 +115,7 @@ app.get('/api/health', (req, res) => {
 
 app.get('/api/services', async (req, res) => {
   try {
-    const { is_active, sort_by = 'display_order' } = req.query;
+    const { is_active, sort_by = 'display_order', limit, offset = 0 } = req.query;
     let query = 'SELECT * FROM services';
     const params: any[] = [];
     if (is_active !== undefined) {
@@ -128,8 +128,22 @@ app.get('/api/services', async (req, res) => {
     const sortByStr = String(sort_by);
     const sortField = validSortFields.includes(sortByStr) ? sortByStr : 'display_order';
     query += ` ORDER BY ${sortField} ASC`;
+    
+    if (limit) {
+      query += ` LIMIT ${parseInt(String(limit))}`;
+    }
+    if (offset) {
+      query += ` OFFSET ${parseInt(String(offset))}`;
+    }
+    
     const result = await pool.query(query, params);
-    res.json({ services: result.rows });
+    
+    const services = result.rows.map(service => ({
+      ...service,
+      price: service.price ? parseFloat(service.price) : null
+    }));
+    
+    res.json({ services });
   } catch (error) {
     console.error('Get services error:', error);
     res.status(500).json(createErrorResponse('Failed to retrieve services', error, 'INTERNAL_ERROR'));
@@ -729,7 +743,11 @@ app.post('/api/admin/bookings', authenticateAdmin, async (req, res) => {
 app.get('/api/admin/services', authenticateAdmin, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM services ORDER BY display_order ASC');
-    res.json({ services: result.rows });
+    const services = result.rows.map(service => ({
+      ...service,
+      price: service.price ? parseFloat(service.price) : null
+    }));
+    res.json({ services });
   } catch (error) {
     console.error('Admin get services error:', error);
     res.status(500).json(createErrorResponse('Failed to retrieve services', error, 'INTERNAL_ERROR'));

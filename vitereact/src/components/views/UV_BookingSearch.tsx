@@ -93,9 +93,11 @@ const UV_BookingSearch: React.FC = () => {
   const [ticketNumber, setTicketNumber] = useState('');
   const [phone, setPhone] = useState('');
   const [date, setDate] = useState(() => {
-    // Default to today
     const today = new Date();
-    return today.toISOString().split('T')[0];
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   });
   
   const [searchTriggered, setSearchTriggered] = useState(false);
@@ -197,7 +199,7 @@ const UV_BookingSearch: React.FC = () => {
     setSearchError(null);
   };
 
-  const handleSearch = (e: React.FormEvent | React.KeyboardEvent) => {
+  const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     e.stopPropagation();
     
@@ -211,7 +213,11 @@ const UV_BookingSearch: React.FC = () => {
   const handleClearSearch = () => {
     setTicketNumber('');
     setPhone('');
-    setDate(new Date().toISOString().split('T')[0]);
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    setDate(`${year}-${month}-${day}`);
     setSearchError(null);
     setSearchTriggered(false);
   };
@@ -295,14 +301,6 @@ const UV_BookingSearch: React.FC = () => {
                           const formatted = formatTicketNumber(pastedText);
                           setTicketNumber(formatted);
                         }}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
-                            e.preventDefault();
-                            if (canSearch) {
-                              handleSearch(e as any);
-                            }
-                          }
-                        }}
                         placeholder="TKT-20241105-003"
                         autoComplete="off"
                         autoCorrect="off"
@@ -339,14 +337,6 @@ const UV_BookingSearch: React.FC = () => {
                         aria-label="Phone number"
                         value={phone}
                         onChange={handlePhoneChange}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
-                            e.preventDefault();
-                            if (canSearch) {
-                              handleSearch(e as any);
-                            }
-                          }
-                        }}
                         placeholder="+1 (555) 123-4567"
                         autoComplete="tel"
                         data-form-type="other"
@@ -370,14 +360,6 @@ const UV_BookingSearch: React.FC = () => {
                         aria-label="Booking date"
                         value={date}
                         onChange={handleDateChange}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
-                            e.preventDefault();
-                            if (canSearch) {
-                              handleSearch(e as any);
-                            }
-                          }
-                        }}
                         autoComplete="off"
                         data-form-type="other"
                         data-lpignore="true"
@@ -407,12 +389,6 @@ const UV_BookingSearch: React.FC = () => {
                 data-testid="search-button"
                 aria-label="Search for booking"
                 tabIndex={0}
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (canSearch && !isLoading) {
-                    handleSearch(e);
-                  }
-                }}
                 disabled={!canSearch || isLoading}
                 className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2"
               >

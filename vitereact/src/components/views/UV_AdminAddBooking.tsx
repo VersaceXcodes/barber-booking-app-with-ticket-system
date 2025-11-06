@@ -150,7 +150,7 @@ const UV_AdminAddBooking: React.FC = () => {
       const response = await axios.get(
         `${apiBaseUrl}/api/services?is_active=true&sort_by=display_order&sort_order=asc`
       );
-      return response.data as Service[];
+      return (response.data.services || []) as Service[];
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
     retry: 1,

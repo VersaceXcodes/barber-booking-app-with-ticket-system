@@ -217,7 +217,7 @@ const fetchServices = async (token: string): Promise<Service[]> => {
     { headers: { Authorization: `Bearer ${token}` } }
   );
   
-  return response.data;
+  return response.data.services || [];
 };
 
 const fetchCapacityOverrides = async (

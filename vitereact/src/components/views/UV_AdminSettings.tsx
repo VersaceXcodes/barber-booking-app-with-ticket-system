@@ -175,7 +175,7 @@ const UV_AdminSettings: React.FC = () => {
         params: { sort_by: 'display_order', sort_order: 'asc' },
         headers: { Authorization: `Bearer ${authToken}` },
       });
-      return response.data;
+      return response.data.services || [];
     },
     enabled: !!authToken && activeSection === 'services',
     staleTime: 60000,

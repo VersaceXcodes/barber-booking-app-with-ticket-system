@@ -274,7 +274,7 @@ const UV_AdminBookingsList: React.FC = () => {
       const response = await axios.get(
         `${getApiBaseUrl()}/api/services?is_active=true&sort_by=display_order&sort_order=asc`
       );
-      return response.data;
+      return response.data.services || [];
     },
     staleTime: 5 * 60 * 1000 // 5 minutes
   });

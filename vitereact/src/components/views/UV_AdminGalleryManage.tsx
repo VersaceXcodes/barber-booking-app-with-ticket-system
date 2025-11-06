@@ -117,7 +117,7 @@ const UV_AdminGalleryManage: React.FC = () => {
         params: { is_active: true },
       });
       
-      return response.data.map((s: any) => ({
+      return (response.data.services || []).map((s: any) => ({
         service_id: s.service_id,
         name: s.name,
       })) as Service[];

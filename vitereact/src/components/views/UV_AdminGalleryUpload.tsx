@@ -51,7 +51,7 @@ const UV_AdminGalleryUpload: React.FC = () => {
           headers: authToken ? { Authorization: `Bearer ${authToken}` } : {}
         }
       );
-      return response.data;
+      return response.data.services || [];
     },
     select: (data) => {
       // Extract only service_id and name for dropdown

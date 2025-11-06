@@ -197,11 +197,11 @@ const UV_BookingSearch: React.FC = () => {
     setSearchError(null);
   };
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = (e: React.FormEvent | React.KeyboardEvent) => {
     e.preventDefault();
     e.stopPropagation();
     
-    if (!canSearch) return;
+    if (!canSearch || isLoading) return;
     
     setSearchError(null);
     setSearchTriggered(true);
@@ -296,9 +296,11 @@ const UV_BookingSearch: React.FC = () => {
                           setTicketNumber(formatted);
                         }}
                         onKeyDown={(e) => {
-                          if (e.key === 'Enter' && canSearch) {
+                          if (e.key === 'Enter') {
                             e.preventDefault();
-                            handleSearch(e as any);
+                            if (canSearch) {
+                              handleSearch(e as any);
+                            }
                           }
                         }}
                         placeholder="TKT-20241105-003"
@@ -328,7 +330,7 @@ const UV_BookingSearch: React.FC = () => {
                       Phone Number
                     </label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 size-5 text-gray-400" />
+                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 size-5 text-gray-400 pointer-events-none" />
                       <input
                         type="tel"
                         id="phone"
@@ -338,9 +340,11 @@ const UV_BookingSearch: React.FC = () => {
                         value={phone}
                         onChange={handlePhoneChange}
                         onKeyDown={(e) => {
-                          if (e.key === 'Enter' && canSearch) {
+                          if (e.key === 'Enter') {
                             e.preventDefault();
-                            handleSearch(e as any);
+                            if (canSearch) {
+                              handleSearch(e as any);
+                            }
                           }
                         }}
                         placeholder="+1 (555) 123-4567"
@@ -357,7 +361,7 @@ const UV_BookingSearch: React.FC = () => {
                       Booking Date
                     </label>
                     <div className="relative">
-                      <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 size-5 text-gray-400" />
+                      <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 size-5 text-gray-400 pointer-events-none" />
                       <input
                         type="date"
                         id="date"
@@ -367,9 +371,11 @@ const UV_BookingSearch: React.FC = () => {
                         value={date}
                         onChange={handleDateChange}
                         onKeyDown={(e) => {
-                          if (e.key === 'Enter' && canSearch) {
+                          if (e.key === 'Enter') {
                             e.preventDefault();
-                            handleSearch(e as any);
+                            if (canSearch) {
+                              handleSearch(e as any);
+                            }
                           }
                         }}
                         autoComplete="off"
@@ -378,8 +384,7 @@ const UV_BookingSearch: React.FC = () => {
                         data-1p-ignore="true"
                         min="2020-01-01"
                         max="2030-12-31"
-                        pattern="\d{4}-\d{2}-\d{2}"
-                        className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base"
+                        className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base [&::-webkit-calendar-picker-indicator]:cursor-pointer"
                       />
                     </div>
                   </div>
@@ -401,8 +406,13 @@ const UV_BookingSearch: React.FC = () => {
                 name="search-submit-button"
                 data-testid="search-button"
                 aria-label="Search for booking"
-                role="button"
                 tabIndex={0}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (canSearch && !isLoading) {
+                    handleSearch(e);
+                  }
+                }}
                 disabled={!canSearch || isLoading}
                 className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2"
               >

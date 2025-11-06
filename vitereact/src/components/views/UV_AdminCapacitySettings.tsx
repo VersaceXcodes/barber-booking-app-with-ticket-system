@@ -286,19 +286,25 @@ const UV_AdminCapacitySettings: React.FC = () => {
     if (!selectedDateForOverride) {
       errors.date = 'Please select a date';
     } else {
-      const selectedDate = new Date(selectedDateForOverride);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (selectedDate < today) {
-        errors.date = 'Cannot create override for past dates';
-      }
-      
-      // Check if override already exists for this date
-      const existingOverride = capacityOverrides.find(
-        o => o.override_date === selectedDateForOverride
-      );
-      if (existingOverride) {
-        errors.date = 'Override already exists for this date. Edit the existing one instead.';
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+      if (!dateRegex.test(selectedDateForOverride)) {
+        errors.date = 'Date must be in YYYY-MM-DD format';
+      } else {
+        const selectedDate = new Date(selectedDateForOverride + 'T00:00:00');
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (isNaN(selectedDate.getTime())) {
+          errors.date = 'Invalid date';
+        } else if (selectedDate < today) {
+          errors.date = 'Cannot create override for past dates';
+        } else {
+          const existingOverride = capacityOverrides.find(
+            o => o.override_date === selectedDateForOverride
+          );
+          if (existingOverride) {
+            errors.date = 'Override already exists for this date. Edit the existing one instead.';
+          }
+        }
       }
     }
     
@@ -320,16 +326,21 @@ const UV_AdminCapacitySettings: React.FC = () => {
     if (!validateOverrideForm()) return;
     if (!selectedDateForOverride || newOverrideCapacity === null) return;
     
-    // Check for booking conflicts
-    const canProceed = await checkExistingBookings(selectedDateForOverride, newOverrideCapacity);
+    const normalizedDate = normalizeDate(selectedDateForOverride);
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(normalizedDate)) {
+      setValidationErrors({ ...validationErrors, date: 'Invalid date format. Must be YYYY-MM-DD.' });
+      return;
+    }
+    
+    const canProceed = await checkExistingBookings(normalizedDate, newOverrideCapacity);
     if (!canProceed) {
-      // Warning modal will be shown, user must confirm
       return;
     }
     
     createOverrideMutation.mutate({
-      override_date: selectedDateForOverride,
-      time_slot: '00:00', // Day-level override
+      override_date: normalizedDate,
+      time_slot: '00:00',
       capacity: newOverrideCapacity,
       is_active: true
     });
@@ -338,8 +349,16 @@ const UV_AdminCapacitySettings: React.FC = () => {
   const handleProceedWithWarning = () => {
     if (!selectedDateForOverride || newOverrideCapacity === null) return;
     
+    const normalizedDate = normalizeDate(selectedDateForOverride);
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(normalizedDate)) {
+      setValidationErrors({ ...validationErrors, date: 'Invalid date format. Must be YYYY-MM-DD.' });
+      setBookingWarning(null);
+      return;
+    }
+    
     createOverrideMutation.mutate({
-      override_date: selectedDateForOverride,
+      override_date: normalizedDate,
       time_slot: '00:00',
       capacity: newOverrideCapacity,
       is_active: true
@@ -360,10 +379,17 @@ const UV_AdminCapacitySettings: React.FC = () => {
   const handleSaveEditOverride = () => {
     if (!editOverrideModalState) return;
     
+    const normalizedDate = normalizeDate(editOverrideModalState.override_date);
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(normalizedDate)) {
+      alert('Invalid date format. Must be YYYY-MM-DD.');
+      return;
+    }
+    
     updateOverrideMutation.mutate({
       override_id: editOverrideModalState.override_id,
       payload: {
-        override_date: editOverrideModalState.override_date,
+        override_date: normalizedDate,
         capacity: editOverrideModalState.capacity,
         time_slot: editOverrideModalState.time_slot
       }
@@ -406,8 +432,22 @@ const UV_AdminCapacitySettings: React.FC = () => {
   // HELPER FUNCTIONS
   // ====================================
 
+  const normalizeDate = (dateString: string): string => {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(dateString)) {
+      const date = new Date(dateString);
+      if (!isNaN(date.getTime())) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }
+    }
+    return dateString;
+  };
+
   const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
+    const date = new Date(dateString + 'T00:00:00');
     return date.toLocaleDateString('en-US', { 
       weekday: 'long', 
       year: 'numeric', 
@@ -498,9 +538,15 @@ const UV_AdminCapacitySettings: React.FC = () => {
                         <input
                           id="override-date"
                           type="date"
+                          min={new Date().toISOString().split('T')[0]}
                           value={selectedDateForOverride || ''}
                           onChange={(e) => {
-                            setSelectedDateForOverride(e.target.value);
+                            const value = e.target.value;
+                            if (value && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
+                              setSelectedDateForOverride(value);
+                            } else if (!value) {
+                              setSelectedDateForOverride(null);
+                            }
                             setValidationErrors({ ...validationErrors, date: null });
                           }}
                           className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
@@ -777,7 +823,12 @@ const UV_AdminCapacitySettings: React.FC = () => {
                   id="edit-date"
                   type="date"
                   value={editOverrideModalState.override_date}
-                  onChange={(e) => setEditOverrideModalState({ ...editOverrideModalState, override_date: e.target.value })}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
+                      setEditOverrideModalState({ ...editOverrideModalState, override_date: value });
+                    }
+                  }}
                   className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200"
                 />
               </div>

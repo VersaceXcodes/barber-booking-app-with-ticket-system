@@ -1,81 +1,88 @@
-# Capacity Override Display Fix
+# Capacity Override Creation Fix
 
-## Issue
-Capacity overrides were being created successfully (HTTP 201) but were not appearing in the UI after submission. The "Existing Capacity Overrides" section continued to show "No capacity overrides set" even though the POST request succeeded.
+## Issue Summary
+New capacity overrides were failing to be created due to malformed date formats being sent from the frontend to the backend API. The backend validation was rejecting dates that didn't match the strict YYYY-MM-DD format regex pattern.
 
-## Root Causes
-
-### 1. Frontend API Response Structure Mismatch
-**Location**: `vitereact/src/components/views/UV_AdminCapacitySettings.tsx:147-168`
-
-**Problem**: The frontend expected the API to return:
-```typescript
-{
-  data: CapacityOverride[],
-  pagination: { total, limit, offset, has_more }
-}
-```
-
-But the backend actually returns:
-```typescript
-{
-  overrides: CapacityOverride[]
-}
-```
-
-**Result**: The component was accessing `overridesData?.data` which was always `undefined`, so `capacityOverrides` was always an empty array.
-
-**Fix**: Changed the query type definition and accessor:
-```typescript
-// Before
-const { data: overridesData } = useQuery<{
-  data: CapacityOverride[];
-  pagination: { ... };
-}>({ ... });
-const capacityOverrides = overridesData?.data || [];
-
-// After
-const { data: overridesData } = useQuery<{
-  overrides: CapacityOverride[];
-}>({ ... });
-const capacityOverrides = overridesData?.overrides || [];
-```
-
-### 2. Missing PATCH Endpoint
-**Location**: `backend/server.ts`
-
-**Problem**: The frontend attempted to update capacity overrides using a PATCH request to `/api/admin/capacity-overrides/:override_id`, but this endpoint did not exist in the backend. Only GET, POST, and DELETE endpoints were implemented.
-
-**Fix**: Added the PATCH endpoint handler at line 1087 to support updating existing capacity overrides:
-```typescript
-app.patch('/api/admin/capacity-overrides/:override_id', authenticateAdmin, async (req, res) => {
-  // Supports updating override_date, time_slot, capacity, and is_active
-  // Returns updated override object
-});
-```
-
-## Files Modified
-
-1. **vitereact/src/components/views/UV_AdminCapacitySettings.tsx**
-   - Fixed TypeScript interface for query response (line 147-149)
-   - Changed data accessor from `.data` to `.overrides` (line 168)
-
-2. **backend/server.ts**
-   - Added PATCH endpoint for updating capacity overrides (line 1087-1129)
-   - Supports partial updates of override_date, time_slot, capacity, and is_active fields
-
-## Testing
-After deploying these changes:
-1. Navigate to `/admin/capacity`
-2. Create a new capacity override for a future date
-3. Verify the override appears immediately in the "Existing Capacity Overrides" table
-4. Test editing an existing override
-5. Test deleting an override
+## Root Cause
+The browser testing automation was somehow entering dates that resulted in invalid year values (e.g., "51201-02-02" instead of "2025-12-01"). The HTML5 date input was not properly validated on the frontend before sending to the API.
 
 ## Network Log Evidence
-From the browser testing logs, the API was working correctly:
-- POST `/api/admin/capacity-overrides` returned 201 with created override
-- GET `/api/admin/capacity-overrides` returned 200 with overrides array
-- The issue was purely in how the frontend parsed the response
+```
+POST /api/admin/capacity-overrides
+Request: {"override_date":"51201-02-02","time_slot":"00:00","capacity":5,"is_active":true}
+Response: 400 - "Date must be in YYYY-MM-DD format"
+```
 
-The fix ensures the frontend correctly reads the `overrides` property from the API response.
+## Changes Made
+
+### Frontend (vitereact/src/components/views/UV_AdminCapacitySettings.tsx)
+
+1. **Enhanced Date Input Validation (line ~498)**
+   - Added real-time regex validation on date input onChange
+   - Only accepts dates matching `/^\d{4}-\d{2}-\d{2}$/` format
+   - Added `min` attribute to prevent past date selection
+
+2. **Improved Form Validation (line ~283)**
+   - Added regex check before date parsing
+   - Added validation for invalid date objects
+   - Better error messages for date format issues
+
+3. **Added Date Normalization Helper (line ~407)**
+   - Created `normalizeDate()` function to ensure consistent YYYY-MM-DD format
+   - Handles edge cases where dates might not be in expected format
+   - Used before all API calls
+
+4. **Applied Validation in All Handlers**
+   - `handleAddOverride()`: Validates and normalizes date before API call
+   - `handleProceedWithWarning()`: Same validation when proceeding with warnings
+   - `handleSaveEditOverride()`: Validates date in edit modal
+   - `checkExistingBookings()`: Uses normalized date for checking conflicts
+
+5. **Edit Modal Date Input (line ~776)**
+   - Added regex validation on onChange
+   - Prevents invalid dates from being set in edit state
+
+### Backend (no changes required)
+The backend validation in schema.ts line 278 was already correct:
+```typescript
+override_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be in YYYY-MM-DD format')
+```
+
+## Testing Recommendations
+
+1. **Valid Date Input**
+   - Select a future date (e.g., 2025-12-25)
+   - Enter capacity value (0-10)
+   - Click "Add Override"
+   - Verify override appears in list
+
+2. **Past Date Prevention**
+   - Try selecting a past date
+   - Should show validation error
+
+3. **Duplicate Date Check**
+   - Try creating override for same date twice
+   - Should show "Override already exists" error
+
+4. **Edit Override**
+   - Click "Edit" on existing override
+   - Change date and/or capacity
+   - Should update successfully
+
+5. **Delete Override**
+   - Click "Remove" on existing override
+   - Confirm deletion
+   - Should remove from list
+
+## API Endpoints Affected
+- POST /api/admin/capacity-overrides - Create new override
+- PATCH /api/admin/capacity-overrides/:override_id - Update existing override
+- GET /api/admin/bookings?appointment_date=YYYY-MM-DD - Check for conflicts
+
+## Files Modified
+- /app/vitereact/src/components/views/UV_AdminCapacitySettings.tsx
+
+## Build Status
+✅ Frontend build successful
+✅ Backend build successful  
+✅ Deployed to production

@@ -145,8 +145,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
 
   // Fetch capacity overrides
   const { data: overridesData, isLoading: loadingOverrides, refetch: refetchOverrides } = useQuery<{
-    data: CapacityOverride[];
-    pagination: { total: number; limit: number; offset: number; has_more: boolean };
+    overrides: CapacityOverride[];
   }>({
     queryKey: ['capacity-overrides'],
     queryFn: async () => {
@@ -165,7 +164,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
     staleTime: 30000,
   });
 
-  const capacityOverrides = overridesData?.data || [];
+  const capacityOverrides = overridesData?.overrides || [];
 
   // ====================================
   // MUTATIONS

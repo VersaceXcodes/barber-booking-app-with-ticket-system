@@ -846,6 +846,46 @@ app.post('/api/admin/capacity-overrides', authenticateAdmin, async (req, res) =>
         res.status(500).json(createErrorResponse('Failed to create capacity override', error, 'INTERNAL_ERROR'));
     }
 });
+app.patch('/api/admin/capacity-overrides/:override_id', authenticateAdmin, async (req, res) => {
+    try {
+        const { override_id } = req.params;
+        const { override_date, time_slot, capacity, is_active } = req.body;
+        const updates = [];
+        const params = [];
+        let paramCount = 1;
+        if (override_date !== undefined) {
+            updates.push(`override_date = $${paramCount++}`);
+            params.push(override_date);
+        }
+        if (time_slot !== undefined) {
+            updates.push(`time_slot = $${paramCount++}`);
+            params.push(time_slot);
+        }
+        if (capacity !== undefined) {
+            updates.push(`capacity = $${paramCount++}`);
+            params.push(capacity);
+        }
+        if (is_active !== undefined) {
+            updates.push(`is_active = $${paramCount++}`);
+            params.push(is_active);
+        }
+        if (updates.length === 0) {
+            return res.status(400).json(createErrorResponse('No fields to update', null, 'VALIDATION_ERROR'));
+        }
+        updates.push(`updated_at = $${paramCount++}`);
+        params.push(new Date().toISOString());
+        params.push(override_id);
+        const result = await pool.query(`UPDATE capacity_overrides SET ${updates.join(', ')} WHERE override_id = $${paramCount} RETURNING *`, params);
+        if (result.rows.length === 0) {
+            return res.status(404).json(createErrorResponse('Override not found', null, 'NOT_FOUND'));
+        }
+        res.json({ override: result.rows[0], message: 'Capacity override updated successfully' });
+    }
+    catch (error) {
+        console.error('Update capacity override error:', error);
+        res.status(500).json(createErrorResponse('Failed to update capacity override', error, 'INTERNAL_ERROR'));
+    }
+});
 app.delete('/api/admin/capacity-overrides/:override_id', authenticateAdmin, async (req, res) => {
     try {
         const { override_id } = req.params;

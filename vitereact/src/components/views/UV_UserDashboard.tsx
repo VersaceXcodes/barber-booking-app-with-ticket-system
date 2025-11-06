@@ -222,6 +222,51 @@ const UV_UserDashboard: React.FC = () => {
     refetchOnWindowFocus: false
   });
 
+  const { data: allBookingsData } = useQuery({
+    queryKey: ['user-bookings-all', authToken],
+    queryFn: async () => {
+      if (!authToken) throw new Error('Not authenticated');
+      
+      const [confirmedRes, completedRes, cancelledRes] = await Promise.all([
+        axios.get(
+          `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/user/bookings`,
+          {
+            headers: { Authorization: `Bearer ${authToken}` },
+            params: { status: 'confirmed' }
+          }
+        ),
+        axios.get(
+          `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/user/bookings`,
+          {
+            headers: { Authorization: `Bearer ${authToken}` },
+            params: { status: 'completed' }
+          }
+        ),
+        axios.get(
+          `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/user/bookings`,
+          {
+            headers: { Authorization: `Bearer ${authToken}` },
+            params: { status: 'cancelled' }
+          }
+        )
+      ]);
+      
+      const allBookings = [
+        ...(confirmedRes.data.bookings || []),
+        ...(completedRes.data.bookings || []),
+        ...(cancelledRes.data.bookings || [])
+      ];
+      
+      return {
+        bookings: allBookings,
+        total: allBookings.length
+      };
+    },
+    enabled: !!authToken,
+    staleTime: 60000,
+    refetchOnWindowFocus: false
+  });
+
   // ============================================================================
   // CANCEL BOOKING MUTATION
   // ============================================================================
@@ -246,6 +291,7 @@ const UV_UserDashboard: React.FC = () => {
     onSuccess: () => {
       // Refetch bookings
       queryClient.invalidateQueries({ queryKey: ['user-bookings'] });
+      queryClient.invalidateQueries({ queryKey: ['user-bookings-all'] });
       
       // Close modal
       setCancelModalState({
@@ -357,14 +403,20 @@ const UV_UserDashboard: React.FC = () => {
   // ============================================================================
 
   const userStats: UserStats = React.useMemo(() => {
-    const allBookings = bookingsData?.bookings || [];
+    const allBookings = allBookingsData?.bookings || [];
+    
+    const sortedByDate = [...allBookings].sort((a, b) => {
+      const dateA = new Date(`${a.appointment_date}T${a.appointment_time}`);
+      const dateB = new Date(`${b.appointment_date}T${b.appointment_time}`);
+      return dateB.getTime() - dateA.getTime();
+    });
     
     return {
-      total_bookings: allBookings.length,
-      last_booking_date: allBookings.length > 0 
-        ? allBookings[0].appointment_date 
+      total_bookings: allBookingsData?.total || 0,
+      last_booking_date: sortedByDate.length > 0 
+        ? sortedByDate[0].appointment_date 
         : null,
-      most_booked_service: 'Haircut', // Simple default
+      most_booked_service: 'Haircut',
       member_since: currentUser?.created_at 
         ? new Date(currentUser.created_at).toLocaleDateString('en-US', { 
             month: 'long', 
@@ -372,7 +424,7 @@ const UV_UserDashboard: React.FC = () => {
           })
         : 'Unknown'
     };
-  }, [bookingsData, currentUser]);
+  }, [allBookingsData, currentUser]);
 
   // ============================================================================
   // RENDER

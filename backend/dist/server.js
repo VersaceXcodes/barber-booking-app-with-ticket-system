@@ -759,6 +759,19 @@ app.delete('/api/admin/capacity-overrides/:override_id', authenticateAdmin, asyn
         res.status(500).json(createErrorResponse('Failed to delete capacity override', error, 'INTERNAL_ERROR'));
     }
 });
+app.get('/api/admin/blocked-slots', authenticateAdmin, async (req, res) => {
+    try {
+        const { block_date_from, block_date_to } = req.query;
+        res.json({
+            blocked_slots: [],
+            total: 0
+        });
+    }
+    catch (error) {
+        console.error('Get blocked slots error:', error);
+        res.status(500).json(createErrorResponse('Failed to retrieve blocked slots', error, 'INTERNAL_ERROR'));
+    }
+});
 app.get('/api/admin/dashboard/stats', authenticateAdmin, async (req, res) => {
     try {
         const todayStr = new Date().toISOString().split('T')[0];

@@ -189,26 +189,32 @@ const fetchBookings = async (
     search?: string;
   }
 ): Promise<Booking[]> => {
-  const params = new URLSearchParams();
-  
-  if (filters.status && filters.status !== 'all') {
-    params.append('status', filters.status);
+  try {
+    const params = new URLSearchParams();
+    
+    if (filters.status && filters.status !== 'all') {
+      params.append('status', filters.status);
+    }
+    if (filters.service_id) {
+      params.append('service_id', filters.service_id);
+    }
+    params.append('appointment_date_from', filters.start_date);
+    params.append('appointment_date_to', filters.end_date);
+    if (filters.search) {
+      params.append('query', filters.search);
+    }
+    
+    const response = await axios.get(
+      `${getApiBaseUrl()}/api/admin/bookings?${params.toString()}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    
+    const data = response.data.bookings || response.data.data || response.data;
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.error('Failed to fetch bookings:', error);
+    return [];
   }
-  if (filters.service_id) {
-    params.append('service_id', filters.service_id);
-  }
-  params.append('appointment_date_from', filters.start_date);
-  params.append('appointment_date_to', filters.end_date);
-  if (filters.search) {
-    params.append('query', filters.search);
-  }
-  
-  const response = await axios.get(
-    `${getApiBaseUrl()}/api/admin/bookings?${params.toString()}`,
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
-  
-  return response.data.data || response.data;
 };
 
 const fetchServices = async (token: string): Promise<Service[]> => {
@@ -225,12 +231,18 @@ const fetchCapacityOverrides = async (
   startDate: string,
   endDate: string
 ): Promise<CapacityOverride[]> => {
-  const response = await axios.get(
-    `${getApiBaseUrl()}/api/admin/capacity-overrides?override_date_from=${startDate}&override_date_to=${endDate}`,
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
-  
-  return response.data.data || response.data;
+  try {
+    const response = await axios.get(
+      `${getApiBaseUrl()}/api/admin/capacity-overrides?override_date_from=${startDate}&override_date_to=${endDate}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    
+    const data = response.data.overrides || response.data.data || response.data;
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.error('Failed to fetch capacity overrides:', error);
+    return [];
+  }
 };
 
 const fetchBlockedSlots = async (
@@ -238,12 +250,18 @@ const fetchBlockedSlots = async (
   startDate: string,
   endDate: string
 ): Promise<BlockedSlot[]> => {
-  const response = await axios.get(
-    `${getApiBaseUrl()}/api/admin/blocked-slots?block_date_from=${startDate}&block_date_to=${endDate}`,
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
-  
-  return response.data.data || response.data;
+  try {
+    const response = await axios.get(
+      `${getApiBaseUrl()}/api/admin/blocked-slots?block_date_from=${startDate}&block_date_to=${endDate}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    
+    const data = response.data.blocked_slots || response.data.data || response.data;
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.error('Failed to fetch blocked slots:', error);
+    return [];
+  }
 };
 
 // ============================================================================

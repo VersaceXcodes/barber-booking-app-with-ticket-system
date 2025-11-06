@@ -243,7 +243,7 @@ const UV_AdminBookingsList: React.FC = () => {
       params.set('sort_order', filters.sort_order);
 
       const response = await axios.get(
-        `${getApiBaseUrl()}/api/bookings/search?${params.toString()}`,
+        `${getApiBaseUrl()}/api/admin/bookings?${params.toString()}`,
         {
           headers: {
             Authorization: `Bearer ${authToken}`,

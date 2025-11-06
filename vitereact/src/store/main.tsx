@@ -388,6 +388,7 @@ export const useAppStore = create<AppState>()(
       initialize_auth: async () => {
         const { authentication_state } = get();
         const token = authentication_state.auth_token;
+        const user_type = authentication_state.authentication_status.user_type;
 
         if (!token) {
           set((state) => ({
@@ -404,29 +405,49 @@ export const useAppStore = create<AppState>()(
         }
 
         try {
-          // Verify token with backend
-          const response = await axios.get(
-            `${get_api_base_url()}/api/auth/me`,
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
+          if (user_type === 'admin') {
+            const current_user = authentication_state.current_user;
+            
+            if (current_user) {
+              set(() => ({
+                authentication_state: {
+                  current_user: current_user,
+                  auth_token: token,
+                  authentication_status: {
+                    is_authenticated: true,
+                    is_loading: false,
+                    user_type: 'admin',
+                  },
+                  error_message: null,
+                },
+              }));
+              return;
+            } else {
+              throw new Error('Admin user data not found');
+            }
+          } else {
+            const response = await axios.get(
+              `${get_api_base_url()}/api/auth/me`,
+              { headers: { Authorization: `Bearer ${token}` } }
+            );
 
-          const { user } = response.data;
-          const mapped_user = map_backend_user_to_frontend(user);
+            const { user } = response.data;
+            const mapped_user = map_backend_user_to_frontend(user);
 
-          const user_type = authentication_state.authentication_status.user_type || 'user';
-
-          set(() => ({
-            authentication_state: {
-              current_user: mapped_user,
-              auth_token: token,
-              authentication_status: {
-                is_authenticated: true,
-                is_loading: false,
-                user_type: user_type,
+            set(() => ({
+              authentication_state: {
+                current_user: mapped_user,
+                auth_token: token,
+                authentication_status: {
+                  is_authenticated: true,
+                  is_loading: false,
+                  user_type: 'user',
+                },
+                error_message: null,
               },
-              error_message: null,
-            },
-          }));
+            }));
+            return;
+          }
         } catch {
           set({
             authentication_state: {

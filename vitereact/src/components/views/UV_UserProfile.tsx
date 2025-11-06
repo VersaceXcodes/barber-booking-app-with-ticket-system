@@ -6,13 +6,62 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { User, Mail, Phone, CheckCircle, XCircle, Edit2, Save, X } from 'lucide-react';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+
+const getApiBaseUrl = () => {
+  return import.meta.env.VITE_API_BASE_URL || window.location.origin;
+};
 
 const UV_UserProfile: React.FC = () => {
   const currentUser = useAppStore(state => state.authentication_state.current_user);
+  const authToken = useAppStore(state => state.authentication_state.auth_token);
+  const updateCurrentUser = useAppStore(state => state.update_current_user);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     name: currentUser?.name || '',
     phone: currentUser?.phone || '',
+  });
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+
+  const updateProfileMutation = useMutation({
+    mutationFn: async (updates: { name: string; phone: string }) => {
+      if (!authToken) {
+        throw new Error('Not authenticated');
+      }
+
+      const response = await axios.patch(
+        `${getApiBaseUrl()}/api/auth/me`,
+        updates,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      return response.data;
+    },
+    onSuccess: (data) => {
+      if (data.user) {
+        updateCurrentUser({
+          name: data.user.name,
+          phone: data.user.phone,
+        });
+        setSaveMessage({ type: 'success', text: 'Profile updated successfully!' });
+        setTimeout(() => setSaveMessage(null), 3000);
+      }
+      setIsEditing(false);
+      setIsSaving(false);
+    },
+    onError: (error: any) => {
+      const errorMsg = error.response?.data?.message || 'Failed to update profile';
+      setSaveMessage({ type: 'error', text: errorMsg });
+      setTimeout(() => setSaveMessage(null), 5000);
+      setIsSaving(false);
+    },
   });
 
   const handleEditToggle = () => {
@@ -21,12 +70,24 @@ const UV_UserProfile: React.FC = () => {
         name: currentUser?.name || '',
         phone: currentUser?.phone || '',
       });
+      setSaveMessage(null);
     }
     setIsEditing(!isEditing);
   };
 
-  const handleSave = () => {
-    setIsEditing(false);
+  const handleSave = async () => {
+    if (!formData.name.trim()) {
+      setSaveMessage({ type: 'error', text: 'Name is required' });
+      return;
+    }
+
+    setIsSaving(true);
+    setSaveMessage(null);
+
+    await updateProfileMutation.mutateAsync({
+      name: formData.name.trim(),
+      phone: formData.phone.trim(),
+    });
   };
 
   const handleChange = (field: string, value: string) => {
@@ -64,11 +125,11 @@ const UV_UserProfile: React.FC = () => {
                   </Button>
                 ) : (
                   <>
-                    <Button onClick={handleSave} size="sm">
+                    <Button onClick={handleSave} size="sm" disabled={isSaving}>
                       <Save className="h-4 w-4 mr-2" />
-                      Save
+                      {isSaving ? 'Saving...' : 'Save'}
                     </Button>
-                    <Button onClick={handleEditToggle} variant="outline" size="sm">
+                    <Button onClick={handleEditToggle} variant="outline" size="sm" disabled={isSaving}>
                       <X className="h-4 w-4 mr-2" />
                       Cancel
                     </Button>
@@ -78,6 +139,15 @@ const UV_UserProfile: React.FC = () => {
             </div>
           </CardHeader>
           <CardContent className="space-y-6">
+            {saveMessage && (
+              <div className={`p-4 rounded-lg ${
+                saveMessage.type === 'success' 
+                  ? 'bg-green-50 border border-green-200 text-green-800' 
+                  : 'bg-red-50 border border-red-200 text-red-800'
+              }`}>
+                <p className="text-sm font-medium">{saveMessage.text}</p>
+              </div>
+            )}
             <div className="space-y-4">
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                 <div className="flex items-center gap-3">

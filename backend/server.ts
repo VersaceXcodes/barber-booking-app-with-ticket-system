@@ -455,6 +455,82 @@ app.patch('/api/bookings/:ticket_number/cancel', async (req, res) => {
   }
 });
 
+app.patch('/api/bookings/:ticket_number/complete', async (req, res) => {
+  try {
+    const { ticket_number } = req.params;
+
+    const bookingResult = await pool.query(
+      'SELECT * FROM bookings WHERE UPPER(ticket_number) = UPPER($1)',
+      [ticket_number]
+    );
+
+    if (bookingResult.rows.length === 0) {
+      return res.status(404).json(createErrorResponse('Booking not found', null, 'BOOKING_NOT_FOUND'));
+    }
+
+    const booking = bookingResult.rows[0];
+    if (booking.status === 'completed') {
+      return res.status(409).json(createErrorResponse('Booking already completed', null, 'ALREADY_COMPLETED'));
+    }
+    if (booking.status === 'cancelled') {
+      return res.status(409).json(createErrorResponse('Cannot complete cancelled booking', null, 'CANNOT_COMPLETE_CANCELLED'));
+    }
+
+    const now = new Date().toISOString();
+
+    const updateResult = await pool.query(
+      `UPDATE bookings
+       SET status = 'completed', completed_at = $1, updated_at = $1
+       WHERE booking_id = $2
+       RETURNING *`,
+      [now, booking.booking_id]
+    );
+
+    res.json({
+      booking: updateResult.rows[0],
+      message: 'Booking marked as completed successfully'
+    });
+  } catch (error) {
+    console.error('Complete booking error:', error);
+    res.status(500).json(createErrorResponse('Failed to complete booking', error, 'INTERNAL_ERROR'));
+  }
+});
+
+app.patch('/api/bookings/:ticket_number', async (req, res) => {
+  try {
+    const { ticket_number } = req.params;
+    const { admin_notes } = req.body;
+
+    const bookingResult = await pool.query(
+      'SELECT * FROM bookings WHERE UPPER(ticket_number) = UPPER($1)',
+      [ticket_number]
+    );
+
+    if (bookingResult.rows.length === 0) {
+      return res.status(404).json(createErrorResponse('Booking not found', null, 'BOOKING_NOT_FOUND'));
+    }
+
+    const booking = bookingResult.rows[0];
+    const now = new Date().toISOString();
+
+    const updateResult = await pool.query(
+      `UPDATE bookings
+       SET admin_notes = $1, updated_at = $2
+       WHERE booking_id = $3
+       RETURNING *`,
+      [admin_notes, now, booking.booking_id]
+    );
+
+    res.json({
+      booking: updateResult.rows[0],
+      message: 'Booking updated successfully'
+    });
+  } catch (error) {
+    console.error('Update booking error:', error);
+    res.status(500).json(createErrorResponse('Failed to update booking', error, 'INTERNAL_ERROR'));
+  }
+});
+
 app.post('/api/bookings/:ticket_number/reschedule', async (req, res) => {
   try {
     const { ticket_number } = req.params;
@@ -1067,6 +1143,47 @@ app.get('/api/admin/dashboard/stats', authenticateAdmin, async (req, res) => {
   } catch (error) {
     console.error('Get dashboard stats error:', error);
     res.status(500).json(createErrorResponse('Failed to retrieve dashboard stats', error, 'INTERNAL_ERROR'));
+  }
+});
+
+app.get('/api/admin/settings', authenticateAdmin, async (req, res) => {
+  try {
+    const settings = {
+      shop_name: 'BarberSlot',
+      shop_address: '123 Main St, City, State 12345',
+      shop_phone: '(555) 123-4567',
+      shop_email: 'info@barberslot.com',
+      operating_hours: '10:00 AM - 3:00 PM',
+      capacity_mon_wed: 2,
+      capacity_thu_sun: 3,
+      booking_window_days: 90,
+      same_day_cutoff_hours: 2,
+      reminder_hours_before: 2,
+      services_enabled: true,
+      gallery_enabled: true,
+      social_facebook: '',
+      social_instagram: '',
+      social_twitter: ''
+    };
+    res.json(settings);
+  } catch (error) {
+    console.error('Get admin settings error:', error);
+    res.status(500).json(createErrorResponse('Failed to retrieve settings', error, 'INTERNAL_ERROR'));
+  }
+});
+
+app.patch('/api/admin/settings', authenticateAdmin, async (req, res) => {
+  try {
+    const updatedSettings = {
+      ...req.body,
+    };
+    res.json({
+      ...updatedSettings,
+      message: 'Settings updated successfully'
+    });
+  } catch (error) {
+    console.error('Update admin settings error:', error);
+    res.status(500).json(createErrorResponse('Failed to update settings', error, 'INTERNAL_ERROR'));
   }
 });
 

@@ -566,9 +566,14 @@ const UV_AdminBookingsCalendar: React.FC = () => {
             const totalBookings = dayBookings ? Object.values(dayBookings).flat().length : 0;
             
             // Calculate total capacity for the day
+            const allSlotsForDate = new Set(TIME_SLOTS);
+            if (dayBookings) {
+              Object.keys(dayBookings).forEach(time => allSlotsForDate.add(time));
+            }
+            
             let totalCapacity = 0;
             let totalBooked = 0;
-            TIME_SLOTS.forEach(time => {
+            Array.from(allSlotsForDate).forEach(time => {
               const { capacity, booked } = getSlotCapacity(dateStr, time);
               totalCapacity += capacity;
               totalBooked += booked;
@@ -634,6 +639,21 @@ const UV_AdminBookingsCalendar: React.FC = () => {
   const renderWeekView = () => {
     const dates = getWeekDates(focusedDate);
     
+    const allTimeSlotsForWeek = useMemo(() => {
+      const slots = new Set(TIME_SLOTS);
+      
+      dates.forEach(date => {
+        const dateStr = formatDate(date);
+        if (groupedBookings[dateStr]) {
+          Object.keys(groupedBookings[dateStr]).forEach(time => {
+            slots.add(time);
+          });
+        }
+      });
+      
+      return Array.from(slots).sort();
+    }, [dates, groupedBookings]);
+    
     return (
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         {/* Day headers */}
@@ -659,7 +679,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
         
         {/* Time slot grid */}
         <div className="grid grid-cols-8">
-          {TIME_SLOTS.map((time) => (
+          {allTimeSlotsForWeek.map((time) => (
             <React.Fragment key={time}>
               {/* Time label */}
               <div className="px-4 py-4 text-sm font-medium text-gray-600 bg-gray-50 border-b border-gray-200">
@@ -712,9 +732,21 @@ const UV_AdminBookingsCalendar: React.FC = () => {
   const renderDayView = () => {
     const dateStr = formatDate(focusedDate);
     
+    const allTimeSlots = useMemo(() => {
+      const slots = new Set(TIME_SLOTS);
+      
+      if (groupedBookings[dateStr]) {
+        Object.keys(groupedBookings[dateStr]).forEach(time => {
+          slots.add(time);
+        });
+      }
+      
+      return Array.from(slots).sort();
+    }, [dateStr, groupedBookings]);
+    
     return (
       <div className="space-y-4">
-        {TIME_SLOTS.map(time => {
+        {allTimeSlots.map(time => {
           const slotBookings = groupedBookings[dateStr]?.[time] || [];
           const { capacity, booked, isBlocked } = getSlotCapacity(dateStr, time);
           

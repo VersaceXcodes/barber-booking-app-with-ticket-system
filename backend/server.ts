@@ -767,7 +767,7 @@ app.post('/api/admin/login', async (req, res) => {
 
 app.get('/api/admin/bookings', authenticateAdmin, async (req, res) => {
   try {
-    const { status, service_id, appointment_date_from, appointment_date_to, limit = 50, offset = 0 } = req.query;
+    const { status, service_id, appointment_date_from, appointment_date_to, query: searchQuery, limit = 50, offset = 0, sort_by = 'appointment_date', sort_order = 'desc' } = req.query;
     let query = 'SELECT b.*, s.name as service_name FROM bookings b LEFT JOIN services s ON b.service_id = s.service_id WHERE 1=1';
     const params: any[] = [];
     let paramCount = 1;
@@ -788,13 +788,53 @@ app.get('/api/admin/bookings', authenticateAdmin, async (req, res) => {
       query += ` AND b.appointment_date <= $${paramCount++}`;
       params.push(appointment_date_to);
     }
+    if (searchQuery) {
+      query += ` AND (b.ticket_number ILIKE $${paramCount} OR b.customer_name ILIKE $${paramCount} OR b.customer_phone ILIKE $${paramCount} OR b.customer_email ILIKE $${paramCount})`;
+      params.push(`%${searchQuery}%`);
+      paramCount++;
+    }
 
-    query += ' ORDER BY b.appointment_date DESC, b.appointment_time DESC';
+    const validSortFields = ['appointment_date', 'appointment_time', 'customer_name', 'ticket_number', 'created_at', 'status'];
+    const sortField = validSortFields.includes(String(sort_by)) ? String(sort_by) : 'appointment_date';
+    const sortOrderStr = String(sort_order).toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+    
+    query += ` ORDER BY b.${sortField} ${sortOrderStr}`;
+    query += `, b.appointment_time ${sortOrderStr}`;
     query += ` LIMIT $${paramCount++} OFFSET $${paramCount++}`;
     params.push(parseInt(String(limit)), parseInt(String(offset)));
 
     const result = await pool.query(query, params);
-    res.json({ bookings: result.rows, total: result.rows.length });
+    
+    let countQuery = 'SELECT COUNT(*) as total FROM bookings b WHERE 1=1';
+    const countParams: any[] = [];
+    let countParamNum = 1;
+    
+    if (status) {
+      countQuery += ` AND b.status = $${countParamNum++}`;
+      countParams.push(status);
+    }
+    if (service_id) {
+      countQuery += ` AND b.service_id = $${countParamNum++}`;
+      countParams.push(service_id);
+    }
+    if (appointment_date_from) {
+      countQuery += ` AND b.appointment_date >= $${countParamNum++}`;
+      countParams.push(appointment_date_from);
+    }
+    if (appointment_date_to) {
+      countQuery += ` AND b.appointment_date <= $${countParamNum++}`;
+      countParams.push(appointment_date_to);
+    }
+    if (searchQuery) {
+      countQuery += ` AND (b.ticket_number ILIKE $${countParamNum} OR b.customer_name ILIKE $${countParamNum} OR b.customer_phone ILIKE $${countParamNum} OR b.customer_email ILIKE $${countParamNum})`;
+      countParams.push(`%${searchQuery}%`);
+      countParamNum++;
+    }
+    
+    const countResult = await pool.query(countQuery, countParams);
+    const total = parseInt(countResult.rows[0].total);
+    
+    res.json({ bookings: result.rows, total });
   } catch (error) {
     console.error('Admin get bookings error:', error);
     res.status(500).json(createErrorResponse('Failed to retrieve bookings', error, 'INTERNAL_ERROR'));
@@ -918,7 +958,24 @@ app.patch('/api/admin/services/:service_id', authenticateAdmin, async (req, res)
 
 app.get('/api/admin/capacity-overrides', authenticateAdmin, async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM capacity_overrides WHERE is_active = TRUE ORDER BY override_date ASC, time_slot ASC');
+    const { override_date_from, override_date_to } = req.query;
+    
+    let query = 'SELECT * FROM capacity_overrides WHERE is_active = TRUE';
+    const params: any[] = [];
+    let paramCount = 1;
+    
+    if (override_date_from) {
+      query += ` AND override_date >= $${paramCount++}`;
+      params.push(override_date_from);
+    }
+    if (override_date_to) {
+      query += ` AND override_date <= $${paramCount++}`;
+      params.push(override_date_to);
+    }
+    
+    query += ' ORDER BY override_date ASC, time_slot ASC';
+    
+    const result = await pool.query(query, params);
     res.json({ overrides: result.rows });
   } catch (error) {
     console.error('Get capacity overrides error:', error);

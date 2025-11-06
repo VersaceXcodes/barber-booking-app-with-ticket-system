@@ -170,22 +170,18 @@ const UV_UserDashboard: React.FC = () => {
       if (!authToken) throw new Error('Not authenticated');
       
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/bookings/search`,
+        `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/user/bookings`,
         {
           headers: { Authorization: `Bearer ${authToken}` },
           params: {
-            status: statusMap[selectedTab],
-            sort_by: 'appointment_date',
-            sort_order: sortOrderMap[selectedTab],
-            limit: 50,
-            offset: 0
+            status: statusMap[selectedTab]
           }
         }
       );
       return response.data;
     },
     select: (data): { bookings: BookingWithDerived[]; total: number } => {
-      const bookings = (data.bookings || []).map((booking: Booking): BookingWithDerived => ({
+      let bookings = (data.bookings || []).map((booking: Booking): BookingWithDerived => ({
         ...booking,
         time_until_appointment: selectedTab === 'upcoming' 
           ? calculateTimeUntil(booking.appointment_date, booking.appointment_time)
@@ -198,6 +194,23 @@ const UV_UserDashboard: React.FC = () => {
           ? canCancelBooking(booking.appointment_date, booking.appointment_time)
           : false
       }));
+      
+      // Sort bookings based on selected tab
+      if (selectedTab === 'upcoming') {
+        // For upcoming, show earliest first (ascending order)
+        bookings.sort((a, b) => {
+          const dateA = new Date(`${a.appointment_date}T${a.appointment_time}`);
+          const dateB = new Date(`${b.appointment_date}T${b.appointment_time}`);
+          return dateA.getTime() - dateB.getTime();
+        });
+      } else {
+        // For past/cancelled, show latest first (descending order)
+        bookings.sort((a, b) => {
+          const dateA = new Date(`${a.appointment_date}T${a.appointment_time}`);
+          const dateB = new Date(`${b.appointment_date}T${b.appointment_time}`);
+          return dateB.getTime() - dateA.getTime();
+        });
+      }
       
       return {
         bookings,

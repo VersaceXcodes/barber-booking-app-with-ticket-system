@@ -193,11 +193,7 @@ const UV_BookingSearch: React.FC = () => {
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (value && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
-      setDate(value);
-    } else if (!value) {
-      setDate('');
-    }
+    setDate(value);
     setSearchError(null);
   };
 
@@ -276,6 +272,7 @@ const UV_BookingSearch: React.FC = () => {
               data-testid="search-form"
               role="search"
               aria-label="Booking search form"
+              autoComplete="off"
             >
               {/* Ticket Number Tab */}
               {searchMethod === 'ticket' && (
@@ -299,14 +296,9 @@ const UV_BookingSearch: React.FC = () => {
                           setTicketNumber(formatted);
                         }}
                         onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
+                          if (e.key === 'Enter' && canSearch) {
                             e.preventDefault();
-                            if (canSearch) {
-                              const form = e.currentTarget.form;
-                              if (form) {
-                                form.requestSubmit();
-                              }
-                            }
+                            handleSearch(e as any);
                           }
                         }}
                         placeholder="TKT-20241105-003"
@@ -346,14 +338,9 @@ const UV_BookingSearch: React.FC = () => {
                         value={phone}
                         onChange={handlePhoneChange}
                         onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
+                          if (e.key === 'Enter' && canSearch) {
                             e.preventDefault();
-                            if (canSearch) {
-                              const form = e.currentTarget.form;
-                              if (form) {
-                                form.requestSubmit();
-                              }
-                            }
+                            handleSearch(e as any);
                           }
                         }}
                         placeholder="+1 (555) 123-4567"
@@ -380,18 +367,18 @@ const UV_BookingSearch: React.FC = () => {
                         value={date}
                         onChange={handleDateChange}
                         onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
+                          if (e.key === 'Enter' && canSearch) {
                             e.preventDefault();
-                            if (canSearch) {
-                              const form = e.currentTarget.form;
-                              if (form) {
-                                form.requestSubmit();
-                              }
-                            }
+                            handleSearch(e as any);
                           }
                         }}
                         autoComplete="off"
                         data-form-type="other"
+                        data-lpignore="true"
+                        data-1p-ignore="true"
+                        min="2020-01-01"
+                        max="2030-12-31"
+                        pattern="\d{4}-\d{2}-\d{2}"
                         className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base"
                       />
                     </div>
@@ -411,15 +398,12 @@ const UV_BookingSearch: React.FC = () => {
               <button
                 type="submit"
                 id="search-submit-button"
+                name="search-submit-button"
                 data-testid="search-button"
                 aria-label="Search for booking"
+                role="button"
+                tabIndex={0}
                 disabled={!canSearch || isLoading}
-                onClick={(e) => {
-                  if (!canSearch || isLoading) {
-                    e.preventDefault();
-                    return;
-                  }
-                }}
                 className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2"
               >
                 {isLoading ? (

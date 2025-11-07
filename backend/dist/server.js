@@ -1172,6 +1172,154 @@ app.get('/api/admin/dashboard/stats', authenticateAdmin, async (req, res) => {
         res.status(500).json(createErrorResponse('Failed to retrieve dashboard stats', error, 'INTERNAL_ERROR'));
     }
 });
+app.get('/api/admin/reports/bookings', authenticateAdmin, async (req, res) => {
+    try {
+        const { start_date, end_date, group_by = 'service', service_id, status } = req.query;
+        if (!start_date || !end_date) {
+            return res.status(400).json(createErrorResponse('start_date and end_date are required', null, 'MISSING_DATES'));
+        }
+        let query = `
+      SELECT 
+        b.*,
+        s.name as service_name,
+        s.price as service_price
+      FROM bookings b
+      LEFT JOIN services s ON b.service_id = s.service_id
+      WHERE b.appointment_date >= $1 AND b.appointment_date <= $2
+    `;
+        const params = [start_date, end_date];
+        let paramCount = 3;
+        if (service_id) {
+            query += ` AND b.service_id = $${paramCount++}`;
+            params.push(service_id);
+        }
+        if (status) {
+            query += ` AND b.status = $${paramCount++}`;
+            params.push(status);
+        }
+        const result = await pool.query(query, params);
+        const bookings = result.rows;
+        const totalBookings = bookings.length;
+        const completed = bookings.filter(b => b.status === 'completed').length;
+        const cancelled = bookings.filter(b => b.status === 'cancelled').length;
+        const noShows = bookings.filter(b => b.status === 'no_show').length;
+        const showUpRate = (completed + noShows) > 0 ? (completed / (completed + noShows)) * 100 : 0;
+        let totalRevenue = null;
+        const completedBookings = bookings.filter(b => b.status === 'completed');
+        if (completedBookings.length > 0) {
+            totalRevenue = completedBookings.reduce((sum, b) => {
+                const price = b.service_price ? parseFloat(b.service_price) : 0;
+                return sum + price;
+            }, 0);
+        }
+        const byService = {};
+        bookings.forEach(b => {
+            const serviceName = b.service_name || 'No Service';
+            if (!byService[serviceName]) {
+                byService[serviceName] = { service_name: serviceName, count: 0 };
+            }
+            byService[serviceName].count++;
+        });
+        const byDayOfWeek = {
+            'Sunday': { day: 'Sunday', count: 0 },
+            'Monday': { day: 'Monday', count: 0 },
+            'Tuesday': { day: 'Tuesday', count: 0 },
+            'Wednesday': { day: 'Wednesday', count: 0 },
+            'Thursday': { day: 'Thursday', count: 0 },
+            'Friday': { day: 'Friday', count: 0 },
+            'Saturday': { day: 'Saturday', count: 0 }
+        };
+        bookings.forEach(b => {
+            const date = new Date(b.appointment_date);
+            const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const dayName = dayNames[date.getDay()];
+            byDayOfWeek[dayName].count++;
+        });
+        const byTimeSlot = {};
+        bookings.forEach(b => {
+            const time = b.appointment_time;
+            if (!byTimeSlot[time]) {
+                const date = new Date(b.appointment_date);
+                const dayOfWeek = date.getDay();
+                const isMondayToWednesday = [1, 2, 3].includes(dayOfWeek);
+                const capacity = isMondayToWednesday ? 2 : 3;
+                byTimeSlot[time] = { time, count: 0, total_capacity: capacity };
+            }
+            byTimeSlot[time].count++;
+        });
+        res.json({
+            total_bookings: totalBookings,
+            completed,
+            cancelled,
+            no_shows: noShows,
+            show_up_rate: showUpRate,
+            total_revenue: totalRevenue,
+            by_service: Object.values(byService),
+            by_day_of_week: Object.values(byDayOfWeek).filter(d => d.count > 0),
+            by_time_slot: Object.values(byTimeSlot)
+        });
+    }
+    catch (error) {
+        console.error('Get reports error:', error);
+        res.status(500).json(createErrorResponse('Failed to retrieve reports', error, 'INTERNAL_ERROR'));
+    }
+});
+app.get('/api/admin/reports/export', authenticateAdmin, async (req, res) => {
+    try {
+        const { start_date, end_date, fields, format = 'csv' } = req.query;
+        if (!start_date || !end_date) {
+            return res.status(400).json(createErrorResponse('start_date and end_date are required', null, 'MISSING_DATES'));
+        }
+        if (format !== 'csv') {
+            return res.status(400).json(createErrorResponse('Only CSV format is supported', null, 'UNSUPPORTED_FORMAT'));
+        }
+        const requestedFields = fields ? String(fields).split(',') : [
+            'ticket_number', 'customer_name', 'customer_email', 'customer_phone',
+            'appointment_date', 'appointment_time', 'service_name', 'status', 'special_request'
+        ];
+        const query = `
+      SELECT 
+        b.*,
+        s.name as service_name
+      FROM bookings b
+      LEFT JOIN services s ON b.service_id = s.service_id
+      WHERE b.appointment_date >= $1 AND b.appointment_date <= $2
+      ORDER BY b.appointment_date ASC, b.appointment_time ASC
+    `;
+        const result = await pool.query(query, [start_date, end_date]);
+        const bookings = result.rows;
+        const fieldMapping = {
+            'ticket_number': 'Ticket Number',
+            'customer_name': 'Customer Name',
+            'customer_email': 'Customer Email',
+            'customer_phone': 'Customer Phone',
+            'appointment_date': 'Date',
+            'appointment_time': 'Time',
+            'service_name': 'Service',
+            'status': 'Status',
+            'special_request': 'Special Request',
+            'admin_notes': 'Admin Notes'
+        };
+        const csvHeaders = requestedFields.map(field => fieldMapping[field] || field).join(',');
+        const csvRows = bookings.map(booking => {
+            return requestedFields.map(field => {
+                let value = booking[field] || '';
+                if (typeof value === 'string' && (value.includes(',') || value.includes('"') || value.includes('\n'))) {
+                    value = `"${value.replace(/"/g, '""')}"`;
+                }
+                return value;
+            }).join(',');
+        });
+        const csv = [csvHeaders, ...csvRows].join('\n');
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', `attachment; filename="bookings_${start_date}_${end_date}.csv"`);
+        res.send(csv);
+    }
+    catch (error) {
+        console.error('Export reports error:', error);
+        res.status(500).json(createErrorResponse('Failed to export reports', error, 'INTERNAL_ERROR'));
+    }
+});
 app.get('/api/admin/settings', authenticateAdmin, async (req, res) => {
     try {
         const settings = {

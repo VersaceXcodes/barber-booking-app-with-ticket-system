@@ -1164,6 +1164,93 @@ app.get('/api/admin/blocked-slots', authenticateAdmin, async (req, res) => {
   }
 });
 
+app.get('/api/admin/customers', authenticateAdmin, async (req, res) => {
+  try {
+    const { 
+      limit = 50, 
+      offset = 0, 
+      sort_by = 'total_bookings', 
+      sort_order = 'desc',
+      type
+    } = req.query;
+
+    let query = `
+      SELECT 
+        COALESCE(u.user_id, 'guest-' || b.customer_email) as customer_id,
+        COALESCE(u.email, b.customer_email) as email,
+        COALESCE(u.name, b.customer_name) as name,
+        COALESCE(u.phone, b.customer_phone) as phone,
+        CASE WHEN u.user_id IS NOT NULL THEN 'registered' ELSE 'guest' END as customer_type,
+        u.is_verified,
+        COUNT(b.booking_id) as total_bookings,
+        SUM(CASE WHEN b.status = 'completed' THEN 1 ELSE 0 END) as completed_bookings,
+        SUM(CASE WHEN b.status = 'cancelled' THEN 1 ELSE 0 END) as cancelled_bookings,
+        MAX(b.appointment_date) as last_booking_date,
+        MIN(b.created_at) as first_booking_date
+      FROM bookings b
+      LEFT JOIN users u ON b.user_id = u.user_id
+      WHERE 1=1
+    `;
+    
+    const params: any[] = [];
+    let paramCount = 1;
+
+    if (type === 'registered') {
+      query += ` AND u.user_id IS NOT NULL`;
+    } else if (type === 'guest') {
+      query += ` AND u.user_id IS NULL`;
+    }
+
+    query += ` GROUP BY u.user_id, u.email, u.name, u.phone, u.is_verified, b.customer_email, b.customer_name, b.customer_phone`;
+
+    const validSortFields = {
+      'name': 'COALESCE(u.name, b.customer_name)',
+      'email': 'COALESCE(u.email, b.customer_email)',
+      'total_bookings': 'total_bookings',
+      'last_booking_date': 'last_booking_date',
+      'first_booking_date': 'first_booking_date'
+    };
+    
+    const sortField = validSortFields[String(sort_by)] || validSortFields['total_bookings'];
+    const sortOrderStr = String(sort_order).toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+    
+    query += ` ORDER BY ${sortField} ${sortOrderStr}`;
+    query += ` LIMIT $${paramCount++} OFFSET $${paramCount++}`;
+    params.push(parseInt(String(limit)), parseInt(String(offset)));
+
+    const result = await pool.query(query, params);
+
+    let countQuery = `
+      SELECT COUNT(DISTINCT COALESCE(u.user_id, 'guest-' || b.customer_email)) as total
+      FROM bookings b
+      LEFT JOIN users u ON b.user_id = u.user_id
+      WHERE 1=1
+    `;
+    
+    if (type === 'registered') {
+      countQuery += ` AND u.user_id IS NOT NULL`;
+    } else if (type === 'guest') {
+      countQuery += ` AND u.user_id IS NULL`;
+    }
+
+    const countResult = await pool.query(countQuery);
+    const total = parseInt(countResult.rows[0].total);
+
+    res.json({ 
+      customers: result.rows.map(row => ({
+        ...row,
+        total_bookings: parseInt(row.total_bookings),
+        completed_bookings: parseInt(row.completed_bookings),
+        cancelled_bookings: parseInt(row.cancelled_bookings)
+      })),
+      total 
+    });
+  } catch (error) {
+    console.error('Admin get customers error:', error);
+    res.status(500).json(createErrorResponse('Failed to retrieve customers', error, 'INTERNAL_ERROR'));
+  }
+});
+
 app.get('/api/admin/dashboard/stats', authenticateAdmin, async (req, res) => {
   try {
     const todayStr = new Date().toISOString().split('T')[0];

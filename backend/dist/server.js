@@ -648,10 +648,15 @@ app.post('/api/admin/login', async (req, res) => {
 });
 app.get('/api/admin/bookings', authenticateAdmin, async (req, res) => {
     try {
-        const { status, service_id, appointment_date_from, appointment_date_to, query: searchQuery, limit = 50, offset = 0, sort_by = 'appointment_date', sort_order = 'desc' } = req.query;
-        let query = 'SELECT b.*, s.name as service_name FROM bookings b LEFT JOIN services s ON b.service_id = s.service_id WHERE 1=1';
+        const { status, service_id, customer_id, appointment_date_from, appointment_date_to, query: searchQuery, limit = 50, offset = 0, sort_by = 'appointment_date', sort_order = 'desc' } = req.query;
+        let query = 'SELECT b.*, s.name as service_name FROM bookings b LEFT JOIN services s ON b.service_id = s.service_id LEFT JOIN users u ON b.user_id = u.user_id WHERE 1=1';
         const params = [];
         let paramCount = 1;
+        if (customer_id) {
+            query += ` AND (b.user_id = $${paramCount} OR 'guest-' || b.customer_email = $${paramCount})`;
+            params.push(customer_id);
+            paramCount++;
+        }
         if (status) {
             query += ` AND b.status = $${paramCount++}`;
             params.push(status);
@@ -681,9 +686,14 @@ app.get('/api/admin/bookings', authenticateAdmin, async (req, res) => {
         query += ` LIMIT $${paramCount++} OFFSET $${paramCount++}`;
         params.push(parseInt(String(limit)), parseInt(String(offset)));
         const result = await pool.query(query, params);
-        let countQuery = 'SELECT COUNT(*) as total FROM bookings b WHERE 1=1';
+        let countQuery = 'SELECT COUNT(*) as total FROM bookings b LEFT JOIN users u ON b.user_id = u.user_id WHERE 1=1';
         const countParams = [];
         let countParamNum = 1;
+        if (customer_id) {
+            countQuery += ` AND (b.user_id = $${countParamNum} OR 'guest-' || b.customer_email = $${countParamNum})`;
+            countParams.push(customer_id);
+            countParamNum++;
+        }
         if (status) {
             countQuery += ` AND b.status = $${countParamNum++}`;
             countParams.push(status);
@@ -1000,45 +1010,6 @@ app.get('/api/admin/customers', authenticateAdmin, async (req, res) => {
         res.status(500).json(createErrorResponse('Failed to retrieve customers', error, 'INTERNAL_ERROR'));
     }
 });
-app.get('/api/admin/customers/:customer_id', authenticateAdmin, async (req, res) => {
-    try {
-        const { customer_id } = req.params;
-        let query = `
-      SELECT 
-        COALESCE(u.user_id, 'guest-' || b.customer_email) as customer_id,
-        COALESCE(u.email, b.customer_email) as email,
-        COALESCE(u.name, b.customer_name) as name,
-        COALESCE(u.phone, b.customer_phone) as phone,
-        CASE WHEN u.user_id IS NOT NULL THEN true ELSE false END as is_registered,
-        COUNT(b.booking_id) as total_bookings,
-        SUM(CASE WHEN b.status = 'completed' THEN 1 ELSE 0 END) as completed_bookings,
-        SUM(CASE WHEN b.status = 'cancelled' THEN 1 ELSE 0 END) as cancelled_bookings,
-        SUM(CASE WHEN b.status = 'no_show' THEN 1 ELSE 0 END) as no_shows,
-        MAX(b.appointment_date) as last_booking_date,
-        MIN(b.created_at) as created_at
-      FROM bookings b
-      LEFT JOIN users u ON b.user_id = u.user_id
-      WHERE COALESCE(u.user_id, 'guest-' || b.customer_email) = $1
-      GROUP BY u.user_id, u.email, u.name, u.phone, b.customer_email, b.customer_name, b.customer_phone
-    `;
-        const result = await pool.query(query, [customer_id]);
-        if (result.rows.length === 0) {
-            return res.status(404).json(createErrorResponse('Customer not found', null, 'NOT_FOUND'));
-        }
-        const customer = {
-            ...result.rows[0],
-            total_bookings: parseInt(result.rows[0].total_bookings),
-            completed_bookings: parseInt(result.rows[0].completed_bookings),
-            cancelled_bookings: parseInt(result.rows[0].cancelled_bookings),
-            no_shows: parseInt(result.rows[0].no_shows || 0)
-        };
-        res.json(customer);
-    }
-    catch (error) {
-        console.error('Get customer detail error:', error);
-        res.status(500).json(createErrorResponse('Failed to retrieve customer', error, 'INTERNAL_ERROR'));
-    }
-});
 app.get('/api/admin/customers/:customer_id/notes', authenticateAdmin, async (req, res) => {
     try {
         const { customer_id } = req.params;
@@ -1133,6 +1104,45 @@ app.delete('/api/admin/customers/:customer_id/notes/:note_id', authenticateAdmin
     catch (error) {
         console.error('Delete customer note error:', error);
         res.status(500).json(createErrorResponse('Failed to delete note', error, 'INTERNAL_ERROR'));
+    }
+});
+app.get('/api/admin/customers/:customer_id', authenticateAdmin, async (req, res) => {
+    try {
+        const { customer_id } = req.params;
+        let query = `
+      SELECT 
+        COALESCE(u.user_id, 'guest-' || b.customer_email) as customer_id,
+        COALESCE(u.email, b.customer_email) as email,
+        COALESCE(u.name, b.customer_name) as name,
+        COALESCE(u.phone, b.customer_phone) as phone,
+        CASE WHEN u.user_id IS NOT NULL THEN true ELSE false END as is_registered,
+        COUNT(b.booking_id) as total_bookings,
+        SUM(CASE WHEN b.status = 'completed' THEN 1 ELSE 0 END) as completed_bookings,
+        SUM(CASE WHEN b.status = 'cancelled' THEN 1 ELSE 0 END) as cancelled_bookings,
+        SUM(CASE WHEN b.status = 'no_show' THEN 1 ELSE 0 END) as no_shows,
+        MAX(b.appointment_date) as last_booking_date,
+        MIN(b.created_at) as created_at
+      FROM bookings b
+      LEFT JOIN users u ON b.user_id = u.user_id
+      WHERE COALESCE(u.user_id, 'guest-' || b.customer_email) = $1
+      GROUP BY u.user_id, u.email, u.name, u.phone, b.customer_email, b.customer_name, b.customer_phone
+    `;
+        const result = await pool.query(query, [customer_id]);
+        if (result.rows.length === 0) {
+            return res.status(404).json(createErrorResponse('Customer not found', null, 'NOT_FOUND'));
+        }
+        const customer = {
+            ...result.rows[0],
+            total_bookings: parseInt(result.rows[0].total_bookings),
+            completed_bookings: parseInt(result.rows[0].completed_bookings),
+            cancelled_bookings: parseInt(result.rows[0].cancelled_bookings),
+            no_shows: parseInt(result.rows[0].no_shows || 0)
+        };
+        res.json(customer);
+    }
+    catch (error) {
+        console.error('Get customer detail error:', error);
+        res.status(500).json(createErrorResponse('Failed to retrieve customer', error, 'INTERNAL_ERROR'));
     }
 });
 app.get('/api/admin/dashboard/stats', authenticateAdmin, async (req, res) => {

@@ -14,23 +14,18 @@ interface Customer {
   name: string;
   email: string;
   phone: string;
-  is_registered: boolean;
+  customer_type: 'registered' | 'guest';
+  is_verified: boolean | null;
   total_bookings: number;
   completed_bookings: number;
   cancelled_bookings: number;
-  no_shows: number;
   last_booking_date: string | null;
-  created_at: string;
+  first_booking_date: string;
 }
 
 interface CustomersResponse {
-  data: Customer[];
-  pagination: {
-    total: number;
-    limit: number;
-    offset: number;
-    has_more: boolean;
-  };
+  customers: Customer[];
+  total: number;
 }
 
 // ============================================================================
@@ -164,8 +159,8 @@ const UV_AdminCustomerList: React.FC = () => {
     refetchOnWindowFocus: false,
   });
 
-  const customers = customersData?.data || [];
-  const totalCustomers = customersData?.pagination.total || 0;
+  const customers = customersData?.customers || [];
+  const totalCustomers = customersData?.total || 0;
   const totalPages = Math.ceil(totalCustomers / rowsPerPage);
 
   // ====================================================================
@@ -438,7 +433,7 @@ const UV_AdminCustomerList: React.FC = () => {
 
                           {/* Type Badge */}
                           <td className="px-6 py-4 whitespace-nowrap">
-                            {customer.is_registered ? (
+                            {customer.customer_type === 'registered' ? (
                               <span className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
                                 Registered
                               </span>

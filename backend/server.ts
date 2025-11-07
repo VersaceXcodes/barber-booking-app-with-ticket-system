@@ -1316,6 +1316,130 @@ app.get('/api/admin/customers/:customer_id', authenticateAdmin, async (req, res)
   }
 });
 
+app.get('/api/admin/customers/:customer_id/notes', authenticateAdmin, async (req, res) => {
+  try {
+    const { customer_id } = req.params;
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS customer_notes (
+        note_id TEXT PRIMARY KEY,
+        customer_id TEXT NOT NULL,
+        note_text TEXT NOT NULL,
+        created_by TEXT NOT NULL,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+      )
+    `);
+
+    const result = await pool.query(
+      'SELECT * FROM customer_notes WHERE customer_id = $1 ORDER BY created_at DESC',
+      [customer_id]
+    );
+
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Get customer notes error:', error);
+    res.status(500).json(createErrorResponse('Failed to retrieve notes', error, 'INTERNAL_ERROR'));
+  }
+});
+
+app.post('/api/admin/customers/:customer_id/notes', authenticateAdmin, async (req, res) => {
+  try {
+    const { customer_id } = req.params;
+    const { note_text } = req.body;
+    const admin = (req as any).admin;
+
+    if (!note_text || note_text.trim().length === 0) {
+      return res.status(400).json(createErrorResponse('Note text is required', null, 'MISSING_FIELD'));
+    }
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS customer_notes (
+        note_id TEXT PRIMARY KEY,
+        customer_id TEXT NOT NULL,
+        note_text TEXT NOT NULL,
+        created_by TEXT NOT NULL,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+      )
+    `);
+
+    const note_id = uuidv4();
+    const now = new Date().toISOString();
+    const created_by = admin.email || 'Admin';
+
+    const result = await pool.query(
+      `INSERT INTO customer_notes (note_id, customer_id, note_text, created_by, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $5)
+       RETURNING *`,
+      [note_id, customer_id, note_text.trim(), created_by, now]
+    );
+
+    res.status(201).json({
+      note: result.rows[0],
+      message: 'Note added successfully'
+    });
+  } catch (error) {
+    console.error('Add customer note error:', error);
+    res.status(500).json(createErrorResponse('Failed to add note', error, 'INTERNAL_ERROR'));
+  }
+});
+
+app.patch('/api/admin/customers/:customer_id/notes/:note_id', authenticateAdmin, async (req, res) => {
+  try {
+    const { customer_id, note_id } = req.params;
+    const { note_text } = req.body;
+
+    if (!note_text || note_text.trim().length === 0) {
+      return res.status(400).json(createErrorResponse('Note text is required', null, 'MISSING_FIELD'));
+    }
+
+    const now = new Date().toISOString();
+
+    const result = await pool.query(
+      `UPDATE customer_notes
+       SET note_text = $1, updated_at = $2
+       WHERE note_id = $3 AND customer_id = $4
+       RETURNING *`,
+      [note_text.trim(), now, note_id, customer_id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json(createErrorResponse('Note not found', null, 'NOT_FOUND'));
+    }
+
+    res.json({
+      note: result.rows[0],
+      message: 'Note updated successfully'
+    });
+  } catch (error) {
+    console.error('Update customer note error:', error);
+    res.status(500).json(createErrorResponse('Failed to update note', error, 'INTERNAL_ERROR'));
+  }
+});
+
+app.delete('/api/admin/customers/:customer_id/notes/:note_id', authenticateAdmin, async (req, res) => {
+  try {
+    const { customer_id, note_id } = req.params;
+
+    const result = await pool.query(
+      'DELETE FROM customer_notes WHERE note_id = $1 AND customer_id = $2 RETURNING *',
+      [note_id, customer_id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json(createErrorResponse('Note not found', null, 'NOT_FOUND'));
+    }
+
+    res.json({
+      message: 'Note deleted successfully'
+    });
+  } catch (error) {
+    console.error('Delete customer note error:', error);
+    res.status(500).json(createErrorResponse('Failed to delete note', error, 'INTERNAL_ERROR'));
+  }
+});
+
 app.get('/api/admin/dashboard/stats', authenticateAdmin, async (req, res) => {
   try {
     const todayStr = new Date().toISOString().split('T')[0];

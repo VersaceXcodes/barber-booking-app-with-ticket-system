@@ -226,7 +226,7 @@ const UV_AdminCustomerDetail: React.FC = () => {
         }
       );
 
-      return response.data.map((booking: any) => ({
+      return response.data.bookings.map((booking: any) => ({
         booking_id: booking.booking_id,
         ticket_number: booking.ticket_number,
         status: booking.status,
@@ -261,7 +261,7 @@ const UV_AdminCustomerDetail: React.FC = () => {
           headers: { Authorization: `Bearer ${authToken}` },
         }
       );
-      return response.data;
+      return Array.isArray(response.data) ? response.data : [];
     },
     enabled: !!customer_id && !!authToken && activeTab === 'notes',
     staleTime: 2 * 60 * 1000,
@@ -283,7 +283,7 @@ const UV_AdminCustomerDetail: React.FC = () => {
           },
         }
       );
-      return response.data;
+      return response.data.note || response.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin', 'customer', customer_id, 'notes'] });
@@ -316,7 +316,7 @@ const UV_AdminCustomerDetail: React.FC = () => {
           },
         }
       );
-      return response.data;
+      return response.data.note || response.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin', 'customer', customer_id, 'notes'] });

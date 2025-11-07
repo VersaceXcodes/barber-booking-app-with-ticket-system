@@ -1171,7 +1171,8 @@ app.get('/api/admin/customers', authenticateAdmin, async (req, res) => {
       offset = 0, 
       sort_by = 'total_bookings', 
       sort_order = 'desc',
-      type
+      type,
+      search
     } = req.query;
 
     let query = `
@@ -1203,6 +1204,12 @@ app.get('/api/admin/customers', authenticateAdmin, async (req, res) => {
 
     query += ` GROUP BY u.user_id, u.email, u.name, u.phone, u.is_verified, b.customer_email, b.customer_name, b.customer_phone`;
 
+    if (search) {
+      query += ` HAVING (COALESCE(u.name, b.customer_name) ILIKE $${paramCount} OR COALESCE(u.email, b.customer_email) ILIKE $${paramCount} OR COALESCE(u.phone, b.customer_phone) ILIKE $${paramCount})`;
+      params.push(`%${search}%`);
+      paramCount++;
+    }
+
     const validSortFields = {
       'name': 'COALESCE(u.name, b.customer_name)',
       'email': 'COALESCE(u.email, b.customer_email)',
@@ -1221,10 +1228,16 @@ app.get('/api/admin/customers', authenticateAdmin, async (req, res) => {
     const result = await pool.query(query, params);
 
     let countQuery = `
-      SELECT COUNT(DISTINCT COALESCE(u.user_id, 'guest-' || b.customer_email)) as total
-      FROM bookings b
-      LEFT JOIN users u ON b.user_id = u.user_id
-      WHERE 1=1
+      SELECT COUNT(*) as total
+      FROM (
+        SELECT 
+          COALESCE(u.user_id, 'guest-' || b.customer_email) as customer_id,
+          COALESCE(u.name, b.customer_name) as name,
+          COALESCE(u.email, b.customer_email) as email,
+          COALESCE(u.phone, b.customer_phone) as phone
+        FROM bookings b
+        LEFT JOIN users u ON b.user_id = u.user_id
+        WHERE 1=1
     `;
     
     if (type === 'registered') {
@@ -1232,6 +1245,14 @@ app.get('/api/admin/customers', authenticateAdmin, async (req, res) => {
     } else if (type === 'guest') {
       countQuery += ` AND u.user_id IS NULL`;
     }
+
+    countQuery += ` GROUP BY u.user_id, u.email, u.name, u.phone, b.customer_email, b.customer_name, b.customer_phone`;
+
+    if (search) {
+      countQuery += ` HAVING (COALESCE(u.name, b.customer_name) ILIKE '%${String(search)}%' OR COALESCE(u.email, b.customer_email) ILIKE '%${String(search)}%' OR COALESCE(u.phone, b.customer_phone) ILIKE '%${String(search)}%')`;
+    }
+
+    countQuery += `) as subquery`;
 
     const countResult = await pool.query(countQuery);
     const total = parseInt(countResult.rows[0].total);
@@ -1248,6 +1269,50 @@ app.get('/api/admin/customers', authenticateAdmin, async (req, res) => {
   } catch (error) {
     console.error('Admin get customers error:', error);
     res.status(500).json(createErrorResponse('Failed to retrieve customers', error, 'INTERNAL_ERROR'));
+  }
+});
+
+app.get('/api/admin/customers/:customer_id', authenticateAdmin, async (req, res) => {
+  try {
+    const { customer_id } = req.params;
+
+    let query = `
+      SELECT 
+        COALESCE(u.user_id, 'guest-' || b.customer_email) as customer_id,
+        COALESCE(u.email, b.customer_email) as email,
+        COALESCE(u.name, b.customer_name) as name,
+        COALESCE(u.phone, b.customer_phone) as phone,
+        CASE WHEN u.user_id IS NOT NULL THEN true ELSE false END as is_registered,
+        COUNT(b.booking_id) as total_bookings,
+        SUM(CASE WHEN b.status = 'completed' THEN 1 ELSE 0 END) as completed_bookings,
+        SUM(CASE WHEN b.status = 'cancelled' THEN 1 ELSE 0 END) as cancelled_bookings,
+        SUM(CASE WHEN b.status = 'no_show' THEN 1 ELSE 0 END) as no_shows,
+        MAX(b.appointment_date) as last_booking_date,
+        MIN(b.created_at) as created_at
+      FROM bookings b
+      LEFT JOIN users u ON b.user_id = u.user_id
+      WHERE COALESCE(u.user_id, 'guest-' || b.customer_email) = $1
+      GROUP BY u.user_id, u.email, u.name, u.phone, b.customer_email, b.customer_name, b.customer_phone
+    `;
+
+    const result = await pool.query(query, [customer_id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json(createErrorResponse('Customer not found', null, 'NOT_FOUND'));
+    }
+
+    const customer = {
+      ...result.rows[0],
+      total_bookings: parseInt(result.rows[0].total_bookings),
+      completed_bookings: parseInt(result.rows[0].completed_bookings),
+      cancelled_bookings: parseInt(result.rows[0].cancelled_bookings),
+      no_shows: parseInt(result.rows[0].no_shows || 0)
+    };
+
+    res.json(customer);
+  } catch (error) {
+    console.error('Get customer detail error:', error);
+    res.status(500).json(createErrorResponse('Failed to retrieve customer', error, 'INTERNAL_ERROR'));
   }
 });
 

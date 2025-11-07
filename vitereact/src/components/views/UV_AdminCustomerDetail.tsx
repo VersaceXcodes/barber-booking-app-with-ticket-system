@@ -226,7 +226,8 @@ const UV_AdminCustomerDetail: React.FC = () => {
         }
       );
 
-      return response.data.bookings.map((booking: any) => ({
+      const bookingsData = response.data?.bookings || [];
+      return bookingsData.map((booking: any) => ({
         booking_id: booking.booking_id,
         ticket_number: booking.ticket_number,
         status: booking.status,
@@ -261,7 +262,14 @@ const UV_AdminCustomerDetail: React.FC = () => {
           headers: { Authorization: `Bearer ${authToken}` },
         }
       );
-      return Array.isArray(response.data) ? response.data : [];
+      const notesData = response.data;
+      if (Array.isArray(notesData)) {
+        return notesData;
+      }
+      if (notesData && Array.isArray(notesData.notes)) {
+        return notesData.notes;
+      }
+      return [];
     },
     enabled: !!customer_id && !!authToken && activeTab === 'notes',
     staleTime: 2 * 60 * 1000,

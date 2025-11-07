@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navigation Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .viewport-size {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Viewport Size Display -->
+    <div class="viewport-size" id="viewportSize">
+        Width: <span id="width"></span>px | Height: <span id="height"></span>px
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="#" class="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors">
+                        123 Barber Shop
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation (hidden on mobile) -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
+                        Book Now
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
+                        Our Work
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
+                        Find My Booking
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-gray-900 px-4 py-2 rounded-md text-sm font-medium">
+                        Log In
+                    </a>
+                    <a href="#" class="bg-blue-600 text-white hover:bg-blue-700 px-6 py-2 rounded-lg text-sm font-medium">
+                        Sign Up
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button (shown on mobile) -->
+                <div class="md:hidden">
+                    <button
+                        id="mobileMenuButton"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                        aria-label="Toggle mobile menu"
+                        data-testid="mobile-menu-button"
+                    >
+                        <svg id="menuIcon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="closeIcon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobileMenuPanel" class="md:hidden border-t border-gray-200 bg-white hidden" data-testid="mobile-menu-panel">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">
+                    Book Now
+                </a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">
+                    Our Work
+                </a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">
+                    Find My Booking
+                </a>
+                <div class="pt-4 border-t border-gray-200 space-y-2">
+                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
+                        Log In
+                    </a>
+                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium bg-blue-600 text-white hover:bg-blue-700 text-center">
+                        Sign Up
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Responsive Navigation Test</h1>
+            
+            <div class="space-y-6">
+                <section class="border-b pb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-3">Test Instructions:</h2>
+                    <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                        <li>Resize your browser window to less than 768px width</li>
+                        <li>Verify that desktop navigation links disappear</li>
+                        <li>Verify that hamburger menu (≡) appears in top-right</li>
+                        <li>Click the hamburger menu button</li>
+                        <li>Verify that mobile menu panel slides down with all navigation links</li>
+                        <li>Click again to close the mobile menu</li>
+                        <li>Resize browser window to 768px or wider</li>
+                        <li>Verify that hamburger menu disappears</li>
+                        <li>Verify that desktop navigation links appear</li>
+                    </ol>
+                </section>
+
+                <section class="border-b pb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-3">Expected Behavior:</h2>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li><strong>Mobile (< 768px):</strong> Hamburger menu visible, desktop nav hidden</li>
+                        <li><strong>Desktop (≥ 768px):</strong> Desktop nav visible, hamburger menu hidden</li>
+                        <li><strong>Mobile Menu:</strong> Opens/closes on hamburger click, shows all nav links</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-3">Current Status:</h2>
+                    <div id="status" class="space-y-2">
+                        <p class="text-gray-700">Viewport Width: <span id="statusWidth" class="font-mono font-semibold"></span>px</p>
+                        <p class="text-gray-700">Navigation Mode: <span id="navMode" class="font-mono font-semibold"></span></p>
+                        <p class="text-gray-700">Mobile Menu: <span id="menuStatus" class="font-mono font-semibold"></span></p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Update viewport size display
+        function updateViewportSize() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            document.getElementById('width').textContent = width;
+            document.getElementById('height').textContent = height;
+            document.getElementById('statusWidth').textContent = width;
+            
+            // Update navigation mode
+            const navMode = width >= 768 ? 'Desktop' : 'Mobile';
+            document.getElementById('navMode').textContent = navMode;
+            document.getElementById('navMode').className = width >= 768 ? 'font-mono font-semibold text-green-600' : 'font-mono font-semibold text-blue-600';
+        }
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenuPanel = document.getElementById('mobileMenuPanel');
+        const menuIcon = document.getElementById('menuIcon');
+        const closeIcon = document.getElementById('closeIcon');
+        let isMobileMenuOpen = false;
+
+        mobileMenuButton.addEventListener('click', () => {
+            isMobileMenuOpen = !isMobileMenuOpen;
+            
+            if (isMobileMenuOpen) {
+                mobileMenuPanel.classList.remove('hidden');
+                menuIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+                document.getElementById('menuStatus').textContent = 'Open';
+                document.getElementById('menuStatus').className = 'font-mono font-semibold text-green-600';
+            } else {
+                mobileMenuPanel.classList.add('hidden');
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                document.getElementById('menuStatus').textContent = 'Closed';
+                document.getElementById('menuStatus').className = 'font-mono font-semibold text-gray-600';
+            }
+        });
+
+        // Initial update
+        updateViewportSize();
+        document.getElementById('menuStatus').textContent = 'Closed';
+        document.getElementById('menuStatus').className = 'font-mono font-semibold text-gray-600';
+
+        // Update on resize
+        window.addEventListener('resize', updateViewportSize);
+
+        // Close mobile menu on window resize to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768 && isMobileMenuOpen) {
+                isMobileMenuOpen = false;
+                mobileMenuPanel.classList.add('hidden');
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                document.getElementById('menuStatus').textContent = 'Closed';
+                document.getElementById('menuStatus').className = 'font-mono font-semibold text-gray-600';
+            }
+        });
+    </script>
+</body>
+</html>

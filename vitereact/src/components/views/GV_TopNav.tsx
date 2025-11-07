@@ -148,6 +148,22 @@ const GV_TopNav: React.FC = () => {
   }, []);
 
   // ============================================================================
+  // WINDOW RESIZE HANDLER - Close mobile menu when resizing to desktop
+  // ============================================================================
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768 && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isMobileMenuOpen]);
+
+  // ============================================================================
   // RENDER - GUEST NAVIGATION
   // ============================================================================
   const renderGuestNav = () => (
@@ -454,8 +470,9 @@ const GV_TopNav: React.FC = () => {
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors"
                 aria-label="Toggle mobile menu"
                 aria-expanded={isMobileMenuOpen}
+                data-testid="mobile-menu-button"
               >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                {isMobileMenuOpen ? <X size={24} data-testid="close-icon" /> : <Menu size={24} data-testid="menu-icon" />}
               </button>
             </div>
           </div>
@@ -463,7 +480,7 @@ const GV_TopNav: React.FC = () => {
 
         {/* Mobile Menu Panel */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 bg-white">
+          <div className="md:hidden border-t border-gray-200 bg-white" data-testid="mobile-menu-panel">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {/* Guest Mobile Menu */}
               {!isAuthenticated && (

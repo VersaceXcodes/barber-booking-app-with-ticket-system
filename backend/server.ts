@@ -349,17 +349,41 @@ app.get('/api/bookings/search', async (req, res) => {
     const { ticket_number, phone, date } = req.query;
 
     if (ticket_number) {
+      if (typeof ticket_number !== 'string' || ticket_number.trim().length === 0) {
+        return res.status(400).json(createErrorResponse(
+          'Invalid ticket number format',
+          null,
+          'INVALID_TICKET_FORMAT'
+        ));
+      }
+
       const result = await pool.query(
         'SELECT * FROM bookings WHERE UPPER(ticket_number) = UPPER($1)',
-        [ticket_number]
+        [String(ticket_number).trim()]
       );
       return res.json({ bookings: result.rows, total: result.rows.length });
     }
 
     if (phone && date) {
+      if (typeof phone !== 'string' || typeof date !== 'string') {
+        return res.status(400).json(createErrorResponse(
+          'Invalid phone or date format',
+          null,
+          'INVALID_PHONE_DATE_FORMAT'
+        ));
+      }
+
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(String(date))) {
+        return res.status(400).json(createErrorResponse(
+          'Invalid date format. Use YYYY-MM-DD',
+          null,
+          'INVALID_DATE_FORMAT'
+        ));
+      }
+
       const result = await pool.query(
         'SELECT * FROM bookings WHERE customer_phone = $1 AND appointment_date = $2 ORDER BY appointment_time ASC',
-        [phone, date]
+        [String(phone).trim(), String(date)]
       );
       return res.json({ bookings: result.rows, total: result.rows.length });
     }
@@ -371,6 +395,15 @@ app.get('/api/bookings/search', async (req, res) => {
     ));
   } catch (error) {
     console.error('Search bookings error:', error);
+    
+    if ((error as any).code === 'ECONNREFUSED' || (error as any).code === 'ETIMEDOUT') {
+      return res.status(503).json(createErrorResponse(
+        'Database connection failed. Please try again later.',
+        error,
+        'DB_CONNECTION_ERROR'
+      ));
+    }
+    
     res.status(500).json(createErrorResponse('Failed to search bookings', error, 'INTERNAL_ERROR'));
   }
 });

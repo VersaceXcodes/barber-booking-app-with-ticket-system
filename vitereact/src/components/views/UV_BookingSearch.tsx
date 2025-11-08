@@ -138,11 +138,38 @@ const UV_BookingSearch: React.FC = () => {
         params.date = date;
       }
 
-      const response = await axios.get<SearchResponse>(apiUrl, { params });
-      return response.data;
+      try {
+        const response = await axios.get<SearchResponse>(apiUrl, { 
+          params,
+          timeout: 15000, // 15 second timeout
+          validateStatus: (status) => status < 500, // Don't throw on client errors
+        });
+        
+        // Handle explicit error responses
+        if (response.status >= 400) {
+          throw new Error(response.data?.message || 'Search failed');
+        }
+        
+        return response.data;
+      } catch (error: any) {
+        if (error.code === 'ECONNABORTED') {
+          throw new Error('Request timed out. Please try again.');
+        }
+        if (error.response?.status === 502 || error.response?.status === 503) {
+          throw new Error('Service temporarily unavailable. Please try again in a moment.');
+        }
+        throw error;
+      }
     },
     enabled: false, // Manual trigger only
-    retry: 1,
+    retry: (failureCount, error: any) => {
+      // Retry up to 2 times for 502/503 errors, once for others
+      if (error?.response?.status === 502 || error?.response?.status === 503) {
+        return failureCount < 2;
+      }
+      return failureCount < 1;
+    },
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 5000),
     staleTime: 0,
   });
 
@@ -167,8 +194,14 @@ const UV_BookingSearch: React.FC = () => {
       const axiosError = error as any;
       if (axiosError.response?.status === 429) {
         setSearchError('Too many search attempts. Please try again later.');
+      } else if (axiosError.response?.status === 502) {
+        setSearchError('Service temporarily unavailable. Please try again in a moment.');
+      } else if (axiosError.response?.status >= 500) {
+        setSearchError('Server error occurred. Please try again later.');
+      } else if (!axiosError.response) {
+        setSearchError('Unable to connect to server. Please check your connection and try again.');
       } else {
-        setSearchError(axiosError.response?.data?.error?.message || 'Search failed. Please try again.');
+        setSearchError(axiosError.response?.data?.message || axiosError.response?.data?.error?.message || 'Search failed. Please try again.');
       }
       setSearchTriggered(false);
     }
@@ -366,9 +399,14 @@ const UV_BookingSearch: React.FC = () => {
                         data-1p-ignore="true"
                         min="2020-01-01"
                         max="2030-12-31"
+                        required
+                        pattern="\d{4}-\d{2}-\d{2}"
                         className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base [&::-webkit-calendar-picker-indicator]:cursor-pointer"
                       />
                     </div>
+                    <p className="mt-2 text-sm text-gray-600">
+                      Enter the date of your appointment
+                    </p>
                   </div>
                 </div>
               )}
@@ -387,14 +425,17 @@ const UV_BookingSearch: React.FC = () => {
                 id="search-submit-button"
                 name="search-submit-button"
                 data-testid="search-button"
-                aria-label="Search for booking"
+                aria-label={isLoading ? 'Searching for booking...' : 'Search for booking'}
+                aria-disabled={!canSearch || isLoading}
+                aria-live="polite"
+                aria-busy={isLoading}
                 tabIndex={0}
                 disabled={!canSearch || isLoading}
-                className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2"
+                className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2 focus:outline-none focus:ring-4 focus:ring-blue-300"
               >
                 {isLoading ? (
                   <>
-                    <svg className="animate-spin size-5" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin size-5" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
@@ -402,7 +443,7 @@ const UV_BookingSearch: React.FC = () => {
                   </>
                 ) : (
                   <>
-                    <Search className="size-5" />
+                    <Search className="size-5" aria-hidden="true" />
                     <span>Search</span>
                   </>
                 )}

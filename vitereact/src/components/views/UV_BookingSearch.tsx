@@ -253,7 +253,26 @@ const UV_BookingSearch: React.FC = () => {
     e.preventDefault();
     e.stopPropagation();
     
-    if (!canSearch || isLoading) return;
+    if (isLoading) return;
+    
+    if (!canSearch) {
+      if (searchMethod === 'ticket') {
+        if (!ticketNumber) {
+          setSearchError('Please enter a ticket number');
+        } else if (!isValidTicketFormat(ticketNumber)) {
+          setSearchError('Invalid ticket format. Expected format: TKT-YYYYMMDD-XXX');
+        }
+      } else {
+        if (!phone) {
+          setSearchError('Please enter a phone number');
+        } else if (!isValidPhone(phone)) {
+          setSearchError('Please enter a valid phone number (10-15 digits)');
+        } else if (!date) {
+          setSearchError('Please select a booking date');
+        }
+      }
+      return;
+    }
     
     setSearchError(null);
     setSearchTriggered(true);
@@ -387,6 +406,12 @@ const UV_BookingSearch: React.FC = () => {
                         aria-label="Phone number"
                         value={phone}
                         onChange={handlePhoneChange}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleSearch(e as any);
+                          }
+                        }}
                         placeholder="+1 (555) 123-4567"
                         autoComplete="tel"
                         data-form-type="other"
@@ -410,14 +435,18 @@ const UV_BookingSearch: React.FC = () => {
                         aria-label="Booking date"
                         value={date}
                         onChange={handleDateChange}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleSearch(e as any);
+                          }
+                        }}
                         autoComplete="off"
                         data-form-type="other"
                         data-lpignore="true"
                         data-1p-ignore="true"
                         min="2020-01-01"
                         max="2030-12-31"
-                        required
-                        pattern="\d{4}-\d{2}-\d{2}"
                         onInvalid={(e) => {
                           e.preventDefault();
                           setSearchError('Please enter a valid date in YYYY-MM-DD format');
@@ -450,7 +479,6 @@ const UV_BookingSearch: React.FC = () => {
                 aria-disabled={!canSearch || isLoading}
                 aria-live="polite"
                 aria-busy={isLoading}
-                tabIndex={0}
                 disabled={!canSearch || isLoading}
                 className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2 focus:outline-none focus:ring-4 focus:ring-blue-300"
               >

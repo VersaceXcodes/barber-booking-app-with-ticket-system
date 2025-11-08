@@ -134,7 +134,12 @@ app.get('/api/availability', async (req, res) => {
             return res.status(400).json(createErrorResponse('Invalid date format. Use YYYY-MM-DD', null, 'INVALID_DATE_FORMAT'));
         }
         const settingsResult = await pool.query("SELECT * FROM (SELECT 'settings-main' as setting_id, 2 as capacity_mon_wed, 3 as capacity_thu_sun, 90 as booking_window_days, 2 as same_day_cutoff_hours) s LIMIT 1");
-        const settings = settingsResult.rows[0] || { capacity_mon_wed: 2, capacity_thu_sun: 3 };
+        const settings = settingsResult.rows[0] || { capacity_mon_wed: 2, capacity_thu_sun: 3, booking_window_days: 90 };
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const maxDate = new Date(today);
+        maxDate.setDate(today.getDate() + settings.booking_window_days);
+        maxDate.setHours(23, 59, 59, 999);
         const overridesResult = await pool.query('SELECT * FROM capacity_overrides WHERE override_date >= $1 AND override_date <= $2 AND is_active = TRUE', [start_date, end_date]);
         const overrides = {};
         overridesResult.rows.forEach(row => {
@@ -150,22 +155,28 @@ app.get('/api/availability', async (req, res) => {
         const dates = [];
         for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
             const dateStr = d.toISOString().split('T')[0];
+            const currentDate = new Date(dateStr + 'T00:00:00');
+            const isPast = currentDate < today;
+            const isBeyondBookingWindow = currentDate > maxDate;
             const dayOfWeek = d.getDay();
             const isMondayToWednesday = [1, 2, 3].includes(dayOfWeek);
             let baseCapacity = isMondayToWednesday ? settings.capacity_mon_wed : settings.capacity_thu_sun;
             let effectiveCapacity = overrides[dateStr] !== undefined ? overrides[dateStr] : baseCapacity;
+            if (isPast || isBeyondBookingWindow) {
+                effectiveCapacity = 0;
+            }
             const bookedCount = bookingsByDate[dateStr] || 0;
             const availableSpots = Math.max(0, effectiveCapacity - bookedCount);
             dates.push({
                 date: dateStr,
                 day_of_week: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dayOfWeek],
-                is_blocked: effectiveCapacity === 0,
+                is_blocked: effectiveCapacity === 0 || isPast || isBeyondBookingWindow,
                 base_capacity: baseCapacity,
                 override_capacity: overrides[dateStr] !== undefined ? overrides[dateStr] : null,
                 effective_capacity: effectiveCapacity,
                 booked_count: bookedCount,
                 available_spots: availableSpots,
-                is_available: availableSpots > 0 && effectiveCapacity > 0
+                is_available: availableSpots > 0 && effectiveCapacity > 0 && !isPast && !isBeyondBookingWindow
             });
         }
         res.json({ dates });
@@ -182,7 +193,19 @@ app.get('/api/availability/:date', async (req, res) => {
             return res.status(400).json(createErrorResponse('Invalid date format. Use YYYY-MM-DD', null, 'INVALID_DATE_FORMAT'));
         }
         const settingsResult = await pool.query("SELECT * FROM (SELECT 'settings-main' as setting_id, 2 as capacity_mon_wed, 3 as capacity_thu_sun, 90 as booking_window_days, 2 as same_day_cutoff_hours) s LIMIT 1");
-        const settings = settingsResult.rows[0] || { capacity_mon_wed: 2, capacity_thu_sun: 3 };
+        const settings = settingsResult.rows[0] || { capacity_mon_wed: 2, capacity_thu_sun: 3, booking_window_days: 90 };
+        const requestedDate = new Date(date + 'T00:00:00');
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (requestedDate < today) {
+            return res.status(400).json(createErrorResponse('Cannot check availability for past dates', null, 'PAST_DATE'));
+        }
+        const maxDate = new Date(today);
+        maxDate.setDate(today.getDate() + settings.booking_window_days);
+        maxDate.setHours(23, 59, 59, 999);
+        if (requestedDate > maxDate) {
+            return res.status(400).json(createErrorResponse(`Cannot check availability more than ${settings.booking_window_days} days in advance`, null, 'BEYOND_BOOKING_WINDOW'));
+        }
         const dayOfWeek = new Date(date).getDay();
         const isMondayToWednesday = [1, 2, 3].includes(dayOfWeek);
         let baseCapacity = isMondayToWednesday ? settings.capacity_mon_wed : settings.capacity_thu_sun;
@@ -234,11 +257,25 @@ app.post('/api/bookings', async (req, res) => {
             return res.status(400).json(createErrorResponse('Validation failed', validationResult.error, 'VALIDATION_ERROR'));
         }
         const { appointment_date, appointment_time, customer_name, customer_email, customer_phone, booking_for_name, service_id, special_request, inspiration_photos } = validationResult.data;
+        const settingsResult = await pool.query("SELECT * FROM (SELECT 'settings-main' as setting_id, 2 as capacity_mon_wed, 3 as capacity_thu_sun, 90 as booking_window_days, 2 as same_day_cutoff_hours) s LIMIT 1");
+        const settings = settingsResult.rows[0] || { booking_window_days: 90 };
+        const appointmentDate = new Date(appointment_date + 'T00:00:00');
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (appointmentDate < today) {
+            return res.status(400).json(createErrorResponse('Cannot book appointments in the past', null, 'PAST_DATE'));
+        }
+        const maxDate = new Date(today);
+        maxDate.setDate(today.getDate() + settings.booking_window_days);
+        maxDate.setHours(23, 59, 59, 999);
+        if (appointmentDate > maxDate) {
+            return res.status(400).json(createErrorResponse(`Cannot book appointments more than ${settings.booking_window_days} days in advance`, null, 'BEYOND_BOOKING_WINDOW'));
+        }
         const availabilityRes = await pool.query('SELECT COUNT(*) as count FROM bookings WHERE appointment_date = $1 AND appointment_time = $2 AND status = $3', [appointment_date, appointment_time, 'confirmed']);
         const currentBookings = parseInt(availabilityRes.rows[0].count);
         const dayOfWeek = new Date(appointment_date).getDay();
         const isMondayToWednesday = [1, 2, 3].includes(dayOfWeek);
-        let capacity = isMondayToWednesday ? 2 : 3;
+        let capacity = isMondayToWednesday ? settings.capacity_mon_wed || 2 : settings.capacity_thu_sun || 3;
         const overrideResult = await pool.query('SELECT * FROM capacity_overrides WHERE override_date = $1 AND is_active = TRUE LIMIT 1', [appointment_date]);
         if (overrideResult.rows.length > 0) {
             capacity = overrideResult.rows[0].capacity;

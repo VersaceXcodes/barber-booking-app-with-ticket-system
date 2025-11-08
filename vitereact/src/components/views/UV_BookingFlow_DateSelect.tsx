@@ -82,20 +82,27 @@ const getFirstAndLastDayOfMonth = (monthString: string): { start_date: string; e
   };
 };
 
-const transformAvailability = (response: AvailabilityResponse): AvailabilityData => {
+const transformAvailability = (response: AvailabilityResponse, bookingWindowDays: number): AvailabilityData => {
   const availabilityMap: AvailabilityData = {};
+  
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  const maxDate = new Date(today);
+  maxDate.setDate(today.getDate() + bookingWindowDays);
+  maxDate.setHours(23, 59, 59, 999);
   
   (response.dates || []).forEach(dateData => {
     const dateObj = new Date(dateData.date + 'T00:00:00');
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
     const isPast = dateObj < today;
+    const isBeyondBookingWindow = dateObj > maxDate;
     
     availabilityMap[dateData.date] = {
       available_slots: dateData.available_slots,
       total_capacity: dateData.total_capacity,
       status: dateData.is_blocked ? 'blocked' :
               isPast ? 'past' :
+              isBeyondBookingWindow ? 'blocked' :
               dateData.available_slots === 0 ? 'full' :
               dateData.available_slots <= 1 ? 'limited' : 'available'
     };
@@ -142,7 +149,7 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
     isLoading: loading_availability,
     error: error_message
   } = useQuery<AvailabilityData>({
-    queryKey: ['availability', calendar_month, serviceId],
+    queryKey: ['availability', calendar_month, serviceId, bookingWindowDays],
     queryFn: async () => {
       const response = await axios.get<AvailabilityResponse>(
         `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/availability`,
@@ -154,7 +161,7 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
           }
         }
       );
-      return transformAvailability(response.data);
+      return transformAvailability(response.data, bookingWindowDays);
     },
     staleTime: 60000, // 1 minute
     refetchOnWindowFocus: false,
@@ -244,15 +251,25 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
       return; // Not selectable
     }
     
+    // Additional validation: check if date is within valid range
+    const dateObj = new Date(day.dateString + 'T00:00:00');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const maxDate = new Date(today);
+    maxDate.setDate(today.getDate() + bookingWindowDays);
+    maxDate.setHours(23, 59, 59, 999);
+    
+    if (dateObj < today || dateObj > maxDate) {
+      return; // Date is outside valid range
+    }
+    
     // Update local state
     setSelectedDate(day.dateString);
     
     // Update global booking context
     updateBookingContext({
       selected_date: day.dateString,
-      // Store formatted date for display
-      // Note: We can't directly update arbitrary fields, but we can store in special_request temporarily
-      // or the view that needs it can format it. Let's just store the raw date.
     });
   };
 
@@ -263,9 +280,25 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
   const handleContinue = () => {
     if (!selected_date) return;
     
-    // Final validation
+    // Final validation - check availability status
     const availability = availability_data[selected_date];
     if (!availability || (availability.status !== 'available' && availability.status !== 'limited')) {
+      return;
+    }
+    
+    // Final validation - check date range
+    const dateObj = new Date(selected_date + 'T00:00:00');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const maxDate = new Date(today);
+    maxDate.setDate(today.getDate() + bookingWindowDays);
+    maxDate.setHours(23, 59, 59, 999);
+    
+    if (dateObj < today || dateObj > maxDate) {
+      // Date is outside valid range - clear selection
+      setSelectedDate(null);
+      updateBookingContext({ selected_date: null });
       return;
     }
     

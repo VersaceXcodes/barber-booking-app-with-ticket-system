@@ -141,23 +141,51 @@ const UV_BookingSearch: React.FC = () => {
       try {
         const response = await axios.get<SearchResponse>(apiUrl, { 
           params,
-          timeout: 15000, // 15 second timeout
-          validateStatus: (status) => status < 500, // Don't throw on client errors
+          timeout: 15000,
+          validateStatus: (status) => status < 500,
         });
         
-        // Handle explicit error responses
         if (response.status >= 400) {
-          throw new Error(response.data?.message || 'Search failed');
+          const errorMessage = response.data?.message || 'Search failed. Please try again.';
+          throw new Error(errorMessage);
         }
         
         return response.data;
       } catch (error: any) {
+        console.error('Search API error:', error);
+        
         if (error.code === 'ECONNABORTED') {
           throw new Error('Request timed out. Please try again.');
         }
-        if (error.response?.status === 502 || error.response?.status === 503) {
-          throw new Error('Service temporarily unavailable. Please try again in a moment.');
+        
+        if (axios.isAxiosError(error)) {
+          const status = error.response?.status;
+          
+          if (status === 502) {
+            throw new Error('Service temporarily unavailable. The server is having issues. Please try again in a moment.');
+          }
+          
+          if (status === 503) {
+            throw new Error('Database connection failed. Please try again later.');
+          }
+          
+          if (status === 504) {
+            throw new Error('Gateway timeout. The request took too long. Please try again.');
+          }
+          
+          if (status && status >= 500) {
+            throw new Error('Server error occurred. Please try again later.');
+          }
+          
+          if (error.response?.data?.message) {
+            throw new Error(error.response.data.message);
+          }
+          
+          if (!error.response) {
+            throw new Error('Unable to connect to server. Please check your internet connection and try again.');
+          }
         }
+        
         throw error;
       }
     },
@@ -188,21 +216,10 @@ const UV_BookingSearch: React.FC = () => {
     }
   }, [data, searchTriggered, navigate]);
 
-  // Handle search errors
   useEffect(() => {
     if (error) {
-      const axiosError = error as any;
-      if (axiosError.response?.status === 429) {
-        setSearchError('Too many search attempts. Please try again later.');
-      } else if (axiosError.response?.status === 502) {
-        setSearchError('Service temporarily unavailable. Please try again in a moment.');
-      } else if (axiosError.response?.status >= 500) {
-        setSearchError('Server error occurred. Please try again later.');
-      } else if (!axiosError.response) {
-        setSearchError('Unable to connect to server. Please check your connection and try again.');
-      } else {
-        setSearchError(axiosError.response?.data?.message || axiosError.response?.data?.error?.message || 'Search failed. Please try again.');
-      }
+      const errorMessage = error instanceof Error ? error.message : 'Search failed. Please try again.';
+      setSearchError(errorMessage);
       setSearchTriggered(false);
     }
   }, [error]);
@@ -401,11 +418,15 @@ const UV_BookingSearch: React.FC = () => {
                         max="2030-12-31"
                         required
                         pattern="\d{4}-\d{2}-\d{2}"
+                        onInvalid={(e) => {
+                          e.preventDefault();
+                          setSearchError('Please enter a valid date in YYYY-MM-DD format');
+                        }}
                         className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base [&::-webkit-calendar-picker-indicator]:cursor-pointer"
                       />
                     </div>
                     <p className="mt-2 text-sm text-gray-600">
-                      Enter the date of your appointment
+                      Enter the date of your appointment (e.g., 2024-11-08)
                     </p>
                   </div>
                 </div>

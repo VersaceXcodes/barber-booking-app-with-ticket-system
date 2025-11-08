@@ -278,12 +278,44 @@ app.get('/api/bookings/search', async (req, res) => {
     try {
         const { ticket_number, phone, date } = req.query;
         if (ticket_number) {
-            const result = await pool.query('SELECT * FROM bookings WHERE UPPER(ticket_number) = UPPER($1)', [ticket_number]);
-            return res.json({ bookings: result.rows, total: result.rows.length });
+            if (typeof ticket_number !== 'string' || ticket_number.trim().length === 0) {
+                return res.status(400).json(createErrorResponse('Invalid ticket number format', null, 'INVALID_TICKET_FORMAT'));
+            }
+            try {
+                const result = await pool.query('SELECT * FROM bookings WHERE UPPER(ticket_number) = UPPER($1)', [String(ticket_number).trim()]);
+                return res.json({ bookings: result.rows, total: result.rows.length });
+            }
+            catch (dbError) {
+                console.error('Database error searching by ticket:', dbError);
+                if (dbError.code === 'ECONNREFUSED' || dbError.code === 'ETIMEDOUT') {
+                    return res.status(503).json(createErrorResponse('Database connection failed. Please try again later.', dbError, 'DB_CONNECTION_ERROR'));
+                }
+                throw dbError;
+            }
         }
         if (phone && date) {
-            const result = await pool.query('SELECT * FROM bookings WHERE customer_phone = $1 AND appointment_date = $2 ORDER BY appointment_time ASC', [phone, date]);
-            return res.json({ bookings: result.rows, total: result.rows.length });
+            if (typeof phone !== 'string' || typeof date !== 'string') {
+                return res.status(400).json(createErrorResponse('Invalid phone or date format', null, 'INVALID_PHONE_DATE_FORMAT'));
+            }
+            const dateStr = String(date).trim();
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+                return res.status(400).json(createErrorResponse('Invalid date format. Use YYYY-MM-DD', null, 'INVALID_DATE_FORMAT'));
+            }
+            const parsedDate = new Date(dateStr);
+            if (isNaN(parsedDate.getTime())) {
+                return res.status(400).json(createErrorResponse('Invalid date value. Please provide a valid date.', null, 'INVALID_DATE_VALUE'));
+            }
+            try {
+                const result = await pool.query('SELECT * FROM bookings WHERE customer_phone = $1 AND appointment_date = $2 ORDER BY appointment_time ASC', [String(phone).trim(), dateStr]);
+                return res.json({ bookings: result.rows, total: result.rows.length });
+            }
+            catch (dbError) {
+                console.error('Database error searching by phone/date:', dbError);
+                if (dbError.code === 'ECONNREFUSED' || dbError.code === 'ETIMEDOUT') {
+                    return res.status(503).json(createErrorResponse('Database connection failed. Please try again later.', dbError, 'DB_CONNECTION_ERROR'));
+                }
+                throw dbError;
+            }
         }
         return res.status(400).json(createErrorResponse("Provide either 'ticket_number' OR both 'phone' and 'date'", null, 'INVALID_SEARCH_PARAMS'));
     }

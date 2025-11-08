@@ -48,9 +48,9 @@ const isValidTicketFormat = (ticket: string): boolean => {
 };
 
 const isValidPhone = (phone: string): boolean => {
-  // Basic international phone validation
+  if (!phone || phone.trim().length === 0) return false;
   const cleaned = phone.replace(/\D/g, '');
-  return cleaned.length >= 10 && cleaned.length <= 15;
+  return cleaned.length >= 7 && cleaned.length <= 15;
 };
 
 const formatDate = (dateString: string): string => {
@@ -245,8 +245,18 @@ const UV_BookingSearch: React.FC = () => {
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setDate(value);
-    setSearchError(null);
+    if (value) {
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+      if (dateRegex.test(value)) {
+        setDate(value);
+        setSearchError(null);
+      } else {
+        console.warn('Invalid date format received:', value);
+      }
+    } else {
+      setDate(value);
+      setSearchError(null);
+    }
   };
 
   const handleSearch = (e: React.FormEvent) => {
@@ -266,7 +276,7 @@ const UV_BookingSearch: React.FC = () => {
         if (!phone) {
           setSearchError('Please enter a phone number');
         } else if (!isValidPhone(phone)) {
-          setSearchError('Please enter a valid phone number (10-15 digits)');
+          setSearchError('Please enter a valid phone number (7-15 digits)');
         } else if (!date) {
           setSearchError('Please select a booking date');
         }
@@ -441,12 +451,19 @@ const UV_BookingSearch: React.FC = () => {
                             handleSearch(e as any);
                           }
                         }}
+                        onBlur={(e) => {
+                          const value = e.target.value;
+                          if (value && !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+                            setSearchError('Please enter a valid date in YYYY-MM-DD format');
+                          }
+                        }}
                         autoComplete="off"
                         data-form-type="other"
                         data-lpignore="true"
                         data-1p-ignore="true"
                         min="2020-01-01"
                         max="2030-12-31"
+                        pattern="\d{4}-\d{2}-\d{2}"
                         onInvalid={(e) => {
                           e.preventDefault();
                           setSearchError('Please enter a valid date in YYYY-MM-DD format');

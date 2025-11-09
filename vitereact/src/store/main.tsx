@@ -114,10 +114,10 @@ const initial_booking_context: BookingContext = {
 };
 
 const initial_app_settings: AppSettings = {
-  shop_name: 'BarberSlot',
-  shop_address: '',
-  shop_phone: '',
-  shop_email: '',
+  shop_name: 'Master Fade',
+  shop_address: '13 Synnott Pl, Phibsborough, Dublin 7, D07 E7N5',
+  shop_phone: '+353833276229',
+  shop_email: 'info@masterfade.ie',
   operating_hours: '10:00 AM - 3:00 PM',
   capacity_mon_wed: 2,
   capacity_thu_sun: 3,

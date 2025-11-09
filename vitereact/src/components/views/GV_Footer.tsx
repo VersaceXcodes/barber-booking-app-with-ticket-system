@@ -340,10 +340,10 @@ const GV_Footer: React.FC = () => {
           
           <div className="mt-12 pt-8 border-t border-gray-800 text-center text-sm text-gray-400">
             <p>
-              &copy; {currentYear} {shopName}. All rights reserved.
+              &copy; {currentYear} {shopName || 'Master Fade'}. All rights reserved.
             </p>
-            <p className="mt-2">
-              Powered by <span className="text-blue-400">BarberSlot</span>
+            <p className="mt-2 text-xs">
+              13 Synnott Pl, Phibsborough, Dublin 7, D07 E7N5 | {shopPhone || '+353833276229'}
             </p>
           </div>
         </div>

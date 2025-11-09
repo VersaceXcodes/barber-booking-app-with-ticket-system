@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppStore } from '@/store/main';
+import { motion } from 'framer-motion';
+import { Scissors, Clock, MapPin, Phone, Star, Calendar, ChevronRight } from 'lucide-react';
 interface Service {
   service_id: string;
   name: string;
@@ -74,9 +76,9 @@ const fetchShopSettings = async (): Promise<ShopInfo> => {
   const response = await axios.get(`${getApiBaseUrl()}/api/settings`);
   
   return {
-    shop_name: response.data.shop_name || 'BarberSlot',
-    shop_address: response.data.shop_address || '',
-    shop_phone: response.data.shop_phone || '',
+    shop_name: response.data.shop_name || 'Master Fade',
+    shop_address: response.data.shop_address || '13 Synnott Pl, Phibsborough, Dublin 7, D07 E7N5',
+    shop_phone: response.data.shop_phone || '+353833276229',
     shop_email: response.data.shop_email || '',
     operating_hours: response.data.operating_hours || '10:00 AM - 3:00 PM',
   };
@@ -88,6 +90,11 @@ const fetchShopSettings = async (): Promise<ShopInfo> => {
 
 const UV_Landing: React.FC = () => {
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
   
   // CRITICAL: Individual Zustand selectors (no object destructuring)
   const isAuthenticated = useAppStore(
@@ -140,10 +147,10 @@ const UV_Landing: React.FC = () => {
     retry: 1,
     refetchOnWindowFocus: false,
     // Use cached data from global state if available
-    initialData: appSettings.shop_name !== 'BarberSlot' ? {
-      shop_name: appSettings.shop_name,
-      shop_address: appSettings.shop_address,
-      shop_phone: appSettings.shop_phone,
+    initialData: appSettings.shop_name !== 'Master Fade' ? {
+      shop_name: appSettings.shop_name || 'Master Fade',
+      shop_address: appSettings.shop_address || '13 Synnott Pl, Phibsborough, Dublin 7, D07 E7N5',
+      shop_phone: appSettings.shop_phone || '+353833276229',
       shop_email: appSettings.shop_email,
       operating_hours: appSettings.operating_hours,
     } : undefined,
@@ -177,82 +184,190 @@ const UV_Landing: React.FC = () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 to-indigo-100 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
-          <div className="text-center">
-            {/* Personalized Greeting for Authenticated Users */}
-            {isAuthenticated && currentUser && (
-              <div className="mb-4">
-                <p className="text-lg text-blue-700 font-medium">
-                  Welcome back, {currentUser.name}!
-                </p>
-              </div>
-            )}
+      <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden min-h-[90vh] flex items-center">
+        {/* Animated background pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
+            backgroundSize: '40px 40px'
+          }}></div>
+        </div>
+        
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
 
-            {/* Admin Notice */}
-            {userType === 'admin' && (
-              <div className="mb-4 inline-block">
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg px-4 py-2">
-                  <p className="text-sm text-yellow-800 font-medium">
-                    👋 Admin View - <Link to="/admin" className="underline hover:text-yellow-900">Go to Admin Dashboard</Link>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
+              transition={{ duration: 0.6 }}
+              className="text-left"
+            >
+              {/* Personalized Greeting for Authenticated Users */}
+              {isAuthenticated && currentUser && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="mb-4"
+                >
+                  <p className="text-lg text-blue-400 font-medium">
+                    Welcome back, {currentUser.name}!
                   </p>
-                </div>
-              </div>
-            )}
+                </motion.div>
+              )}
 
-            {/* Main Headline */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-              Book Your Haircut
-              <br />
-              <span className="text-blue-600">In Under 2 Minutes</span>
-            </h1>
-
-            {/* Subheadline */}
-            <p className="text-xl md:text-2xl text-gray-600 leading-relaxed mb-8 max-w-3xl mx-auto">
-              Professional haircuts with easy online booking. No phone calls, no waiting.
-            </p>
-
-            {/* Primary CTA Button */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button
-                onClick={handleBookNowClick}
-                className="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
-                style={{ minHeight: '44px', minWidth: '44px' }}
-              >
-                Book Your Haircut Now
-              </button>
-
-              {/* Auth CTAs for Guests */}
-              {!isAuthenticated && (
-                <div className="flex gap-3">
-                  <Link
-                    to="/login"
-                    className="px-6 py-3 bg-white hover:bg-gray-50 text-gray-900 font-medium rounded-lg border-2 border-gray-300 transition-all duration-200"
-                    style={{ minHeight: '44px', minWidth: '44px' }}
-                  >
-                    Log In
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 font-medium rounded-lg border border-gray-300 transition-all duration-200"
-                    style={{ minHeight: '44px', minWidth: '44px' }}
-                  >
-                    Sign Up
-                  </Link>
+              {/* Admin Notice */}
+              {userType === 'admin' && (
+                <div className="mb-4">
+                  <div className="bg-yellow-500/20 border border-yellow-500/30 rounded-lg px-4 py-2 backdrop-blur-sm">
+                    <p className="text-sm text-yellow-200 font-medium">
+                      👋 Admin View - <Link to="/admin" className="underline hover:text-yellow-100">Go to Admin Dashboard</Link>
+                    </p>
+                  </div>
                 </div>
               )}
 
-              {/* Dashboard Link for Authenticated Users */}
-              {isAuthenticated && userType === 'user' && (
-                <Link
-                  to="/dashboard"
-                  className="px-6 py-3 bg-white hover:bg-gray-50 text-gray-900 font-medium rounded-lg border-2 border-gray-300 transition-all duration-200"
+              {/* Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="inline-flex items-center gap-2 bg-blue-500/20 backdrop-blur-sm border border-blue-500/30 rounded-full px-4 py-2 mb-6"
+              >
+                <Scissors className="w-4 h-4 text-blue-400" />
+                <span className="text-sm font-medium text-blue-300">Dublin's Premier Barbershop</span>
+              </motion.div>
+
+              {/* Main Headline */}
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6"
+              >
+                <span className="text-white">Master Your</span>
+                <br />
+                <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                  Perfect Fade
+                </span>
+              </motion.h1>
+
+              {/* Subheadline */}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="text-xl md:text-2xl text-gray-300 leading-relaxed mb-8 max-w-2xl"
+              >
+                Expert cuts, seamless booking. Walk in with confidence, walk out with style.
+              </motion.p>
+
+              {/* Features list */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8"
+              >
+                {[
+                  { icon: Clock, text: 'Book in 2 minutes' },
+                  { icon: Calendar, text: 'Choose your time' },
+                  { icon: Star, text: '5-star service' },
+                  { icon: Scissors, text: 'Expert barbers' },
+                ].map((feature, index) => (
+                  <div key={index} className="flex items-center gap-3">
+                    <div className="flex-shrink-0 w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                      <feature.icon className="w-5 h-5 text-blue-400" />
+                    </div>
+                    <span className="text-gray-300 font-medium">{feature.text}</span>
+                  </div>
+                ))}
+              </motion.div>
+
+              {/* CTA Buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+                className="flex flex-col sm:flex-row gap-4"
+              >
+                <button
+                  onClick={handleBookNowClick}
+                  className="group relative px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white text-lg font-semibold rounded-xl shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-500/60 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
                   style={{ minHeight: '44px', minWidth: '44px' }}
                 >
-                  My Dashboard
-                </Link>
-              )}
-            </div>
+                  <span>Book Your Cut Now</span>
+                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+
+                {/* Auth CTAs for Guests */}
+                {!isAuthenticated && (
+                  <div className="flex gap-3">
+                    <Link
+                      to="/login"
+                      className="px-6 py-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-medium rounded-xl border border-white/20 transition-all duration-200"
+                      style={{ minHeight: '44px', minWidth: '44px' }}
+                    >
+                      Log In
+                    </Link>
+                  </div>
+                )}
+
+                {/* Dashboard Link for Authenticated Users */}
+                {isAuthenticated && userType === 'user' && (
+                  <Link
+                    to="/dashboard"
+                    className="px-6 py-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-medium rounded-xl border border-white/20 transition-all duration-200"
+                    style={{ minHeight: '44px', minWidth: '44px' }}
+                  >
+                    My Dashboard
+                  </Link>
+                )}
+              </motion.div>
+            </motion.div>
+
+            {/* Right Column - Visual/Stats */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0.95 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="relative hidden lg:block"
+            >
+              <div className="relative">
+                {/* Main card */}
+                <div className="relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl">
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-white mb-2">500+</div>
+                      <div className="text-sm text-gray-400">Happy Clients</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-white mb-2">5.0</div>
+                      <div className="text-sm text-gray-400 flex items-center justify-center gap-1">
+                        <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                        Google Rating
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-white mb-2">10+</div>
+                      <div className="text-sm text-gray-400">Years Experience</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-white mb-2">24/7</div>
+                      <div className="text-sm text-gray-400">Online Booking</div>
+                    </div>
+                  </div>
+
+                  {/* Decorative elements */}
+                  <div className="absolute -top-4 -right-4 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl"></div>
+                  <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-cyan-500/20 rounded-full blur-2xl"></div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
 
@@ -265,18 +380,57 @@ const UV_Landing: React.FC = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-12 lg:py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Welcome to {shop_info?.shop_name || 'BarberSlot'}
-          </h2>
-          <p className="text-lg text-gray-600 leading-relaxed mb-4">
-            We provide professional haircut services with a focus on quality and customer satisfaction. 
-            Book your appointment online in just a few clicks, choose your preferred time slot, and arrive without waiting.
-          </p>
-          <p className="text-lg text-gray-600 leading-relaxed">
-            Our experienced barbers are ready to give you the perfect cut. Walk in with confidence, walk out with style.
-          </p>
+      <section className="py-16 lg:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Welcome to <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">{shop_info?.shop_name || 'Master Fade'}</span>
+            </h2>
+            <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+              Located in the heart of Phibsborough, Dublin 7, we're your destination for premium cuts and exceptional service.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: Scissors,
+                title: 'Expert Craftsmanship',
+                description: 'Our experienced barbers deliver precision cuts tailored to your style and personality.'
+              },
+              {
+                icon: Clock,
+                title: 'Seamless Booking',
+                description: 'Book online in minutes, choose your preferred time, and skip the waiting. Your time is valuable.'
+              },
+              {
+                icon: Star,
+                title: 'Premium Experience',
+                description: 'From consultation to finish, we ensure every visit leaves you looking and feeling your best.'
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.6 }}
+                className="group relative bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-2xl p-8 hover:shadow-xl hover:border-blue-200 transition-all duration-300"
+              >
+                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <item.icon className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">{item.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -429,70 +583,161 @@ const UV_Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Contact Information Section */}
-      <section className="py-12 lg:py-16 bg-gray-50">
+      {/* Contact & Google Reviews Section */}
+      <section className="py-16 lg:py-24 bg-gradient-to-br from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Visit Us
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Visit Us Today
             </h2>
-          </div>
+            <p className="text-xl text-gray-600">We're conveniently located in Phibsborough, Dublin 7</p>
+          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 text-center">
-            {/* Address */}
-            {shop_info?.shop_address && (
-              <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
-                <div className="text-blue-600 mb-3">
-                  <svg className="mx-auto h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
+          <div className="grid lg:grid-cols-2 gap-12 mb-16">
+            {/* Contact Cards */}
+            <div className="space-y-6">
+              {/* Address */}
+              {shop_info?.shop_address && (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1, duration: 0.6 }}
+                  className="group bg-white p-8 rounded-2xl shadow-lg border border-gray-200 hover:shadow-xl hover:border-blue-200 transition-all duration-300"
+                >
+                  <div className="flex items-start gap-6">
+                    <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <MapPin className="w-7 h-7 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-xl text-gray-900 mb-3">Our Location</h3>
+                      <p className="text-gray-600 mb-4 leading-relaxed">{shop_info.shop_address}</p>
+                      <a
+                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(shop_info.shop_address)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors group"
+                      >
+                        <span>Get Directions</span>
+                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Phone */}
+              {shop_info?.shop_phone && (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                  className="group bg-white p-8 rounded-2xl shadow-lg border border-gray-200 hover:shadow-xl hover:border-blue-200 transition-all duration-300"
+                >
+                  <div className="flex items-start gap-6">
+                    <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <Phone className="w-7 h-7 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-xl text-gray-900 mb-3">Call Us</h3>
+                      <p className="text-gray-600 mb-4 text-lg font-medium">{shop_info.shop_phone}</p>
+                      <button
+                        onClick={() => handlePhoneClick(shop_info.shop_phone)}
+                        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors group"
+                        style={{ minHeight: '44px', minWidth: '44px' }}
+                      >
+                        <span>Call Now</span>
+                        <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Hours */}
+              {shop_info?.operating_hours && (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                  className="group bg-white p-8 rounded-2xl shadow-lg border border-gray-200 hover:shadow-xl hover:border-blue-200 transition-all duration-300"
+                >
+                  <div className="flex items-start gap-6">
+                    <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <Clock className="w-7 h-7 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-xl text-gray-900 mb-3">Opening Hours</h3>
+                      <p className="text-gray-600 text-lg">{shop_info.operating_hours}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </div>
+
+            {/* Google Map & Reviews */}
+            <div className="space-y-6">
+              {/* Google Map */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+                className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden h-[400px]"
+              >
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2380.8487556267477!2d-6.278427223704396!3d53.36294097228234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48670e9c2baf8e6d%3A0x8e4b1c8c3e0e4b8c!2s13%20Synnott%20Pl%2C%20Phibsborough%2C%20Dublin%207%2C%20D07%20E7N5!5e0!3m2!1sen!2sie!4v1699999999999!5m2!1sen!2sie"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Master Fade Location"
+                ></iframe>
+              </motion.div>
+
+              {/* Google Reviews Widget */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+                className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="font-bold text-2xl text-gray-900">Google Reviews</h3>
+                  <div className="flex items-center gap-2">
+                    <div className="flex">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star key={star} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                      ))}
+                    </div>
+                    <span className="font-bold text-gray-900">5.0</span>
+                  </div>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Address</h3>
-                <p className="text-gray-600 mb-3">{shop_info.shop_address}</p>
+                <p className="text-gray-600 mb-6">
+                  Our customers love us! Check out what they're saying about their experience at Master Fade.
+                </p>
                 <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(shop_info.shop_address)}`}
+                  href={`https://search.google.com/local/writereview?placeid=ChIJbY6vK5wOZ0gRjEsO4Iweh44`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105"
                 >
-                  Get Directions →
+                  <Star className="w-5 h-5" />
+                  <span>View All Reviews</span>
                 </a>
-              </div>
-            )}
-
-            {/* Phone */}
-            {shop_info?.shop_phone && (
-              <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
-                <div className="text-blue-600 mb-3">
-                  <svg className="mx-auto h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Phone</h3>
-                <p className="text-gray-600 mb-3">{shop_info.shop_phone}</p>
-                <button
-                  onClick={() => handlePhoneClick(shop_info.shop_phone)}
-                  className="inline-block text-blue-600 hover:text-blue-700 font-medium transition-colors"
-                  style={{ minHeight: '44px', minWidth: '44px' }}
-                >
-                  Call Now →
-                </button>
-              </div>
-            )}
-
-            {/* Hours */}
-            {shop_info?.operating_hours && (
-              <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
-                <div className="text-blue-600 mb-3">
-                  <svg className="mx-auto h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Hours</h3>
-                <p className="text-gray-600">{shop_info.operating_hours}</p>
-              </div>
-            )}
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>

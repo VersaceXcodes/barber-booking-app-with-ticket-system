@@ -1392,10 +1392,10 @@ app.get('/api/admin/reports/export', authenticateAdmin, async (req, res) => {
 app.get('/api/admin/settings', authenticateAdmin, async (req, res) => {
     try {
         const settings = {
-            shop_name: 'BarberSlot',
-            shop_address: '123 Main St, City, State 12345',
-            shop_phone: '(555) 123-4567',
-            shop_email: 'info@barberslot.com',
+            shop_name: 'Master Fade',
+            shop_address: '13 Synnott Pl, Phibsborough, Dublin 7, D07 E7N5',
+            shop_phone: '+353833276229',
+            shop_email: 'info@masterfade.ie',
             operating_hours: '10:00 AM - 3:00 PM',
             capacity_mon_wed: 2,
             capacity_thu_sun: 3,
@@ -1433,10 +1433,10 @@ app.patch('/api/admin/settings', authenticateAdmin, async (req, res) => {
 app.get('/api/settings', async (req, res) => {
     try {
         const settings = {
-            shop_name: 'BarberSlot',
-            shop_address: '123 Main St, City, State 12345',
-            shop_phone: '(555) 123-4567',
-            shop_email: 'info@barberslot.com',
+            shop_name: 'Master Fade',
+            shop_address: '13 Synnott Pl, Phibsborough, Dublin 7, D07 E7N5',
+            shop_phone: '+353833276229',
+            shop_email: 'info@masterfade.ie',
             operating_hours: '10:00 AM - 3:00 PM',
             capacity_mon_wed: 2,
             capacity_thu_sun: 3,

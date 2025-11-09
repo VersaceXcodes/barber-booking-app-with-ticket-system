@@ -362,9 +362,12 @@ const UV_UserDashboard: React.FC = () => {
     }
     
     // Update booking context with original booking data
+    // CRITICAL: Clear selected_date and selected_time to force fresh selection
     updateBookingContext({
       service_id: booking.service_id,
       service_name: booking.service_name || null,
+      selected_date: null,
+      selected_time: null,
       customer_name: booking.customer_name,
       customer_email: booking.customer_email,
       customer_phone: booking.customer_phone,

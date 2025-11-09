@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
@@ -24,6 +24,7 @@ interface AvailabilityResponse {
 
 const UV_BookingFlow_TimeSelect: React.FC = () => {
   const navigate = useNavigate();
+  const hasRedirected = useRef(false);
 
   // CRITICAL: Individual selectors, no object destructuring
   const selectedDate = useAppStore(state => state.booking_context.selected_date);
@@ -89,10 +90,11 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
     refetchInterval: 60000, // Auto-refresh every 60 seconds
   });
 
-  // Redirect if no date selected
+  // Redirect if no date selected (with guard to prevent multiple redirects)
   useEffect(() => {
-    if (!selectedDate) {
-      navigate('/book/date');
+    if (!selectedDate && !hasRedirected.current) {
+      hasRedirected.current = true;
+      navigate('/book/date', { replace: true });
     }
   }, [selectedDate, navigate]);
 

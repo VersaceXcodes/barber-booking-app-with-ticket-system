@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
@@ -133,10 +133,30 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
   // ============================================================================
   
   const [calendar_month, setCalendarMonth] = useState<string>(() => {
+    // If there's a selected date, start with that month
+    if (selectedDateFromContext) {
+      return selectedDateFromContext.slice(0, 7); // "YYYY-MM"
+    }
     return new Date().toISOString().slice(0, 7); // "YYYY-MM"
   });
   
   const [selected_date, setSelectedDate] = useState<string | null>(selectedDateFromContext);
+  
+  // ============================================================================
+  // SYNC LOCAL STATE WITH CONTEXT
+  // ============================================================================
+  
+  // When user navigates back from time selection, sync the context date
+  useEffect(() => {
+    if (selectedDateFromContext && selectedDateFromContext !== selected_date) {
+      setSelectedDate(selectedDateFromContext);
+      // Update calendar month to match selected date only if we're not already viewing it
+      const contextMonth = selectedDateFromContext.slice(0, 7);
+      if (calendar_month !== contextMonth) {
+        setCalendarMonth(contextMonth);
+      }
+    }
+  }, [selectedDateFromContext]);
   
   // ============================================================================
   // REACT QUERY - FETCH AVAILABILITY
@@ -268,8 +288,10 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
     setSelectedDate(day.dateString);
     
     // Update global booking context
+    // CRITICAL: Clear selected_time when date changes to prevent mismatched state
     updateBookingContext({
       selected_date: day.dateString,
+      selected_time: null,
     });
   };
 
@@ -280,9 +302,22 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
   const handleContinue = () => {
     if (!selected_date) return;
     
+    // If we're loading availability, wait
+    if (loading_availability) {
+      return;
+    }
+    
     // Final validation - check availability status
     const availability = availability_data[selected_date];
-    if (!availability || (availability.status !== 'available' && availability.status !== 'limited')) {
+    if (!availability) {
+      // Availability data not loaded for this date - this shouldn't happen
+      // but if it does, we can still proceed (time selection will validate)
+      console.warn('No availability data for selected date, proceeding anyway');
+    } else if (availability.status !== 'available' && availability.status !== 'limited') {
+      // Date is not available - clear selection
+      alert('This date is no longer available. Please select another date.');
+      setSelectedDate(null);
+      updateBookingContext({ selected_date: null, selected_time: null });
       return;
     }
     
@@ -297,11 +332,13 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
     
     if (dateObj < today || dateObj > maxDate) {
       // Date is outside valid range - clear selection
+      alert('This date is outside the booking window. Please select another date.');
       setSelectedDate(null);
-      updateBookingContext({ selected_date: null });
+      updateBookingContext({ selected_date: null, selected_time: null });
       return;
     }
     
+    // All validations passed - proceed to time selection
     navigate('/book/time');
   };
 

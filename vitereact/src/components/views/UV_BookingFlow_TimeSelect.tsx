@@ -33,11 +33,12 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
   const updateBookingContext = useAppStore(state => state.update_booking_context);
 
   // Local state for selected time to prevent loss during scrolling/interaction
-  const [selectedTime, setSelectedTime] = React.useState<string | null>(selectedTimeFromContext);
+  const [selectedTime, setSelectedTime] = React.useState<string | null>(null);
 
-  // Sync local state with context when returning to this page
+  // Sync local state with context - use context as source of truth
   React.useEffect(() => {
-    if (selectedTimeFromContext && selectedTimeFromContext !== selectedTime) {
+    // Always sync from context to ensure we have the latest value
+    if (selectedTimeFromContext !== selectedTime) {
       console.log('[Time Selection] Syncing time from context:', selectedTimeFromContext);
       setSelectedTime(selectedTimeFromContext);
     }
@@ -108,12 +109,15 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
     },
     enabled: !!selectedDate,
     staleTime: 30000, // 30 seconds
-    refetchInterval: 60000, // Auto-refresh every 60 seconds
+    refetchInterval: false, // Disable auto-refresh to prevent unwanted re-renders
+    refetchOnWindowFocus: false, // Disable refetch on focus
   });
 
   // Redirect if no date selected (with guard to prevent multiple redirects)
   useEffect(() => {
+    // Only redirect if we truly have no date and haven't already redirected
     if (!selectedDate && !hasRedirected.current) {
+      console.log('[Time Selection] No date selected, redirecting to date selection');
       hasRedirected.current = true;
       navigate('/book/date', { replace: true });
     }
@@ -136,21 +140,27 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
 
     console.log('[Time Selection] Time slot selected:', slot.time);
 
-    // Update both local state and context
-    setSelectedTime(slot.time);
+    // Update context first (source of truth)
     updateBookingContext({
       selected_time: slot.time,
     });
+    
+    // Then update local state for immediate UI feedback
+    setSelectedTime(slot.time);
   };
 
   // Handle continue to details
   const handleContinue = () => {
-    if (!selectedTime) {
+    // Use selected time from either local state or context
+    const timeToUse = selectedTime || selectedTimeFromContext;
+    
+    if (!timeToUse) {
+      console.log('[Time Selection] No time selected, cannot continue');
       return; // Button should be disabled
     }
 
     // Verify slot is still available
-    const slot = timeSlots?.find(s => s.time === selectedTime);
+    const slot = timeSlots?.find(s => s.time === timeToUse);
     if (!slot || !slot.is_available || slot.available_slots === 0) {
       alert('Sorry, this slot was just booked. Please choose another time.');
       refetch(); // Refresh availability
@@ -160,8 +170,9 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
     }
 
     // Final check: ensure context is updated before navigation
+    console.log('[Time Selection] Continuing with time:', timeToUse);
     updateBookingContext({
-      selected_time: selectedTime,
+      selected_time: timeToUse,
     });
 
     navigate('/book/details');
@@ -290,7 +301,8 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
             <>
               <div className="space-y-4 mb-6">
                 {timeSlots.map((slot) => {
-                  const isSelected = selectedTime === slot.time;
+                  // Check both local state and context for selection
+                  const isSelected = selectedTime === slot.time || selectedTimeFromContext === slot.time;
                   const isDisabled = !slot.is_available || slot.available_slots === 0;
                   
                   return (
@@ -354,14 +366,14 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
               <div className="sticky bottom-0 pb-4 pt-6 bg-gradient-to-t from-blue-50 via-blue-50 to-transparent">
                 <button
                   onClick={handleContinue}
-                  disabled={!selectedTime}
+                  disabled={!selectedTime && !selectedTimeFromContext}
                   className={`w-full py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-200 shadow-lg ${
-                    selectedTime
+                    (selectedTime || selectedTimeFromContext)
                       ? 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-xl transform hover:scale-105'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  {selectedTime ? 'Continue to Details' : 'Select a time to continue'}
+                  {(selectedTime || selectedTimeFromContext) ? 'Continue to Details' : 'Select a time to continue'}
                 </button>
               </div>
             </>

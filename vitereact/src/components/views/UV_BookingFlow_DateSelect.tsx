@@ -149,6 +149,7 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
   // When user navigates back from time selection, sync the context date
   useEffect(() => {
     if (selectedDateFromContext && selectedDateFromContext !== selected_date) {
+      console.log('[Date Selection] Syncing date from context:', selectedDateFromContext);
       setSelectedDate(selectedDateFromContext);
       // Update calendar month to match selected date only if we're not already viewing it
       const contextMonth = selectedDateFromContext.slice(0, 7);
@@ -156,7 +157,7 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
         setCalendarMonth(contextMonth);
       }
     }
-  }, [selectedDateFromContext]);
+  }, [selectedDateFromContext, selected_date, calendar_month]);
   
   // ============================================================================
   // REACT QUERY - FETCH AVAILABILITY

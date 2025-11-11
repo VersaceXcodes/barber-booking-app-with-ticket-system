@@ -181,12 +181,13 @@ app.get('/api/availability', async (req, res) => {
     });
 
     const bookingsResult = await pool.query(
-      'SELECT appointment_date, COUNT(*) as booked_count FROM bookings WHERE appointment_date >= $1 AND appointment_date <= $2 AND status = $3 GROUP BY appointment_date',
+      'SELECT appointment_date, appointment_time, COUNT(*) as booked_count FROM bookings WHERE appointment_date >= $1 AND appointment_date <= $2 AND status = $3 GROUP BY appointment_date, appointment_time',
       [start_date, end_date, 'confirmed']
     );
-    const bookingsByDate = {};
+    const bookingsByDateAndTime = {};
     bookingsResult.rows.forEach(row => {
-      bookingsByDate[row.appointment_date] = parseInt(row.booked_count);
+      const key = `${row.appointment_date}:${row.appointment_time}`;
+      bookingsByDateAndTime[key] = parseInt(row.booked_count);
     });
 
     const start = new Date(String(start_date));
@@ -209,8 +210,18 @@ app.get('/api/availability', async (req, res) => {
         effectiveCapacity = 0;
       }
       
-      const bookedCount = bookingsByDate[dateStr] || 0;
-      const availableSpots = Math.max(0, effectiveCapacity - bookedCount);
+      // Calculate availability across all time slots for this date
+      const timeSlots = ['10:00', '10:40', '11:20', '12:00', '12:40', '13:20', '14:00', '14:20'];
+      let totalAvailableSlots = 0;
+      let totalBookedSlots = 0;
+      
+      timeSlots.forEach(timeSlot => {
+        const key = `${dateStr}:${timeSlot}`;
+        const bookedCount = bookingsByDateAndTime[key] || 0;
+        totalBookedSlots += bookedCount;
+        const availableForSlot = Math.max(0, effectiveCapacity - bookedCount);
+        totalAvailableSlots += availableForSlot;
+      });
       
       dates.push({
         date: dateStr,
@@ -219,9 +230,9 @@ app.get('/api/availability', async (req, res) => {
         base_capacity: baseCapacity,
         override_capacity: overrides[dateStr] !== undefined ? overrides[dateStr] : null,
         effective_capacity: effectiveCapacity,
-        booked_count: bookedCount,
-        available_spots: availableSpots,
-        is_available: availableSpots > 0 && effectiveCapacity > 0 && !isPast && !isBeyondBookingWindow
+        booked_count: totalBookedSlots,
+        available_spots: totalAvailableSlots,
+        is_available: totalAvailableSlots > 0 && effectiveCapacity > 0 && !isPast && !isBeyondBookingWindow
       });
     }
 

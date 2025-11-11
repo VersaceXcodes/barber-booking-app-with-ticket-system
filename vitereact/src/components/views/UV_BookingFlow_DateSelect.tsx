@@ -347,8 +347,11 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
     
     console.log('[Date Selection] Navigating to time selection with date:', selected_date);
     
-    // All validations passed - proceed to time selection
-    navigate('/book/time');
+    // Use setTimeout to ensure state update is flushed before navigation
+    // This prevents race conditions where navigation happens before state persists
+    setTimeout(() => {
+      navigate('/book/time');
+    }, 0);
   };
 
   // ============================================================================

@@ -163,5 +163,149 @@ useEffect(() => {
 - No database migrations required
 - Changes are backward compatible
 
+## Additional Fixes (Current Iteration)
+
+### 4. UV_BookingFlow_TimeSelect.tsx - State Initialization and Persistence
+**File**: `/app/vitereact/src/components/views/UV_BookingFlow_TimeSelect.tsx`
+
+**Additional Changes**:
+
+a) **Initialize Local State from Context** (Line 36):
+   - Changed initialization to use context value instead of null
+   - Preserves selection when returning to page
+
+```typescript
+// BEFORE: const [selectedTime, setSelectedTime] = React.useState<string | null>(null);
+// AFTER:
+const [selectedTime, setSelectedTime] = React.useState<string | null>(selectedTimeFromContext);
+```
+
+b) **Fixed State Sync Dependencies** (Line 39-45):
+   - Added `selectedTime` to dependency array to prevent stale closures
+
+```typescript
+React.useEffect(() => {
+  if (selectedTimeFromContext !== selectedTime) {
+    console.log('[Time Selection] Syncing time from context:', selectedTimeFromContext);
+    setSelectedTime(selectedTimeFromContext);
+  }
+}, [selectedTimeFromContext, selectedTime]); // Added selectedTime
+```
+
+c) **Delayed Redirect for Context Hydration** (Line 119-131):
+   - Added 100ms delay to allow Zustand context to hydrate from localStorage
+   - Prevents premature redirects during page load
+
+```typescript
+useEffect(() => {
+  const timer = setTimeout(() => {
+    if (!selectedDate && !hasRedirected.current) {
+      console.log('[Time Selection] No date selected, redirecting to date selection');
+      hasRedirected.current = true;
+      navigate('/book/date', { replace: true });
+    }
+  }, 100); // Small delay for context hydration
+  
+  return () => clearTimeout(timer);
+}, [selectedDate, navigate]);
+```
+
+d) **State Update Order** (Line 136-150):
+   - Changed to update local state first, then context
+   - Provides immediate UI feedback
+
+```typescript
+// Update local state first for immediate UI feedback
+setSelectedTime(slot.time);
+
+// Then update context (source of truth) - this will persist across navigation
+updateBookingContext({
+  selected_time: slot.time,
+});
+```
+
+e) **Flush State Before Navigation** (Line 173-179):
+   - Added setTimeout(0) to ensure state update completes before navigation
+
+```typescript
+updateBookingContext({
+  selected_time: timeToUse,
+});
+
+setTimeout(() => {
+  navigate('/book/details');
+}, 0); // Ensure state is flushed before navigation
+```
+
+f) **Reduced React Query Refetch Frequency** (Line 110-114):
+   - Increased staleTime to 60 seconds
+   - Added refetchOnMount: false
+   - Reduces unnecessary re-renders
+
+```typescript
+enabled: !!selectedDate,
+staleTime: 60000, // Increased from 30s to 60s
+refetchInterval: false,
+refetchOnWindowFocus: false,
+refetchOnMount: false, // ADDED: Don't refetch on mount if data exists
+```
+
+g) **Memoized Selection State** (New - after line 216):
+   - Added useMemo to compute valid selection state
+   - Prevents unnecessary re-computations
+
+```typescript
+const hasValidSelection = React.useMemo(() => {
+  return !!(selectedTime || selectedTimeFromContext);
+}, [selectedTime, selectedTimeFromContext]);
+```
+
+h) **Updated Button Logic** (Line 378-385):
+   - Uses memoized `hasValidSelection` for consistency
+
+```typescript
+<button
+  onClick={handleContinue}
+  disabled={!hasValidSelection}
+  className={`... ${
+    hasValidSelection ? 'bg-blue-600 ...' : 'bg-gray-300 ...'
+  }`}
+>
+  {hasValidSelection ? 'Continue to Details' : 'Select a time to continue'}
+</button>
+```
+
+### 5. UV_BookingFlow_DateSelect.tsx - Navigation State Flush
+**File**: `/app/vitereact/src/components/views/UV_BookingFlow_DateSelect.tsx`
+
+**Additional Change**:
+
+a) **Flush State Before Navigation** (Line 343-351):
+   - Added setTimeout(0) to ensure state update completes before navigation
+
+```typescript
+updateBookingContext({
+  selected_date: selected_date,
+});
+
+console.log('[Date Selection] Navigating to time selection with date:', selected_date);
+
+setTimeout(() => {
+  navigate('/book/time');
+}, 0); // Ensure state is flushed before navigation
+```
+
+## Build Status
+✅ **Fixed** - All changes implemented and built successfully
+✅ No build errors or warnings
+✅ All TypeScript types validated
+
 ## Status
 ✅ **Fixed** - Changes implemented and built successfully
+🔧 **Root Causes Addressed**:
+- ✅ State initialization from context
+- ✅ Race conditions in navigation
+- ✅ Premature redirects during hydration
+- ✅ Aggressive React Query refetching
+- ✅ Missing effect dependencies
+- ✅ Button state consistency

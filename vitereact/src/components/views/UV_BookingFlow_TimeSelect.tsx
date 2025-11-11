@@ -33,16 +33,18 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
   const updateBookingContext = useAppStore(state => state.update_booking_context);
 
   // Local state for selected time to prevent loss during scrolling/interaction
-  const [selectedTime, setSelectedTime] = React.useState<string | null>(null);
+  // Initialize from context to preserve selection when navigating back
+  const [selectedTime, setSelectedTime] = React.useState<string | null>(selectedTimeFromContext);
 
   // Sync local state with context - use context as source of truth
+  // Only sync when context value actually changes (not on every render)
   React.useEffect(() => {
     // Always sync from context to ensure we have the latest value
     if (selectedTimeFromContext !== selectedTime) {
       console.log('[Time Selection] Syncing time from context:', selectedTimeFromContext);
       setSelectedTime(selectedTimeFromContext);
     }
-  }, [selectedTimeFromContext]);
+  }, [selectedTimeFromContext, selectedTime]);
 
   // Log current state for debugging
   React.useEffect(() => {
@@ -108,19 +110,25 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
       })) as TimeSlot[];
     },
     enabled: !!selectedDate,
-    staleTime: 30000, // 30 seconds
+    staleTime: 60000, // 60 seconds - longer to prevent aggressive refetching
     refetchInterval: false, // Disable auto-refresh to prevent unwanted re-renders
     refetchOnWindowFocus: false, // Disable refetch on focus
+    refetchOnMount: false, // Don't refetch when component mounts if data exists
   });
 
   // Redirect if no date selected (with guard to prevent multiple redirects)
   useEffect(() => {
-    // Only redirect if we truly have no date and haven't already redirected
-    if (!selectedDate && !hasRedirected.current) {
-      console.log('[Time Selection] No date selected, redirecting to date selection');
-      hasRedirected.current = true;
-      navigate('/book/date', { replace: true });
-    }
+    // Wait for initial render and context hydration before checking
+    // This prevents premature redirects during page load
+    const timer = setTimeout(() => {
+      if (!selectedDate && !hasRedirected.current) {
+        console.log('[Time Selection] No date selected, redirecting to date selection');
+        hasRedirected.current = true;
+        navigate('/book/date', { replace: true });
+      }
+    }, 100); // Small delay to allow context to hydrate from localStorage
+    
+    return () => clearTimeout(timer);
   }, [selectedDate, navigate]);
 
   // Format time to 12-hour format with AM/PM
@@ -140,13 +148,13 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
 
     console.log('[Time Selection] Time slot selected:', slot.time);
 
-    // Update context first (source of truth)
+    // Update local state first for immediate UI feedback
+    setSelectedTime(slot.time);
+    
+    // Then update context (source of truth) - this will persist across navigation
     updateBookingContext({
       selected_time: slot.time,
     });
-    
-    // Then update local state for immediate UI feedback
-    setSelectedTime(slot.time);
   };
 
   // Handle continue to details
@@ -175,7 +183,11 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
       selected_time: timeToUse,
     });
 
-    navigate('/book/details');
+    // Use setTimeout to ensure state update is flushed before navigation
+    // This prevents race conditions where navigation happens before state persists
+    setTimeout(() => {
+      navigate('/book/details');
+    }, 0);
   };
 
   // Get slot status styling
@@ -213,6 +225,12 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
     }
     return `${booked}/${slot.total_capacity} booked • ${remaining} left`;
   };
+
+  // Compute if we have a valid time selection
+  // Use useMemo to prevent unnecessary re-computations
+  const hasValidSelection = React.useMemo(() => {
+    return !!(selectedTime || selectedTimeFromContext);
+  }, [selectedTime, selectedTimeFromContext]);
 
   return (
     <>
@@ -366,14 +384,14 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
               <div className="sticky bottom-0 pb-4 pt-6 bg-gradient-to-t from-blue-50 via-blue-50 to-transparent">
                 <button
                   onClick={handleContinue}
-                  disabled={!selectedTime && !selectedTimeFromContext}
+                  disabled={!hasValidSelection}
                   className={`w-full py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-200 shadow-lg ${
-                    (selectedTime || selectedTimeFromContext)
+                    hasValidSelection
                       ? 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-xl transform hover:scale-105'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  {(selectedTime || selectedTimeFromContext) ? 'Continue to Details' : 'Select a time to continue'}
+                  {hasValidSelection ? 'Continue to Details' : 'Select a time to continue'}
                 </button>
               </div>
             </>

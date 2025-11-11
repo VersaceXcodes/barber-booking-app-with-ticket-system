@@ -489,12 +489,23 @@ export const useAppStore = create<AppState>()(
       // ======================================================================
 
       update_booking_context: (updates: Partial<BookingContext>) => {
-        set((state) => ({
-          booking_context: {
+        set((state) => {
+          const updated_context = {
             ...state.booking_context,
             ...updates,
-          },
-        }));
+          };
+          
+          // Log for debugging
+          console.log('[Booking Context Update]', {
+            previous: state.booking_context,
+            updates,
+            result: updated_context
+          });
+          
+          return {
+            booking_context: updated_context,
+          };
+        });
       },
 
       clear_booking_context: () => {

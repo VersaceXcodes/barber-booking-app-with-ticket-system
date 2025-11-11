@@ -29,8 +29,29 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
   // CRITICAL: Individual selectors, no object destructuring
   const selectedDate = useAppStore(state => state.booking_context.selected_date);
   const serviceId = useAppStore(state => state.booking_context.service_id);
-  const selectedTime = useAppStore(state => state.booking_context.selected_time);
+  const selectedTimeFromContext = useAppStore(state => state.booking_context.selected_time);
   const updateBookingContext = useAppStore(state => state.update_booking_context);
+
+  // Local state for selected time to prevent loss during scrolling/interaction
+  const [selectedTime, setSelectedTime] = React.useState<string | null>(selectedTimeFromContext);
+
+  // Sync local state with context when returning to this page
+  React.useEffect(() => {
+    if (selectedTimeFromContext && selectedTimeFromContext !== selectedTime) {
+      console.log('[Time Selection] Syncing time from context:', selectedTimeFromContext);
+      setSelectedTime(selectedTimeFromContext);
+    }
+  }, [selectedTimeFromContext]);
+
+  // Log current state for debugging
+  React.useEffect(() => {
+    console.log('[Time Selection] Current state:', {
+      selectedDate,
+      selectedTime,
+      selectedTimeFromContext,
+      serviceId,
+    });
+  }, [selectedDate, selectedTime, selectedTimeFromContext, serviceId]);
 
   // Format date for display
   const getFormattedDate = (dateString: string | null): string => {
@@ -113,6 +134,10 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
       return; // Cannot select unavailable slots
     }
 
+    console.log('[Time Selection] Time slot selected:', slot.time);
+
+    // Update both local state and context
+    setSelectedTime(slot.time);
     updateBookingContext({
       selected_time: slot.time,
     });
@@ -129,9 +154,15 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
     if (!slot || !slot.is_available || slot.available_slots === 0) {
       alert('Sorry, this slot was just booked. Please choose another time.');
       refetch(); // Refresh availability
+      setSelectedTime(null);
       updateBookingContext({ selected_time: null });
       return;
     }
+
+    // Final check: ensure context is updated before navigation
+    updateBookingContext({
+      selected_time: selectedTime,
+    });
 
     navigate('/book/details');
   };

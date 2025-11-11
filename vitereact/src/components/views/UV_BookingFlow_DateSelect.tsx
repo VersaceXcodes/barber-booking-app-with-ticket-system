@@ -288,10 +288,11 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
     setSelectedDate(day.dateString);
     
     // Update global booking context
-    // CRITICAL: Clear selected_time when date changes to prevent mismatched state
+    // CRITICAL: Only clear selected_time if the date actually changed
+    const dateChanged = day.dateString !== selectedDateFromContext;
     updateBookingContext({
       selected_date: day.dateString,
-      selected_time: null,
+      ...(dateChanged ? { selected_time: null } : {}),
     });
   };
 
@@ -337,6 +338,13 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
       updateBookingContext({ selected_date: null, selected_time: null });
       return;
     }
+    
+    // Ensure the context is definitely updated before navigation
+    updateBookingContext({
+      selected_date: selected_date,
+    });
+    
+    console.log('[Date Selection] Navigating to time selection with date:', selected_date);
     
     // All validations passed - proceed to time selection
     navigate('/book/time');

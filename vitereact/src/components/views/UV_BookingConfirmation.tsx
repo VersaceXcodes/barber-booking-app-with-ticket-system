@@ -153,7 +153,6 @@ const UV_BookingConfirmation: React.FC = () => {
   const [searchParams] = useSearchParams();
   
   // CRITICAL: Individual selectors to avoid infinite loops
-  const bookingContext = useAppStore(state => state.booking_context);
   const isAuthenticated = useAppStore(state => state.authentication_state.authentication_status.is_authenticated);
   const shopInfo = useAppStore(state => state.app_settings);
   const clearBookingContext = useAppStore(state => state.clear_booking_context);

@@ -158,12 +158,6 @@ const UV_UserDashboard: React.FC = () => {
     cancelled: 'cancelled'
   };
 
-  const sortOrderMap: Record<TabType, 'asc' | 'desc'> = {
-    upcoming: 'asc',
-    past: 'desc',
-    cancelled: 'desc'
-  };
-
   const { data: bookingsData, isLoading, error, refetch } = useQuery({
     queryKey: ['user-bookings', selectedTab, authToken],
     queryFn: async () => {
@@ -181,7 +175,7 @@ const UV_UserDashboard: React.FC = () => {
       return response.data;
     },
     select: (data): { bookings: BookingWithDerived[]; total: number } => {
-      let bookings = (data.bookings || []).map((booking: Booking): BookingWithDerived => ({
+      const bookings = (data.bookings || []).map((booking: Booking): BookingWithDerived => ({
         ...booking,
         time_until_appointment: selectedTab === 'upcoming' 
           ? calculateTimeUntil(booking.appointment_date, booking.appointment_time)

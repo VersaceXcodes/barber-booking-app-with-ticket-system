@@ -1,22 +1,17 @@
 import React, { useState, useMemo } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { useAppStore } from '@/store/main';
 import { 
   Calendar, 
   Clock, 
   Mail, 
   Phone, 
-  MapPin, 
   Copy, 
   CheckCircle, 
-  XCircle, 
   AlertCircle,
   User,
-  FileText,
   ArrowLeft,
-  ExternalLink,
   Edit,
   Save
 } from 'lucide-react';
@@ -56,7 +51,6 @@ interface ServiceDetails {
 
 const UV_AdminBookingDetail: React.FC = () => {
   const { ticket_number } = useParams<{ ticket_number: string }>();
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const [copySuccess, setCopySuccess] = useState(false);

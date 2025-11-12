@@ -22,6 +22,7 @@ interface Booking {
 interface SearchResponse {
   bookings: Booking[];
   total: number;
+  message?: string;
 }
 
 // ============================================================================

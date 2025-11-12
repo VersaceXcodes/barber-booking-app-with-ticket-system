@@ -639,20 +639,17 @@ const UV_AdminBookingsCalendar: React.FC = () => {
   const renderWeekView = () => {
     const dates = getWeekDates(focusedDate);
     
-    const allTimeSlotsForWeek = useMemo(() => {
-      const slots = new Set(TIME_SLOTS);
-      
-      dates.forEach(date => {
-        const dateStr = formatDate(date);
-        if (groupedBookings[dateStr]) {
-          Object.keys(groupedBookings[dateStr]).forEach(time => {
-            slots.add(time);
-          });
-        }
-      });
-      
-      return Array.from(slots).sort();
-    }, [dates, groupedBookings]);
+    // Calculate all time slots for the week
+    const slots = new Set(TIME_SLOTS);
+    dates.forEach(date => {
+      const dateStr = formatDate(date);
+      if (groupedBookings[dateStr]) {
+        Object.keys(groupedBookings[dateStr]).forEach(time => {
+          slots.add(time);
+        });
+      }
+    });
+    const allTimeSlotsForWeek = Array.from(slots).sort();
     
     return (
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
@@ -732,17 +729,14 @@ const UV_AdminBookingsCalendar: React.FC = () => {
   const renderDayView = () => {
     const dateStr = formatDate(focusedDate);
     
-    const allTimeSlots = useMemo(() => {
-      const slots = new Set(TIME_SLOTS);
-      
-      if (groupedBookings[dateStr]) {
-        Object.keys(groupedBookings[dateStr]).forEach(time => {
-          slots.add(time);
-        });
-      }
-      
-      return Array.from(slots).sort();
-    }, [dateStr, groupedBookings]);
+    // Calculate all time slots for the day
+    const slots = new Set(TIME_SLOTS);
+    if (groupedBookings[dateStr]) {
+      Object.keys(groupedBookings[dateStr]).forEach(time => {
+        slots.add(time);
+      });
+    }
+    const allTimeSlots = Array.from(slots).sort();
     
     return (
       <div className="space-y-4">

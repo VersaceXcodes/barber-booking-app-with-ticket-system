@@ -10,7 +10,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import GV_TopNav from '../components/views/GV_TopNav';
 
-// Mock the store
+// Configure store for testing
 vi.mock('@/store/main', () => ({
   useAppStore: vi.fn((selector) => {
     const state = {

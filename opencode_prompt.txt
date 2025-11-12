@@ -1,27 +1,34 @@
-VALIDATION FAILURE - Frontend TypeScript Compilation (Attempt 1/100)
+VALIDATION FAILURE - Lint Project (Attempt 1/100)
 
-The project validation failed at the "Frontend TypeScript Compilation" step. You need to analyze the error and fix it.
+The project validation failed at the "Lint Project" step. You need to analyze the error and fix it.
 
 ## Error Details:
-src/components/views/UV_AdminBookingDetail.tsx(5,1): error TS6133: 'useAppStore' is declared but its value is never read.
-src/components/views/UV_AdminBookingDetail.tsx(11,3): error TS6133: 'MapPin' is declared but its value is never read.
-src/components/views/UV_AdminBookingDetail.tsx(14,3): error TS6133: 'XCircle' is declared but its value is never read.
-src/components/views/UV_AdminBookingDetail.tsx(17,3): error TS6133: 'FileText' is declared but its value is never read.
-src/components/views/UV_AdminBookingDetail.tsx(19,3): error TS6133: 'ExternalLink' is declared but its value is never read.
-src/components/views/UV_AdminBookingDetail.tsx(59,9): error TS6133: 'navigate' is declared but its value is never read.
-src/components/views/UV_BookingConfirmation.tsx(156,9): error TS6133: 'bookingContext' is declared but its value is never read.
-src/components/views/UV_BookingSearch.tsx(149,47): error TS2339: Property 'message' does not exist on type 'SearchResponse'.
-src/components/views/UV_UserDashboard.tsx(161,9): error TS6133: 'sortOrderMap' is declared but its value is never read.
+
+> conductor@0.0.0 lint
+> eslint .
+
+
+/app/vitereact/src/__tests__/responsive-navigation.test.tsx
+  13:1  error  Comments mentioning mock/dummy/fake data are not allowed. Implement real functionality  custom/no-mock-data
+
+/app/vitereact/src/components/views/UV_AdminBookingsCalendar.tsx
+  642:33  error    React Hook "useMemo" is called in function "renderWeekView" that is neither a React function component nor a custom React Hook function. React component names must start with an uppercase letter. React Hook names must start with the word "use"  react-hooks/rules-of-hooks
+  655:8   warning  React Hook useMemo has an unnecessary dependency: 'groupedBookings'. Either exclude it or remove the dependency array. Outer scope values like 'groupedBookings' aren't valid dependencies because mutating them doesn't re-render the component     react-hooks/exhaustive-deps
+  735:26  error    React Hook "useMemo" is called in function "renderDayView" that is neither a React function component nor a custom React Hook function. React component names must start with an uppercase letter. React Hook names must start with the word "use"   react-hooks/rules-of-hooks
+  745:8   warning  React Hook useMemo has an unnecessary dependency: 'groupedBookings'. Either exclude it or remove the dependency array. Outer scope values like 'groupedBookings' aren't valid dependencies because mutating them doesn't re-render the component     react-hooks/exhaustive-deps
+
+✖ 5 problems (3 errors, 2 warnings)
+
 
 
 ## Validation Context:
-- Step: Frontend TypeScript Compilation
+- Step: Lint Project
 - Working Directory: /app/vitereact
 - Attempt: 1/100
 - Previous failures for this step: 1
 
 ## Project Memory Summary:
-- Total validation attempts: 4
+- Total validation attempts: 7
 - Common issues encountered: None
 - Known dependencies: @hookform/resolvers, @radix-ui/react-accordion, @radix-ui/react-alert-dialog, @radix-ui/react-aspect-ratio, @radix-ui/react-avatar, @radix-ui/react-checkbox, @radix-ui/react-collapsible, @radix-ui/react-context-menu, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu
 - Missing dependencies: None
@@ -139,11 +146,11 @@ PROTECTED DIRECTORIES (DO NOT MODIFY):
 
 
 
-## Previous Validation Failures for Frontend TypeScript Compilation:
-- 9:49:06 PM: 
+## Previous Validation Failures for Lint Project:
+- 9:54:56 PM: 
 
 ## Your Task:
-1. **Analyze the Error**: Understand what specifically went wrong in the Frontend TypeScript Compilation step
+1. **Analyze the Error**: Understand what specifically went wrong in the Lint Project step
 2. **Check Previous Attempts**: Consider if this is a recurring issue based on validation history
 3. **Locate the Problem**: Identify which files need to be modified
 4. **Apply Fixes**: Use the available tools to fix the specific issues

@@ -1,34 +1,88 @@
-VALIDATION FAILURE - Lint Project (Attempt 1/100)
+VALIDATION FAILURE - Auth E2E Tests (Attempt 3/100)
 
-The project validation failed at the "Lint Project" step. You need to analyze the error and fix it.
+The project validation failed at the "Auth E2E Tests" step. You need to analyze the error and fix it.
 
 ## Error Details:
+stderr | src/__tests__/responsive-navigation.test.tsx > GV_TopNav - Responsive Behavior > Desktop Viewport (≥768px) > should show desktop navigation links
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
 
-> conductor@0.0.0 lint
-> eslint .
+stderr | src/__tests__/responsive-navigation.test.tsx > GV_TopNav - Responsive Behavior > Responsive Behavior on Resize > should close mobile menu when resizing from mobile to desktop
+Warning: An update to GV_TopNav inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at GV_TopNav (/app/vitereact/src/components/views/GV_TopNav.tsx:12:73)
+    at Router (/app/vitereact/node_modules/react-router/dist/umd/react-router.development.js:1207:17)
+    at BrowserRouter (/app/vitereact/node_modules/react-router-dom/dist/umd/react-router-dom.development.js:695:7)
+
+stderr | src/__tests__/auth.e2e.test.tsx > Auth E2E Flow (real API) > registers a new user, logs out, and signs in
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/__tests__/auth.e2e.test.tsx > Auth E2E Flow (real API) > registers a new user, logs out, and signs in
+Warning: An update to UV_Login inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at UV_Login (/app/vitereact/src/components/views/UV_Login.tsx:14:48)
+    at Router (/app/vitereact/node_modules/react-router/dist/umd/react-router.development.js:1207:17)
+    at BrowserRouter (/app/vitereact/node_modules/react-router-dom/dist/umd/react-router-dom.development.js:695:7)
+    at Wrapper (/app/vitereact/src/__tests__/auth.e2e.test.tsx:15:20)
+
+stderr | src/__tests__/auth.e2e.test.tsx > Auth E2E Flow (real API) > shows error on invalid login credentials
+Login error: Error: Invalid email or password
+    at login_user [90m(/app/vitereact/[39msrc/store/main.tsx:219:17[90m)[39m
+[90m    at processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+    at handleSubmit [90m(/app/vitereact/[39msrc/components/views/UV_Login.tsx:159:9[90m)[39m
+
+stderr | src/__tests__/auth.e2e.test.tsx > Auth E2E Flow (real API) > prevents duplicate email registration
+Registration error: Error: Email already registered
+    at register_user [90m(/app/vitereact/[39msrc/store/main.tsx:355:17[90m)[39m
+[90m    at processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+    at handleSubmit [90m(/app/vitereact/[39msrc/components/views/UV_Login.tsx:183:9[90m)[39m
 
 
-/app/vitereact/src/__tests__/responsive-navigation.test.tsx
-  13:1  error  Comments mentioning mock/dummy/fake data are not allowed. Implement real functionality  custom/no-mock-data
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
-/app/vitereact/src/components/views/UV_AdminBookingsCalendar.tsx
-  642:33  error    React Hook "useMemo" is called in function "renderWeekView" that is neither a React function component nor a custom React Hook function. React component names must start with an uppercase letter. React Hook names must start with the word "use"  react-hooks/rules-of-hooks
-  655:8   warning  React Hook useMemo has an unnecessary dependency: 'groupedBookings'. Either exclude it or remove the dependency array. Outer scope values like 'groupedBookings' aren't valid dependencies because mutating them doesn't re-render the component     react-hooks/exhaustive-deps
-  735:26  error    React Hook "useMemo" is called in function "renderDayView" that is neither a React function component nor a custom React Hook function. React component names must start with an uppercase letter. React Hook names must start with the word "use"   react-hooks/rules-of-hooks
-  745:8   warning  React Hook useMemo has an unnecessary dependency: 'groupedBookings'. Either exclude it or remove the dependency array. Outer scope values like 'groupedBookings' aren't valid dependencies because mutating them doesn't re-render the component     react-hooks/exhaustive-deps
+ FAIL  src/__tests__/responsive-navigation.test.tsx > GV_TopNav - Responsive Behavior > Desktop Viewport (≥768px) > should hide mobile menu button on desktop
+AssertionError: expected 'inline-flex items-center justify-cent…' to contain 'md:hidden'
 
-✖ 5 problems (3 errors, 2 warnings)
+Expected: [32m"md:hidden"[39m
+Received: [31m"inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors"[39m
+
+ ❯ src/__tests__/responsive-navigation.test.tsx:83:25
+     81|         // Check if it has md:hidden class or is not displayed
+     82|         const classes = mobileMenuButton.className;
+     83|         expect(classes).toContain('md:hidden');
+       |                         ^
+     84|       }
+     85|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 
 
 
 ## Validation Context:
-- Step: Lint Project
+- Step: Auth E2E Tests
 - Working Directory: /app/vitereact
-- Attempt: 1/100
-- Previous failures for this step: 1
+- Attempt: 3/100
+- Previous failures for this step: 2
 
 ## Project Memory Summary:
-- Total validation attempts: 7
+- Total validation attempts: 12
 - Common issues encountered: None
 - Known dependencies: @hookform/resolvers, @radix-ui/react-accordion, @radix-ui/react-alert-dialog, @radix-ui/react-aspect-ratio, @radix-ui/react-avatar, @radix-ui/react-checkbox, @radix-ui/react-collapsible, @radix-ui/react-context-menu, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu
 - Missing dependencies: None
@@ -42,9 +96,9 @@ Working Directory: /app/vitereact
 PROJECT DIRECTORIES:
 /app
 /app/.git
-/app/.git/info
-/app/.git/hooks
 /app/.git/branches
+/app/.git/hooks
+/app/.git/info
 /app/.git/refs
 /app/.git/refs/heads
 /app/.git/refs/tags
@@ -52,14 +106,14 @@ PROJECT DIRECTORIES:
 /app/.git/objects
 /app/.git/objects/pack
 /app/.git/objects/info
-/app/.git/objects/fb
-/app/.git/objects/ae
-/app/.git/objects/97
-/app/.git/objects/92
-/app/.git/objects/14
-/app/.git/logs
-/app/.git/logs/refs
-/app/backend
+/app/.git/objects/36
+/app/.git/objects/27
+/app/.git/objects/52
+/app/.git/objects/06
+/app/.git/objects/9c
+/app/.git/objects/f6
+/app/.git/objects/ef
+/app/.git/objects/82
 
 
 KEY PROJECT FILES:
@@ -146,11 +200,12 @@ PROTECTED DIRECTORIES (DO NOT MODIFY):
 
 
 
-## Previous Validation Failures for Lint Project:
-- 9:54:56 PM: 
+## Previous Validation Failures for Auth E2E Tests:
+- 6:31:35 AM: 
+- 6:36:36 AM: 
 
 ## Your Task:
-1. **Analyze the Error**: Understand what specifically went wrong in the Lint Project step
+1. **Analyze the Error**: Understand what specifically went wrong in the Auth E2E Tests step
 2. **Check Previous Attempts**: Consider if this is a recurring issue based on validation history
 3. **Locate the Problem**: Identify which files need to be modified
 4. **Apply Fixes**: Use the available tools to fix the specific issues

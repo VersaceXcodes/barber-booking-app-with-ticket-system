@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppStore } from '@/store/main';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
 // ============================================================================
@@ -94,6 +94,7 @@ const formatTimeRange = (startTime: string, durationMinutes: number): string => 
 
 const UV_BookingFlow_Review: React.FC = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   // ============================================================================
   // STATE - CRITICAL: Individual selectors to avoid infinite loops
@@ -132,6 +133,10 @@ const UV_BookingFlow_Review: React.FC = () => {
       return response.data;
     },
     onSuccess: (data) => {
+      // Invalidate availability queries to ensure fresh data on next booking attempt
+      queryClient.invalidateQueries({ queryKey: ['availability-slots'] });
+      queryClient.invalidateQueries({ queryKey: ['availability'] });
+      
       navigate(`/booking/confirmation?ticket_number=${data.booking.ticket_number}`);
     },
   });

@@ -6,8 +6,9 @@ import { useAppStore } from '@/store/main';
 
 interface TimeSlot {
   time: string;
-  available_slots: number;
+  available_spots: number;
   total_capacity: number;
+  booked_count: number;
   is_available: boolean;
   status: 'available' | 'limited' | 'full' | 'blocked';
 }
@@ -16,8 +17,9 @@ interface AvailabilityResponse {
   date: string;
   slots: Array<{
     time: string;
-    available_slots: number;
+    available_spots: number;
     total_capacity: number;
+    booked_count: number;
     is_available: boolean;
   }>;
 }
@@ -100,21 +102,22 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
       // Transform response to add computed status field
       return (response.data.slots || []).map(slot => ({
         time: slot.time,
-        available_slots: slot.available_slots,
+        available_spots: slot.available_spots,
         total_capacity: slot.total_capacity,
+        booked_count: slot.booked_count,
         is_available: slot.is_available,
-        status: !slot.is_available || slot.available_slots === 0
-          ? (slot.available_slots === 0 ? 'full' : 'blocked')
-          : slot.available_slots === 1
+        status: !slot.is_available || slot.available_spots === 0
+          ? (slot.available_spots === 0 ? 'full' : 'blocked')
+          : slot.available_spots === 1
           ? 'limited'
           : ('available' as const),
       })) as TimeSlot[];
     },
     enabled: !!selectedDate,
-    staleTime: 60000, // 60 seconds - longer to prevent aggressive refetching
+    staleTime: 0, // Always fetch fresh data to ensure availability is up-to-date
     refetchInterval: false, // Disable auto-refresh to prevent unwanted re-renders
-    refetchOnWindowFocus: false, // Disable refetch on focus
-    refetchOnMount: false, // Don't refetch when component mounts if data exists
+    refetchOnWindowFocus: true, // Refetch when window regains focus to get latest availability
+    refetchOnMount: true, // Always refetch when component mounts to get fresh data
   });
 
   // Redirect if no date selected (with guard to prevent multiple redirects)
@@ -143,7 +146,7 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
 
   // Handle slot selection
   const handleSelectSlot = (slot: TimeSlot) => {
-    if (!slot.is_available || slot.available_slots === 0) {
+    if (!slot.is_available || slot.available_spots === 0) {
       return; // Cannot select unavailable slots
     }
 
@@ -170,7 +173,7 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
 
     // Verify slot is still available
     const slot = timeSlots?.find(s => s.time === timeToUse);
-    if (!slot || !slot.is_available || slot.available_slots === 0) {
+    if (!slot || !slot.is_available || slot.available_spots === 0) {
       alert('Sorry, this slot was just booked. Please choose another time.');
       refetch(); // Refresh availability
       setSelectedTime(null);
@@ -215,16 +218,16 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
 
   // Get capacity text
   const getCapacityText = (slot: TimeSlot): string => {
-    const booked = slot.total_capacity - slot.available_slots;
-    const remaining = slot.available_slots;
+    const booked = slot.booked_count;
+    const remaining = slot.available_spots;
 
     if (!slot.is_available) {
       return 'Blocked';
     }
-    if (slot.available_slots === 0) {
+    if (slot.available_spots === 0) {
       return 'Fully Booked';
     }
-    if (slot.available_slots === 1) {
+    if (slot.available_spots === 1) {
       return 'Last spot!';
     }
     return `${booked}/${slot.total_capacity} booked • ${remaining} left`;
@@ -325,7 +328,7 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
                 {timeSlots.map((slot) => {
                   // Check both local state and context for selection
                   const isSelected = selectedTime === slot.time || selectedTimeFromContext === slot.time;
-                  const isDisabled = !slot.is_available || slot.available_slots === 0;
+                  const isDisabled = !slot.is_available || slot.available_spots === 0;
                   
                   return (
                     <button

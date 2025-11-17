@@ -474,6 +474,8 @@ const UV_BookingFlow_Review: React.FC = () => {
                 type="checkbox"
                 checked={termsAccepted}
                 onChange={handleTermsToggle}
+                data-testid="terms-checkbox"
+                aria-label="Accept terms and conditions"
                 className="mt-1 h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-4 focus:ring-blue-100 cursor-pointer"
               />
               <span className="ml-3 text-sm text-gray-700">
@@ -500,6 +502,8 @@ const UV_BookingFlow_Review: React.FC = () => {
             <button
               onClick={handleConfirmBooking}
               disabled={!termsAccepted || createBookingMutation.isPending}
+              data-testid="confirm-booking-button"
+              aria-label="Confirm booking and proceed to confirmation"
               className="flex-1 px-8 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center"
             >
               {createBookingMutation.isPending ? (

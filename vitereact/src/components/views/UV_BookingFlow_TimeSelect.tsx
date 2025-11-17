@@ -35,6 +35,7 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
   // Local state for selected time to prevent loss during scrolling/interaction
   // Initialize from context to preserve selection when navigating back
   const [selectedTime, setSelectedTime] = React.useState<string | null>(selectedTimeFromContext);
+  const [isNavigating, setIsNavigating] = React.useState(false);
 
   // Sync local state with context - use context as source of truth
   // Only sync when context value actually changes (not on every render)
@@ -176,6 +177,9 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
       updateBookingContext({ selected_time: null });
       return;
     }
+
+    // Show loading indicator
+    setIsNavigating(true);
 
     // Final check: ensure context is updated before navigation
     console.log('[Time Selection] Continuing with time:', timeToUse);
@@ -384,14 +388,24 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
               <div className="sticky bottom-0 pb-4 pt-6 bg-gradient-to-t from-blue-50 via-blue-50 to-transparent">
                 <button
                   onClick={handleContinue}
-                  disabled={!hasValidSelection}
-                  className={`w-full py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-200 shadow-lg ${
-                    hasValidSelection
+                  disabled={!hasValidSelection || isNavigating}
+                  className={`w-full py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-200 shadow-lg flex items-center justify-center ${
+                    hasValidSelection && !isNavigating
                       ? 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-xl transform hover:scale-105'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  {hasValidSelection ? 'Continue to Details' : 'Select a time to continue'}
+                  {isNavigating ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Loading...
+                    </>
+                  ) : (
+                    hasValidSelection ? 'Continue to Details' : 'Select a time to continue'
+                  )}
                 </button>
               </div>
             </>

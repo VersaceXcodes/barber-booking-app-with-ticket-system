@@ -505,7 +505,15 @@ const UV_BookingFlow_Details: React.FC = () => {
           )}
 
           {/* Main Form Card */}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 lg:p-8">
+          <form 
+            className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 lg:p-8"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleContinue();
+            }}
+            aria-label="Booking Details Form"
+            role="form"
+          >
             {/* Profile Pre-fill Toggle (Registered Users Only) */}
             {isAuthenticated && (
               <div className="mb-6 pb-6 border-b border-gray-200">
@@ -549,13 +557,19 @@ const UV_BookingFlow_Details: React.FC = () => {
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <User className="h-5 w-5 text-gray-400" />
                     </div>
-                    <input
+                     <input
                       id="customer_name"
+                      name="customer_name"
+                      data-testid="customer-name-input"
+                      aria-label="Full Name"
                       type="text"
                       value={formData.customer_name}
                       onChange={(e) => handleFieldChange('customer_name', e.target.value)}
                       onBlur={() => handleFieldBlur('customer_name')}
                       placeholder="John Smith"
+                      aria-required="true"
+                      aria-invalid={!!validationErrors.customer_name}
+                      aria-describedby={validationErrors.customer_name ? "customer-name-error" : undefined}
                       className={`block w-full pl-10 pr-3 py-3 border-2 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all ${
                         validationErrors.customer_name
                           ? 'border-red-500 focus:border-red-500'
@@ -563,8 +577,8 @@ const UV_BookingFlow_Details: React.FC = () => {
                       }`}
                     />
                   </div>
-                  {validationErrors.customer_name && (
-                    <p className="mt-1 text-sm text-red-600 flex items-center">
+                   {validationErrors.customer_name && (
+                    <p id="customer-name-error" className="mt-1 text-sm text-red-600 flex items-center" role="alert">
                       <AlertCircle className="w-4 h-4 mr-1" />
                       {validationErrors.customer_name}
                     </p>
@@ -581,13 +595,19 @@ const UV_BookingFlow_Details: React.FC = () => {
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Mail className="h-5 w-5 text-gray-400" />
                     </div>
-                    <input
+                     <input
                       id="customer_email"
+                      name="customer_email"
+                      data-testid="customer-email-input"
+                      aria-label="Email Address"
                       type="email"
                       value={formData.customer_email}
                       onChange={(e) => handleFieldChange('customer_email', e.target.value)}
                       onBlur={() => handleFieldBlur('customer_email')}
                       placeholder="john@example.com"
+                      aria-required="true"
+                      aria-invalid={!!validationErrors.customer_email}
+                      aria-describedby={validationErrors.customer_email ? "customer-email-error" : undefined}
                       className={`block w-full pl-10 pr-3 py-3 border-2 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all ${
                         validationErrors.customer_email
                           ? 'border-red-500 focus:border-red-500'
@@ -595,8 +615,8 @@ const UV_BookingFlow_Details: React.FC = () => {
                       }`}
                     />
                   </div>
-                  {validationErrors.customer_email && (
-                    <p className="mt-1 text-sm text-red-600 flex items-center">
+                   {validationErrors.customer_email && (
+                    <p id="customer-email-error" className="mt-1 text-sm text-red-600 flex items-center" role="alert">
                       <AlertCircle className="w-4 h-4 mr-1" />
                       {validationErrors.customer_email}
                     </p>
@@ -613,13 +633,19 @@ const UV_BookingFlow_Details: React.FC = () => {
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Phone className="h-5 w-5 text-gray-400" />
                     </div>
-                    <input
+                     <input
                       id="customer_phone"
+                      name="customer_phone"
+                      data-testid="customer-phone-input"
+                      aria-label="Phone Number"
                       type="tel"
                       value={formData.customer_phone}
                       onChange={(e) => handleFieldChange('customer_phone', e.target.value)}
                       onBlur={() => handleFieldBlur('customer_phone')}
                       placeholder="+1 (555) 123-4567"
+                      aria-required="true"
+                      aria-invalid={!!validationErrors.customer_phone}
+                      aria-describedby={validationErrors.customer_phone ? "customer-phone-error" : undefined}
                       className={`block w-full pl-10 pr-3 py-3 border-2 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all ${
                         validationErrors.customer_phone
                           ? 'border-red-500 focus:border-red-500'
@@ -627,8 +653,8 @@ const UV_BookingFlow_Details: React.FC = () => {
                       }`}
                     />
                   </div>
-                  {validationErrors.customer_phone && (
-                    <p className="mt-1 text-sm text-red-600 flex items-center">
+                   {validationErrors.customer_phone && (
+                    <p id="customer-phone-error" className="mt-1 text-sm text-red-600 flex items-center" role="alert">
                       <AlertCircle className="w-4 h-4 mr-1" />
                       {validationErrors.customer_phone}
                     </p>
@@ -846,12 +872,17 @@ const UV_BookingFlow_Details: React.FC = () => {
                 )}
               </div>
             )}
-          </div>
+          </form>
 
           {/* Action Buttons */}
           <div className="mt-8 flex flex-col sm:flex-row gap-4">
             <Link
               to="/book/time"
+              data-testid="back-button"
+              id="back-button"
+              aria-label="Back to Time Selection"
+              role="button"
+              tabIndex={0}
               className="flex-1 px-6 py-3 bg-gray-100 text-gray-900 rounded-lg font-medium hover:bg-gray-200 border border-gray-300 text-center transition-colors"
             >
               Back
@@ -863,8 +894,11 @@ const UV_BookingFlow_Details: React.FC = () => {
               id="continue-to-review-button"
               name="continue-to-review"
               aria-label="Continue to Review"
+              title="Continue to Review"
               type="button"
-              className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all focus:outline-none focus:ring-4 focus:ring-blue-100 relative z-10"
+              role="button"
+              tabIndex={0}
+              className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all focus:outline-none focus:ring-4 focus:ring-blue-100"
             >
               {(updateProfileMutation.isPending || isNavigating) ? (
                 <span className="flex items-center justify-center">

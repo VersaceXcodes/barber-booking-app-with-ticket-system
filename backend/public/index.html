@@ -9,7 +9,14 @@
 			rel="stylesheet"
 		/>
 		<title>Vite + React + TS</title>
-		<script type="module" crossorigin src="/assets/index-B_fGI5I4.js"></script>
+		<!-- Runtime Configuration - Sets API URL before app loads -->
+		<script>
+			// This configuration is injected at runtime to ensure correct API URL
+			window.__RUNTIME_CONFIG__ = {
+				API_BASE_URL: window.location.origin
+			};
+		</script>
+		<script type="module" crossorigin src="/assets/index-BcivOkmA.js"></script>
 		<link rel="stylesheet" crossorigin href="/assets/index-Cf2515i0.css">
 	</head>
 	<body>

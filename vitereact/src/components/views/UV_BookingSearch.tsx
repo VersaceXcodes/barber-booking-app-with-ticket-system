@@ -129,7 +129,15 @@ const UV_BookingSearch: React.FC = () => {
   const { data, isLoading, error, refetch } = useQuery<SearchResponse>({
     queryKey: ['bookingSearch', searchMethod, ticketNumber, phone, date],
     queryFn: async () => {
-      const apiUrl = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/bookings/search`;
+      // Get API URL from runtime config or environment variable
+      const getApiBaseUrl = (): string => {
+        if (typeof window !== 'undefined' && (window as any).__RUNTIME_CONFIG__?.API_BASE_URL) {
+          return (window as any).__RUNTIME_CONFIG__.API_BASE_URL;
+        }
+        return import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+      };
+      
+      const apiUrl = `${getApiBaseUrl()}/api/bookings/search`;
       const params: Record<string, string> = {};
 
       if (searchMethod === 'ticket') {
@@ -155,12 +163,31 @@ const UV_BookingSearch: React.FC = () => {
       } catch (error: any) {
         console.error('Search API error:', error);
         
+        // Handle timeout errors
         if (error.code === 'ECONNABORTED') {
           throw new Error('Request timed out. Please try again.');
         }
         
+        // Handle Axios errors
         if (axios.isAxiosError(error)) {
           const status = error.response?.status;
+          const errorData = error.response?.data;
+          
+          // Check for specific error message from backend
+          if (errorData?.message) {
+            throw new Error(errorData.message);
+          }
+          
+          // Handle specific HTTP status codes
+          if (status === 400) {
+            // Bad request - validation errors
+            throw new Error(errorData?.message || 'Invalid search parameters. Please check your input.');
+          }
+          
+          if (status === 404) {
+            // Not found
+            throw new Error('Booking not found. Please check your ticket number or search criteria.');
+          }
           
           if (status === 502) {
             throw new Error('Service temporarily unavailable. The server is having issues. Please try again in a moment.');
@@ -178,16 +205,19 @@ const UV_BookingSearch: React.FC = () => {
             throw new Error('Server error occurred. Please try again later.');
           }
           
-          if (error.response?.data?.message) {
-            throw new Error(error.response.data.message);
-          }
-          
+          // Network error (no response from server)
           if (!error.response) {
             throw new Error('Unable to connect to server. Please check your internet connection and try again.');
           }
         }
         
-        throw error;
+        // Re-throw the original error if it's already an Error object
+        if (error instanceof Error) {
+          throw error;
+        }
+        
+        // Fallback error
+        throw new Error('An unexpected error occurred. Please try again.');
       }
     },
     enabled: false, // Manual trigger only

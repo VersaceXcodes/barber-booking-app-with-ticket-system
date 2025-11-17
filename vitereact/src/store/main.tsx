@@ -133,6 +133,11 @@ const initial_app_settings: AppSettings = {
 // ============================================================================
 
 const get_api_base_url = (): string => {
+  // Check for runtime config first (injected in index.html)
+  if (typeof window !== 'undefined' && (window as any).__RUNTIME_CONFIG__?.API_BASE_URL) {
+    return (window as any).__RUNTIME_CONFIG__.API_BASE_URL;
+  }
+  // Fall back to build-time environment variable
   return import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 };
 

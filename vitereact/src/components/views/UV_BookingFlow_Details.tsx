@@ -849,7 +849,7 @@ const UV_BookingFlow_Details: React.FC = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-4" style={{ position: 'relative', zIndex: 10 }}>
+          <div className="mt-8 flex flex-col sm:flex-row gap-4">
             <Link
               to="/book/time"
               className="flex-1 px-6 py-3 bg-gray-100 text-gray-900 rounded-lg font-medium hover:bg-gray-200 border border-gray-300 text-center transition-colors"
@@ -861,13 +861,10 @@ const UV_BookingFlow_Details: React.FC = () => {
               disabled={!isFormValid || updateProfileMutation.isPending || isNavigating}
               data-testid="continue-to-review-button"
               id="continue-to-review-button"
+              name="continue-to-review"
               aria-label="Continue to Review"
-              aria-disabled={!isFormValid || updateProfileMutation.isPending || isNavigating}
-              role="button"
               type="button"
-              tabIndex={0}
-              style={{ pointerEvents: 'auto' }}
-              className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all focus:outline-none focus:ring-4 focus:ring-blue-100"
+              className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all focus:outline-none focus:ring-4 focus:ring-blue-100 relative z-10"
             >
               {(updateProfileMutation.isPending || isNavigating) ? (
                 <span className="flex items-center justify-center">

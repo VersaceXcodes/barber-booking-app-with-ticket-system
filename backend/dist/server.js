@@ -148,7 +148,11 @@ app.get('/api/availability', async (req, res) => {
         const bookingsResult = await pool.query('SELECT appointment_date, appointment_time, COUNT(*) as booked_count FROM bookings WHERE appointment_date >= $1 AND appointment_date <= $2 AND status = $3 GROUP BY appointment_date, appointment_time', [start_date, end_date, 'confirmed']);
         const bookingsByDateAndTime = {};
         bookingsResult.rows.forEach(row => {
-            const key = `${row.appointment_date}:${row.appointment_time}`;
+            // Ensure date is in YYYY-MM-DD format
+            const dateStr = row.appointment_date instanceof Date
+                ? row.appointment_date.toISOString().split('T')[0]
+                : String(row.appointment_date);
+            const key = `${dateStr}:${row.appointment_time}`;
             bookingsByDateAndTime[key] = parseInt(row.booked_count);
         });
         const start = new Date(String(start_date));

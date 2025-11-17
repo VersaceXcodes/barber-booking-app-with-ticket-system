@@ -186,7 +186,11 @@ app.get('/api/availability', async (req, res) => {
     );
     const bookingsByDateAndTime = {};
     bookingsResult.rows.forEach(row => {
-      const key = `${row.appointment_date}:${row.appointment_time}`;
+      // Ensure date is in YYYY-MM-DD format
+      const dateStr = row.appointment_date instanceof Date 
+        ? row.appointment_date.toISOString().split('T')[0]
+        : String(row.appointment_date);
+      const key = `${dateStr}:${row.appointment_time}`;
       bookingsByDateAndTime[key] = parseInt(row.booked_count);
     });
 

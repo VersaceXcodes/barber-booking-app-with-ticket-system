@@ -31,7 +31,14 @@ interface ValidationErrors {
 const customerDetailsSchema = z.object({
   customer_name: z.string().min(2, 'Name must be at least 2 characters').max(100, 'Name too long').regex(/^[a-zA-Z\s]+$/, 'Name must contain only letters and spaces'),
   customer_email: z.string().email('Please enter a valid email address').max(255, 'Email too long'),
-  customer_phone: z.string().min(10, 'Phone number too short').max(20, 'Phone number too long').regex(/^\+?[1-9]\d{1,14}$/, 'Please enter a valid phone number'),
+  customer_phone: z.string()
+    .min(10, 'Phone number too short')
+    .max(20, 'Phone number too long')
+    .refine((val) => {
+      // Strip formatting characters before validation
+      const cleaned = val.replace(/[\s()-]/g, '');
+      return /^\+?[1-9]\d{1,14}$/.test(cleaned);
+    }, 'Please enter a valid phone number'),
   booking_for_name: z.string().max(255, 'Name too long').nullable(),
   special_request: z.string().max(500, 'Special request must be 500 characters or less').nullable(),
 });

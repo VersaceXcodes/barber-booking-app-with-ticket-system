@@ -57,10 +57,15 @@ const UV_Login: React.FC = () => {
   // EFFECTS
   // ============================================================================
 
-  // Redirect if already authenticated
+  // Redirect if already authenticated (with a small delay to show toast)
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(redirect_url, { replace: true });
+      // Small delay to ensure toast notification is visible before navigation
+      const timer = setTimeout(() => {
+        navigate(redirect_url, { replace: true });
+      }, 300);
+      
+      return () => clearTimeout(timer);
     }
   }, [isAuthenticated, navigate, redirect_url]);
 

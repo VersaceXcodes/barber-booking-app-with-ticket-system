@@ -207,8 +207,10 @@ export const useAppStore = create<AppState>()(
             },
           }));
           
-          // Show success toast
-          toast.success(`Welcome back, ${mapped_user.name}!`);
+          // Show success toast after state update with a slight delay to ensure rendering
+          setTimeout(() => {
+            toast.success(`Welcome back, ${mapped_user.name}!`);
+          }, 100);
         } catch (error: any) {
           const error_message = error.response?.data?.message || error.message || 'Login failed';
 

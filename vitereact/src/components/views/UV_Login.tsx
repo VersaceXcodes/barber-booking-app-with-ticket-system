@@ -60,10 +60,10 @@ const UV_Login: React.FC = () => {
   // Redirect if already authenticated (with a small delay to show toast)
   useEffect(() => {
     if (isAuthenticated) {
-      // Small delay to ensure toast notification is visible before navigation
+      // Delay to ensure toast notification is visible before navigation
       const timer = setTimeout(() => {
         navigate(redirect_url, { replace: true });
-      }, 300);
+      }, 1500);
       
       return () => clearTimeout(timer);
     }
@@ -162,6 +162,7 @@ const UV_Login: React.FC = () => {
 
       try {
         await loginUser(form_data.email, form_data.password);
+        // Success toast is shown by the store action
       } catch (error) {
         console.error('Login error:', error);
         const errorMsg = error instanceof Error ? error.message : 'Login failed';

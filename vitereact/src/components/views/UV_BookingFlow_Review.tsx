@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppStore } from '@/store/main';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { toast } from '@/components/views/GV_NotificationToast';
 
 // ============================================================================
 // INTERFACES
@@ -136,6 +137,9 @@ const UV_BookingFlow_Review: React.FC = () => {
       // Invalidate availability queries to ensure fresh data on next booking attempt
       queryClient.invalidateQueries({ queryKey: ['availability-slots'] });
       queryClient.invalidateQueries({ queryKey: ['availability'] });
+      
+      // Show success toast
+      toast.success('Booking confirmed! Check your email for details.', 5000);
       
       navigate(`/booking/confirmation?ticket_number=${data.booking.ticket_number}`);
     },

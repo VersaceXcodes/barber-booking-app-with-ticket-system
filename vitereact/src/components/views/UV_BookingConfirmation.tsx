@@ -4,6 +4,7 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppStore } from '@/store/main';
 import { Check, Copy, Calendar, Printer, RefreshCw, ChevronRight, MapPin, Phone, Mail, Clock, Info } from 'lucide-react';
+import { toast } from '@/components/views/GV_NotificationToast';
 
 // ============================================================================
 // TYPE DEFINITIONS
@@ -194,11 +195,14 @@ const UV_BookingConfirmation: React.FC = () => {
       return response.data;
     },
     onSuccess: (data) => {
+      toast.success(data.message || 'Confirmation email sent successfully!');
       setResendSuccess(data.message || 'Confirmation sent successfully!');
       setTimeout(() => setResendSuccess(null), 5000);
     },
-    onError: () => {
-      setResendSuccess('Failed to send confirmation. Please try again.');
+    onError: (error: any) => {
+      const errorMessage = error.response?.data?.message || 'Failed to send confirmation. Please try again.';
+      toast.error(errorMessage);
+      setResendSuccess(errorMessage);
       setTimeout(() => setResendSuccess(null), 5000);
     }
   });

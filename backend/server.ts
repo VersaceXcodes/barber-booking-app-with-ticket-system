@@ -531,6 +531,36 @@ app.get('/api/bookings/:ticket_number', async (req, res) => {
   }
 });
 
+app.post('/api/bookings/:ticket_number/resend-confirmation', async (req, res) => {
+  try {
+    const { ticket_number } = req.params;
+    
+    const result = await pool.query(
+      'SELECT * FROM bookings WHERE UPPER(ticket_number) = UPPER($1)',
+      [ticket_number]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json(createErrorResponse('Booking not found', null, 'BOOKING_NOT_FOUND'));
+    }
+
+    const booking = result.rows[0];
+    
+    // In a real application, this would send an email
+    // For now, we just return a success response
+    console.log(`Resending confirmation email to ${booking.customer_email} for booking ${ticket_number}`);
+    
+    res.json({
+      success: true,
+      message: `Confirmation email resent to ${booking.customer_email}`,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Resend confirmation error:', error);
+    res.status(500).json(createErrorResponse('Failed to resend confirmation', error, 'INTERNAL_ERROR'));
+  }
+});
+
 app.patch('/api/bookings/:ticket_number/cancel', async (req, res) => {
   try {
     const { ticket_number } = req.params;

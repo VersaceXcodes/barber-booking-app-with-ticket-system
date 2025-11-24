@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import axios from 'axios';
+import { toast } from '@/components/views/GV_NotificationToast';
 
 // ============================================================================
 // TYPE DEFINITIONS
@@ -205,6 +206,9 @@ export const useAppStore = create<AppState>()(
               error_message: null,
             },
           }));
+          
+          // Show success toast
+          toast.success(`Welcome back, ${mapped_user.name}!`);
         } catch (error: any) {
           const error_message = error.response?.data?.message || error.message || 'Login failed';
 

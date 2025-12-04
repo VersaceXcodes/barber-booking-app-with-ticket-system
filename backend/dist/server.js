@@ -951,6 +951,23 @@ app.patch('/api/admin/services/:service_id', authenticateAdmin, async (req, res)
         res.status(500).json(createErrorResponse('Failed to update service', error, 'INTERNAL_ERROR'));
     }
 });
+app.delete('/api/admin/services/:service_id', authenticateAdmin, async (req, res) => {
+    try {
+        const { service_id } = req.params;
+        // Check if service exists
+        const checkResult = await pool.query('SELECT * FROM services WHERE service_id = $1', [service_id]);
+        if (checkResult.rows.length === 0) {
+            return res.status(404).json(createErrorResponse('Service not found', null, 'NOT_FOUND'));
+        }
+        // Delete the service
+        await pool.query('DELETE FROM services WHERE service_id = $1', [service_id]);
+        res.json({ message: 'Service deleted successfully', service_id });
+    }
+    catch (error) {
+        console.error('Delete service error:', error);
+        res.status(500).json(createErrorResponse('Failed to delete service', error, 'INTERNAL_ERROR'));
+    }
+});
 // Image upload endpoint for services
 app.post('/api/admin/upload/service-image', authenticateAdmin, upload.single('image'), async (req, res) => {
     try {

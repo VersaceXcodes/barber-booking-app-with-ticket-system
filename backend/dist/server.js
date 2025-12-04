@@ -8,6 +8,8 @@ import { Pool } from 'pg';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import * as dotenv from 'dotenv';
+import multer from 'multer';
+import fs from 'fs';
 import { createUserInputSchema, createServiceInputSchema, createBookingInputSchema, createCapacityOverrideInputSchema } from './schema.js';
 dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
@@ -27,6 +29,36 @@ const pool = new Pool(DATABASE_URL
         ssl: { rejectUnauthorized: false },
     });
 const app = express();
+// Configure multer for image uploads
+const uploadDir = path.join(__dirname, 'public', 'uploads');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, uploadDir);
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`;
+        const ext = path.extname(file.originalname);
+        cb(null, `service-${uniqueSuffix}${ext}`);
+    }
+});
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 5 * 1024 * 1024 // 5MB limit
+    },
+    fileFilter: (req, file, cb) => {
+        const allowedMimes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+        if (allowedMimes.includes(file.mimetype)) {
+            cb(null, true);
+        }
+        else {
+            cb(new Error('Invalid file type. Only JPEG, PNG, GIF, and WebP images are allowed.'));
+        }
+    }
+});
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(morgan('combined'));
@@ -917,6 +949,25 @@ app.patch('/api/admin/services/:service_id', authenticateAdmin, async (req, res)
     catch (error) {
         console.error('Update service error:', error);
         res.status(500).json(createErrorResponse('Failed to update service', error, 'INTERNAL_ERROR'));
+    }
+});
+// Image upload endpoint for services
+app.post('/api/admin/upload/service-image', authenticateAdmin, upload.single('image'), async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json(createErrorResponse('No image file provided', null, 'NO_FILE'));
+        }
+        // Return the URL path to the uploaded image
+        const imageUrl = `/uploads/${req.file.filename}`;
+        res.json({
+            success: true,
+            imageUrl: imageUrl,
+            message: 'Image uploaded successfully'
+        });
+    }
+    catch (error) {
+        console.error('Image upload error:', error);
+        res.status(500).json(createErrorResponse('Failed to upload image', error, 'UPLOAD_ERROR'));
     }
 });
 app.get('/api/admin/capacity-overrides', authenticateAdmin, async (req, res) => {

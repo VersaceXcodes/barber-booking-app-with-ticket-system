@@ -115,6 +115,10 @@ const UV_AdminSettings: React.FC = () => {
   const [showServiceModal, setShowServiceModal] = useState(false);
   const [serviceModalMode, setServiceModalMode] = useState<'add' | 'edit'>('add');
   const [draggedServiceId, setDraggedServiceId] = useState<string | null>(null);
+  const [uploadedImageFile, setUploadedImageFile] = useState<File | null>(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [imageInputMode, setImageInputMode] = useState<'upload' | 'url'>('upload');
 
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
@@ -439,6 +443,10 @@ const UV_AdminSettings: React.FC = () => {
 
   const handleOpenServiceModal = useCallback((mode: 'add' | 'edit', service?: Service) => {
     setServiceModalMode(mode);
+    setUploadedImageFile(null);
+    setImagePreviewUrl(null);
+    setImageInputMode('upload');
+    
     if (mode === 'add') {
       setServiceFormData({
         service_id: null,
@@ -461,6 +469,10 @@ const UV_AdminSettings: React.FC = () => {
         is_active: service.is_active,
         display_order: service.display_order,
       });
+      // If editing and has existing image, set preview
+      if (service.image_url) {
+        setImagePreviewUrl(service.image_url);
+      }
     }
     setShowServiceModal(true);
   }, [servicesList.length]);
@@ -498,6 +510,69 @@ const UV_AdminSettings: React.FC = () => {
       updateServiceMutation.mutate(serviceFormData);
     }
   }, [serviceFormData, serviceModalMode, createServiceMutation, updateServiceMutation]);
+
+  const handleImageFileChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      setErrorMessage('Invalid file type. Only JPEG, PNG, GIF, and WebP images are allowed.');
+      setTimeout(() => setErrorMessage(null), 5000);
+      return;
+    }
+
+    // Validate file size (5MB max)
+    if (file.size > 5 * 1024 * 1024) {
+      setErrorMessage('File size must be less than 5MB.');
+      setTimeout(() => setErrorMessage(null), 5000);
+      return;
+    }
+
+    setUploadedImageFile(file);
+    
+    // Create preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreviewUrl(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+
+    // Upload the image immediately
+    setUploadingImage(true);
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const response = await axios.post(`${API_BASE_URL}/api/admin/upload/service-image`, formData, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.data.imageUrl) {
+        setServiceFormData({ ...serviceFormData, image_url: response.data.imageUrl });
+        setSuccessMessage('Image uploaded successfully!');
+        setTimeout(() => setSuccessMessage(null), 3000);
+      }
+    } catch (error: any) {
+      console.error('Image upload error:', error);
+      setErrorMessage(error.response?.data?.message || 'Failed to upload image');
+      setTimeout(() => setErrorMessage(null), 5000);
+      setUploadedImageFile(null);
+      setImagePreviewUrl(null);
+    } finally {
+      setUploadingImage(false);
+    }
+  }, [authToken, API_BASE_URL, serviceFormData]);
+
+  const handleRemoveImage = useCallback(() => {
+    setUploadedImageFile(null);
+    setImagePreviewUrl(null);
+    setServiceFormData({ ...serviceFormData, image_url: null });
+  }, [serviceFormData]);
 
   const handleDeleteService = useCallback((service: Service) => {
     setDeleteConfirmService(service);
@@ -1500,19 +1575,113 @@ const UV_AdminSettings: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Image URL */}
+                {/* Image Upload / URL */}
                 <div>
-                  <label htmlFor="service_image_url" className="block text-sm font-medium text-gray-700 mb-2">
-                    Image URL (optional)
-                  </label>
-                  <input
-                    type="url"
-                    id="service_image_url"
-                    value={serviceFormData.image_url || ''}
-                    onChange={(e) => setServiceFormData({ ...serviceFormData, image_url: e.target.value || null })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                    placeholder="https://example.com/image.jpg"
-                  />
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Service Image (optional)
+                    </label>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        type="button"
+                        onClick={() => setImageInputMode('upload')}
+                        className={`text-xs px-3 py-1 rounded ${
+                          imageInputMode === 'upload'
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        }`}
+                      >
+                        Upload
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setImageInputMode('url')}
+                        className={`text-xs px-3 py-1 rounded ${
+                          imageInputMode === 'url'
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        }`}
+                      >
+                        URL
+                      </button>
+                    </div>
+                  </div>
+
+                  {imageInputMode === 'upload' ? (
+                    <div>
+                      {/* Image Preview */}
+                      {imagePreviewUrl && (
+                        <div className="mb-3 relative">
+                          <img
+                            src={imagePreviewUrl.startsWith('/') ? `${API_BASE_URL}${imagePreviewUrl}` : imagePreviewUrl}
+                            alt="Preview"
+                            className="w-full h-48 object-cover rounded-lg border border-gray-300"
+                          />
+                          <button
+                            type="button"
+                            onClick={handleRemoveImage}
+                            className="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition-colors"
+                          >
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          </button>
+                        </div>
+                      )}
+
+                      {/* File Upload Input */}
+                      {!imagePreviewUrl && (
+                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-500 transition-colors">
+                          <input
+                            type="file"
+                            id="service_image_file"
+                            accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
+                            onChange={handleImageFileChange}
+                            className="hidden"
+                            disabled={uploadingImage}
+                          />
+                          <label
+                            htmlFor="service_image_file"
+                            className="cursor-pointer flex flex-col items-center"
+                          >
+                            {uploadingImage ? (
+                              <>
+                                <svg className="animate-spin h-10 w-10 text-blue-600 mb-3" fill="none" viewBox="0 0 24 24">
+                                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                <span className="text-sm text-gray-600">Uploading...</span>
+                              </>
+                            ) : (
+                              <>
+                                <svg className="w-10 h-10 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                </svg>
+                                <span className="text-sm font-medium text-gray-700 mb-1">
+                                  Click to upload or drag and drop
+                                </span>
+                                <span className="text-xs text-gray-500">
+                                  JPEG, PNG, GIF, WebP (max 5MB)
+                                </span>
+                              </>
+                            )}
+                          </label>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <input
+                      type="url"
+                      id="service_image_url"
+                      value={serviceFormData.image_url || ''}
+                      onChange={(e) => {
+                        setServiceFormData({ ...serviceFormData, image_url: e.target.value || null });
+                        setImagePreviewUrl(e.target.value || null);
+                      }}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      placeholder="https://example.com/image.jpg"
+                    />
+                  )}
                 </div>
 
                 {/* Active Toggle */}
@@ -1538,6 +1707,8 @@ const UV_AdminSettings: React.FC = () => {
                   onClick={() => {
                     setShowServiceModal(false);
                     setValidationErrors({});
+                    setUploadedImageFile(null);
+                    setImagePreviewUrl(null);
                   }}
                   className="px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                 >

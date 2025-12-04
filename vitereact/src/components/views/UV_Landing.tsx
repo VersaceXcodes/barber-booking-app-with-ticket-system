@@ -198,14 +198,23 @@ const UV_Landing: React.FC = () => {
     <>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-red-950 via-red-900 to-red-950 overflow-hidden min-h-[90vh] flex items-center">
-        {/* Scissors background pattern */}
-        <div className="absolute inset-0 opacity-5">
+        {/* Premium scissors background pattern */}
+        <div className="absolute inset-0 opacity-[0.07]">
           <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M20 20 L25 15 L30 20 L25 25 Z M50 20 L55 15 L60 20 L55 25 Z M25 25 L40 40 L55 25 M40 40 L40 60'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: '80px 80px',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23c0c0c0' stroke-width='1' stroke-linecap='round'%3E%3Ccircle cx='25' cy='25' r='8' fill='none' stroke='%23c0c0c0' stroke-width='1.5'/%3E%3Ccircle cx='25' cy='55' r='8' fill='none' stroke='%23c0c0c0' stroke-width='1.5'/%3E%3Cpath d='M25 33 L40 40 L25 47' stroke='%23c0c0c0' stroke-width='2'/%3E%3Cpath d='M40 40 L70 40' stroke='%23c0c0c0' stroke-width='1.5'/%3E%3Cpath d='M68 35 L70 40 L68 45' stroke='%23c0c0c0' stroke-width='2' stroke-linejoin='miter'/%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundSize: '120px 120px',
             backgroundRepeat: 'repeat'
           }}></div>
         </div>
+        
+        {/* Vignette overlay for depth */}
+        <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black opacity-40"></div>
+        
+        {/* Deep red gradient overlay with enhanced depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-red-950/80 via-red-900/60 to-red-950/90"></div>
+        
+        {/* Edge darkening for premium feel */}
+        <div className="absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.5)]"></div>
         
         {/* Dynamic fading text background */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
@@ -213,21 +222,24 @@ const UV_Landing: React.FC = () => {
             <motion.div
               key={currentWordIndex}
               initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 0.03, scale: 1 }}
+              animate={{ opacity: 0.04, scale: 1 }}
               exit={{ opacity: 0, scale: 1.2 }}
               transition={{ duration: 1.5, ease: "easeInOut" }}
               className="text-9xl md:text-[12rem] lg:text-[16rem] font-black text-white select-none"
+              style={{ 
+                textShadow: '0 4px 20px rgba(0,0,0,0.3)',
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%)',
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text'
+              }}
             >
               {barberWords[currentWordIndex]}
             </motion.div>
           </AnimatePresence>
         </div>
-        
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-red-950 via-transparent to-transparent"></div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left Column - Content */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -326,7 +338,7 @@ const UV_Landing: React.FC = () => {
               >
                 <button
                   onClick={handleBookNowClick}
-                  className="group relative px-10 py-5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-xl font-bold rounded-xl shadow-2xl shadow-red-900/50 hover:shadow-red-900/70 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 border-2 border-white/20"
+                  className="group relative px-10 py-5 bg-gradient-to-r from-white to-gray-100 hover:from-gray-100 hover:to-white text-red-900 text-xl font-black rounded-xl shadow-2xl shadow-black/50 hover:shadow-black/70 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 border-2 border-red-800"
                   style={{ minHeight: '44px', minWidth: '44px' }}
                 >
                   <Calendar className="w-6 h-6" />
@@ -338,7 +350,7 @@ const UV_Landing: React.FC = () => {
                 {isAuthenticated && userType === 'user' && (
                   <Link
                     to="/dashboard"
-                    className="px-6 py-5 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-medium rounded-xl border-2 border-white/30 transition-all duration-200 flex items-center justify-center"
+                    className="px-6 py-5 bg-white/10 backdrop-blur-sm hover:bg-white/25 text-white font-bold rounded-xl border-2 border-white/40 transition-all duration-200 flex items-center justify-center hover:shadow-lg"
                     style={{ minHeight: '44px', minWidth: '44px' }}
                   >
                     My Dashboard
@@ -550,13 +562,13 @@ const UV_Landing: React.FC = () => {
           >
             <button
               onClick={handleBookNowClick}
-              className="group px-10 py-5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-lg font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 inline-flex items-center gap-3 border-2 border-white/20"
+              className="group px-10 py-5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-lg font-black rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 inline-flex items-center gap-3 border-2 border-red-800/50"
               style={{ minHeight: '44px', minWidth: '44px' }}
             >
               <span>Get Your Appointment Now</span>
               <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
-            <p className="text-sm text-gray-500 mt-4">Takes less than 60 seconds  •  Free cancellation anytime</p>
+            <p className="text-sm text-gray-500 mt-4 font-medium">Takes less than 60 seconds  •  Free cancellation anytime</p>
           </motion.div>
         </div>
       </section>
@@ -745,14 +757,20 @@ const UV_Landing: React.FC = () => {
 
       {/* How It Works - Remove friction */}
       <section className="py-16 lg:py-20 bg-gradient-to-br from-red-950 via-red-900 to-red-950 text-white relative overflow-hidden">
-        {/* Subtle scissors pattern background */}
-        <div className="absolute inset-0 opacity-5">
+        {/* Premium scissors pattern background */}
+        <div className="absolute inset-0 opacity-[0.07]">
           <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M20 20 L25 15 L30 20 L25 25 Z M50 20 L55 15 L60 20 L55 25 Z M25 25 L40 40 L55 25 M40 40 L40 60'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: '80px 80px',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23c0c0c0' stroke-width='1' stroke-linecap='round'%3E%3Ccircle cx='25' cy='25' r='8' fill='none' stroke='%23c0c0c0' stroke-width='1.5'/%3E%3Ccircle cx='25' cy='55' r='8' fill='none' stroke='%23c0c0c0' stroke-width='1.5'/%3E%3Cpath d='M25 33 L40 40 L25 47' stroke='%23c0c0c0' stroke-width='2'/%3E%3Cpath d='M40 40 L70 40' stroke='%23c0c0c0' stroke-width='1.5'/%3E%3Cpath d='M68 35 L70 40 L68 45' stroke='%23c0c0c0' stroke-width='2' stroke-linejoin='miter'/%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundSize: '120px 120px',
             backgroundRepeat: 'repeat'
           }}></div>
         </div>
+        
+        {/* Vignette overlay for depth */}
+        <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black opacity-30"></div>
+        
+        {/* Edge darkening */}
+        <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.4)]"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -812,14 +830,14 @@ const UV_Landing: React.FC = () => {
           >
             <button
               onClick={handleBookNowClick}
-              className="group px-12 py-6 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-xl font-bold rounded-xl shadow-2xl hover:shadow-red-900/50 transition-all duration-300 transform hover:scale-105 inline-flex items-center gap-3 border-2 border-white/30"
+              className="group px-12 py-6 bg-gradient-to-r from-white to-gray-100 hover:from-gray-100 hover:to-white text-red-900 text-xl font-black rounded-xl shadow-2xl hover:shadow-black/70 transition-all duration-300 transform hover:scale-105 inline-flex items-center gap-3 border-2 border-red-800"
               style={{ minHeight: '44px', minWidth: '44px' }}
             >
               <Calendar className="w-6 h-6" />
               <span>Book Your Cut Now—It's Free!</span>
               <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </button>
-            <p className="text-gray-100 mt-6 text-lg">
+            <p className="text-gray-100 mt-6 text-lg font-medium">
               Join 500+ happy clients  •  5.0 Google rating  •  Free cancellation
             </p>
           </motion.div>

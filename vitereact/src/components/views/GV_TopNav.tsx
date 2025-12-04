@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAppStore } from '@/store/main';
-import { Menu, X, ChevronDown, User, LogOut, Settings, Home, Calendar } from 'lucide-react';
+import { Menu, X, ChevronDown, User, LogOut, Settings, Home, Calendar, Scissors } from 'lucide-react';
 
 const GV_TopNav: React.FC = () => {
   // ============================================================================
@@ -172,24 +172,24 @@ const GV_TopNav: React.FC = () => {
       <div className="hidden md:flex items-center space-x-8">
         <Link
           to={getBookingStartPath()}
-          className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-            isActiveLink(getBookingStartPath()) ? 'text-blue-600 font-semibold' : ''
+          className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+            isActiveLink(getBookingStartPath()) ? 'text-white font-semibold bg-red-800/30' : ''
           }`}
         >
           Book Now
         </Link>
         <Link
           to="/gallery"
-          className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-            isActiveLink('/gallery') ? 'text-blue-600 font-semibold' : ''
+          className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+            isActiveLink('/gallery') ? 'text-white font-semibold bg-red-800/30' : ''
           }`}
         >
           Our Work
         </Link>
         <Link
           to="/search"
-          className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-            isActiveLink('/search') ? 'text-blue-600 font-semibold' : ''
+          className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+            isActiveLink('/search') ? 'text-white font-semibold bg-red-800/30' : ''
           }`}
         >
           Find My Booking
@@ -200,13 +200,13 @@ const GV_TopNav: React.FC = () => {
       <div className="hidden md:flex items-center space-x-4">
         <Link
           to="/login"
-          className="text-gray-700 hover:text-gray-900 px-4 py-2 rounded-md text-sm font-medium transition-colors"
+          className="text-gray-100 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
         >
           Log In
         </Link>
         <Link
           to="/register"
-          className="bg-blue-600 text-white hover:bg-blue-700 px-6 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
+          className="bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 px-6 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg hover:shadow-xl border border-white/20"
         >
           Sign Up
         </Link>
@@ -223,22 +223,22 @@ const GV_TopNav: React.FC = () => {
       <div className="hidden md:flex items-center space-x-8">
         <Link
           to={getBookingStartPath()}
-          className="bg-blue-600 text-white hover:bg-blue-700 px-6 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
+          className="bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 px-6 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg hover:shadow-xl border border-white/20"
         >
           Book Appointment
         </Link>
         <Link
           to="/dashboard"
-          className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-            isActiveLink('/dashboard') ? 'text-blue-600 font-semibold' : ''
+          className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+            isActiveLink('/dashboard') ? 'text-white font-semibold bg-red-800/30' : ''
           }`}
         >
           My Bookings
         </Link>
         <Link
           to="/gallery"
-          className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-            isActiveLink('/gallery') ? 'text-blue-600 font-semibold' : ''
+          className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+            isActiveLink('/gallery') ? 'text-white font-semibold bg-red-800/30' : ''
           }`}
         >
           Gallery
@@ -250,7 +250,7 @@ const GV_TopNav: React.FC = () => {
         <button
           onClick={toggleUserDropdown}
           onKeyDown={(e) => e.key === 'Enter' && toggleUserDropdown()}
-          className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+          className="flex items-center space-x-2 text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-red-400 transition-colors"
           aria-label="User menu"
           aria-expanded={userDropdownOpen}
           aria-haspopup="true"
@@ -307,8 +307,8 @@ const GV_TopNav: React.FC = () => {
       <div className="hidden md:flex items-center space-x-6">
         <Link
           to="/admin"
-          className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-            isActiveLink('/admin') ? 'text-blue-600 font-semibold' : ''
+          className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+            isActiveLink('/admin') ? 'text-white font-semibold bg-red-800/30' : ''
           }`}
         >
           Dashboard
@@ -319,8 +319,8 @@ const GV_TopNav: React.FC = () => {
           <button
             onClick={toggleBookingsDropdown}
             onKeyDown={(e) => e.key === 'Enter' && toggleBookingsDropdown()}
-            className={`flex items-center space-x-1 text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-              location.pathname.startsWith('/admin/bookings') ? 'text-blue-600 font-semibold' : ''
+            className={`flex items-center space-x-1 text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-red-400 transition-colors ${
+              location.pathname.startsWith('/admin/bookings') ? 'text-white font-semibold bg-red-800/30' : ''
             }`}
             aria-label="Bookings menu"
             aria-expanded={bookingsDropdownOpen}
@@ -358,24 +358,24 @@ const GV_TopNav: React.FC = () => {
 
         <Link
           to="/admin/customers"
-          className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-            isActiveLink('/admin/customers') ? 'text-blue-600 font-semibold' : ''
+          className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+            isActiveLink('/admin/customers') ? 'text-white font-semibold bg-red-800/30' : ''
           }`}
         >
           Customers
         </Link>
         <Link
           to="/admin/gallery"
-          className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-            isActiveLink('/admin/gallery') ? 'text-blue-600 font-semibold' : ''
+          className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+            isActiveLink('/admin/gallery') ? 'text-white font-semibold bg-red-800/30' : ''
           }`}
         >
           Gallery
         </Link>
         <Link
           to="/admin/settings"
-          className={`text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-            isActiveLink('/admin/settings') ? 'text-blue-600 font-semibold' : ''
+          className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+            isActiveLink('/admin/settings') ? 'text-white font-semibold bg-red-800/30' : ''
           }`}
         >
           Settings
@@ -387,12 +387,12 @@ const GV_TopNav: React.FC = () => {
         <button
           onClick={toggleAdminDropdown}
           onKeyDown={(e) => e.key === 'Enter' && toggleAdminDropdown()}
-          className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+          className="flex items-center space-x-2 text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-red-400 transition-colors"
           aria-label="Admin menu"
           aria-expanded={adminDropdownOpen}
           aria-haspopup="true"
         >
-          <div className="bg-blue-600 text-white rounded-full p-1">
+          <div className="bg-gradient-to-r from-red-600 to-red-700 text-white rounded-full p-1">
             <User size={16} />
           </div>
           <span className="max-w-32 truncate">{currentUser?.name || 'Admin'}</span>
@@ -443,16 +443,32 @@ const GV_TopNav: React.FC = () => {
         Skip to main content
       </a>
 
-      <nav className="bg-white shadow-sm sticky top-0 z-40" role="navigation" aria-label="Main navigation">
+      <nav className="bg-gradient-to-r from-red-950 via-red-900 to-red-950 shadow-lg sticky top-0 z-40 border-b-2 border-red-800/30" role="navigation" aria-label="Main navigation">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo / Shop Name */}
             <div className="flex items-center">
               <Link
                 to={getLogoLink()}
-                className="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md px-2 py-1"
+                className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-red-400 rounded-md px-2 py-1 transition-all"
               >
-                {shopName}
+                {/* Logo Icon */}
+                <div className="relative">
+                  <div className="w-10 h-10 bg-gradient-to-br from-gray-300 via-gray-200 to-gray-400 rounded-lg flex items-center justify-center shadow-lg transform group-hover:scale-105 transition-transform">
+                    <Scissors className="w-6 h-6 text-red-900 transform rotate-45" strokeWidth={2.5} />
+                  </div>
+                  {/* Metallic shine effect */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/40 via-transparent to-transparent rounded-lg pointer-events-none"></div>
+                </div>
+                {/* Logo Text */}
+                <div className="flex flex-col">
+                  <span className="text-xl font-black tracking-tight bg-gradient-to-r from-gray-100 via-white to-gray-200 bg-clip-text text-transparent leading-none" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
+                    {shopName}
+                  </span>
+                  <span className="text-[10px] font-medium text-red-300 tracking-widest uppercase leading-none mt-0.5">
+                    Premium Barbers
+                  </span>
+                </div>
               </Link>
             </div>
 
@@ -467,7 +483,7 @@ const GV_TopNav: React.FC = () => {
             <div className="md:hidden">
               <button
                 onClick={toggleMobileMenu}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-100 hover:text-white hover:bg-red-800/30 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-400 transition-colors"
                 aria-label="Toggle mobile menu"
                 aria-expanded={isMobileMenuOpen}
                 data-testid="mobile-menu-button"
@@ -480,43 +496,43 @@ const GV_TopNav: React.FC = () => {
 
         {/* Mobile Menu Panel */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 bg-white" data-testid="mobile-menu-panel">
+          <div className="md:hidden border-t border-red-800/30 bg-gradient-to-br from-red-950 via-red-900 to-red-950" data-testid="mobile-menu-panel">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {/* Guest Mobile Menu */}
               {!isAuthenticated && (
                 <>
                   <Link
                     to={getBookingStartPath()}
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Book Now
                   </Link>
                   <Link
                     to="/gallery"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Our Work
                   </Link>
                   <Link
                     to="/search"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Find My Booking
                   </Link>
-                  <div className="pt-4 border-t border-gray-200 space-y-2">
+                  <div className="pt-4 border-t border-red-800/30 space-y-2">
                     <Link
                       to="/login"
-                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Log In
                     </Link>
                     <Link
                       to="/register"
-                      className="block px-3 py-2 rounded-md text-base font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors text-center"
+                      className="block px-3 py-2 rounded-md text-base font-medium bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 transition-colors text-center border border-white/20"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Sign Up
@@ -530,29 +546,29 @@ const GV_TopNav: React.FC = () => {
                 <>
                   <Link
                     to={getBookingStartPath()}
-                    className="block px-3 py-2 rounded-md text-base font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors text-center"
+                    className="block px-3 py-2 rounded-md text-base font-medium bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 transition-colors text-center border border-white/20"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Book Appointment
                   </Link>
                   <Link
                     to="/dashboard"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     My Bookings
                   </Link>
                   <Link
                     to="/gallery"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Gallery
                   </Link>
-                  <div className="pt-4 border-t border-gray-200 space-y-2">
+                  <div className="pt-4 border-t border-red-800/30 space-y-2">
                     <Link
                       to="/profile"
-                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Profile Settings
@@ -562,7 +578,7 @@ const GV_TopNav: React.FC = () => {
                         handleLogout();
                         setIsMobileMenuOpen(false);
                       }}
-                      className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50 transition-colors"
+                      className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-300 hover:text-white hover:bg-red-800/50 transition-colors"
                     >
                       Logout
                     </button>
@@ -575,52 +591,52 @@ const GV_TopNav: React.FC = () => {
                 <>
                   <Link
                     to="/admin"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Dashboard
                   </Link>
                   <Link
                     to="/admin/bookings/calendar"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Calendar View
                   </Link>
                   <Link
                     to="/admin/bookings"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Bookings List
                   </Link>
                   <Link
                     to="/admin/customers"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Customers
                   </Link>
                   <Link
                     to="/admin/gallery"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Gallery
                   </Link>
                   <Link
                     to="/admin/settings"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Settings
                   </Link>
-                  <div className="pt-4 border-t border-gray-200 space-y-2">
+                  <div className="pt-4 border-t border-red-800/30 space-y-2">
                     <a
                       href="/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       View Public Site
@@ -630,7 +646,7 @@ const GV_TopNav: React.FC = () => {
                         handleLogout();
                         setIsMobileMenuOpen(false);
                       }}
-                      className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50 transition-colors"
+                      className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-300 hover:text-white hover:bg-red-800/50 transition-colors"
                     >
                       Logout
                     </button>

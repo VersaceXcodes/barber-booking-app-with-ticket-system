@@ -1877,54 +1877,54 @@ app.get('/api/gallery', async (req, res) => {
     const mockGalleryImages = [
       {
         image_id: 'img-1',
-        image_url: 'https://picsum.photos/seed/haircut1/800/600',
-        thumbnail_url: 'https://picsum.photos/seed/haircut1/400/300',
-        caption: 'Classic Haircut',
+        image_url: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&h=600&fit=crop',
+        thumbnail_url: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=400&h=300&fit=crop',
+        caption: 'Classic Fade',
         service_id: null,
         display_order: 1,
         uploaded_at: new Date().toISOString()
       },
       {
         image_id: 'img-2',
-        image_url: 'https://picsum.photos/seed/balayage2/800/600',
-        thumbnail_url: 'https://picsum.photos/seed/balayage2/400/300',
-        caption: 'Balayage Style',
+        image_url: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800&h=600&fit=crop',
+        thumbnail_url: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=400&h=300&fit=crop',
+        caption: 'Modern Haircut',
         service_id: null,
         display_order: 2,
         uploaded_at: new Date().toISOString()
       },
       {
         image_id: 'img-3',
-        image_url: 'https://picsum.photos/seed/color3/800/600',
-        thumbnail_url: 'https://picsum.photos/seed/color3/400/300',
-        caption: 'Color Treatment',
+        image_url: 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&h=600&fit=crop',
+        thumbnail_url: 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=400&h=300&fit=crop',
+        caption: 'Professional Cut',
         service_id: null,
         display_order: 3,
         uploaded_at: new Date().toISOString()
       },
       {
         image_id: 'img-4',
-        image_url: 'https://picsum.photos/seed/keratin4/800/600',
-        thumbnail_url: 'https://picsum.photos/seed/keratin4/400/300',
-        caption: 'Keratin Treatment',
+        image_url: 'https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=800&h=600&fit=crop',
+        thumbnail_url: 'https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=400&h=300&fit=crop',
+        caption: 'Beard Trim',
         service_id: null,
         display_order: 4,
         uploaded_at: new Date().toISOString()
       },
       {
         image_id: 'img-5',
-        image_url: 'https://picsum.photos/seed/conditioning5/800/600',
-        thumbnail_url: 'https://picsum.photos/seed/conditioning5/400/300',
-        caption: 'Deep Conditioning',
+        image_url: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=800&h=600&fit=crop',
+        thumbnail_url: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=400&h=300&fit=crop',
+        caption: 'Skin Fade',
         service_id: null,
         display_order: 5,
         uploaded_at: new Date().toISOString()
       },
       {
         image_id: 'img-6',
-        image_url: 'https://picsum.photos/seed/bridal6/800/600',
-        thumbnail_url: 'https://picsum.photos/seed/bridal6/400/300',
-        caption: 'Bridal Hair',
+        image_url: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&h=600&fit=crop',
+        thumbnail_url: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=400&h=300&fit=crop',
+        caption: 'Textured Crop',
         service_id: null,
         display_order: 6,
         uploaded_at: new Date().toISOString()

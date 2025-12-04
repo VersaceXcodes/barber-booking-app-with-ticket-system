@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useAppStore } from '@/store/main';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Scissors, Clock, MapPin, Phone, Star, Calendar, ChevronRight } from 'lucide-react';
+import { usePageTransition } from '@/hooks/usePageTransition';
 interface Service {
   service_id: string;
   name: string;
@@ -90,6 +91,7 @@ const fetchShopSettings = async (): Promise<ShopInfo> => {
 
 const UV_Landing: React.FC = () => {
   const navigate = useNavigate();
+  const { transitionTo } = usePageTransition();
   const [isVisible, setIsVisible] = useState(false);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   
@@ -174,11 +176,11 @@ const UV_Landing: React.FC = () => {
   // ============================================================================
 
   const handleBookNowClick = () => {
-    // Navigate based on services_enabled setting
+    // Navigate with scissors transition based on services_enabled setting
     if (servicesEnabled) {
-      navigate('/book/service');
+      transitionTo('/book/service');
     } else {
-      navigate('/book/date');
+      transitionTo('/book/date');
     }
   };
 

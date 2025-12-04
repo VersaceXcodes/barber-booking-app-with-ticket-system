@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppStore } from '@/store/main';
 import { Calendar, Clock, Users, CheckCircle, XCircle, AlertCircle, ChevronRight } from 'lucide-react';
+import { usePageTransition } from '@/hooks/usePageTransition';
 
 // ============================================================================
 // TYPE DEFINITIONS
@@ -116,6 +117,7 @@ const UV_UserDashboard: React.FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { transitionTo } = usePageTransition();
   
   // CRITICAL: Individual Zustand selectors (NO object destructuring)
   const currentUser = useAppStore(state => state.authentication_state.current_user);
@@ -445,13 +447,13 @@ const UV_UserDashboard: React.FC = () => {
                   Member since {userStats.member_since}
                 </p>
               </div>
-              <Link
-                to="/book/service"
+              <button
+                onClick={() => transitionTo('/book/service')}
                 className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 <Calendar className="w-5 h-5 mr-2" />
                 Book Appointment
-              </Link>
+              </button>
             </div>
 
             {/* User Statistics */}

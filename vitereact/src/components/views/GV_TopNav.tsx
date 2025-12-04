@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAppStore } from '@/store/main';
 import { Menu, X, ChevronDown, User, LogOut, Settings, Home, Calendar, Scissors } from 'lucide-react';
+import { usePageTransition } from '@/hooks/usePageTransition';
 
 const GV_TopNav: React.FC = () => {
   // ============================================================================
@@ -20,10 +21,11 @@ const GV_TopNav: React.FC = () => {
   const bookingsDropdownRef = useRef<HTMLDivElement>(null);
 
   // ============================================================================
-  // ROUTER
+  // ROUTER & TRANSITIONS
   // ============================================================================
   const navigate = useNavigate();
   const location = useLocation();
+  const { transitionTo } = usePageTransition();
 
   // ============================================================================
   // GLOBAL STATE (CRITICAL: Individual selectors to avoid infinite loops)
@@ -221,12 +223,12 @@ const GV_TopNav: React.FC = () => {
     <>
       {/* Desktop Navigation */}
       <div className="hidden md:flex items-center space-x-8">
-        <Link
-          to={getBookingStartPath()}
+        <button
+          onClick={() => transitionTo(getBookingStartPath())}
           className="bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 px-6 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg hover:shadow-xl border border-white/20"
         >
           Book Appointment
-        </Link>
+        </button>
         <Link
           to="/dashboard"
           className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
@@ -544,13 +546,15 @@ const GV_TopNav: React.FC = () => {
               {/* User Mobile Menu */}
               {isAuthenticated && userType === 'user' && (
                 <>
-                  <Link
-                    to={getBookingStartPath()}
-                    className="block px-3 py-2 rounded-md text-base font-medium bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 transition-colors text-center border border-white/20"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      transitionTo(getBookingStartPath());
+                    }}
+                    className="block w-full px-3 py-2 rounded-md text-base font-medium bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 transition-colors text-center border border-white/20"
                   >
                     Book Appointment
-                  </Link>
+                  </button>
                   <Link
                     to="/dashboard"
                     className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"

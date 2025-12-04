@@ -60,3 +60,103 @@
 		background-image: radial-gradient(var(--tw-gradient-stops));
 	}
 }
+
+/* ============================================================================
+   SCISSORS TRANSITION ANIMATIONS - Mobile Optimized
+   ============================================================================ */
+
+/* Enable hardware acceleration for smooth animations */
+.scissors-transition-container {
+	will-change: transform, opacity;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+}
+
+/* Optimize SVG rendering for mobile */
+.scissors-blade {
+	will-change: transform;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+}
+
+/* Smooth slice effect animation */
+@keyframes slice-flash {
+	0% {
+		opacity: 0;
+		transform: scaleX(0);
+	}
+	50% {
+		opacity: 1;
+		transform: scaleX(1.5);
+	}
+	100% {
+		opacity: 0;
+		transform: scaleX(0);
+	}
+}
+
+.slice-effect {
+	animation: slice-flash 0.6s ease-out;
+}
+
+/* Screen split animations */
+@keyframes split-up {
+	0% {
+		transform: translateY(0);
+	}
+	100% {
+		transform: translateY(-100%);
+	}
+}
+
+@keyframes split-down {
+	0% {
+		transform: translateY(0);
+	}
+	100% {
+		transform: translateY(100%);
+	}
+}
+
+/* Shimmer loading animation */
+@keyframes shimmer-pulse {
+	0%, 100% {
+		opacity: 0.5;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 1;
+		transform: scale(1.5);
+	}
+}
+
+.shimmer-dot {
+	animation: shimmer-pulse 0.8s ease-in-out infinite;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+	.scissors-transition-container,
+	.scissors-blade,
+	.slice-effect,
+	.shimmer-dot {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+	/* Slightly faster animations on mobile for snappier feel */
+	.scissors-transition-container {
+		animation-duration: 0.7s;
+	}
+	
+	/* Reduce blur effects on mobile for better performance */
+	.slice-effect {
+		filter: blur(1px);
+	}
+}

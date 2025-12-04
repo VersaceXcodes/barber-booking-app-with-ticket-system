@@ -54,6 +54,10 @@ import UV_AdminCustomerDetail from '@/components/views/UV_AdminCustomerDetail';
 import UV_AdminSettings from '@/components/views/UV_AdminSettings';
 import UV_AdminReports from '@/components/views/UV_AdminReports';
 
+// Transition Components
+import { PageTransitionProvider, usePageTransition } from '@/hooks/usePageTransition';
+import ScissorsTransition from '@/components/transitions/ScissorsTransition';
+
 // ============================================================================
 // REACT QUERY CLIENT CONFIGURATION
 // ============================================================================
@@ -174,15 +178,31 @@ const App: React.FC = () => {
   return (
     <Router>
       <QueryClientProvider client={queryClient}>
-        <div className="App min-h-screen flex flex-col bg-gray-50">
-          {/* Global Top Navigation - appears on all pages */}
-          <GV_TopNav />
+        <PageTransitionProvider>
+          <AppContent />
+        </PageTransitionProvider>
+      </QueryClientProvider>
+    </Router>
+  );
+};
 
-          {/* Mobile Navigation - triggered from TopNav hamburger */}
-          <GV_MobileNav />
+/**
+ * AppContent - Inner component with access to PageTransition context
+ */
+const AppContent: React.FC = () => {
+  const { isTransitioning } = usePageTransition();
 
-          {/* Main Content Area */}
-          <main className="flex-1">
+  return (
+    <>
+      <div className="App min-h-screen flex flex-col bg-gray-50">
+        {/* Global Top Navigation - appears on all pages */}
+        <GV_TopNav />
+
+        {/* Mobile Navigation - triggered from TopNav hamburger */}
+        <GV_MobileNav />
+
+        {/* Main Content Area */}
+        <main className="flex-1">
             <Routes>
               {/* ============================================================ */}
               {/* PUBLIC ROUTES - Accessible to all users */}
@@ -395,9 +415,13 @@ const App: React.FC = () => {
           {/* Error modal for critical errors */}
           <GV_ErrorModal />
         </div>
-      </QueryClientProvider>
-    </Router>
-  );
+
+        {/* ============================================================ */}
+        {/* PAGE TRANSITION OVERLAY - Scissors animation */}
+        {/* ============================================================ */}
+        <ScissorsTransition isActive={isTransitioning} />
+      </>
+    );
 };
 
 export default App;

@@ -464,21 +464,47 @@ const UV_Landing: React.FC = () => {
             ) : (
               /* Services Grid */
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {services_preview.map((service) => (
+                {services_preview.map((service) => {
+                  // Determine tailored image based on service name/type
+                  const getServiceImage = (serviceName: string, imageUrl: string | null) => {
+                    if (imageUrl) return imageUrl;
+                    
+                    // Tailored placeholder images based on service category
+                    const lowerName = serviceName.toLowerCase();
+                    
+                    if (lowerName.includes('fade') || lowerName.includes('taper')) {
+                      return 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=500&h=300&fit=crop';
+                    } else if (lowerName.includes('beard') || lowerName.includes('shave')) {
+                      return 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=500&h=300&fit=crop';
+                    } else if (lowerName.includes('buzz') || lowerName.includes('crew')) {
+                      return 'https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=500&h=300&fit=crop';
+                    } else if (lowerName.includes('kid') || lowerName.includes('child')) {
+                      return 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500&h=300&fit=crop';
+                    } else if (lowerName.includes('design') || lowerName.includes('pattern')) {
+                      return 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=500&h=300&fit=crop';
+                    } else if (lowerName.includes('wash') || lowerName.includes('treatment')) {
+                      return 'https://images.unsplash.com/photo-1560869713-7d0a29430803?w=500&h=300&fit=crop';
+                    } else {
+                      // Default barbershop image
+                      return 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=500&h=300&fit=crop';
+                    }
+                  };
+
+                  const displayImage = getServiceImage(service.name, service.image_url);
+                  
+                  return (
                   <div
                     key={service.service_id}
                     className="bg-white rounded-xl shadow-lg hover:shadow-xl overflow-hidden border border-gray-100 transition-all duration-200 transform hover:scale-105"
                   >
-                    {service.image_url && (
-                      <div className="w-full h-48 overflow-hidden bg-gray-100">
-                        <img
-                          src={service.image_url}
-                          alt={service.name}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
-                      </div>
-                    )}
+                    <div className="w-full h-48 overflow-hidden bg-gray-100">
+                      <img
+                        src={displayImage}
+                        alt={service.name}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
                     <div className="p-6">
                       <h3 className="text-xl font-bold text-gray-900 mb-2">
                         {service.name}
@@ -498,7 +524,8 @@ const UV_Landing: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>

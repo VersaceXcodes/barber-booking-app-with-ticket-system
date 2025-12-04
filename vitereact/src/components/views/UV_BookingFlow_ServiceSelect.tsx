@@ -243,16 +243,51 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
                   )}
 
                   {/* Service Image */}
-                  {service.image_url && (
-                    <div className="mb-4 aspect-video overflow-hidden rounded-lg bg-gray-100">
-                      <img
-                        src={service.image_url}
-                        alt={`${service.name} service preview`}
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                        loading="lazy"
-                      />
-                    </div>
-                  )}
+                  {(() => {
+                    // Determine tailored image based on service name/type
+                    const getServiceImage = (serviceName: string, imageUrl: string | null) => {
+                      if (imageUrl) return imageUrl;
+                      
+                      // Tailored placeholder images based on service category
+                      const lowerName = serviceName.toLowerCase();
+                      
+                      if (lowerName.includes('fade') || lowerName.includes('taper')) {
+                        return 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&h=450&fit=crop';
+                      } else if (lowerName.includes('beard') || lowerName.includes('shave')) {
+                        return 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800&h=450&fit=crop';
+                      } else if (lowerName.includes('buzz') || lowerName.includes('crew')) {
+                        return 'https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=800&h=450&fit=crop';
+                      } else if (lowerName.includes('kid') || lowerName.includes('child')) {
+                        return 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&h=450&fit=crop';
+                      } else if (lowerName.includes('design') || lowerName.includes('pattern') || lowerName.includes('line')) {
+                        return 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=800&h=450&fit=crop';
+                      } else if (lowerName.includes('wash') || lowerName.includes('treatment') || lowerName.includes('scalp')) {
+                        return 'https://images.unsplash.com/photo-1560869713-7d0a29430803?w=800&h=450&fit=crop';
+                      } else if (lowerName.includes('color') || lowerName.includes('dye')) {
+                        return 'https://images.unsplash.com/photo-1562004760-aceed7bb0fe3?w=800&h=450&fit=crop';
+                      } else if (lowerName.includes('styling') || lowerName.includes('style')) {
+                        return 'https://images.unsplash.com/photo-1534620808146-d33bb39128b2?w=800&h=450&fit=crop';
+                      } else if (lowerName.includes('trim') || lowerName.includes('cut')) {
+                        return 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=800&h=450&fit=crop';
+                      } else {
+                        // Default barbershop image
+                        return 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&h=450&fit=crop';
+                      }
+                    };
+
+                    const displayImage = getServiceImage(service.name, service.image_url);
+                    
+                    return (
+                      <div className="mb-4 aspect-video overflow-hidden rounded-lg bg-gray-100">
+                        <img
+                          src={displayImage}
+                          alt={`${service.name} service preview`}
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                          loading="lazy"
+                        />
+                      </div>
+                    );
+                  })()}
 
                   {/* Service Name */}
                   <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 leading-tight">

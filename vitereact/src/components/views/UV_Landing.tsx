@@ -577,10 +577,16 @@ const UV_Landing: React.FC = () => {
                       return 'https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=500&h=300&fit=crop';
                     } else if (lowerName.includes('kid') || lowerName.includes('child')) {
                       return 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500&h=300&fit=crop';
-                    } else if (lowerName.includes('design') || lowerName.includes('pattern')) {
+                    } else if (lowerName.includes('design') || lowerName.includes('pattern') || lowerName.includes('line')) {
                       return 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=500&h=300&fit=crop';
-                    } else if (lowerName.includes('wash') || lowerName.includes('treatment')) {
+                    } else if (lowerName.includes('wash') || lowerName.includes('treatment') || lowerName.includes('scalp')) {
                       return 'https://images.unsplash.com/photo-1560869713-7d0a29430803?w=500&h=300&fit=crop';
+                    } else if (lowerName.includes('color') || lowerName.includes('dye')) {
+                      return 'https://images.unsplash.com/photo-1562004760-aceed7bb0fe3?w=500&h=300&fit=crop';
+                    } else if (lowerName.includes('styling') || lowerName.includes('style')) {
+                      return 'https://images.unsplash.com/photo-1534620808146-d33bb39128b2?w=500&h=300&fit=crop';
+                    } else if (lowerName.includes('trim') || lowerName.includes('cut')) {
+                      return 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=500&h=300&fit=crop';
                     } else {
                       // Default barbershop image
                       return 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=500&h=300&fit=crop';

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppStore } from '@/store/main';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Scissors, Clock, MapPin, Phone, Star, Calendar, ChevronRight } from 'lucide-react';
 interface Service {
   service_id: string;
@@ -91,9 +91,22 @@ const fetchShopSettings = async (): Promise<ShopInfo> => {
 const UV_Landing: React.FC = () => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  
+  // Dynamic barber-themed words for fade animation
+  const barberWords = ['Precision', 'Style', 'Barber Craft', 'Fresh Cuts', 'Master Cuts', 'Sharp Looks'];
   
   useEffect(() => {
     setIsVisible(true);
+  }, []);
+  
+  // Fade in/out animation for barber words
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentWordIndex((prev) => (prev + 1) % barberWords.length);
+    }, 3000); // Change word every 3 seconds
+    
+    return () => clearInterval(interval);
   }, []);
   
   // CRITICAL: Individual Zustand selectors (no object destructuring)
@@ -184,17 +197,34 @@ const UV_Landing: React.FC = () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden min-h-[90vh] flex items-center">
-        {/* Animated background pattern */}
-        <div className="absolute inset-0 opacity-10">
+      <section className="relative bg-gradient-to-br from-red-950 via-red-900 to-red-950 overflow-hidden min-h-[90vh] flex items-center">
+        {/* Scissors background pattern */}
+        <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
-            backgroundSize: '40px 40px'
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M20 20 L25 15 L30 20 L25 25 Z M50 20 L55 15 L60 20 L55 25 Z M25 25 L40 40 L55 25 M40 40 L40 60'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundSize: '80px 80px',
+            backgroundRepeat: 'repeat'
           }}></div>
         </div>
         
+        {/* Dynamic fading text background */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentWordIndex}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 0.03, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.2 }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              className="text-9xl md:text-[12rem] lg:text-[16rem] font-black text-white select-none"
+            >
+              {barberWords[currentWordIndex]}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+        
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-red-950 via-transparent to-transparent"></div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -213,7 +243,7 @@ const UV_Landing: React.FC = () => {
                   transition={{ delay: 0.2 }}
                   className="mb-4"
                 >
-                  <p className="text-lg text-blue-400 font-medium">
+                  <p className="text-lg text-red-300 font-medium">
                     Welcome back, {currentUser.name}!
                   </p>
                 </motion.div>
@@ -235,10 +265,10 @@ const UV_Landing: React.FC = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="inline-flex items-center gap-2 bg-blue-500/20 backdrop-blur-sm border border-blue-500/30 rounded-full px-4 py-2 mb-6"
+                className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6"
               >
                 <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                <span className="text-sm font-medium text-blue-300">Rated 5.0 on Google</span>
+                <span className="text-sm font-medium text-gray-100">Rated 5.0 on Google</span>
               </motion.div>
 
               {/* Main Headline - Benefit-focused */}
@@ -250,7 +280,7 @@ const UV_Landing: React.FC = () => {
               >
                 <span className="text-white">Skip the Wait.</span>
                 <br />
-                <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-red-400 via-red-300 to-red-500 bg-clip-text text-transparent">
                   Book Your Cut in 60 Seconds
                 </span>
               </motion.h1>
@@ -260,7 +290,7 @@ const UV_Landing: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="text-xl md:text-2xl text-gray-300 leading-relaxed mb-8 max-w-2xl"
+                className="text-xl md:text-2xl text-gray-100 leading-relaxed mb-8 max-w-2xl"
               >
                 No more long queues or wasted time. Guarantee your slot and walk out looking sharp—fast, easy, and hassle-free.
               </motion.p>
@@ -279,10 +309,10 @@ const UV_Landing: React.FC = () => {
                   { icon: Scissors, text: 'Master barbers with 10+ years' },
                 ].map((feature, index) => (
                   <div key={index} className="flex items-center gap-3">
-                    <div className="flex-shrink-0 w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                      <feature.icon className="w-5 h-5 text-blue-400" />
+                    <div className="flex-shrink-0 w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center border border-white/20">
+                      <feature.icon className="w-5 h-5 text-red-300" />
                     </div>
-                    <span className="text-gray-300 font-medium">{feature.text}</span>
+                    <span className="text-gray-100 font-medium">{feature.text}</span>
                   </div>
                 ))}
               </motion.div>
@@ -296,7 +326,7 @@ const UV_Landing: React.FC = () => {
               >
                 <button
                   onClick={handleBookNowClick}
-                  className="group relative px-10 py-5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white text-xl font-bold rounded-xl shadow-2xl shadow-blue-500/50 hover:shadow-blue-500/70 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3"
+                  className="group relative px-10 py-5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-xl font-bold rounded-xl shadow-2xl shadow-red-900/50 hover:shadow-red-900/70 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 border-2 border-white/20"
                   style={{ minHeight: '44px', minWidth: '44px' }}
                 >
                   <Calendar className="w-6 h-6" />
@@ -308,7 +338,7 @@ const UV_Landing: React.FC = () => {
                 {isAuthenticated && userType === 'user' && (
                   <Link
                     to="/dashboard"
-                    className="px-6 py-5 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-medium rounded-xl border border-white/20 transition-all duration-200 flex items-center justify-center"
+                    className="px-6 py-5 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-medium rounded-xl border-2 border-white/30 transition-all duration-200 flex items-center justify-center"
                     style={{ minHeight: '44px', minWidth: '44px' }}
                   >
                     My Dashboard
@@ -321,7 +351,7 @@ const UV_Landing: React.FC = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.8 }}
-                className="text-sm text-gray-400 mt-4"
+                className="text-sm text-gray-200 mt-4"
               >
                 ✓ Instant confirmation  •  ✓ Free cancellation  •  ✓ 500+ happy clients
               </motion.p>
@@ -336,33 +366,33 @@ const UV_Landing: React.FC = () => {
             >
               <div className="relative">
                 {/* Main card */}
-                <div className="relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl">
+                <div className="relative bg-gradient-to-br from-red-900/40 to-red-950/60 backdrop-blur-xl border-2 border-white/20 rounded-2xl p-8 shadow-2xl">
                   {/* Stats Grid */}
                   <div className="grid grid-cols-2 gap-6">
                     <div className="text-center">
-                      <div className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-2">500+</div>
-                      <div className="text-sm text-gray-300 font-medium">Happy Clients</div>
+                      <div className="text-4xl font-bold bg-gradient-to-r from-red-300 to-red-400 bg-clip-text text-transparent mb-2">500+</div>
+                      <div className="text-sm text-gray-100 font-medium">Happy Clients</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-2">5.0</div>
-                      <div className="text-sm text-gray-300 font-medium flex items-center justify-center gap-1">
+                      <div className="text-4xl font-bold bg-gradient-to-r from-red-300 to-red-400 bg-clip-text text-transparent mb-2">5.0</div>
+                      <div className="text-sm text-gray-100 font-medium flex items-center justify-center gap-1">
                         <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
                         Google Rating
                       </div>
                     </div>
                     <div className="text-center">
-                      <div className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-2">10+</div>
-                      <div className="text-sm text-gray-300 font-medium">Years Experience</div>
+                      <div className="text-4xl font-bold bg-gradient-to-r from-red-300 to-red-400 bg-clip-text text-transparent mb-2">10+</div>
+                      <div className="text-sm text-gray-100 font-medium">Years Experience</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-2">0 min</div>
-                      <div className="text-sm text-gray-300 font-medium">Wait Time</div>
+                      <div className="text-4xl font-bold bg-gradient-to-r from-red-300 to-red-400 bg-clip-text text-transparent mb-2">0 min</div>
+                      <div className="text-sm text-gray-100 font-medium">Wait Time</div>
                     </div>
                   </div>
 
                   {/* Decorative elements */}
-                  <div className="absolute -top-4 -right-4 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl"></div>
-                  <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-cyan-500/20 rounded-full blur-2xl"></div>
+                  <div className="absolute -top-4 -right-4 w-24 h-24 bg-red-600/30 rounded-full blur-2xl"></div>
+                  <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-red-700/30 rounded-full blur-2xl"></div>
                 </div>
               </div>
             </motion.div>
@@ -372,13 +402,13 @@ const UV_Landing: React.FC = () => {
         {/* Decorative wave divider */}
         <div className="absolute bottom-0 left-0 right-0">
           <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 48h1440V0c-240 48-480 48-720 0S240 0 0 48z" fill="white" />
+            <path d="M0 48h1440V0c-240 48-480 48-720 0S240 0 0 48z" fill="#f5f5f5" />
           </svg>
         </div>
       </section>
 
       {/* Testimonials Section - Social Proof */}
-      <section className="py-12 lg:py-16 bg-gradient-to-br from-blue-50 to-white">
+      <section className="py-12 lg:py-16 bg-gradient-to-br from-gray-100 to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -452,7 +482,7 @@ const UV_Landing: React.FC = () => {
       </section>
 
       {/* Why Choose Us Section - Benefits */}
-      <section className="py-16 lg:py-24 bg-white">
+      <section className="py-16 lg:py-24 bg-gradient-to-br from-red-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -462,7 +492,7 @@ const UV_Landing: React.FC = () => {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Why <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">{shop_info?.shop_name || 'Master Fade'}</span>?
+              Why <span className="bg-gradient-to-r from-red-700 to-red-600 bg-clip-text text-transparent">{shop_info?.shop_name || 'Master Fade'}</span>?
             </h2>
             <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
               We're not just another barbershop. We're your partner in looking sharp and feeling confident—without the hassle.
@@ -496,14 +526,14 @@ const UV_Landing: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
-                className="group relative bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-2xl p-8 hover:shadow-xl hover:border-blue-200 transition-all duration-300"
+                className="group relative bg-gradient-to-br from-white to-red-50 border border-red-200 rounded-2xl p-8 hover:shadow-xl hover:border-red-300 transition-all duration-300"
               >
-                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <div className="mb-6 inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-red-600 to-red-700 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
                   <item.icon className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">{item.title}</h3>
                 <p className="text-gray-600 leading-relaxed mb-4">{item.description}</p>
-                <div className="inline-block px-4 py-2 bg-blue-50 text-blue-700 text-sm font-semibold rounded-lg">
+                <div className="inline-block px-4 py-2 bg-red-100 text-red-800 text-sm font-semibold rounded-lg">
                   {item.benefit}
                 </div>
               </motion.div>
@@ -520,7 +550,7 @@ const UV_Landing: React.FC = () => {
           >
             <button
               onClick={handleBookNowClick}
-              className="group px-10 py-5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white text-lg font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 inline-flex items-center gap-3"
+              className="group px-10 py-5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-lg font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 inline-flex items-center gap-3 border-2 border-white/20"
               style={{ minHeight: '44px', minWidth: '44px' }}
             >
               <span>Get Your Appointment Now</span>
@@ -533,7 +563,7 @@ const UV_Landing: React.FC = () => {
 
       {/* Services Preview Section (if services exist) */}
       {services_preview.length > 0 && (
-        <section className="py-12 lg:py-20 bg-gray-50">
+        <section className="py-12 lg:py-20 bg-gradient-to-br from-gray-50 to-red-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -598,7 +628,7 @@ const UV_Landing: React.FC = () => {
                   return (
                   <div
                     key={service.service_id}
-                    className="bg-white rounded-xl shadow-lg hover:shadow-xl overflow-hidden border border-gray-100 transition-all duration-200 transform hover:scale-105"
+                    className="bg-white rounded-xl shadow-lg hover:shadow-xl overflow-hidden border-2 border-red-200 transition-all duration-200 transform hover:scale-105"
                   >
                     <div className="w-full h-48 overflow-hidden bg-gray-100">
                       <img
@@ -620,7 +650,7 @@ const UV_Landing: React.FC = () => {
                           {service.duration} minutes
                         </span>
                         {service.price !== null && service.price !== undefined && (
-                          <span className="text-lg font-semibold text-blue-600">
+                          <span className="text-lg font-semibold text-red-700">
                             ${typeof service.price === 'number' ? service.price.toFixed(2) : parseFloat(String(service.price)).toFixed(2)}
                           </span>
                         )}
@@ -691,7 +721,7 @@ const UV_Landing: React.FC = () => {
               <div className="text-center">
                 <Link
                   to="/gallery"
-                  className="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+                  className="inline-block px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 border-2 border-white/20"
                   style={{ minHeight: '44px', minWidth: '44px' }}
                 >
                   View Full Gallery
@@ -714,22 +744,30 @@ const UV_Landing: React.FC = () => {
       </section>
 
       {/* How It Works - Remove friction */}
-      <section className="py-16 lg:py-20 bg-gradient-to-br from-slate-900 to-slate-800 text-white">
+      <section className="py-16 lg:py-20 bg-gradient-to-br from-red-950 via-red-900 to-red-950 text-white relative overflow-hidden">
+        {/* Subtle scissors pattern background */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M20 20 L25 15 L30 20 L25 25 Z M50 20 L55 15 L60 20 L55 25 Z M25 25 L40 40 L55 25 M40 40 L40 60'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundSize: '80px 80px',
+            backgroundRepeat: 'repeat'
+          }}></div>
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-16"
+            className="text-center mb-16 relative z-10"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Book in <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">3 Simple Steps</span>
+              Book in <span className="bg-gradient-to-r from-red-300 to-red-400 bg-clip-text text-transparent">3 Simple Steps</span>
             </h2>
-            <p className="text-xl text-gray-300">Quick, easy, and hassle-free. You'll be done before you know it.</p>
+            <p className="text-xl text-gray-100">Quick, easy, and hassle-free. You'll be done before you know it.</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
+          <div className="grid md:grid-cols-3 gap-8 mb-16 relative z-10">
             {[
               {
                 step: "1",
@@ -755,11 +793,11 @@ const UV_Landing: React.FC = () => {
                 transition={{ delay: index * 0.15, duration: 0.6 }}
                 className="relative text-center"
               >
-                <div className="mb-6 inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full text-3xl font-bold shadow-2xl">
+                <div className="mb-6 inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-red-600 to-red-700 rounded-full text-3xl font-bold shadow-2xl border-2 border-white/30">
                   {item.step}
                 </div>
                 <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-                <p className="text-gray-300 leading-relaxed">{item.description}</p>
+                <p className="text-gray-100 leading-relaxed">{item.description}</p>
               </motion.div>
             ))}
           </div>
@@ -770,18 +808,18 @@ const UV_Landing: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center"
+            className="text-center relative z-10"
           >
             <button
               onClick={handleBookNowClick}
-              className="group px-12 py-6 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white text-xl font-bold rounded-xl shadow-2xl hover:shadow-blue-500/50 transition-all duration-300 transform hover:scale-105 inline-flex items-center gap-3"
+              className="group px-12 py-6 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-xl font-bold rounded-xl shadow-2xl hover:shadow-red-900/50 transition-all duration-300 transform hover:scale-105 inline-flex items-center gap-3 border-2 border-white/30"
               style={{ minHeight: '44px', minWidth: '44px' }}
             >
               <Calendar className="w-6 h-6" />
               <span>Book Your Cut Now—It's Free!</span>
               <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </button>
-            <p className="text-gray-400 mt-6 text-lg">
+            <p className="text-gray-100 mt-6 text-lg">
               Join 500+ happy clients  •  5.0 Google rating  •  Free cancellation
             </p>
           </motion.div>
@@ -814,10 +852,10 @@ const UV_Landing: React.FC = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1, duration: 0.6 }}
-                  className="group bg-white p-8 rounded-2xl shadow-lg border border-gray-200 hover:shadow-xl hover:border-blue-200 transition-all duration-300"
+                  className="group bg-white p-8 rounded-2xl shadow-lg border-2 border-red-200 hover:shadow-xl hover:border-red-300 transition-all duration-300"
                 >
                   <div className="flex items-start gap-6">
-                    <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                       <MapPin className="w-7 h-7 text-white" />
                     </div>
                     <div className="flex-1">
@@ -827,7 +865,7 @@ const UV_Landing: React.FC = () => {
                         href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(shop_info.shop_address)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors group"
+                        className="inline-flex items-center gap-2 text-red-700 hover:text-red-800 font-semibold transition-colors group"
                       >
                         <span>Get Directions</span>
                         <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -844,10 +882,10 @@ const UV_Landing: React.FC = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2, duration: 0.6 }}
-                  className="group bg-white p-8 rounded-2xl shadow-lg border border-gray-200 hover:shadow-xl hover:border-blue-200 transition-all duration-300"
+                  className="group bg-white p-8 rounded-2xl shadow-lg border-2 border-red-200 hover:shadow-xl hover:border-red-300 transition-all duration-300"
                 >
                   <div className="flex items-start gap-6">
-                    <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                       <Phone className="w-7 h-7 text-white" />
                     </div>
                     <div className="flex-1">
@@ -855,7 +893,7 @@ const UV_Landing: React.FC = () => {
                       <p className="text-gray-600 mb-4 text-lg font-medium">{shop_info.shop_phone}</p>
                       <button
                         onClick={() => handlePhoneClick(shop_info.shop_phone)}
-                        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors group"
+                        className="inline-flex items-center gap-2 text-red-700 hover:text-red-800 font-semibold transition-colors group"
                         style={{ minHeight: '44px', minWidth: '44px' }}
                       >
                         <span>Call Now</span>
@@ -873,10 +911,10 @@ const UV_Landing: React.FC = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.3, duration: 0.6 }}
-                  className="group bg-white p-8 rounded-2xl shadow-lg border border-gray-200 hover:shadow-xl hover:border-blue-200 transition-all duration-300"
+                  className="group bg-white p-8 rounded-2xl shadow-lg border-2 border-red-200 hover:shadow-xl hover:border-red-300 transition-all duration-300"
                 >
                   <div className="flex items-start gap-6">
-                    <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                       <Clock className="w-7 h-7 text-white" />
                     </div>
                     <div className="flex-1">
@@ -896,7 +934,7 @@ const UV_Landing: React.FC = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2, duration: 0.6 }}
-                className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden h-[400px]"
+                className="bg-white rounded-2xl shadow-lg border-2 border-red-200 overflow-hidden h-[400px]"
               >
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2380.8487556267477!2d-6.278427223704396!3d53.36294097228234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48670e9c2baf8e6d%3A0x8e4b1c8c3e0e4b8c!2s13%20Synnott%20Pl%2C%20Phibsborough%2C%20Dublin%207%2C%20D07%20E7N5!5e0!3m2!1sen!2sie!4v1699999999999!5m2!1sen!2sie"
@@ -916,7 +954,7 @@ const UV_Landing: React.FC = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200"
+                className="bg-white p-8 rounded-2xl shadow-lg border-2 border-red-200"
               >
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="font-bold text-2xl text-gray-900">What Our Clients Say</h3>
@@ -936,7 +974,7 @@ const UV_Landing: React.FC = () => {
                   href={`https://search.google.com/local/writereview?placeid=ChIJbY6vK5wOZ0gRjEsO4Iweh44`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 border-2 border-white/20"
                 >
                   <Star className="w-5 h-5" />
                   <span>Read All Reviews</span>

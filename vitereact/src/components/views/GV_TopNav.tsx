@@ -173,12 +173,20 @@ const GV_TopNav: React.FC = () => {
       {/* Desktop Navigation */}
       <div className="hidden md:flex items-center space-x-8">
         <Link
+          to="/"
+          className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+            isActiveLink('/') ? 'text-white font-semibold bg-red-800/30' : ''
+          }`}
+        >
+          Home
+        </Link>
+        <Link
           to={getBookingStartPath()}
           className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
             isActiveLink(getBookingStartPath()) ? 'text-white font-semibold bg-red-800/30' : ''
           }`}
         >
-          Book Now
+          Services
         </Link>
         <Link
           to="/gallery"
@@ -186,7 +194,7 @@ const GV_TopNav: React.FC = () => {
             isActiveLink('/gallery') ? 'text-white font-semibold bg-red-800/30' : ''
           }`}
         >
-          Our Work
+          Gallery
         </Link>
         <Link
           to="/search"
@@ -194,7 +202,7 @@ const GV_TopNav: React.FC = () => {
             isActiveLink('/search') ? 'text-white font-semibold bg-red-800/30' : ''
           }`}
         >
-          Find My Booking
+          Live Queue
         </Link>
       </div>
 
@@ -202,15 +210,9 @@ const GV_TopNav: React.FC = () => {
       <div className="hidden md:flex items-center space-x-4">
         <Link
           to="/login"
-          className="text-gray-100 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+          className="bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 px-6 py-2 rounded-lg text-sm font-medium transition-all duration-200 border border-white/30"
         >
-          Log In
-        </Link>
-        <Link
-          to="/register"
-          className="bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 px-6 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg hover:shadow-xl border border-white/20"
-        >
-          Sign Up
+          Login
         </Link>
       </div>
     </>
@@ -504,40 +506,40 @@ const GV_TopNav: React.FC = () => {
               {!isAuthenticated && (
                 <>
                   <Link
+                    to="/"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Home
+                  </Link>
+                  <Link
                     to={getBookingStartPath()}
                     className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Book Now
+                    Services
                   </Link>
                   <Link
                     to="/gallery"
                     className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Our Work
+                    Gallery
                   </Link>
                   <Link
                     to="/search"
                     className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Find My Booking
+                    Live Queue
                   </Link>
                   <div className="pt-4 border-t border-red-800/30 space-y-2">
                     <Link
                       to="/login"
-                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
+                      className="block px-3 py-2 rounded-md text-base font-medium bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-colors text-center border border-white/30"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
-                      Log In
-                    </Link>
-                    <Link
-                      to="/register"
-                      className="block px-3 py-2 rounded-md text-base font-medium bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 transition-colors text-center border border-white/20"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Sign Up
+                      Login
                     </Link>
                   </div>
                 </>

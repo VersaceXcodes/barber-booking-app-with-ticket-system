@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { User, Phone, AlertCircle, Users, Clock } from 'lucide-react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { User, Phone, AlertCircle, Users, Clock, CheckCircle, Home, X, Ticket } from 'lucide-react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { z } from 'zod';
 
@@ -28,6 +28,17 @@ interface WaitTimeData {
   timestamp: string;
 }
 
+interface QueueJoinResponse {
+  queue_id: string;
+  customer_name: string;
+  customer_phone: string;
+  position: number;
+  estimated_wait_minutes: number;
+  status: string;
+  created_at: string;
+  message: string;
+}
+
 // ============================================================================
 // VALIDATION SCHEMA
 // ============================================================================
@@ -49,6 +60,7 @@ const queueSchema = z.object({
 
 const UV_JoinQueue: React.FC = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   // ============================================================================
   // LOCAL STATE
@@ -59,6 +71,10 @@ const UV_JoinQueue: React.FC = () => {
     customer_phone: '',
   });
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [queueResponse, setQueueResponse] = useState<QueueJoinResponse | null>(null);
+  const [showLeaveConfirm, setShowLeaveConfirm] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   // ============================================================================
   // API BASE URL
@@ -97,13 +113,54 @@ const UV_JoinQueue: React.FC = () => {
       );
       return response.data;
     },
-    onSuccess: (data) => {
-      // Navigate to queue status page with queue ID
-      navigate(`/queue/status?id=${data.queue_id}`);
+    onSuccess: (data: QueueJoinResponse) => {
+      // Store response and show confirmation view
+      setQueueResponse(data);
+      setShowConfirmation(true);
+      setErrorMessage('');
+      
+      // Invalidate wait time query to refresh stats
+      queryClient.invalidateQueries({ queryKey: ['waitTime'] });
     },
     onError: (error: any) => {
       console.error('Join queue error:', error);
-      alert(error.response?.data?.error || 'Failed to join queue. Please try again.');
+      const errorMsg = error.response?.data?.message || 
+                       error.response?.data?.error || 
+                       "We couldn't add you to the queue. Please try again.";
+      setErrorMessage(errorMsg);
+    },
+  });
+
+  // ============================================================================
+  // MUTATION - LEAVE QUEUE
+  // ============================================================================
+
+  const leaveQueueMutation = useMutation({
+    mutationFn: async (queueId: string) => {
+      const response = await axios.post(
+        `${getApiBaseUrl()}/api/queue/leave/${queueId}`,
+        {},
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+      return response.data;
+    },
+    onSuccess: () => {
+      // Reset state and return to form
+      setShowConfirmation(false);
+      setQueueResponse(null);
+      setShowLeaveConfirm(false);
+      setFormData({ customer_name: '', customer_phone: '' });
+      
+      // Invalidate wait time query to refresh stats
+      queryClient.invalidateQueries({ queryKey: ['waitTime'] });
+    },
+    onError: (error: any) => {
+      console.error('Leave queue error:', error);
+      const errorMsg = error.response?.data?.message || 
+                       error.response?.data?.error || 
+                       'Failed to leave queue. Please try again.';
+      setErrorMessage(errorMsg);
+      setShowLeaveConfirm(false);
     },
   });
 
@@ -148,12 +205,194 @@ const UV_JoinQueue: React.FC = () => {
       customer_phone: formData.customer_phone,
     };
 
+    setErrorMessage(''); // Clear any previous errors
     joinQueueMutation.mutate(queueData);
+  };
+
+  const handleDone = () => {
+    navigate('/');
+  };
+
+  const handleLeaveQueue = () => {
+    setShowLeaveConfirm(true);
+  };
+
+  const confirmLeaveQueue = () => {
+    if (queueResponse?.queue_id) {
+      leaveQueueMutation.mutate(queueResponse.queue_id);
+    }
+  };
+
+  const cancelLeaveQueue = () => {
+    setShowLeaveConfirm(false);
   };
 
   // ============================================================================
   // RENDER
   // ============================================================================
+
+  // Show confirmation view after successful join
+  if (showConfirmation && queueResponse) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] py-12 px-4">
+        <div className="max-w-2xl mx-auto">
+          {/* Success Header */}
+          <motion.div
+            className="text-center mb-8"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-500 rounded-full mb-4 animate-pulse">
+              <CheckCircle className="w-10 h-10 text-white" />
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">
+              You're in the queue!
+            </h1>
+            <p className="text-xl text-gray-300">
+              We'll text you when you're next
+            </p>
+          </motion.div>
+
+          {/* Queue Details Card */}
+          <motion.div
+            className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-8 shadow-2xl mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <div className="space-y-6">
+              {/* Ticket Number */}
+              <div className="bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-blue-500/30 rounded-xl p-6 text-center">
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <Ticket className="w-6 h-6 text-blue-400" />
+                  <p className="text-gray-300 text-sm font-medium">Your Ticket</p>
+                </div>
+                <p className="text-5xl font-bold text-white mb-2">
+                  #{queueResponse.position}
+                </p>
+                <p className="text-gray-400 text-sm">Queue Position</p>
+              </div>
+
+              {/* Position and Wait Time */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white/10 rounded-lg p-4 text-center">
+                  <Users className="w-6 h-6 text-blue-400 mx-auto mb-2" />
+                  <p className="text-gray-400 text-sm mb-1">Position</p>
+                  <p className="text-2xl font-bold text-white">#{queueResponse.position} in line</p>
+                </div>
+                <div className="bg-white/10 rounded-lg p-4 text-center">
+                  <Clock className="w-6 h-6 text-green-400 mx-auto mb-2" />
+                  <p className="text-gray-400 text-sm mb-1">Estimated Wait</p>
+                  <p className="text-2xl font-bold text-white">{queueResponse.estimated_wait_minutes} mins</p>
+                </div>
+              </div>
+
+              {/* Contact Info */}
+              <div className="border-t border-white/20 pt-6">
+                <div className="flex items-center gap-3 text-gray-300">
+                  <Phone className="w-5 h-5 text-blue-400" />
+                  <div>
+                    <span className="text-gray-400 text-sm">We'll text you at</span>
+                    <p className="text-white font-medium">{queueResponse.customer_phone}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Info Box */}
+              <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4">
+                <h3 className="text-white font-semibold mb-2">What Happens Next:</h3>
+                <ul className="space-y-1 text-sm text-gray-300">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400 mt-0.5">•</span>
+                    <span>We'll text you when you're next (usually ~5 minutes before)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400 mt-0.5">•</span>
+                    <span>Please arrive within 10 minutes when notified</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400 mt-0.5">•</span>
+                    <span>You can leave the page - we'll still text you</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Action Buttons */}
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <button
+              onClick={handleLeaveQueue}
+              disabled={leaveQueueMutation.isPending}
+              className="flex-1 px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+            >
+              <X className="w-5 h-5" />
+              Leave Queue
+            </button>
+            <button
+              onClick={handleDone}
+              className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-bold hover:shadow-lg hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-2"
+            >
+              <Home className="w-5 h-5" />
+              Done
+            </button>
+          </motion.div>
+
+          {/* Additional Info */}
+          <motion.p
+            className="text-center text-gray-400 text-sm mt-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            Your position updates automatically • Check status anytime at masterfade.ie
+          </motion.p>
+        </div>
+
+        {/* Leave Confirmation Modal */}
+        {showLeaveConfirm && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <motion.div
+              className="bg-gradient-to-br from-gray-900 to-black border border-white/20 rounded-2xl p-8 max-w-md w-full shadow-2xl"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <AlertCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-white text-center mb-3">
+                Leave Queue?
+              </h2>
+              <p className="text-gray-300 text-center mb-6">
+                Are you sure you want to leave the queue? You'll lose your current position (#{queueResponse.position}).
+              </p>
+              <div className="flex gap-4">
+                <button
+                  onClick={cancelLeaveQueue}
+                  disabled={leaveQueueMutation.isPending}
+                  className="flex-1 px-6 py-3 bg-white/10 text-white border border-white/30 rounded-lg font-semibold hover:bg-white/20 transition-colors disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmLeaveQueue}
+                  disabled={leaveQueueMutation.isPending}
+                  className="flex-1 px-6 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-colors disabled:opacity-50"
+                >
+                  {leaveQueueMutation.isPending ? 'Leaving...' : 'Yes, Leave'}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] py-12 px-4">
@@ -218,6 +457,19 @@ const UV_JoinQueue: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
+          {/* Error Message */}
+          {errorMessage && (
+            <div className="mb-6 bg-red-500/20 border border-red-500/30 rounded-lg p-4">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
+                <div>
+                  <h3 className="text-white font-semibold mb-1">Error</h3>
+                  <p className="text-gray-300 text-sm">{errorMessage}</p>
+                </div>
+              </div>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name Field */}
             <div>

@@ -21,7 +21,11 @@ import {
   updateBookingInputSchema,
   cancelBookingInputSchema,
   capacityOverrideSchema,
-  createCapacityOverrideInputSchema
+  createCapacityOverrideInputSchema,
+  joinQueueInputSchema,
+  updateQueueStatusInputSchema,
+  bookCallOutInputSchema,
+  updateCallOutStatusInputSchema
 } from './schema.js';
 import { WaitTimeService } from './waitTimeService.js';
 
@@ -2142,6 +2146,331 @@ app.get('/api/queue', async (req, res) => {
   } catch (error) {
     console.error('Get queue error:', error);
     res.status(500).json(createErrorResponse('Failed to get queue', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// ============================================================================
+// ADMIN QUEUE MANAGEMENT ENDPOINTS
+// ============================================================================
+
+// Get all queue entries (admin)
+app.get('/api/admin/queue', authenticateAdmin, async (req, res) => {
+  try {
+    const { status } = req.query;
+    
+    let query = 'SELECT * FROM walk_in_queue';
+    const params: any[] = [];
+    
+    if (status) {
+      query += ' WHERE status = $1';
+      params.push(status);
+    }
+    
+    query += ' ORDER BY position ASC, created_at ASC';
+    
+    const result = await pool.query(query, params);
+    
+    res.json({
+      queue: result.rows,
+      total: result.rows.length,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Admin get queue error:', error);
+    res.status(500).json(createErrorResponse('Failed to retrieve queue', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Update queue entry status (admin)
+app.patch('/api/admin/queue/:queue_id', authenticateAdmin, async (req, res) => {
+  try {
+    const { queue_id } = req.params;
+    const { status, admin_notes } = req.body;
+    
+    if (!status) {
+      return res.status(400).json(createErrorResponse('Status is required', null, 'MISSING_STATUS'));
+    }
+    
+    const validStatuses = ['waiting', 'in_service', 'completed', 'no_show'];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json(createErrorResponse('Invalid status', null, 'INVALID_STATUS'));
+    }
+    
+    const queueResult = await pool.query(
+      'SELECT * FROM walk_in_queue WHERE queue_id = $1',
+      [queue_id]
+    );
+    
+    if (queueResult.rows.length === 0) {
+      return res.status(404).json(createErrorResponse('Queue entry not found', null, 'QUEUE_NOT_FOUND'));
+    }
+    
+    const now = new Date().toISOString();
+    const updates: string[] = ['status = $1', 'updated_at = $2'];
+    const params: any[] = [status, now];
+    let paramCount = 3;
+    
+    if (status === 'completed' || status === 'no_show') {
+      updates.push(`served_at = $${paramCount++}`);
+      params.push(now);
+    }
+    
+    params.push(queue_id);
+    
+    const result = await pool.query(
+      `UPDATE walk_in_queue 
+       SET ${updates.join(', ')}
+       WHERE queue_id = $${paramCount}
+       RETURNING *`,
+      params
+    );
+    
+    res.json({
+      queue_entry: result.rows[0],
+      message: 'Queue entry updated successfully'
+    });
+    
+    // Update queue positions and wait times in background
+    waitTimeService.updateQueuePositions().catch(err => 
+      console.error('Error updating queue positions:', err)
+    );
+  } catch (error) {
+    console.error('Update queue status error:', error);
+    res.status(500).json(createErrorResponse('Failed to update queue status', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// ============================================================================
+// CALL-OUT BOOKINGS ENDPOINTS
+// ============================================================================
+
+// Book a call-out service
+app.post('/api/callouts/book', async (req, res) => {
+  try {
+    const { customer_name, customer_phone, customer_email, service_address, appointment_date, appointment_time, special_request } = req.body;
+    
+    // Validate required fields
+    if (!customer_name || !customer_phone || !service_address || !appointment_date || !appointment_time) {
+      return res.status(400).json(createErrorResponse(
+        'Missing required fields',
+        null,
+        'MISSING_REQUIRED_FIELDS'
+      ));
+    }
+    
+    // Validate date format
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(appointment_date)) {
+      return res.status(400).json(createErrorResponse(
+        'Invalid date format. Use YYYY-MM-DD',
+        null,
+        'INVALID_DATE_FORMAT'
+      ));
+    }
+    
+    // Validate time format
+    if (!/^\d{2}:\d{2}$/.test(appointment_time)) {
+      return res.status(400).json(createErrorResponse(
+        'Invalid time format. Use HH:MM',
+        null,
+        'INVALID_TIME_FORMAT'
+      ));
+    }
+    
+    // Create call-out booking
+    const callout_id = `callout_${uuidv4()}`;
+    const now = new Date().toISOString();
+    
+    const result = await pool.query(
+      `INSERT INTO call_out_bookings 
+       (callout_id, customer_name, customer_phone, customer_email, service_address, 
+        appointment_date, appointment_time, status, price, special_request, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $11)
+       RETURNING *`,
+      [
+        callout_id, 
+        customer_name, 
+        customer_phone, 
+        customer_email || null, 
+        service_address,
+        appointment_date,
+        appointment_time,
+        'scheduled',
+        150.00,
+        special_request || null,
+        now
+      ]
+    );
+    
+    res.status(201).json({
+      callout: result.rows[0],
+      message: 'Call-out service booked successfully'
+    });
+  } catch (error) {
+    console.error('Book call-out error:', error);
+    res.status(500).json(createErrorResponse('Failed to book call-out service', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Get call-out booking by ID
+app.get('/api/callouts/:callout_id', async (req, res) => {
+  try {
+    const { callout_id } = req.params;
+    
+    const result = await pool.query(
+      'SELECT * FROM call_out_bookings WHERE callout_id = $1',
+      [callout_id]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json(createErrorResponse(
+        'Call-out booking not found',
+        null,
+        'CALLOUT_NOT_FOUND'
+      ));
+    }
+    
+    res.json({ callout: result.rows[0] });
+  } catch (error) {
+    console.error('Get call-out error:', error);
+    res.status(500).json(createErrorResponse('Failed to retrieve call-out booking', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Get all call-out bookings (admin)
+app.get('/api/admin/callouts', authenticateAdmin, async (req, res) => {
+  try {
+    const { status, appointment_date_from, appointment_date_to, limit = 50, offset = 0 } = req.query;
+    
+    let query = 'SELECT * FROM call_out_bookings WHERE 1=1';
+    const params: any[] = [];
+    let paramCount = 1;
+    
+    if (status) {
+      query += ` AND status = $${paramCount++}`;
+      params.push(status);
+    }
+    
+    if (appointment_date_from) {
+      query += ` AND appointment_date >= $${paramCount++}`;
+      params.push(appointment_date_from);
+    }
+    
+    if (appointment_date_to) {
+      query += ` AND appointment_date <= $${paramCount++}`;
+      params.push(appointment_date_to);
+    }
+    
+    query += ' ORDER BY appointment_date ASC, appointment_time ASC';
+    query += ` LIMIT $${paramCount++} OFFSET $${paramCount++}`;
+    params.push(parseInt(String(limit)), parseInt(String(offset)));
+    
+    const result = await pool.query(query, params);
+    
+    // Get total count
+    let countQuery = 'SELECT COUNT(*) as total FROM call_out_bookings WHERE 1=1';
+    const countParams: any[] = [];
+    let countParamNum = 1;
+    
+    if (status) {
+      countQuery += ` AND status = $${countParamNum++}`;
+      countParams.push(status);
+    }
+    
+    if (appointment_date_from) {
+      countQuery += ` AND appointment_date >= $${countParamNum++}`;
+      countParams.push(appointment_date_from);
+    }
+    
+    if (appointment_date_to) {
+      countQuery += ` AND appointment_date <= $${countParamNum++}`;
+      countParams.push(appointment_date_to);
+    }
+    
+    const countResult = await pool.query(countQuery, countParams);
+    const total = parseInt(countResult.rows[0].total);
+    
+    res.json({
+      callouts: result.rows,
+      total,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Admin get call-outs error:', error);
+    res.status(500).json(createErrorResponse('Failed to retrieve call-out bookings', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Update call-out booking status (admin)
+app.patch('/api/admin/callouts/:callout_id', authenticateAdmin, async (req, res) => {
+  try {
+    const { callout_id } = req.params;
+    const { status, cancellation_reason, admin_notes } = req.body;
+    
+    if (!status) {
+      return res.status(400).json(createErrorResponse('Status is required', null, 'MISSING_STATUS'));
+    }
+    
+    const validStatuses = ['scheduled', 'en_route', 'completed', 'cancelled'];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json(createErrorResponse('Invalid status', null, 'INVALID_STATUS'));
+    }
+    
+    const calloutResult = await pool.query(
+      'SELECT * FROM call_out_bookings WHERE callout_id = $1',
+      [callout_id]
+    );
+    
+    if (calloutResult.rows.length === 0) {
+      return res.status(404).json(createErrorResponse('Call-out booking not found', null, 'CALLOUT_NOT_FOUND'));
+    }
+    
+    const now = new Date().toISOString();
+    const updates: string[] = ['status = $1', 'updated_at = $2'];
+    const params: any[] = [status, now];
+    let paramCount = 3;
+    
+    if (status === 'completed') {
+      updates.push(`completed_at = $${paramCount++}`);
+      params.push(now);
+    }
+    
+    if (status === 'cancelled') {
+      updates.push(`cancelled_at = $${paramCount++}`);
+      params.push(now);
+      
+      if (cancellation_reason) {
+        updates.push(`cancellation_reason = $${paramCount++}`);
+        params.push(cancellation_reason);
+      }
+    }
+    
+    if (admin_notes !== undefined) {
+      updates.push(`admin_notes = $${paramCount++}`);
+      params.push(admin_notes);
+    }
+    
+    params.push(callout_id);
+    
+    const result = await pool.query(
+      `UPDATE call_out_bookings 
+       SET ${updates.join(', ')}
+       WHERE callout_id = $${paramCount}
+       RETURNING *`,
+      params
+    );
+    
+    res.json({
+      callout: result.rows[0],
+      message: 'Call-out booking updated successfully'
+    });
+    
+    // Trigger wait time recalculation if needed
+    waitTimeService.updateQueuePositions().catch(err => 
+      console.error('Error updating queue positions:', err)
+    );
+  } catch (error) {
+    console.error('Update call-out status error:', error);
+    res.status(500).json(createErrorResponse('Failed to update call-out booking', error, 'INTERNAL_ERROR'));
   }
 });
 

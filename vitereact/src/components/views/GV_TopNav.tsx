@@ -324,6 +324,19 @@ const GV_TopNav: React.FC = () => {
           Dashboard
         </Link>
 
+        <Link
+          to="/admin/queue"
+          className={`relative text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+            isActiveLink('/admin/queue') ? 'text-white font-semibold bg-red-800/30' : ''
+          }`}
+        >
+          Queue & Call-Outs
+          <span className="absolute -top-1 -right-2 flex items-center">
+            <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-green-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+          </span>
+        </Link>
+
         {/* Bookings Dropdown */}
         <div className="relative" ref={bookingsDropdownRef}>
           <button

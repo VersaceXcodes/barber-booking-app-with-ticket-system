@@ -45,6 +45,7 @@ import UV_UserProfile from '@/components/views/UV_UserProfile';
 // Admin Views
 import UV_AdminLogin from '@/components/views/UV_AdminLogin';
 import UV_AdminDashboardHome from '@/components/views/UV_AdminDashboardHome';
+import UV_AdminQueueDashboard from '@/components/views/UV_AdminQueueDashboard';
 import UV_AdminBookingsCalendar from '@/components/views/UV_AdminBookingsCalendar';
 import UV_AdminBookingsList from '@/components/views/UV_AdminBookingsList';
 import UV_AdminBookingDetail from '@/components/views/UV_AdminBookingDetail';
@@ -286,6 +287,16 @@ const AppContent: React.FC = () => {
                 element={
                   <AdminProtectedRoute>
                     <UV_AdminDashboardHome />
+                  </AdminProtectedRoute>
+                }
+              />
+
+              {/* Queue & Call-Out Management */}
+              <Route
+                path="/admin/queue"
+                element={
+                  <AdminProtectedRoute>
+                    <UV_AdminQueueDashboard />
                   </AdminProtectedRoute>
                 }
               />

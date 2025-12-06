@@ -89,19 +89,19 @@ const UV_CallOutBooking: React.FC = () => {
   const createCallOutBooking = useMutation({
     mutationFn: async (bookingData: any) => {
       const response = await axios.post(
-        `${getApiBaseUrl()}/api/bookings`,
+        `${getApiBaseUrl()}/api/callouts/book`,
         bookingData,
         { headers: { 'Content-Type': 'application/json' } }
       );
       return response.data;
     },
     onSuccess: (data) => {
-      // Navigate to confirmation page with ticket number
-      navigate(`/callout/confirmation?ticket=${data.ticket_number}`);
+      // Navigate to confirmation page with callout ID
+      navigate(`/callout/confirmation?callout=${data.callout.callout_id}`);
     },
     onError: (error: any) => {
       console.error('Call-out booking error:', error);
-      alert(error.response?.data?.error || 'Failed to create call-out booking. Please try again.');
+      alert(error.response?.data?.message || 'Failed to create call-out booking. Please try again.');
     },
   });
 
@@ -152,18 +152,13 @@ const UV_CallOutBooking: React.FC = () => {
     if (!validateForm()) return;
 
     const bookingData = {
-      service_name: 'Call-Out Barber Service',
-      service_id: 'callout-service',
-      is_callout: true,
-      selected_date: formData.preferred_date,
-      selected_time: formData.preferred_time,
       customer_name: formData.customer_name,
       customer_email: formData.customer_email,
       customer_phone: formData.customer_phone,
-      customer_address: formData.customer_address,
+      service_address: formData.customer_address,
+      appointment_date: formData.preferred_date,
+      appointment_time: formData.preferred_time,
       special_request: formData.special_request || null,
-      booking_for_name: null,
-      inspiration_photos: null,
     };
 
     createCallOutBooking.mutate(bookingData);

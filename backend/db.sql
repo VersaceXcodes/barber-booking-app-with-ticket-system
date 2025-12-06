@@ -90,7 +90,28 @@ CREATE TABLE walk_in_queue (
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL,
     served_at TEXT,
-    CONSTRAINT valid_status CHECK (status IN ('waiting', 'ready', 'called', 'served', 'left', 'no_show'))
+    CONSTRAINT valid_status CHECK (status IN ('waiting', 'in_service', 'completed', 'no_show'))
+);
+
+-- Create call_out_bookings table
+CREATE TABLE call_out_bookings (
+    callout_id TEXT PRIMARY KEY,
+    customer_name TEXT NOT NULL,
+    customer_phone TEXT NOT NULL,
+    customer_email TEXT,
+    service_address TEXT NOT NULL,
+    appointment_date TEXT NOT NULL,
+    appointment_time TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'scheduled',
+    price NUMERIC NOT NULL DEFAULT 150.00,
+    special_request TEXT,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    completed_at TEXT,
+    cancelled_at TEXT,
+    cancellation_reason TEXT,
+    admin_notes TEXT,
+    CONSTRAINT valid_callout_status CHECK (status IN ('scheduled', 'en_route', 'completed', 'cancelled'))
 );
 
 -- Create indexes for better performance
@@ -106,6 +127,8 @@ CREATE INDEX idx_services_is_active ON services(is_active);
 CREATE INDEX idx_capacity_overrides_date ON capacity_overrides(override_date);
 CREATE INDEX idx_walk_in_queue_status ON walk_in_queue(status);
 CREATE INDEX idx_walk_in_queue_position ON walk_in_queue(position);
+CREATE INDEX idx_call_out_bookings_status ON call_out_bookings(status);
+CREATE INDEX idx_call_out_bookings_appointment_date ON call_out_bookings(appointment_date);
 
 -- Seed users table
 INSERT INTO users (user_id, email, password_hash, name, phone, is_verified, verification_token, verification_token_expiry, reset_token, reset_token_expiry, created_at, updated_at) VALUES

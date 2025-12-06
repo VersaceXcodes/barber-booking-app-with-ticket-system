@@ -1,0 +1,534 @@
+import React, { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
+import { useAppStore } from '@/store/main';
+import { 
+  Users, 
+  Clock, 
+  MapPin, 
+  Phone, 
+  Calendar,
+  Mail,
+  RefreshCw,
+  CheckCircle,
+  XCircle,
+  AlertCircle,
+  PlayCircle,
+  Car,
+  DollarSign,
+  Filter
+} from 'lucide-react';
+import { motion } from 'framer-motion';
+
+// ============================================================================
+// TYPE DEFINITIONS
+// ============================================================================
+
+interface QueueEntry {
+  queue_id: string;
+  customer_name: string;
+  customer_phone: string;
+  status: 'waiting' | 'in_service' | 'completed' | 'no_show';
+  position: number;
+  estimated_wait_minutes: number;
+  created_at: string;
+  updated_at: string;
+  served_at: string | null;
+}
+
+interface CallOutBooking {
+  callout_id: string;
+  customer_name: string;
+  customer_phone: string;
+  customer_email: string | null;
+  service_address: string;
+  appointment_date: string;
+  appointment_time: string;
+  status: 'scheduled' | 'en_route' | 'completed' | 'cancelled';
+  price: number;
+  special_request: string | null;
+  created_at: string;
+  updated_at: string;
+  completed_at: string | null;
+  cancelled_at: string | null;
+  admin_notes: string | null;
+}
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+const UV_AdminQueueDashboard: React.FC = () => {
+  const authToken = useAppStore(state => state.authentication_state.auth_token);
+  const queryClient = useQueryClient();
+
+  // Local state
+  const [calloutFilter, setCalloutFilter] = useState<'all' | 'today' | 'upcoming'>('all');
+  const [selectedQueueEntry, setSelectedQueueEntry] = useState<string | null>(null);
+  const [selectedCallout, setSelectedCallout] = useState<string | null>(null);
+
+  // ============================================================================
+  // API BASE URL
+  // ============================================================================
+
+  const getApiBaseUrl = (): string => {
+    if (typeof window !== 'undefined' && (window as any).__RUNTIME_CONFIG__?.API_BASE_URL) {
+      return (window as any).__RUNTIME_CONFIG__.API_BASE_URL;
+    }
+    return import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+  };
+
+  // ============================================================================
+  // QUERIES
+  // ============================================================================
+
+  // Fetch queue entries
+  const { data: queueData, isLoading: loadingQueue } = useQuery({
+    queryKey: ['admin-queue'],
+    queryFn: async () => {
+      const response = await axios.get(
+        `${getApiBaseUrl()}/api/admin/queue`,
+        { headers: { Authorization: `Bearer ${authToken}` } }
+      );
+      return response.data;
+    },
+    refetchInterval: 15000, // Refresh every 15 seconds
+    enabled: !!authToken
+  });
+
+  // Fetch call-out bookings
+  const { data: calloutsData, isLoading: loadingCallouts } = useQuery({
+    queryKey: ['admin-callouts', calloutFilter],
+    queryFn: async () => {
+      const today = new Date().toISOString().split('T')[0];
+      const params: any = { limit: 100 };
+      
+      if (calloutFilter === 'today') {
+        params.appointment_date_from = today;
+        params.appointment_date_to = today;
+      } else if (calloutFilter === 'upcoming') {
+        params.appointment_date_from = today;
+      }
+
+      const response = await axios.get(
+        `${getApiBaseUrl()}/api/admin/callouts`,
+        { 
+          headers: { Authorization: `Bearer ${authToken}` },
+          params
+        }
+      );
+      return response.data;
+    },
+    refetchInterval: 30000, // Refresh every 30 seconds
+    enabled: !!authToken
+  });
+
+  // ============================================================================
+  // MUTATIONS
+  // ============================================================================
+
+  // Update queue status
+  const updateQueueMutation = useMutation({
+    mutationFn: async ({ queue_id, status }: { queue_id: string; status: string }) => {
+      const response = await axios.patch(
+        `${getApiBaseUrl()}/api/admin/queue/${queue_id}`,
+        { status },
+        { headers: { Authorization: `Bearer ${authToken}` } }
+      );
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-queue'] });
+      queryClient.invalidateQueries({ queryKey: ['waitTime'] });
+      setSelectedQueueEntry(null);
+    },
+    onError: (error: any) => {
+      console.error('Update queue error:', error);
+      alert(error.response?.data?.message || 'Failed to update queue status');
+    }
+  });
+
+  // Update call-out status
+  const updateCalloutMutation = useMutation({
+    mutationFn: async ({ callout_id, status, cancellation_reason }: { 
+      callout_id: string; 
+      status: string;
+      cancellation_reason?: string;
+    }) => {
+      const response = await axios.patch(
+        `${getApiBaseUrl()}/api/admin/callouts/${callout_id}`,
+        { status, cancellation_reason },
+        { headers: { Authorization: `Bearer ${authToken}` } }
+      );
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-callouts'] });
+      setSelectedCallout(null);
+    },
+    onError: (error: any) => {
+      console.error('Update callout error:', error);
+      alert(error.response?.data?.message || 'Failed to update call-out status');
+    }
+  });
+
+  // ============================================================================
+  // EVENT HANDLERS
+  // ============================================================================
+
+  const handleQueueStatusChange = (queueId: string, status: string) => {
+    if (confirm(`Are you sure you want to change this queue entry to "${status}"?`)) {
+      updateQueueMutation.mutate({ queue_id: queueId, status });
+    }
+  };
+
+  const handleCalloutStatusChange = (calloutId: string, status: string) => {
+    let cancellation_reason: string | undefined = undefined;
+    
+    if (status === 'cancelled') {
+      cancellation_reason = prompt('Cancellation reason (optional):') || 'Cancelled by admin';
+    }
+
+    if (confirm(`Are you sure you want to change this call-out to "${status}"?`)) {
+      updateCalloutMutation.mutate({ callout_id: calloutId, status, cancellation_reason });
+    }
+  };
+
+  // ============================================================================
+  // HELPER FUNCTIONS
+  // ============================================================================
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'waiting':
+      case 'scheduled':
+        return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'in_service':
+      case 'en_route':
+        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'completed':
+        return 'bg-green-100 text-green-800 border-green-200';
+      case 'no_show':
+      case 'cancelled':
+        return 'bg-red-100 text-red-800 border-red-200';
+      default:
+        return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
+
+  const formatTime = (time: string): string => {
+    const [hours, minutes] = time.split(':');
+    const hour = parseInt(hours, 10);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const hour12 = hour % 12 || 12;
+    return `${hour12}:${minutes} ${ampm}`;
+  };
+
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB', {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  // ============================================================================
+  // RENDER
+  // ============================================================================
+
+  const queue: QueueEntry[] = queueData?.queue || [];
+  const callouts: CallOutBooking[] = calloutsData?.callouts || [];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      {/* Page Header */}
+      <div className="bg-white shadow-sm border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Queue & Call-Out Management</h1>
+              <p className="mt-1 text-sm text-gray-600">
+                Manage walk-in queue and call-out bookings in real-time
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => {
+                  queryClient.invalidateQueries({ queryKey: ['admin-queue'] });
+                  queryClient.invalidateQueries({ queryKey: ['admin-callouts'] });
+                }}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                <RefreshCw className="w-4 h-4" />
+                Refresh
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+          
+          {/* LIVE WALK-IN QUEUE SECTION */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-blue-100 rounded-lg">
+                  <Users className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">Live Walk-In Queue</h2>
+                  <p className="text-sm text-gray-600">{queue.filter(q => q.status === 'waiting').length} customers waiting</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-sm text-gray-600">Live</span>
+              </div>
+            </div>
+
+            {loadingQueue ? (
+              <div className="flex items-center justify-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+              </div>
+            ) : queue.length === 0 ? (
+              <div className="text-center py-12">
+                <Users className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                <p className="text-gray-600">No one in queue</p>
+              </div>
+            ) : (
+              <div className="space-y-3 max-h-[600px] overflow-y-auto">
+                {queue.map((entry) => (
+                  <motion.div
+                    key={entry.queue_id}
+                    className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full font-bold text-blue-600">
+                          #{entry.position}
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900">{entry.customer_name}</h3>
+                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <Phone className="w-4 h-4" />
+                            {entry.customer_phone}
+                          </div>
+                        </div>
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(entry.status)}`}>
+                        {entry.status.replace('_', ' ').toUpperCase()}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        <span>~{entry.estimated_wait_minutes} min wait</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        <span>{new Date(entry.created_at).toLocaleTimeString()}</span>
+                      </div>
+                    </div>
+
+                    {entry.status === 'waiting' && (
+                      <div className="flex gap-2 pt-3 border-t border-gray-200">
+                        <button
+                          onClick={() => handleQueueStatusChange(entry.queue_id, 'in_service')}
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors text-sm font-medium"
+                        >
+                          <PlayCircle className="w-4 h-4" />
+                          Start Service
+                        </button>
+                        <button
+                          onClick={() => handleQueueStatusChange(entry.queue_id, 'no_show')}
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-medium"
+                        >
+                          <XCircle className="w-4 h-4" />
+                          No-Show
+                        </button>
+                      </div>
+                    )}
+
+                    {entry.status === 'in_service' && (
+                      <div className="flex gap-2 pt-3 border-t border-gray-200">
+                        <button
+                          onClick={() => handleQueueStatusChange(entry.queue_id, 'completed')}
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+                        >
+                          <CheckCircle className="w-4 h-4" />
+                          Complete
+                        </button>
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* CALL-OUT JOBS SECTION */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-amber-100 rounded-lg">
+                  <Car className="w-6 h-6 text-amber-600" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">Call-Out Jobs</h2>
+                  <p className="text-sm text-gray-600">{callouts.length} bookings</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setCalloutFilter('all')}
+                  className={`px-3 py-1 text-sm font-medium rounded-lg transition-colors ${
+                    calloutFilter === 'all' 
+                      ? 'bg-blue-600 text-white' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  All
+                </button>
+                <button
+                  onClick={() => setCalloutFilter('today')}
+                  className={`px-3 py-1 text-sm font-medium rounded-lg transition-colors ${
+                    calloutFilter === 'today' 
+                      ? 'bg-blue-600 text-white' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  Today
+                </button>
+                <button
+                  onClick={() => setCalloutFilter('upcoming')}
+                  className={`px-3 py-1 text-sm font-medium rounded-lg transition-colors ${
+                    calloutFilter === 'upcoming' 
+                      ? 'bg-blue-600 text-white' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  Upcoming
+                </button>
+              </div>
+            </div>
+
+            {loadingCallouts ? (
+              <div className="flex items-center justify-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600"></div>
+              </div>
+            ) : callouts.length === 0 ? (
+              <div className="text-center py-12">
+                <Car className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                <p className="text-gray-600">No call-out bookings</p>
+              </div>
+            ) : (
+              <div className="space-y-3 max-h-[600px] overflow-y-auto">
+                {callouts.map((callout) => (
+                  <motion.div
+                    key={callout.callout_id}
+                    className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h3 className="font-semibold text-gray-900">{callout.customer_name}</h3>
+                        <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
+                          <Phone className="w-4 h-4" />
+                          {callout.customer_phone}
+                        </div>
+                        {callout.customer_email && (
+                          <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
+                            <Mail className="w-4 h-4" />
+                            {callout.customer_email}
+                          </div>
+                        )}
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(callout.status)}`}>
+                        {callout.status.replace('_', ' ').toUpperCase()}
+                      </span>
+                    </div>
+
+                    <div className="space-y-2 mb-3">
+                      <div className="flex items-start gap-2 text-sm text-gray-700">
+                        <Calendar className="w-4 h-4 mt-0.5 text-gray-500" />
+                        <div>
+                          <span className="font-medium">{formatDate(callout.appointment_date)}</span>
+                          <span className="text-gray-500"> at {formatTime(callout.appointment_time)}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2 text-sm text-gray-700">
+                        <MapPin className="w-4 h-4 mt-0.5 text-gray-500" />
+                        <span>{callout.service_address}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm">
+                        <DollarSign className="w-4 h-4 text-green-600" />
+                        <span className="font-semibold text-green-600">€{callout.price.toFixed(2)}</span>
+                      </div>
+                    </div>
+
+                    {callout.special_request && (
+                      <div className="mb-3 p-3 bg-gray-50 rounded-lg">
+                        <p className="text-sm text-gray-700">
+                          <span className="font-medium">Note: </span>
+                          {callout.special_request}
+                        </p>
+                      </div>
+                    )}
+
+                    {callout.status === 'scheduled' && (
+                      <div className="flex gap-2 pt-3 border-t border-gray-200">
+                        <button
+                          onClick={() => handleCalloutStatusChange(callout.callout_id, 'en_route')}
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors text-sm font-medium"
+                        >
+                          <Car className="w-4 h-4" />
+                          On the Way
+                        </button>
+                        <button
+                          onClick={() => handleCalloutStatusChange(callout.callout_id, 'cancelled')}
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-medium"
+                        >
+                          <XCircle className="w-4 h-4" />
+                          Cancel
+                        </button>
+                      </div>
+                    )}
+
+                    {callout.status === 'en_route' && (
+                      <div className="flex gap-2 pt-3 border-t border-gray-200">
+                        <button
+                          onClick={() => handleCalloutStatusChange(callout.callout_id, 'completed')}
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+                        >
+                          <CheckCircle className="w-4 h-4" />
+                          Complete
+                        </button>
+                        <button
+                          onClick={() => handleCalloutStatusChange(callout.callout_id, 'cancelled')}
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-medium"
+                        >
+                          <XCircle className="w-4 h-4" />
+                          Cancel
+                        </button>
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default UV_AdminQueueDashboard;

@@ -320,6 +320,98 @@ export type SearchCapacityOverrideInput = z.infer<typeof searchCapacityOverrideI
 export type GetCapacityInput = z.infer<typeof getCapacityInputSchema>;
 
 // ============================================================================
+// WALK-IN QUEUE SCHEMAS
+// ============================================================================
+
+// Queue status enum
+export const queueStatusEnum = z.enum(['waiting', 'in_service', 'completed', 'no_show']);
+
+// Main entity schema
+export const walkInQueueSchema = z.object({
+  queue_id: z.string(),
+  customer_name: z.string(),
+  customer_phone: z.string(),
+  status: queueStatusEnum,
+  position: z.number(),
+  estimated_wait_minutes: z.number(),
+  estimated_service_duration: z.number(),
+  created_at: z.string(),
+  updated_at: z.string(),
+  served_at: z.string().nullable()
+});
+
+// Input schema for joining queue
+export const joinQueueInputSchema = z.object({
+  customer_name: z.string().min(1).max(255),
+  customer_phone: z.string().min(10).max(20).regex(/^\+?[0-9\s\-().]+$/, 'Invalid phone number format'),
+  estimated_service_duration: z.number().int().positive().default(30)
+});
+
+// Input schema for updating queue status
+export const updateQueueStatusInputSchema = z.object({
+  queue_id: z.string(),
+  status: queueStatusEnum
+});
+
+// Inferred types
+export type WalkInQueue = z.infer<typeof walkInQueueSchema>;
+export type QueueStatus = z.infer<typeof queueStatusEnum>;
+export type JoinQueueInput = z.infer<typeof joinQueueInputSchema>;
+export type UpdateQueueStatusInput = z.infer<typeof updateQueueStatusInputSchema>;
+
+// ============================================================================
+// CALL-OUT BOOKINGS SCHEMAS
+// ============================================================================
+
+// Call-out status enum
+export const calloutStatusEnum = z.enum(['scheduled', 'en_route', 'completed', 'cancelled']);
+
+// Main entity schema
+export const callOutBookingSchema = z.object({
+  callout_id: z.string(),
+  customer_name: z.string(),
+  customer_phone: z.string(),
+  customer_email: z.string().nullable(),
+  service_address: z.string(),
+  appointment_date: z.string(),
+  appointment_time: z.string(),
+  status: calloutStatusEnum,
+  price: z.number(),
+  special_request: z.string().nullable(),
+  created_at: z.string(),
+  updated_at: z.string(),
+  completed_at: z.string().nullable(),
+  cancelled_at: z.string().nullable(),
+  cancellation_reason: z.string().nullable(),
+  admin_notes: z.string().nullable()
+});
+
+// Input schema for booking call-out
+export const bookCallOutInputSchema = z.object({
+  customer_name: z.string().min(1).max(255),
+  customer_phone: z.string().min(10).max(20).regex(/^\+?[0-9\s\-().]+$/, 'Invalid phone number format'),
+  customer_email: z.string().email().max(255).optional(),
+  service_address: z.string().min(5).max(500),
+  appointment_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be in YYYY-MM-DD format'),
+  appointment_time: z.string().regex(/^\d{2}:\d{2}$/, 'Time must be in HH:MM format'),
+  special_request: z.string().max(1000).nullable().optional()
+});
+
+// Input schema for updating call-out status
+export const updateCallOutStatusInputSchema = z.object({
+  callout_id: z.string(),
+  status: calloutStatusEnum,
+  cancellation_reason: z.string().max(500).optional(),
+  admin_notes: z.string().max(2000).nullable().optional()
+});
+
+// Inferred types
+export type CallOutBooking = z.infer<typeof callOutBookingSchema>;
+export type CallOutStatus = z.infer<typeof calloutStatusEnum>;
+export type BookCallOutInput = z.infer<typeof bookCallOutInputSchema>;
+export type UpdateCallOutStatusInput = z.infer<typeof updateCallOutStatusInputSchema>;
+
+// ============================================================================
 // RESPONSE SCHEMAS
 // ============================================================================
 

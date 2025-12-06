@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { User, Phone, AlertCircle, Users, Clock, CheckCircle, Home, X, Ticket } from 'lucide-react';
+import { User, Phone, AlertCircle, Users, Clock, CheckCircle, Home, X, Ticket, Scissors, Users as UsersIcon } from 'lucide-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { z } from 'zod';
@@ -13,6 +13,16 @@ import { z } from 'zod';
 interface QueueFormData {
   customer_name: string;
   customer_phone: string;
+  barber_id: string | null;
+}
+
+interface Barber {
+  barber_id: string;
+  name: string;
+  photo_url: string | null;
+  specialties: string[] | null;
+  is_working_today: boolean;
+  is_active: boolean;
 }
 
 interface ValidationErrors {
@@ -69,6 +79,7 @@ const UV_JoinQueue: React.FC = () => {
   const [formData, setFormData] = useState<QueueFormData>({
     customer_name: '',
     customer_phone: '',
+    barber_id: null,
   });
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -98,6 +109,19 @@ const UV_JoinQueue: React.FC = () => {
       return response.data;
     },
     refetchInterval: 15000, // Refresh every 15 seconds
+  });
+
+  // ============================================================================
+  // FETCH ACTIVE BARBERS
+  // ============================================================================
+
+  const { data: barbersData, isLoading: barbersLoading } = useQuery({
+    queryKey: ['activeBarbers'],
+    queryFn: async () => {
+      const response = await axios.get(`${getApiBaseUrl()}/api/barbers`);
+      return response.data.barbers as Barber[];
+    },
+    staleTime: 60000,
   });
 
   // ============================================================================
@@ -203,6 +227,7 @@ const UV_JoinQueue: React.FC = () => {
     const queueData = {
       customer_name: formData.customer_name,
       customer_phone: formData.customer_phone,
+      barber_id: formData.barber_id || null,
     };
 
     setErrorMessage(''); // Clear any previous errors
@@ -520,6 +545,80 @@ const UV_JoinQueue: React.FC = () => {
               <p className="text-gray-400 text-sm mt-2">
                 We'll text you when you're next in line
               </p>
+            </div>
+
+            {/* Barber Selection */}
+            <div>
+              <label className="block text-white font-medium mb-3 flex items-center gap-2">
+                <Scissors className="w-5 h-5 text-blue-400" />
+                Preferred Barber (Optional)
+              </label>
+              {barbersLoading ? (
+                <div className="text-center py-4">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
+                  <p className="mt-2 text-gray-300 text-sm">Loading barbers...</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {/* First Available Option */}
+                  <button
+                    type="button"
+                    onClick={() => handleInputChange('barber_id', '')}
+                    disabled={joinQueueMutation.isPending}
+                    className={`p-4 rounded-lg border-2 transition-all disabled:opacity-50 ${
+                      !formData.barber_id
+                        ? 'border-blue-500 bg-blue-500/20'
+                        : 'border-white/30 bg-white/5 hover:bg-white/10'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center flex-shrink-0">
+                        <UsersIcon className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="text-left">
+                        <p className="font-semibold text-white">First Available</p>
+                        <p className="text-xs text-gray-300">Fastest service</p>
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* Individual Barbers */}
+                  {barbersData?.filter(b => b.is_active && b.is_working_today).map((barber) => (
+                    <button
+                      key={barber.barber_id}
+                      type="button"
+                      onClick={() => handleInputChange('barber_id', barber.barber_id)}
+                      disabled={joinQueueMutation.isPending}
+                      className={`p-4 rounded-lg border-2 transition-all disabled:opacity-50 ${
+                        formData.barber_id === barber.barber_id
+                          ? 'border-blue-500 bg-blue-500/20'
+                          : 'border-white/30 bg-white/5 hover:bg-white/10'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        {barber.photo_url ? (
+                          <img
+                            src={barber.photo_url}
+                            alt={barber.name}
+                            className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                          />
+                        ) : (
+                          <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                            <User className="w-6 h-6 text-white" />
+                          </div>
+                        )}
+                        <div className="text-left flex-1 min-w-0">
+                          <p className="font-semibold text-white truncate">{barber.name}</p>
+                          {barber.specialties && barber.specialties.length > 0 && (
+                            <p className="text-xs text-gray-300 truncate">{barber.specialties.join(', ')}</p>
+                          )}
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+              <p className="mt-2 text-sm text-gray-300">Select a barber or choose "First Available" for faster service</p>
             </div>
 
             {/* Info Box */}

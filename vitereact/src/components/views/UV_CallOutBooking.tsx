@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, MapPin, User, Phone, Mail, FileText, Check, AlertCircle, Sparkles } from 'lucide-react';
-import { useMutation } from '@tanstack/react-query';
+import { Calendar, Clock, MapPin, User, Phone, Mail, FileText, Check, AlertCircle, Sparkles, Scissors, Users as UsersIcon } from 'lucide-react';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { z } from 'zod';
 
@@ -18,6 +18,16 @@ interface CallOutFormData {
   preferred_date: string;
   preferred_time: string;
   special_request: string;
+  barber_id: string | null;
+}
+
+interface Barber {
+  barber_id: string;
+  name: string;
+  photo_url: string | null;
+  specialties: string[] | null;
+  is_working_today: boolean;
+  is_active: boolean;
 }
 
 interface ValidationErrors {
@@ -68,8 +78,22 @@ const UV_CallOutBooking: React.FC = () => {
     preferred_date: '',
     preferred_time: '',
     special_request: '',
+    barber_id: null,
   });
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
+
+  // ============================================================================
+  // FETCH ACTIVE BARBERS
+  // ============================================================================
+
+  const { data: barbersData, isLoading: barbersLoading } = useQuery({
+    queryKey: ['activeBarbers'],
+    queryFn: async () => {
+      const response = await axios.get(`${getApiBaseUrl()}/api/barbers`);
+      return response.data.barbers as Barber[];
+    },
+    staleTime: 60000,
+  });
 
   // ============================================================================
   // API BASE URL
@@ -159,6 +183,7 @@ const UV_CallOutBooking: React.FC = () => {
       appointment_date: formData.preferred_date,
       appointment_time: formData.preferred_time,
       special_request: formData.special_request || null,
+      barber_id: formData.barber_id || null,
     };
 
     createCallOutBooking.mutate(bookingData);
@@ -370,6 +395,78 @@ const UV_CallOutBooking: React.FC = () => {
                     )}
                   </div>
                 </div>
+              </div>
+
+              {/* Barber Selection */}
+              <div className="border-t border-white/20 pt-6">
+                <label className="block text-white font-medium mb-3 flex items-center gap-2">
+                  <Scissors className="w-5 h-5 text-amber-400" />
+                  Choose Your Barber
+                </label>
+                {barbersLoading ? (
+                  <div className="text-center py-4">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
+                    <p className="mt-2 text-gray-300 text-sm">Loading barbers...</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {/* First Available Option */}
+                    <button
+                      type="button"
+                      onClick={() => handleInputChange('barber_id', '')}
+                      className={`p-4 rounded-lg border-2 transition-all ${
+                        !formData.barber_id
+                          ? 'border-amber-500 bg-amber-500/20'
+                          : 'border-white/30 bg-white/5 hover:bg-white/10'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0">
+                          <UsersIcon className="w-6 h-6 text-white" />
+                        </div>
+                        <div className="text-left">
+                          <p className="font-semibold text-white">First Available</p>
+                          <p className="text-xs text-gray-300">Any barber</p>
+                        </div>
+                      </div>
+                    </button>
+
+                    {/* Individual Barbers */}
+                    {barbersData?.filter(b => b.is_active && b.is_working_today).map((barber) => (
+                      <button
+                        key={barber.barber_id}
+                        type="button"
+                        onClick={() => handleInputChange('barber_id', barber.barber_id)}
+                        className={`p-4 rounded-lg border-2 transition-all ${
+                          formData.barber_id === barber.barber_id
+                            ? 'border-amber-500 bg-amber-500/20'
+                            : 'border-white/30 bg-white/5 hover:bg-white/10'
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          {barber.photo_url ? (
+                            <img
+                              src={barber.photo_url}
+                              alt={barber.name}
+                              className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                            />
+                          ) : (
+                            <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                              <User className="w-6 h-6 text-white" />
+                            </div>
+                          )}
+                          <div className="text-left flex-1 min-w-0">
+                            <p className="font-semibold text-white truncate">{barber.name}</p>
+                            {barber.specialties && barber.specialties.length > 0 && (
+                              <p className="text-xs text-gray-300 truncate">{barber.specialties.join(', ')}</p>
+                            )}
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+                <p className="mt-2 text-sm text-gray-300">Select "First Available" for the next free barber</p>
               </div>
 
               {/* Special Request */}

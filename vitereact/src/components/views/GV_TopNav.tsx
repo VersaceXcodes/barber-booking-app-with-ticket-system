@@ -182,17 +182,19 @@ const GV_TopNav: React.FC = () => {
         </Link>
         <Link
           to={getBookingStartPath()}
-          className={`relative text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+          className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
             isActiveLink(getBookingStartPath()) ? 'text-white font-semibold bg-red-800/30' : ''
           }`}
         >
           Services
-          <span className="absolute -top-1 -right-2 flex items-center">
-            <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-amber-400 opacity-75"></span>
-            <span className="relative inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg">
-              CALL-OUTS
-            </span>
-          </span>
+        </Link>
+        <Link
+          to={getBookingStartPath()}
+          className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+            isActiveLink(getBookingStartPath()) ? 'text-white font-semibold bg-red-800/30' : ''
+          }`}
+        >
+          Call-Outs
         </Link>
         <Link
           to="/gallery"
@@ -537,6 +539,13 @@ const GV_TopNav: React.FC = () => {
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Services
+                  </Link>
+                  <Link
+                    to={getBookingStartPath()}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Call-Outs
                   </Link>
                   <Link
                     to="/gallery"

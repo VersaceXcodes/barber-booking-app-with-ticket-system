@@ -23,6 +23,7 @@ import {
   capacityOverrideSchema,
   createCapacityOverrideInputSchema
 } from './schema.js';
+import { WaitTimeService } from './waitTimeService.js';
 
 dotenv.config();
 
@@ -85,6 +86,9 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(morgan('combined'));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Initialize Wait Time Service
+const waitTimeService = new WaitTimeService(pool);
 
 function createErrorResponse(message: string, error: any = null, errorCode: string | null = null) {
   const response: any = {
@@ -1942,6 +1946,202 @@ app.get('/api/settings', async (req, res) => {
   } catch (error) {
     console.error('Get settings error:', error);
     res.status(500).json(createErrorResponse('Failed to retrieve settings', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// ============================================================================
+// QUEUE API ENDPOINTS
+// ============================================================================
+
+// Get current wait time
+app.get('/api/wait-time', async (req, res) => {
+  try {
+    const calculation = await waitTimeService.calculateWaitTime();
+    res.json({
+      currentWaitMinutes: calculation.currentWaitMinutes,
+      queueLength: calculation.queueLength,
+      activeBarbers: calculation.activeBarbers,
+      nextAvailableSlot: calculation.nextAvailableSlot,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Get wait time error:', error);
+    res.status(500).json(createErrorResponse('Failed to calculate wait time', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Join the walk-in queue
+app.post('/api/queue/join', async (req, res) => {
+  try {
+    const { customer_name, customer_phone } = req.body;
+
+    // Validate input
+    if (!customer_name || !customer_phone) {
+      return res.status(400).json(createErrorResponse(
+        'Customer name and phone are required',
+        null,
+        'MISSING_REQUIRED_FIELDS'
+      ));
+    }
+
+    // Get current queue length to determine position
+    const queueResult = await pool.query(
+      `SELECT COUNT(*) as count FROM walk_in_queue WHERE status = 'waiting'`
+    );
+    const position = parseInt(queueResult.rows[0].count) + 1;
+
+    // Calculate estimated wait time
+    const waitCalculation = await waitTimeService.calculateWaitTime();
+    const estimatedWait = waitCalculation.currentWaitMinutes + ((position - 1) * 30);
+
+    // Create queue entry
+    const queue_id = `queue_${uuidv4()}`;
+    const now = new Date().toISOString();
+
+    await pool.query(
+      `INSERT INTO walk_in_queue 
+       (queue_id, customer_name, customer_phone, status, position, estimated_wait_minutes, estimated_service_duration, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+      [queue_id, customer_name, customer_phone, 'waiting', position, Math.round(estimatedWait), 30, now, now]
+    );
+
+    res.status(201).json({
+      queue_id,
+      customer_name,
+      customer_phone,
+      position,
+      estimated_wait_minutes: Math.round(estimatedWait),
+      status: 'waiting',
+      created_at: now,
+      message: 'Successfully joined the queue'
+    });
+
+    // Update queue positions in background
+    waitTimeService.updateQueuePositions().catch(err => 
+      console.error('Error updating queue positions:', err)
+    );
+  } catch (error) {
+    console.error('Join queue error:', error);
+    res.status(500).json(createErrorResponse('Failed to join queue', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Get queue status for a specific queue entry
+app.get('/api/queue/status/:queue_id', async (req, res) => {
+  try {
+    const { queue_id } = req.params;
+
+    const result = await pool.query(
+      `SELECT * FROM walk_in_queue WHERE queue_id = $1`,
+      [queue_id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json(createErrorResponse(
+        'Queue entry not found',
+        null,
+        'QUEUE_NOT_FOUND'
+      ));
+    }
+
+    const queueEntry = result.rows[0];
+
+    // Get total queue length
+    const totalResult = await pool.query(
+      `SELECT COUNT(*) as count FROM walk_in_queue WHERE status = 'waiting'`
+    );
+
+    res.json({
+      queue_id: queueEntry.queue_id,
+      customer_name: queueEntry.customer_name,
+      customer_phone: queueEntry.customer_phone,
+      status: queueEntry.status,
+      position: queueEntry.position,
+      estimated_wait_minutes: queueEntry.estimated_wait_minutes,
+      total_in_queue: parseInt(totalResult.rows[0].count),
+      created_at: queueEntry.created_at,
+      updated_at: queueEntry.updated_at
+    });
+  } catch (error) {
+    console.error('Get queue status error:', error);
+    res.status(500).json(createErrorResponse('Failed to get queue status', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Leave the queue
+app.post('/api/queue/leave/:queue_id', async (req, res) => {
+  try {
+    const { queue_id } = req.params;
+
+    const result = await pool.query(
+      `SELECT * FROM walk_in_queue WHERE queue_id = $1`,
+      [queue_id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json(createErrorResponse(
+        'Queue entry not found',
+        null,
+        'QUEUE_NOT_FOUND'
+      ));
+    }
+
+    const queueEntry = result.rows[0];
+
+    if (queueEntry.status !== 'waiting') {
+      return res.status(400).json(createErrorResponse(
+        'Can only leave queue when in waiting status',
+        null,
+        'INVALID_STATUS'
+      ));
+    }
+
+    // Update status to 'left'
+    const now = new Date().toISOString();
+    await pool.query(
+      `UPDATE walk_in_queue 
+       SET status = 'left', updated_at = $1
+       WHERE queue_id = $2`,
+      [now, queue_id]
+    );
+
+    res.json({
+      message: 'Successfully left the queue',
+      queue_id,
+      timestamp: now
+    });
+
+    // Update queue positions in background
+    waitTimeService.updateQueuePositions().catch(err => 
+      console.error('Error updating queue positions:', err)
+    );
+  } catch (error) {
+    console.error('Leave queue error:', error);
+    res.status(500).json(createErrorResponse('Failed to leave queue', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Get current queue (for admin/display purposes)
+app.get('/api/queue', async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT * FROM walk_in_queue 
+       WHERE status = 'waiting'
+       ORDER BY position ASC`
+    );
+
+    const waitCalculation = await waitTimeService.calculateWaitTime();
+
+    res.json({
+      queue: result.rows,
+      total: result.rows.length,
+      currentWaitMinutes: waitCalculation.currentWaitMinutes,
+      activeBarbers: waitCalculation.activeBarbers,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Get queue error:', error);
+    res.status(500).json(createErrorResponse('Failed to get queue', error, 'INTERNAL_ERROR'));
   }
 });
 

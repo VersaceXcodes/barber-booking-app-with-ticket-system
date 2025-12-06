@@ -1,4 +1,5 @@
 -- Drop tables if they exist (for clean setup)
+DROP TABLE IF EXISTS walk_in_queue CASCADE;
 DROP TABLE IF EXISTS capacity_overrides CASCADE;
 DROP TABLE IF EXISTS bookings CASCADE;
 DROP TABLE IF EXISTS services CASCADE;
@@ -77,6 +78,21 @@ CREATE TABLE capacity_overrides (
     updated_at TEXT NOT NULL
 );
 
+-- Create walk_in_queue table
+CREATE TABLE walk_in_queue (
+    queue_id TEXT PRIMARY KEY,
+    customer_name TEXT NOT NULL,
+    customer_phone TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'waiting',
+    position INTEGER NOT NULL,
+    estimated_wait_minutes INTEGER NOT NULL DEFAULT 15,
+    estimated_service_duration INTEGER NOT NULL DEFAULT 30,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    served_at TEXT,
+    CONSTRAINT valid_status CHECK (status IN ('waiting', 'ready', 'called', 'served', 'left', 'no_show'))
+);
+
 -- Create indexes for better performance
 CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_users_verification_token ON users(verification_token);
@@ -88,6 +104,8 @@ CREATE INDEX idx_bookings_status ON bookings(status);
 CREATE INDEX idx_bookings_ticket_number ON bookings(ticket_number);
 CREATE INDEX idx_services_is_active ON services(is_active);
 CREATE INDEX idx_capacity_overrides_date ON capacity_overrides(override_date);
+CREATE INDEX idx_walk_in_queue_status ON walk_in_queue(status);
+CREATE INDEX idx_walk_in_queue_position ON walk_in_queue(position);
 
 -- Seed users table
 INSERT INTO users (user_id, email, password_hash, name, phone, is_verified, verification_token, verification_token_expiry, reset_token, reset_token_expiry, created_at, updated_at) VALUES

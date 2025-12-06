@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { User, Phone, AlertCircle, Users, Clock } from 'lucide-react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { z } from 'zod';
 
@@ -18,6 +18,14 @@ interface QueueFormData {
 interface ValidationErrors {
   customer_name?: string;
   customer_phone?: string;
+}
+
+interface WaitTimeData {
+  currentWaitMinutes: number;
+  queueLength: number;
+  activeBarbers: number;
+  nextAvailableSlot?: string;
+  timestamp: string;
 }
 
 // ============================================================================
@@ -62,6 +70,19 @@ const UV_JoinQueue: React.FC = () => {
     }
     return import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
   };
+
+  // ============================================================================
+  // FETCH WAIT TIME
+  // ============================================================================
+
+  const { data: waitTimeData, isLoading: waitTimeLoading } = useQuery<WaitTimeData>({
+    queryKey: ['waitTime'],
+    queryFn: async () => {
+      const response = await axios.get(`${getApiBaseUrl()}/api/wait-time`);
+      return response.data;
+    },
+    refetchInterval: 15000, // Refresh every 15 seconds
+  });
 
   // ============================================================================
   // MUTATION - JOIN QUEUE
@@ -162,18 +183,32 @@ const UV_JoinQueue: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Users className="w-6 h-6 text-blue-400 mx-auto mb-2" />
-              <p className="text-3xl font-bold text-white mb-1">4</p>
-              <p className="text-gray-300 text-sm">In Queue</p>
+          {waitTimeLoading && !waitTimeData ? (
+            <div className="flex items-center justify-center py-4">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
             </div>
-            <div>
-              <Clock className="w-6 h-6 text-green-400 mx-auto mb-2" />
-              <p className="text-3xl font-bold text-white mb-1">~15 min</p>
-              <p className="text-gray-300 text-sm">Est. Wait</p>
+          ) : (
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Users className="w-6 h-6 text-blue-400 mx-auto mb-2" />
+                <p className="text-3xl font-bold text-white mb-1">
+                  {waitTimeData?.queueLength ?? 0}
+                </p>
+                <p className="text-gray-300 text-sm">In Queue</p>
+              </div>
+              <div>
+                <Clock className="w-6 h-6 text-green-400 mx-auto mb-2" />
+                <p className="text-3xl font-bold text-white mb-1">
+                  {waitTimeData?.currentWaitMinutes === 0 ? (
+                    'No Wait'
+                  ) : (
+                    `~${waitTimeData?.currentWaitMinutes ?? 15} min`
+                  )}
+                </p>
+                <p className="text-gray-300 text-sm">Est. Wait</p>
+              </div>
             </div>
-          </div>
+          )}
         </motion.div>
 
         {/* Form Card */}

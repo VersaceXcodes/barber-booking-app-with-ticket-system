@@ -150,6 +150,7 @@ export declare const serviceSchema: z.ZodObject<{
     price: z.ZodNullable<z.ZodNumber>;
     is_active: z.ZodBoolean;
     display_order: z.ZodNumber;
+    is_callout: z.ZodBoolean;
     created_at: z.ZodString;
     updated_at: z.ZodString;
 }, "strip", z.ZodTypeAny, {
@@ -163,6 +164,7 @@ export declare const serviceSchema: z.ZodObject<{
     price?: number;
     is_active?: boolean;
     display_order?: number;
+    is_callout?: boolean;
 }, {
     name?: string;
     created_at?: string;
@@ -174,6 +176,7 @@ export declare const serviceSchema: z.ZodObject<{
     price?: number;
     is_active?: boolean;
     display_order?: number;
+    is_callout?: boolean;
 }>;
 export declare const createServiceInputSchema: z.ZodObject<{
     name: z.ZodString;
@@ -183,6 +186,7 @@ export declare const createServiceInputSchema: z.ZodObject<{
     price: z.ZodNullable<z.ZodNumber>;
     is_active: z.ZodDefault<z.ZodBoolean>;
     display_order: z.ZodDefault<z.ZodNumber>;
+    is_callout: z.ZodDefault<z.ZodBoolean>;
 }, "strip", z.ZodTypeAny, {
     name?: string;
     description?: string;
@@ -191,6 +195,7 @@ export declare const createServiceInputSchema: z.ZodObject<{
     price?: number;
     is_active?: boolean;
     display_order?: number;
+    is_callout?: boolean;
 }, {
     name?: string;
     description?: string;
@@ -199,6 +204,7 @@ export declare const createServiceInputSchema: z.ZodObject<{
     price?: number;
     is_active?: boolean;
     display_order?: number;
+    is_callout?: boolean;
 }>;
 export declare const updateServiceInputSchema: z.ZodObject<{
     service_id: z.ZodString;
@@ -209,6 +215,7 @@ export declare const updateServiceInputSchema: z.ZodObject<{
     price: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
     is_active: z.ZodOptional<z.ZodBoolean>;
     display_order: z.ZodOptional<z.ZodNumber>;
+    is_callout: z.ZodOptional<z.ZodBoolean>;
 }, "strip", z.ZodTypeAny, {
     name?: string;
     service_id?: string;
@@ -218,6 +225,7 @@ export declare const updateServiceInputSchema: z.ZodObject<{
     price?: number;
     is_active?: boolean;
     display_order?: number;
+    is_callout?: boolean;
 }, {
     name?: string;
     service_id?: string;
@@ -227,6 +235,7 @@ export declare const updateServiceInputSchema: z.ZodObject<{
     price?: number;
     is_active?: boolean;
     display_order?: number;
+    is_callout?: boolean;
 }>;
 export declare const searchServiceInputSchema: z.ZodObject<{
     query: z.ZodOptional<z.ZodString>;

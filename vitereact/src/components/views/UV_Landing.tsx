@@ -4,11 +4,47 @@ import { motion } from 'framer-motion';
 import { Calendar, Users, Star, Clock, MapPin, Sparkles } from 'lucide-react';
 import { usePageTransition } from '@/hooks/usePageTransition';
 import { useAppStore } from '@/store/main';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+
+interface WaitTimeData {
+  currentWaitMinutes: number;
+  queueLength: number;
+  activeBarbers: number;
+  nextAvailableSlot?: string;
+  timestamp: string;
+}
 
 const UV_Landing: React.FC = () => {
   const navigate = useNavigate();
   const { transitionTo } = usePageTransition();
-  const [currentWaitTime] = useState(15);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  // Get API base URL
+  const getApiBaseUrl = (): string => {
+    if (typeof window !== 'undefined' && (window as any).__RUNTIME_CONFIG__?.API_BASE_URL) {
+      return (window as any).__RUNTIME_CONFIG__.API_BASE_URL;
+    }
+    return import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+  };
+
+  // Fetch wait time with auto-refresh every 20 seconds
+  const { data: waitTimeData, isLoading: waitTimeLoading } = useQuery<WaitTimeData>({
+    queryKey: ['waitTime'],
+    queryFn: async () => {
+      setIsUpdating(true);
+      try {
+        const response = await axios.get(`${getApiBaseUrl()}/api/wait-time`);
+        return response.data;
+      } finally {
+        setTimeout(() => setIsUpdating(false), 500);
+      }
+    },
+    refetchInterval: 20000, // Refresh every 20 seconds
+    refetchOnWindowFocus: true,
+  });
+
+  const currentWaitTime = waitTimeData?.currentWaitMinutes ?? 15;
 
   // Get services setting from store
   const servicesEnabled = useAppStore(state => state.app_settings.services_enabled);
@@ -171,17 +207,45 @@ const UV_Landing: React.FC = () => {
 
                 {/* Current Wait Time */}
                 <motion.div 
-                  className="flex items-center gap-4"
+                  className="flex items-center gap-4 relative"
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                  <div className={`w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center backdrop-blur-sm transition-opacity ${isUpdating ? 'opacity-50' : 'opacity-100'}`}>
                     <Clock className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="text-3xl font-bold text-green-400">{currentWaitTime} Mins</p>
-                    <p className="text-gray-300 text-sm">Current Wait</p>
+                    {waitTimeLoading && !waitTimeData ? (
+                      <div className="flex items-center gap-2">
+                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green-400"></div>
+                        <p className="text-xl font-bold text-gray-300">Loading...</p>
+                      </div>
+                    ) : (
+                      <>
+                        <p className="text-3xl font-bold text-green-400">
+                          {currentWaitTime === 0 ? (
+                            <span className="text-2xl">No Wait</span>
+                          ) : (
+                            <>{currentWaitTime} Mins</>
+                          )}
+                        </p>
+                        <p className="text-gray-300 text-sm flex items-center gap-1">
+                          Current Wait
+                          {waitTimeData && waitTimeData.queueLength > 0 && (
+                            <span className="text-xs text-gray-400">({waitTimeData.queueLength} in queue)</span>
+                          )}
+                        </p>
+                      </>
+                    )}
                   </div>
+                  {isUpdating && (
+                    <motion.div 
+                      className="absolute -top-1 -right-1 w-3 h-3 bg-blue-400 rounded-full"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: [0, 1.2, 1] }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  )}
                 </motion.div>
               </div>
             </div>

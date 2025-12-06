@@ -17,6 +17,7 @@ interface Service {
   price: number | null;
   is_active: boolean;
   display_order: number;
+  is_callout?: boolean;
 }
 
 interface TimeSlot {

@@ -42,6 +42,7 @@ interface Service {
   name: string;
   description: string;
   is_active: boolean;
+  is_callout?: boolean;
 }
 
 interface CapacityOverride {

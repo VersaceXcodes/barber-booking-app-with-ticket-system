@@ -30,6 +30,7 @@ CREATE TABLE services (
     price NUMERIC,
     is_active BOOLEAN NOT NULL DEFAULT true,
     display_order INTEGER NOT NULL DEFAULT 0,
+    is_callout BOOLEAN NOT NULL DEFAULT false,
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL
 );
@@ -100,19 +101,20 @@ INSERT INTO users (user_id, email, password_hash, name, phone, is_verified, veri
 ('user_008', 'isabella.moore@email.com', 'password123', 'Isabella Moore', '+1-555-0108', true, NULL, NULL, 'reset_token_isabella_def456', '2024-12-25T18:00:00Z', '2024-03-10T10:00:00Z', '2024-03-10T10:00:00Z');
 
 -- Seed services table
-INSERT INTO services (service_id, name, description, image_url, duration, price, is_active, display_order, created_at, updated_at) VALUES
-('service_001', 'Classic Haircut', 'Professional haircut with wash and blow-dry. Perfect for maintaining your style or trying something new with expert consultation.', 'https://picsum.photos/seed/haircut1/800/600', 45, 65.00, true, 1, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
-('service_002', 'Balayage Highlights', 'Hand-painted highlights for a natural, sun-kissed look. Includes toning and deep conditioning treatment.', 'https://picsum.photos/seed/balayage2/800/600', 180, 225.00, true, 2, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
-('service_003', 'Full Color Treatment', 'Complete color transformation with premium products. Includes consultation, color application, and styling.', 'https://picsum.photos/seed/color3/800/600', 150, 185.00, true, 3, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
-('service_004', 'Keratin Treatment', 'Smoothing treatment that eliminates frizz and adds shine for up to 3 months. Includes wash, treatment, and blow-dry.', 'https://picsum.photos/seed/keratin4/800/600', 120, 295.00, true, 4, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
-('service_005', 'Deep Conditioning', 'Intensive hydrating treatment for damaged or dry hair. Restores moisture and improves hair health.', 'https://picsum.photos/seed/conditioning5/800/600', 40, 55.00, true, 5, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
-('service_006', 'Bridal Updo', 'Elegant updo styling for your special day. Includes consultation, trial run option, and day-of styling.', 'https://picsum.photos/seed/bridal6/800/600', 90, 175.00, true, 6, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
-('service_007', 'Hair Extensions', 'Premium tape-in or clip-in extensions for length and volume. Includes application and styling.', 'https://picsum.photos/seed/extensions7/800/600', 120, 350.00, true, 7, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
-('service_008', 'Blow-Dry & Style', 'Professional wash, blow-dry, and styling. Perfect for special occasions or everyday glam.', 'https://picsum.photos/seed/blowdry8/800/600', 40, 45.00, true, 8, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
-('service_009', 'Root Touch-Up', 'Quick root color refresh to maintain your look between full color treatments.', 'https://picsum.photos/seed/roots9/800/600', 60, 85.00, true, 9, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
-('service_010', 'Perm Treatment', 'Create beautiful waves or curls with our modern perm techniques. Includes styling and aftercare kit.', 'https://picsum.photos/seed/perm10/800/600', 150, 195.00, true, 10, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
-('service_011', 'Scalp Treatment', 'Therapeutic scalp massage and treatment to promote healthy hair growth and relaxation.', 'https://picsum.photos/seed/scalp11/800/600', 30, 40.00, true, 11, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
-('service_012', 'Children''s Haircut', 'Gentle and fun haircut experience for kids under 12. Includes wash and simple styling.', 'https://picsum.photos/seed/kids12/800/600', 30, 35.00, true, 12, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z');
+INSERT INTO services (service_id, name, description, image_url, duration, price, is_active, display_order, is_callout, created_at, updated_at) VALUES
+('service_001', 'Classic Haircut', 'Professional haircut with wash and blow-dry. Perfect for maintaining your style or trying something new with expert consultation.', 'https://picsum.photos/seed/haircut1/800/600', 45, 65.00, true, 1, false, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
+('service_002', 'Balayage Highlights', 'Hand-painted highlights for a natural, sun-kissed look. Includes toning and deep conditioning treatment.', 'https://picsum.photos/seed/balayage2/800/600', 180, 225.00, true, 2, false, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
+('service_003', 'Full Color Treatment', 'Complete color transformation with premium products. Includes consultation, color application, and styling.', 'https://picsum.photos/seed/color3/800/600', 150, 185.00, true, 3, false, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
+('service_004', 'Keratin Treatment', 'Smoothing treatment that eliminates frizz and adds shine for up to 3 months. Includes wash, treatment, and blow-dry.', 'https://picsum.photos/seed/keratin4/800/600', 120, 295.00, true, 4, false, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
+('service_005', 'Deep Conditioning', 'Intensive hydrating treatment for damaged or dry hair. Restores moisture and improves hair health.', 'https://picsum.photos/seed/conditioning5/800/600', 40, 55.00, true, 5, false, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
+('service_006', 'Bridal Updo', 'Elegant updo styling for your special day. Includes consultation, trial run option, and day-of styling.', 'https://picsum.photos/seed/bridal6/800/600', 90, 175.00, true, 6, false, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
+('service_007', 'Hair Extensions', 'Premium tape-in or clip-in extensions for length and volume. Includes application and styling.', 'https://picsum.photos/seed/extensions7/800/600', 120, 350.00, true, 7, false, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
+('service_008', 'Blow-Dry & Style', 'Professional wash, blow-dry, and styling. Perfect for special occasions or everyday glam.', 'https://picsum.photos/seed/blowdry8/800/600', 40, 45.00, true, 8, false, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
+('service_009', 'Root Touch-Up', 'Quick root color refresh to maintain your look between full color treatments.', 'https://picsum.photos/seed/roots9/800/600', 60, 85.00, true, 9, false, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
+('service_010', 'Perm Treatment', 'Create beautiful waves or curls with our modern perm techniques. Includes styling and aftercare kit.', 'https://picsum.photos/seed/perm10/800/600', 150, 195.00, true, 10, false, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
+('service_011', 'Scalp Treatment', 'Therapeutic scalp massage and treatment to promote healthy hair growth and relaxation.', 'https://picsum.photos/seed/scalp11/800/600', 30, 40.00, true, 11, false, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
+('service_012', 'Children''s Haircut', 'Gentle and fun haircut experience for kids under 12. Includes wash and simple styling.', 'https://picsum.photos/seed/kids12/800/600', 30, 35.00, true, 12, false, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
+('service_013', 'Call-Out Barber Service', 'Premium mobile barber service where our expert barber travels to your location. Perfect for busy professionals, special events, or those who prefer the convenience of at-home service. Includes professional haircut with all the amenities of our salon brought to you.', 'https://picsum.photos/seed/callout13/800/600', 60, 150.00, true, 0, true, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z');
 
 -- Seed bookings table
 INSERT INTO bookings (booking_id, ticket_number, user_id, status, appointment_date, appointment_time, slot_duration, customer_name, customer_email, customer_phone, booking_for_name, service_id, special_request, inspiration_photos, created_at, updated_at, confirmed_at, reminder_sent_at, completed_at, cancelled_at, cancellation_reason, cancelled_by, admin_notes, original_booking_id) VALUES

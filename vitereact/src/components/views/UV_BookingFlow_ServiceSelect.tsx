@@ -14,6 +14,7 @@ interface Service {
   price: number | null;
   is_active: boolean;
   display_order: number;
+  is_callout: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -224,18 +225,33 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
                   onClick={() => handleSelectService(service)}
                   className={`
                     relative overflow-hidden rounded-xl border-2 p-4 md:p-6 text-left 
-                    transition-all duration-200 transform focus:outline-none focus:ring-4 focus:ring-blue-100
-                    ${selectedServiceId === service.service_id
-                      ? 'border-blue-600 bg-blue-50 shadow-xl scale-105 ring-4 ring-blue-100'
-                      : 'border-gray-200 bg-white hover:border-blue-300 hover:shadow-lg hover:scale-102'
+                    transition-all duration-200 transform focus:outline-none focus:ring-4
+                    ${service.is_callout 
+                      ? selectedServiceId === service.service_id
+                        ? 'border-orange-500 bg-gradient-to-br from-orange-50 to-amber-50 shadow-xl scale-105 ring-4 ring-orange-100'
+                        : 'border-orange-300 bg-gradient-to-br from-orange-50 to-amber-50 hover:border-orange-400 hover:shadow-lg hover:scale-102'
+                      : selectedServiceId === service.service_id
+                        ? 'border-blue-600 bg-blue-50 shadow-xl scale-105 ring-4 ring-blue-100'
+                        : 'border-gray-200 bg-white hover:border-blue-300 hover:shadow-lg hover:scale-102'
                     }
+                    ${service.is_callout ? 'focus:ring-orange-100' : 'focus:ring-blue-100'}
                   `}
                   aria-pressed={selectedServiceId === service.service_id}
                   aria-label={`Select ${service.name} service`}
                 >
+                  {/* Premium Call-Out Badge */}
+                  {service.is_callout && (
+                    <div className="absolute top-3 left-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center z-10">
+                      <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                      PREMIUM
+                    </div>
+                  )}
+
                   {/* Checkmark Indicator */}
                   {selectedServiceId === service.service_id && (
-                    <div className="absolute top-3 right-3 bg-blue-600 rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shadow-lg animate-in zoom-in duration-200">
+                    <div className="absolute top-3 right-3 bg-blue-600 rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shadow-lg animate-in zoom-in duration-200 z-10">
                       <svg className="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                       </svg>
@@ -269,6 +285,8 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
                         return 'https://images.unsplash.com/photo-1534620808146-d33bb39128b2?w=800&h=450&fit=crop';
                       } else if (lowerName.includes('trim') || lowerName.includes('cut')) {
                         return 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=800&h=450&fit=crop';
+                      } else if (lowerName.includes('call') || lowerName.includes('mobile') || lowerName.includes('home')) {
+                        return 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&h=450&fit=crop';
                       } else {
                         // Default barbershop image
                         return 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&h=450&fit=crop';
@@ -292,6 +310,15 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
                   {/* Service Name */}
                   <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 leading-tight">
                     {service.name}
+                    {service.is_callout && (
+                      <span className="ml-2 inline-flex items-center text-xs font-medium text-orange-600">
+                        <svg className="w-4 h-4 mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        We come to you
+                      </span>
+                    )}
                   </h3>
 
                   {/* Service Description */}
@@ -311,8 +338,8 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
 
                     {/* Price */}
                     {service.price !== null && service.price !== undefined && (
-                      <div className="text-xs md:text-sm font-semibold text-blue-600">
-                        From ${typeof service.price === 'number' ? service.price.toFixed(2) : parseFloat(String(service.price)).toFixed(2)}
+                      <div className={`text-xs md:text-sm font-semibold ${service.is_callout ? 'text-orange-600' : 'text-blue-600'}`}>
+                        {service.is_callout ? '€' : 'From $'}{typeof service.price === 'number' ? service.price.toFixed(2) : parseFloat(String(service.price)).toFixed(2)}
                       </div>
                     )}
                   </div>

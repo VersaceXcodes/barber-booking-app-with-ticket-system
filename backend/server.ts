@@ -1171,15 +1171,15 @@ app.post('/api/admin/services', authenticateAdmin, async (req, res) => {
       return res.status(400).json(createErrorResponse('Validation failed', validationResult.error, 'VALIDATION_ERROR'));
     }
 
-    const { name, description, image_url, duration = 40, price, is_active = true, display_order = 0 } = validationResult.data;
+    const { name, description, image_url, duration = 40, price, is_active = true, display_order = 0, is_callout = false } = validationResult.data;
     const service_id = uuidv4();
     const now = new Date().toISOString();
 
     const result = await pool.query(
-      `INSERT INTO services (service_id, name, description, image_url, duration, price, is_active, display_order, created_at, updated_at)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $9)
+      `INSERT INTO services (service_id, name, description, image_url, duration, price, is_active, display_order, is_callout, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $10)
        RETURNING *`,
-      [service_id, name, description, image_url, duration, price, is_active, display_order, now]
+      [service_id, name, description, image_url, duration, price, is_active, display_order, is_callout, now]
     );
 
     res.status(201).json({ service: result.rows[0], message: 'Service created successfully' });
@@ -1196,7 +1196,7 @@ app.patch('/api/admin/services/:service_id', authenticateAdmin, async (req, res)
     const params: any[] = [];
     let paramCount = 1;
 
-    const allowedFields = ['name', 'description', 'image_url', 'duration', 'price', 'is_active', 'display_order'];
+    const allowedFields = ['name', 'description', 'image_url', 'duration', 'price', 'is_active', 'display_order', 'is_callout'];
     allowedFields.forEach(field => {
       if (req.body[field] !== undefined) {
         updates.push(`${field} = $${paramCount++}`);

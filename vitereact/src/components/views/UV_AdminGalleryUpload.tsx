@@ -20,6 +20,7 @@ interface UploadQueueItem {
 interface Service {
   service_id: string;
   name: string;
+  is_callout?: boolean;
 }
 
 interface ValidationError {

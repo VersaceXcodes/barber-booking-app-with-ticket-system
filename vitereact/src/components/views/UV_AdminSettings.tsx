@@ -38,6 +38,7 @@ interface Service {
   price: number | null;
   is_active: boolean;
   display_order: number;
+  is_callout: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -51,6 +52,7 @@ interface ServiceFormData {
   price: number | null;
   is_active: boolean;
   display_order: number;
+  is_callout: boolean;
 }
 
 type SectionType = 'shop' | 'booking' | 'notifications' | 'services';
@@ -457,6 +459,7 @@ const UV_AdminSettings: React.FC = () => {
         price: null,
         is_active: true,
         display_order: servicesList.length,
+        is_callout: false,
       });
     } else if (service) {
       setServiceFormData({
@@ -468,6 +471,7 @@ const UV_AdminSettings: React.FC = () => {
         price: service.price,
         is_active: service.is_active,
         display_order: service.display_order,
+        is_callout: service.is_callout,
       });
       // If editing and has existing image, set preview
       if (service.image_url) {
@@ -1725,6 +1729,33 @@ const UV_AdminSettings: React.FC = () => {
                     <span
                       className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
                         serviceFormData.is_active ? 'translate-x-6' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                </div>
+
+                {/* Call-Out Service Toggle */}
+                <div className="flex items-center justify-between py-3 border-t border-gray-200">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm font-medium text-gray-700">Call-Out Service (Premium)</span>
+                    <div className="group relative">
+                      <svg className="w-4 h-4 text-gray-400 cursor-help" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-64 p-2 bg-gray-900 text-white text-xs rounded shadow-lg z-10">
+                        Enable this for mobile/at-home services where the barber travels to the customer's location
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setServiceFormData({ ...serviceFormData, is_callout: !serviceFormData.is_callout })}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                      serviceFormData.is_callout ? 'bg-orange-600' : 'bg-gray-300'
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                        serviceFormData.is_callout ? 'translate-x-6' : 'translate-x-1'
                       }`}
                     />
                   </button>

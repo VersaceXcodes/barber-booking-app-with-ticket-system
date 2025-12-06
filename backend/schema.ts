@@ -94,6 +94,7 @@ export const serviceSchema = z.object({
   price: z.number().nullable(),
   is_active: z.boolean(),
   display_order: z.number(),
+  is_callout: z.boolean(),
   created_at: z.string(),
   updated_at: z.string()
 });
@@ -106,7 +107,8 @@ export const createServiceInputSchema = z.object({
   duration: z.number().int().positive().default(40),
   price: z.number().nonnegative().nullable(),
   is_active: z.boolean().default(true),
-  display_order: z.number().int().nonnegative().default(0)
+  display_order: z.number().int().nonnegative().default(0),
+  is_callout: z.boolean().default(false)
 });
 
 // Input schema for updating services
@@ -118,7 +120,8 @@ export const updateServiceInputSchema = z.object({
   duration: z.number().int().positive().optional(),
   price: z.number().nonnegative().nullable().optional(),
   is_active: z.boolean().optional(),
-  display_order: z.number().int().nonnegative().optional()
+  display_order: z.number().int().nonnegative().optional(),
+  is_callout: z.boolean().optional()
 });
 
 // Query schema for searching services

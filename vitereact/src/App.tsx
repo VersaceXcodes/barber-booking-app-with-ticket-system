@@ -56,6 +56,7 @@ import UV_AdminGalleryManage from '@/components/views/UV_AdminGalleryManage';
 import UV_AdminGalleryUpload from '@/components/views/UV_AdminGalleryUpload';
 import UV_AdminCustomerList from '@/components/views/UV_AdminCustomerList';
 import UV_AdminCustomerDetail from '@/components/views/UV_AdminCustomerDetail';
+import UV_AdminBarbersList from '@/components/views/UV_AdminBarbersList';
 import UV_AdminSettings from '@/components/views/UV_AdminSettings';
 import UV_AdminReports from '@/components/views/UV_AdminReports';
 
@@ -391,6 +392,16 @@ const AppContent: React.FC = () => {
                 element={
                   <AdminProtectedRoute>
                     <UV_AdminCustomerDetail />
+                  </AdminProtectedRoute>
+                }
+              />
+
+              {/* Barber Management */}
+              <Route
+                path="/admin/barbers"
+                element={
+                  <AdminProtectedRoute>
+                    <UV_AdminBarbersList />
                   </AdminProtectedRoute>
                 }
               />

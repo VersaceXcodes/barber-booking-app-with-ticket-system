@@ -165,6 +165,7 @@ export const bookingSchema = z.object({
   customer_phone: z.string(),
   booking_for_name: z.string().nullable(),
   service_id: z.string().nullable(),
+  barber_id: z.string().nullable(),
   special_request: z.string().nullable(),
   inspiration_photos: z.array(z.string().url()).nullable(),
   created_at: z.string(),
@@ -190,6 +191,7 @@ export const createBookingInputSchema = z.object({
   customer_phone: z.string().min(10).max(20).regex(/^\+?[0-9\s\-().]+$/, 'Invalid phone number format'),
   booking_for_name: z.string().max(255).nullable(),
   service_id: z.string().nullable(),
+  barber_id: z.string().nullable().optional(),
   special_request: z.string().max(1000).nullable(),
   inspiration_photos: z.array(z.string().url()).max(10).nullable()
 });
@@ -206,6 +208,7 @@ export const updateBookingInputSchema = z.object({
   customer_phone: z.string().min(10).max(20).regex(/^\+?[0-9\s\-().]+$/, 'Invalid phone number format').optional(),
   booking_for_name: z.string().max(255).nullable().optional(),
   service_id: z.string().nullable().optional(),
+  barber_id: z.string().nullable().optional(),
   special_request: z.string().max(1000).nullable().optional(),
   inspiration_photos: z.array(z.string().url()).max(10).nullable().optional(),
   admin_notes: z.string().max(2000).nullable().optional()
@@ -331,6 +334,7 @@ export const walkInQueueSchema = z.object({
   queue_id: z.string(),
   customer_name: z.string(),
   customer_phone: z.string(),
+  barber_id: z.string().nullable(),
   status: queueStatusEnum,
   position: z.number(),
   estimated_wait_minutes: z.number(),
@@ -344,6 +348,7 @@ export const walkInQueueSchema = z.object({
 export const joinQueueInputSchema = z.object({
   customer_name: z.string().min(1).max(255),
   customer_phone: z.string().min(10).max(20).regex(/^\+?[0-9\s\-().]+$/, 'Invalid phone number format'),
+  barber_id: z.string().nullable().optional(),
   estimated_service_duration: z.number().int().positive().default(30)
 });
 
@@ -358,6 +363,49 @@ export type WalkInQueue = z.infer<typeof walkInQueueSchema>;
 export type QueueStatus = z.infer<typeof queueStatusEnum>;
 export type JoinQueueInput = z.infer<typeof joinQueueInputSchema>;
 export type UpdateQueueStatusInput = z.infer<typeof updateQueueStatusInputSchema>;
+
+// ============================================================================
+// BARBERS SCHEMAS
+// ============================================================================
+
+// Main entity schema
+export const barberSchema = z.object({
+  barber_id: z.string(),
+  name: z.string(),
+  photo_url: z.string().nullable(),
+  specialties: z.array(z.string()).nullable(),
+  is_working_today: z.boolean(),
+  is_active: z.boolean(),
+  display_order: z.number(),
+  created_at: z.string(),
+  updated_at: z.string()
+});
+
+// Input schema for creating barbers
+export const createBarberInputSchema = z.object({
+  name: z.string().min(1).max(255),
+  photo_url: z.string().url().nullable().optional(),
+  specialties: z.array(z.string()).max(20).nullable().optional(),
+  is_working_today: z.boolean().default(true),
+  is_active: z.boolean().default(true),
+  display_order: z.number().int().nonnegative().default(0)
+});
+
+// Input schema for updating barbers
+export const updateBarberInputSchema = z.object({
+  barber_id: z.string(),
+  name: z.string().min(1).max(255).optional(),
+  photo_url: z.string().url().nullable().optional(),
+  specialties: z.array(z.string()).max(20).nullable().optional(),
+  is_working_today: z.boolean().optional(),
+  is_active: z.boolean().optional(),
+  display_order: z.number().int().nonnegative().optional()
+});
+
+// Inferred types
+export type Barber = z.infer<typeof barberSchema>;
+export type CreateBarberInput = z.infer<typeof createBarberInputSchema>;
+export type UpdateBarberInput = z.infer<typeof updateBarberInputSchema>;
 
 // ============================================================================
 // CALL-OUT BOOKINGS SCHEMAS
@@ -375,6 +423,7 @@ export const callOutBookingSchema = z.object({
   service_address: z.string(),
   appointment_date: z.string(),
   appointment_time: z.string(),
+  barber_id: z.string().nullable(),
   status: calloutStatusEnum,
   price: z.number(),
   special_request: z.string().nullable(),
@@ -394,6 +443,7 @@ export const bookCallOutInputSchema = z.object({
   service_address: z.string().min(5).max(500),
   appointment_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be in YYYY-MM-DD format'),
   appointment_time: z.string().regex(/^\d{2}:\d{2}$/, 'Time must be in HH:MM format'),
+  barber_id: z.string().nullable().optional(),
   special_request: z.string().max(1000).nullable().optional()
 });
 

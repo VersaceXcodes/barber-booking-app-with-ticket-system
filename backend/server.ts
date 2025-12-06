@@ -22,6 +22,9 @@ import {
   cancelBookingInputSchema,
   capacityOverrideSchema,
   createCapacityOverrideInputSchema,
+  barberSchema,
+  createBarberInputSchema,
+  updateBarberInputSchema,
   joinQueueInputSchema,
   updateQueueStatusInputSchema,
   bookCallOutInputSchema,
@@ -374,7 +377,7 @@ app.post('/api/bookings', async (req, res) => {
       return res.status(400).json(createErrorResponse('Validation failed', validationResult.error, 'VALIDATION_ERROR'));
     }
 
-    const { appointment_date, appointment_time, customer_name, customer_email, customer_phone, booking_for_name, service_id, special_request, inspiration_photos } = validationResult.data;
+    const { appointment_date, appointment_time, customer_name, customer_email, customer_phone, booking_for_name, service_id, barber_id, special_request, inspiration_photos } = validationResult.data;
 
     const settingsResult = await pool.query("SELECT * FROM (SELECT 'settings-main' as setting_id, 2 as capacity_mon_wed, 3 as capacity_thu_sun, 90 as booking_window_days, 2 as same_day_cutoff_hours) s LIMIT 1");
     const settings = settingsResult.rows[0] || { booking_window_days: 90 };
@@ -431,13 +434,13 @@ app.post('/api/bookings', async (req, res) => {
       `INSERT INTO bookings (
         booking_id, ticket_number, user_id, status, appointment_date, appointment_time,
         slot_duration, customer_name, customer_email, customer_phone, booking_for_name,
-        service_id, special_request, inspiration_photos, created_at, updated_at, confirmed_at
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $15, $15)
+        service_id, barber_id, special_request, inspiration_photos, created_at, updated_at, confirmed_at
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $16, $16)
       RETURNING *`,
       [
         booking_id, ticketNumber, user_id, 'confirmed', appointment_date, appointment_time,
         40, customer_name, customer_email, customer_phone, booking_for_name,
-        service_id, special_request, JSON.stringify(inspiration_photos || []), now
+        service_id, barber_id || null, special_request, JSON.stringify(inspiration_photos || []), now
       ]
     );
 
@@ -729,7 +732,7 @@ app.patch('/api/bookings/:ticket_number', async (req, res) => {
 app.post('/api/bookings/:ticket_number/reschedule', async (req, res) => {
   try {
     const { ticket_number } = req.params;
-    const { new_appointment_date, new_appointment_time, service_id, special_request } = req.body;
+    const { new_appointment_date, new_appointment_time, service_id, barber_id, special_request } = req.body;
 
     if (!new_appointment_date || !new_appointment_time) {
       return res.status(400).json(createErrorResponse('New date and time are required', null, 'MISSING_FIELDS'));
@@ -778,13 +781,13 @@ app.post('/api/bookings/:ticket_number/reschedule', async (req, res) => {
       `INSERT INTO bookings (
         booking_id, ticket_number, user_id, status, appointment_date, appointment_time,
         slot_duration, customer_name, customer_email, customer_phone, booking_for_name,
-        service_id, special_request, inspiration_photos, created_at, updated_at, confirmed_at, original_booking_id
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $15, $15, $16)
+        service_id, barber_id, special_request, inspiration_photos, created_at, updated_at, confirmed_at, original_booking_id
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $16, $16, $17)
       RETURNING *`,
       [
         newBookingId, newTicketNumber, original.user_id, 'confirmed', new_appointment_date, new_appointment_time,
         40, original.customer_name, original.customer_email, original.customer_phone, original.booking_for_name,
-        service_id || original.service_id, special_request || original.special_request,
+        service_id || original.service_id, barber_id || original.barber_id || null, special_request || original.special_request,
         original.inspiration_photos, now, original.booking_id
       ]
     );
@@ -1124,7 +1127,7 @@ app.get('/api/admin/bookings', authenticateAdmin, async (req, res) => {
 
 app.post('/api/admin/bookings', authenticateAdmin, async (req, res) => {
   try {
-    const { appointment_date, appointment_time, customer_name, customer_email, customer_phone, service_id, special_request, admin_notes } = req.body;
+    const { appointment_date, appointment_time, customer_name, customer_email, customer_phone, service_id, barber_id, special_request, admin_notes } = req.body;
 
     const dateStr = appointment_date.replace(/-/g, '');
     const maxSeqResult = await pool.query(
@@ -1141,13 +1144,13 @@ app.post('/api/admin/bookings', authenticateAdmin, async (req, res) => {
       `INSERT INTO bookings (
         booking_id, ticket_number, status, appointment_date, appointment_time,
         slot_duration, customer_name, customer_email, customer_phone,
-        service_id, special_request, admin_notes, created_at, updated_at, confirmed_at
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $13, $13)
+        service_id, barber_id, special_request, admin_notes, created_at, updated_at, confirmed_at
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $14, $14)
       RETURNING *`,
       [
         booking_id, ticketNumber, 'confirmed', appointment_date, appointment_time,
         40, customer_name, customer_email, customer_phone,
-        service_id, special_request, admin_notes, now
+        service_id, barber_id || null, special_request, admin_notes, now
       ]
     );
 
@@ -1275,6 +1278,144 @@ app.post('/api/admin/upload/service-image', authenticateAdmin, upload.single('im
   } catch (error) {
     console.error('Image upload error:', error);
     res.status(500).json(createErrorResponse('Failed to upload image', error, 'UPLOAD_ERROR'));
+  }
+});
+
+// ============================================================================
+// BARBERS API ENDPOINTS
+// ============================================================================
+
+// Get all barbers (public - shows only active barbers)
+app.get('/api/barbers', async (req, res) => {
+  try {
+    const { is_working_today, is_active } = req.query;
+    let query = 'SELECT * FROM barbers WHERE 1=1';
+    const params: any[] = [];
+    let paramCount = 1;
+    
+    if (is_working_today !== undefined) {
+      query += ` AND is_working_today = $${paramCount++}`;
+      params.push(is_working_today === 'true');
+    }
+    
+    if (is_active !== undefined) {
+      query += ` AND is_active = $${paramCount++}`;
+      params.push(is_active === 'true');
+    } else {
+      // By default, only show active barbers to public
+      query += ` AND is_active = TRUE`;
+    }
+    
+    query += ' ORDER BY display_order ASC, name ASC';
+    
+    const result = await pool.query(query, params);
+    res.json({ barbers: result.rows });
+  } catch (error) {
+    console.error('Get barbers error:', error);
+    res.status(500).json(createErrorResponse('Failed to retrieve barbers', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Get all barbers (admin - shows all barbers)
+app.get('/api/admin/barbers', authenticateAdmin, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM barbers ORDER BY display_order ASC, name ASC');
+    res.json({ barbers: result.rows });
+  } catch (error) {
+    console.error('Admin get barbers error:', error);
+    res.status(500).json(createErrorResponse('Failed to retrieve barbers', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Create new barber (admin)
+app.post('/api/admin/barbers', authenticateAdmin, async (req, res) => {
+  try {
+    const validationResult = createBarberInputSchema.safeParse(req.body);
+    if (!validationResult.success) {
+      return res.status(400).json(createErrorResponse('Validation failed', validationResult.error, 'VALIDATION_ERROR'));
+    }
+
+    const { name, photo_url, specialties, is_working_today = true, is_active = true, display_order = 0 } = validationResult.data;
+    const barber_id = uuidv4();
+    const now = new Date().toISOString();
+
+    const result = await pool.query(
+      `INSERT INTO barbers (barber_id, name, photo_url, specialties, is_working_today, is_active, display_order, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $8)
+       RETURNING *`,
+      [barber_id, name, photo_url || null, JSON.stringify(specialties || []), is_working_today, is_active, display_order, now]
+    );
+
+    res.status(201).json({ barber: result.rows[0], message: 'Barber created successfully' });
+  } catch (error) {
+    console.error('Create barber error:', error);
+    res.status(500).json(createErrorResponse('Failed to create barber', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Update barber (admin)
+app.patch('/api/admin/barbers/:barber_id', authenticateAdmin, async (req, res) => {
+  try {
+    const { barber_id } = req.params;
+    const updates: string[] = [];
+    const params: any[] = [];
+    let paramCount = 1;
+
+    const allowedFields = ['name', 'photo_url', 'specialties', 'is_working_today', 'is_active', 'display_order'];
+    allowedFields.forEach(field => {
+      if (req.body[field] !== undefined) {
+        updates.push(`${field} = $${paramCount++}`);
+        if (field === 'specialties') {
+          params.push(JSON.stringify(req.body[field]));
+        } else {
+          params.push(req.body[field]);
+        }
+      }
+    });
+
+    if (updates.length === 0) {
+      return res.status(400).json(createErrorResponse('No fields to update', null, 'NO_UPDATES'));
+    }
+
+    const now = new Date().toISOString();
+    updates.push(`updated_at = $${paramCount++}`);
+    params.push(now);
+    params.push(barber_id);
+
+    const result = await pool.query(
+      `UPDATE barbers SET ${updates.join(', ')} WHERE barber_id = $${paramCount} RETURNING *`,
+      params
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json(createErrorResponse('Barber not found', null, 'NOT_FOUND'));
+    }
+
+    res.json({ barber: result.rows[0], message: 'Barber updated successfully' });
+  } catch (error) {
+    console.error('Update barber error:', error);
+    res.status(500).json(createErrorResponse('Failed to update barber', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Delete barber (admin)
+app.delete('/api/admin/barbers/:barber_id', authenticateAdmin, async (req, res) => {
+  try {
+    const { barber_id } = req.params;
+
+    // Check if barber exists
+    const checkResult = await pool.query('SELECT * FROM barbers WHERE barber_id = $1', [barber_id]);
+    if (checkResult.rows.length === 0) {
+      return res.status(404).json(createErrorResponse('Barber not found', null, 'NOT_FOUND'));
+    }
+
+    // Delete the barber
+    await pool.query('DELETE FROM barbers WHERE barber_id = $1', [barber_id]);
+
+    res.json({ message: 'Barber deleted successfully', barber_id });
+  } catch (error) {
+    console.error('Delete barber error:', error);
+    res.status(500).json(createErrorResponse('Failed to delete barber', error, 'INTERNAL_ERROR'));
   }
 });
 
@@ -1977,7 +2118,7 @@ app.get('/api/wait-time', async (req, res) => {
 // Join the walk-in queue
 app.post('/api/queue/join', async (req, res) => {
   try {
-    const { customer_name, customer_phone } = req.body;
+    const { customer_name, customer_phone, barber_id } = req.body;
 
     // Validate input
     if (!customer_name || !customer_phone) {
@@ -2004,9 +2145,9 @@ app.post('/api/queue/join', async (req, res) => {
 
     await pool.query(
       `INSERT INTO walk_in_queue 
-       (queue_id, customer_name, customer_phone, status, position, estimated_wait_minutes, estimated_service_duration, created_at, updated_at)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
-      [queue_id, customer_name, customer_phone, 'waiting', position, Math.round(estimatedWait), 30, now, now]
+       (queue_id, customer_name, customer_phone, barber_id, status, position, estimated_wait_minutes, estimated_service_duration, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+      [queue_id, customer_name, customer_phone, barber_id || null, 'waiting', position, Math.round(estimatedWait), 30, now, now]
     );
 
     res.status(201).json({
@@ -2247,7 +2388,7 @@ app.patch('/api/admin/queue/:queue_id', authenticateAdmin, async (req, res) => {
 // Book a call-out service
 app.post('/api/callouts/book', async (req, res) => {
   try {
-    const { customer_name, customer_phone, customer_email, service_address, appointment_date, appointment_time, special_request } = req.body;
+    const { customer_name, customer_phone, customer_email, service_address, appointment_date, appointment_time, barber_id, special_request } = req.body;
     
     // Validate required fields
     if (!customer_name || !customer_phone || !service_address || !appointment_date || !appointment_time) {
@@ -2283,8 +2424,8 @@ app.post('/api/callouts/book', async (req, res) => {
     const result = await pool.query(
       `INSERT INTO call_out_bookings 
        (callout_id, customer_name, customer_phone, customer_email, service_address, 
-        appointment_date, appointment_time, status, price, special_request, created_at, updated_at)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $11)
+        appointment_date, appointment_time, barber_id, status, price, special_request, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $12)
        RETURNING *`,
       [
         callout_id, 
@@ -2294,6 +2435,7 @@ app.post('/api/callouts/book', async (req, res) => {
         service_address,
         appointment_date,
         appointment_time,
+        barber_id || null,
         'scheduled',
         150.00,
         special_request || null,

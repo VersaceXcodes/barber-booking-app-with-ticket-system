@@ -1,7 +1,9 @@
 -- Drop tables if they exist (for clean setup)
+DROP TABLE IF EXISTS call_out_bookings CASCADE;
 DROP TABLE IF EXISTS walk_in_queue CASCADE;
 DROP TABLE IF EXISTS capacity_overrides CASCADE;
 DROP TABLE IF EXISTS bookings CASCADE;
+DROP TABLE IF EXISTS barbers CASCADE;
 DROP TABLE IF EXISTS services CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
@@ -36,6 +38,19 @@ CREATE TABLE services (
     updated_at TEXT NOT NULL
 );
 
+-- Create barbers table
+CREATE TABLE barbers (
+    barber_id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    photo_url TEXT,
+    specialties JSONB,
+    is_working_today BOOLEAN NOT NULL DEFAULT true,
+    is_active BOOLEAN NOT NULL DEFAULT true,
+    display_order INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+
 -- Create bookings table
 CREATE TABLE bookings (
     booking_id TEXT PRIMARY KEY,
@@ -50,6 +65,7 @@ CREATE TABLE bookings (
     customer_phone TEXT NOT NULL,
     booking_for_name TEXT,
     service_id TEXT,
+    barber_id TEXT,
     special_request TEXT,
     inspiration_photos JSONB,
     created_at TEXT NOT NULL,
@@ -64,6 +80,7 @@ CREATE TABLE bookings (
     original_booking_id TEXT,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE SET NULL,
     FOREIGN KEY (service_id) REFERENCES services(service_id) ON DELETE SET NULL,
+    FOREIGN KEY (barber_id) REFERENCES barbers(barber_id) ON DELETE SET NULL,
     FOREIGN KEY (original_booking_id) REFERENCES bookings(booking_id) ON DELETE SET NULL
 );
 
@@ -83,6 +100,7 @@ CREATE TABLE walk_in_queue (
     queue_id TEXT PRIMARY KEY,
     customer_name TEXT NOT NULL,
     customer_phone TEXT NOT NULL,
+    barber_id TEXT,
     status TEXT NOT NULL DEFAULT 'waiting',
     position INTEGER NOT NULL,
     estimated_wait_minutes INTEGER NOT NULL DEFAULT 15,
@@ -90,6 +108,7 @@ CREATE TABLE walk_in_queue (
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL,
     served_at TEXT,
+    FOREIGN KEY (barber_id) REFERENCES barbers(barber_id) ON DELETE SET NULL,
     CONSTRAINT valid_status CHECK (status IN ('waiting', 'in_service', 'completed', 'no_show'))
 );
 
@@ -102,6 +121,7 @@ CREATE TABLE call_out_bookings (
     service_address TEXT NOT NULL,
     appointment_date TEXT NOT NULL,
     appointment_time TEXT NOT NULL,
+    barber_id TEXT,
     status TEXT NOT NULL DEFAULT 'scheduled',
     price NUMERIC NOT NULL DEFAULT 150.00,
     special_request TEXT,
@@ -111,6 +131,7 @@ CREATE TABLE call_out_bookings (
     cancelled_at TEXT,
     cancellation_reason TEXT,
     admin_notes TEXT,
+    FOREIGN KEY (barber_id) REFERENCES barbers(barber_id) ON DELETE SET NULL,
     CONSTRAINT valid_callout_status CHECK (status IN ('scheduled', 'en_route', 'completed', 'cancelled'))
 );
 
@@ -120,15 +141,20 @@ CREATE INDEX idx_users_verification_token ON users(verification_token);
 CREATE INDEX idx_users_reset_token ON users(reset_token);
 CREATE INDEX idx_bookings_user_id ON bookings(user_id);
 CREATE INDEX idx_bookings_service_id ON bookings(service_id);
+CREATE INDEX idx_bookings_barber_id ON bookings(barber_id);
 CREATE INDEX idx_bookings_appointment_date ON bookings(appointment_date);
 CREATE INDEX idx_bookings_status ON bookings(status);
 CREATE INDEX idx_bookings_ticket_number ON bookings(ticket_number);
 CREATE INDEX idx_services_is_active ON services(is_active);
+CREATE INDEX idx_barbers_is_active ON barbers(is_active);
+CREATE INDEX idx_barbers_is_working_today ON barbers(is_working_today);
 CREATE INDEX idx_capacity_overrides_date ON capacity_overrides(override_date);
 CREATE INDEX idx_walk_in_queue_status ON walk_in_queue(status);
 CREATE INDEX idx_walk_in_queue_position ON walk_in_queue(position);
+CREATE INDEX idx_walk_in_queue_barber_id ON walk_in_queue(barber_id);
 CREATE INDEX idx_call_out_bookings_status ON call_out_bookings(status);
 CREATE INDEX idx_call_out_bookings_appointment_date ON call_out_bookings(appointment_date);
+CREATE INDEX idx_call_out_bookings_barber_id ON call_out_bookings(barber_id);
 
 -- Seed users table
 INSERT INTO users (user_id, email, password_hash, name, phone, is_verified, verification_token, verification_token_expiry, reset_token, reset_token_expiry, created_at, updated_at) VALUES
@@ -140,6 +166,12 @@ INSERT INTO users (user_id, email, password_hash, name, phone, is_verified, veri
 ('user_006', 'olivia.davis@email.com', 'password123', 'Olivia Davis', '+1-555-0106', true, NULL, NULL, NULL, NULL, '2024-03-01T16:00:00Z', '2024-03-01T16:00:00Z'),
 ('user_007', 'sophia.wilson@email.com', 'password123', 'Sophia Wilson', '+1-555-0107', false, 'verify_token_sophia_abc123', '2024-12-31T23:59:59Z', NULL, NULL, '2024-03-05T13:30:00Z', '2024-03-05T13:30:00Z'),
 ('user_008', 'isabella.moore@email.com', 'password123', 'Isabella Moore', '+1-555-0108', true, NULL, NULL, 'reset_token_isabella_def456', '2024-12-25T18:00:00Z', '2024-03-10T10:00:00Z', '2024-03-10T10:00:00Z');
+
+-- Seed barbers table
+INSERT INTO barbers (barber_id, name, photo_url, specialties, is_working_today, is_active, display_order, created_at, updated_at) VALUES
+('barber_001', 'Ahmed', 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ahmed', '["Fade", "Beard Trim", "Classic Cuts"]', true, true, 1, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
+('barber_002', 'Samir', 'https://api.dicebear.com/7.x/avataaars/svg?seed=Samir', '["Kids Cuts", "Modern Styles", "Beard Shaping"]', true, true, 2, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z'),
+('barber_003', 'Mo', 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mo', '["Fade", "Line Up", "Hot Towel Shave"]', true, true, 3, '2024-01-01T00:00:00Z', '2024-01-01T00:00:00Z');
 
 -- Seed services table
 INSERT INTO services (service_id, name, description, image_url, duration, price, is_active, display_order, is_callout, created_at, updated_at) VALUES

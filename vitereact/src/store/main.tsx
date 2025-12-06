@@ -33,6 +33,7 @@ interface BookingContext {
   is_callout: boolean;
   selected_date: string | null;
   selected_time: string | null;
+  barber_id: string | null;
   customer_name: string | null;
   customer_email: string | null;
   customer_phone: string | null;
@@ -108,6 +109,7 @@ const initial_booking_context: BookingContext = {
   is_callout: false,
   selected_date: null,
   selected_time: null,
+  barber_id: null,
   customer_name: null,
   customer_email: null,
   customer_phone: null,

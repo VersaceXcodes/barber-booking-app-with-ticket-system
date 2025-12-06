@@ -390,6 +390,14 @@ const GV_TopNav: React.FC = () => {
           Customers
         </Link>
         <Link
+          to="/admin/barbers"
+          className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+            isActiveLink('/admin/barbers') ? 'text-white font-semibold bg-red-800/30' : ''
+          }`}
+        >
+          Barbers
+        </Link>
+        <Link
           to="/admin/gallery"
           className={`text-gray-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors ${
             isActiveLink('/admin/gallery') ? 'text-white font-semibold bg-red-800/30' : ''
@@ -650,6 +658,13 @@ const GV_TopNav: React.FC = () => {
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Customers
+                  </Link>
+                  <Link
+                    to="/admin/barbers"
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:text-white hover:bg-red-800/30 transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Barbers
                   </Link>
                   <Link
                     to="/admin/gallery"

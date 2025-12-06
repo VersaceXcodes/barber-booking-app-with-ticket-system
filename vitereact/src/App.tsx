@@ -25,6 +25,10 @@ import UV_BookingFlow_Review from '@/components/views/UV_BookingFlow_Review';
 import UV_BookingConfirmation from '@/components/views/UV_BookingConfirmation';
 import UV_BookingSearch from '@/components/views/UV_BookingSearch';
 import UV_BookingDetails from '@/components/views/UV_BookingDetails';
+import UV_CallOutBooking from '@/components/views/UV_CallOutBooking';
+import UV_CallOutConfirmation from '@/components/views/UV_CallOutConfirmation';
+import UV_JoinQueue from '@/components/views/UV_JoinQueue';
+import UV_QueueStatus from '@/components/views/UV_QueueStatus';
 import UV_Gallery from '@/components/views/UV_Gallery';
 import UV_Registration from '@/components/views/UV_Registration';
 import UV_Login from '@/components/views/UV_Login';
@@ -211,12 +215,20 @@ const AppContent: React.FC = () => {
               {/* Landing Page */}
               <Route path="/" element={<UV_Landing />} />
 
-              {/* Booking Flow - 5 Steps */}
+              {/* Standard Booking Flow - 5 Steps (In-Shop Appointments) */}
               <Route path="/book/service" element={<UV_BookingFlow_ServiceSelect />} />
               <Route path="/book/date" element={<UV_BookingFlow_DateSelect />} />
               <Route path="/book/time" element={<UV_BookingFlow_TimeSelect />} />
               <Route path="/book/details" element={<UV_BookingFlow_Details />} />
               <Route path="/book/review" element={<UV_BookingFlow_Review />} />
+
+              {/* Call-Out Service Flow */}
+              <Route path="/callout/book" element={<UV_CallOutBooking />} />
+              <Route path="/callout/confirmation" element={<UV_CallOutConfirmation />} />
+
+              {/* Walk-In Queue Flow */}
+              <Route path="/queue/join" element={<UV_JoinQueue />} />
+              <Route path="/queue/status" element={<UV_QueueStatus />} />
 
               {/* Booking Management */}
               <Route path="/booking/confirmation" element={<UV_BookingConfirmation />} />

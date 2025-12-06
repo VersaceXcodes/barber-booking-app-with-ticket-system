@@ -14,6 +14,7 @@ const UV_Landing: React.FC = () => {
   const servicesEnabled = useAppStore(state => state.app_settings.services_enabled);
 
   const handleBookAppointment = () => {
+    // Standard in-shop appointment booking
     if (servicesEnabled) {
       transitionTo('/book/service');
     } else {
@@ -21,13 +22,14 @@ const UV_Landing: React.FC = () => {
     }
   };
 
+  const handleBookCallOut = () => {
+    // Dedicated call-out service booking
+    transitionTo('/callout/book');
+  };
+
   const handleJoinQueue = () => {
-    // Navigate to booking flow for walk-in queue
-    if (servicesEnabled) {
-      transitionTo('/book/service');
-    } else {
-      transitionTo('/book/date');
-    }
+    // Dedicated walk-in queue flow
+    transitionTo('/queue/join');
   };
 
   const handleLogin = () => {
@@ -242,7 +244,7 @@ const UV_Landing: React.FC = () => {
                   </div>
                   
                   <motion.button
-                    onClick={handleBookAppointment}
+                    onClick={handleBookCallOut}
                     className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg font-bold text-lg shadow-2xl hover:shadow-amber-500/50 transition-all duration-300"
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.98 }}

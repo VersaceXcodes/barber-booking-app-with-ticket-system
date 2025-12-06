@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppStore } from '@/store/main';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
-import { ChevronDown, ChevronUp, X, Check, AlertCircle, User, Mail, Phone, FileText, Image, Calendar, Clock } from 'lucide-react';
+import { ChevronDown, ChevronUp, X, Check, AlertCircle, User, Mail, Phone, FileText, Image, Calendar, Clock, MapPin } from 'lucide-react';
 import { z } from 'zod';
 
 // ============================================================================
@@ -14,6 +14,7 @@ interface FormData {
   customer_name: string;
   customer_email: string;
   customer_phone: string;
+  customer_address: string | null;
   booking_for_name: string | null;
   special_request: string | null;
   inspiration_photos: string[] | null;
@@ -23,6 +24,7 @@ interface ValidationErrors {
   customer_name?: string;
   customer_email?: string;
   customer_phone?: string;
+  customer_address?: string;
   booking_for_name?: string;
   special_request?: string;
 }
@@ -39,6 +41,7 @@ const customerDetailsSchema = z.object({
       const cleaned = val.replace(/[\s()-]/g, '');
       return /^\+?[1-9]\d{1,14}$/.test(cleaned);
     }, 'Please enter a valid phone number'),
+  customer_address: z.string().min(5, 'Address must be at least 5 characters').max(500, 'Address too long').nullable(),
   booking_for_name: z.string().max(255, 'Name too long').nullable(),
   special_request: z.string().max(500, 'Special request must be 500 characters or less').nullable(),
 });
@@ -68,6 +71,7 @@ const UV_BookingFlow_Details: React.FC = () => {
     customer_name: '',
     customer_email: '',
     customer_phone: '',
+    customer_address: null,
     booking_for_name: null,
     special_request: null,
     inspiration_photos: null,
@@ -175,6 +179,7 @@ const UV_BookingFlow_Details: React.FC = () => {
         customer_name: bookingContext.customer_name || '',
         customer_email: bookingContext.customer_email || '',
         customer_phone: bookingContext.customer_phone || '',
+        customer_address: bookingContext.customer_address || null,
         booking_for_name: bookingContext.booking_for_name || null,
         special_request: bookingContext.special_request || null,
         inspiration_photos: bookingContext.inspiration_photos || null,
@@ -230,13 +235,23 @@ const UV_BookingFlow_Details: React.FC = () => {
 
   const validateAllFields = useCallback((): boolean => {
     try {
-      customerDetailsSchema.parse({
+      // For call-out services, address is required
+      const validationData: any = {
         customer_name: formData.customer_name,
         customer_email: formData.customer_email,
         customer_phone: formData.customer_phone,
+        customer_address: bookingContext.is_callout ? formData.customer_address : null,
         booking_for_name: formData.booking_for_name,
         special_request: formData.special_request,
-      });
+      };
+
+      customerDetailsSchema.parse(validationData);
+
+      // Additional check for call-out address requirement
+      if (bookingContext.is_callout && !formData.customer_address?.trim()) {
+        setValidationErrors({ customer_address: 'Address is required for call-out service' });
+        return false;
+      }
 
       setValidationErrors({});
       return true;
@@ -253,7 +268,7 @@ const UV_BookingFlow_Details: React.FC = () => {
       }
       return false;
     }
-  }, [formData]);
+  }, [formData, bookingContext.is_callout]);
 
   // ============================================================================
   // FORM HANDLERS
@@ -354,6 +369,7 @@ const UV_BookingFlow_Details: React.FC = () => {
       customer_name: formData.customer_name,
       customer_email: formData.customer_email,
       customer_phone: formData.customer_phone,
+      customer_address: formData.customer_address,
       booking_for_name: formData.booking_for_name,
       special_request: formData.special_request,
       inspiration_photos: formData.inspiration_photos,
@@ -386,6 +402,7 @@ const UV_BookingFlow_Details: React.FC = () => {
     formData.customer_name.trim().length > 0 &&
     formData.customer_email.trim().length > 0 &&
     formData.customer_phone.trim().length > 0 &&
+    (!bookingContext.is_callout || (formData.customer_address?.trim().length || 0) > 0) &&
     Object.keys(validationErrors).length === 0;
 
   const progressStep = bookingContext.service_id ? 4 : 3;
@@ -492,8 +509,32 @@ const UV_BookingFlow_Details: React.FC = () => {
             </div>
           </div>
 
+          {/* Call-Out Service Banner */}
+          {bookingContext.is_callout && (
+            <div className="bg-gradient-to-r from-orange-50 to-amber-50 border-2 border-orange-200 rounded-xl p-6 mb-6 shadow-md">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
+                    <MapPin className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-orange-900 mb-2 flex items-center">
+                    <span className="mr-2">Premium Call-Out Service</span>
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-white">
+                      €150
+                    </span>
+                  </h3>
+                  <p className="text-orange-800 text-sm leading-relaxed">
+                    A Master Fade barber will come to your location. Please provide your full address including any special instructions (parking, buzzer, floor number, etc.) in the address or notes field below.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Guest User Banner */}
-          {!isAuthenticated && (
+          {!isAuthenticated && !bookingContext.is_callout && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
               <p className="text-blue-800 text-sm">
                 <strong>Tip:</strong> Create a free account to save your details for faster booking next time.{' '}
@@ -661,6 +702,51 @@ const UV_BookingFlow_Details: React.FC = () => {
                   )}
                   <p className="mt-1 text-sm text-gray-500">For confirmation and reminders</p>
                 </div>
+
+                {/* Address (Call-Out Service Only) */}
+                {bookingContext.is_callout && (
+                  <div>
+                    <label htmlFor="customer_address" className="block text-sm font-medium text-gray-700 mb-2">
+                      Service Address <span className="text-red-600">*</span>
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <MapPin className="h-5 w-5 text-orange-500" />
+                      </div>
+                      <input
+                        id="customer_address"
+                        name="customer_address"
+                        data-testid="customer-address-input"
+                        aria-label="Service Address"
+                        type="text"
+                        value={formData.customer_address || ''}
+                        onChange={(e) => handleFieldChange('customer_address', e.target.value)}
+                        onBlur={() => handleFieldBlur('customer_address')}
+                        placeholder="123 Main St, Dublin 1, D01 ABC1"
+                        aria-required="true"
+                        aria-invalid={!!validationErrors.customer_address}
+                        aria-describedby={validationErrors.customer_address ? "customer-address-error" : undefined}
+                        className={`block w-full pl-10 pr-3 py-3 border-2 rounded-lg focus:outline-none focus:ring-4 focus:ring-orange-100 transition-all ${
+                          validationErrors.customer_address
+                            ? 'border-red-500 focus:border-red-500'
+                            : 'border-orange-200 focus:border-orange-500'
+                        }`}
+                      />
+                    </div>
+                    {validationErrors.customer_address && (
+                      <p id="customer-address-error" className="mt-1 text-sm text-red-600 flex items-center" role="alert">
+                        <AlertCircle className="w-4 h-4 mr-1" />
+                        {validationErrors.customer_address}
+                      </p>
+                    )}
+                    <p className="mt-1 text-sm text-gray-500">
+                      <span className="flex items-center text-orange-600 font-medium">
+                        <MapPin className="w-4 h-4 mr-1" />
+                        A Master Fade barber will come to your location
+                      </span>
+                    </p>
+                  </div>
+                )}
 
                 {/* Divider */}
                 <div className="border-t border-gray-200 my-6"></div>

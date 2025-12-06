@@ -93,7 +93,8 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
     // Update global booking context
     updateBookingContext({
       service_id: service.service_id,
-      service_name: service.name
+      service_name: service.name,
+      is_callout: service.is_callout
     });
   };
 

@@ -30,11 +30,13 @@ interface AuthenticationState {
 interface BookingContext {
   service_id: string | null;
   service_name: string | null;
+  is_callout: boolean;
   selected_date: string | null;
   selected_time: string | null;
   customer_name: string | null;
   customer_email: string | null;
   customer_phone: string | null;
+  customer_address: string | null;
   booking_for_name: string | null;
   special_request: string | null;
   inspiration_photos: string[] | null;
@@ -103,11 +105,13 @@ const initial_authentication_state: AuthenticationState = {
 const initial_booking_context: BookingContext = {
   service_id: null,
   service_name: null,
+  is_callout: false,
   selected_date: null,
   selected_time: null,
   customer_name: null,
   customer_email: null,
   customer_phone: null,
+  customer_address: null,
   booking_for_name: null,
   special_request: null,
   inspiration_photos: null,

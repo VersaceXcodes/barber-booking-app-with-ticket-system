@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Users, Star, Clock } from 'lucide-react';
+import { Calendar, Users, Star, Clock, MapPin, Sparkles } from 'lucide-react';
 import { usePageTransition } from '@/hooks/usePageTransition';
 import { useAppStore } from '@/store/main';
 
@@ -185,6 +185,115 @@ const UV_Landing: React.FC = () => {
             </div>
           </motion.div>
         </div>
+
+        {/* Call-Out Service Feature - Premium Highlight */}
+        <motion.section
+          className="mt-16"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 p-1 shadow-2xl">
+            <div className="bg-gradient-to-br from-gray-900/95 via-gray-900/90 to-black/95 backdrop-blur-xl rounded-3xl p-8 sm:p-12">
+              <div className="flex flex-col lg:flex-row items-center gap-8">
+                {/* Left Content */}
+                <div className="flex-1 text-center lg:text-left">
+                  <motion.div 
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full text-white font-bold text-sm mb-4 shadow-lg"
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <Sparkles className="w-4 h-4" />
+                    NEW PREMIUM SERVICE
+                  </motion.div>
+                  
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+                    Call-Out Service
+                    <span className="block text-amber-400">We Come To You</span>
+                  </h2>
+                  
+                  <p className="text-lg sm:text-xl text-gray-300 mb-6 leading-relaxed">
+                    Premium barbering at your doorstep. Perfect for home appointments, special occasions, or when you simply can't make it to the shop.
+                  </p>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start mb-6">
+                    <div className="flex items-center gap-2 text-white">
+                      <MapPin className="w-5 h-5 text-amber-400" />
+                      <span className="font-medium">Your Location</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-white">
+                      <Clock className="w-5 h-5 text-amber-400" />
+                      <span className="font-medium">Flexible Timing</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-white">
+                      <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
+                      <span className="font-medium">Master Barbers</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-3 justify-center lg:justify-start mb-6">
+                    <span className="text-5xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
+                      €150
+                    </span>
+                    <span className="text-gray-400 text-sm">
+                      All-inclusive<br />flat rate
+                    </span>
+                  </div>
+                  
+                  <motion.button
+                    onClick={handleBookAppointment}
+                    className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg font-bold text-lg shadow-2xl hover:shadow-amber-500/50 transition-all duration-300"
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Book Call-Out Service
+                  </motion.button>
+                </div>
+                
+                {/* Right Visual Element */}
+                <div className="flex-shrink-0 w-full lg:w-80">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-500/30 to-orange-500/30 rounded-2xl blur-2xl"></div>
+                    <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6">
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
+                          <div className="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center">
+                            <MapPin className="w-5 h-5 text-white" />
+                          </div>
+                          <div>
+                            <p className="text-white font-semibold text-sm">Home Service</p>
+                            <p className="text-gray-300 text-xs">We travel to you</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
+                          <div className="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center">
+                            <Calendar className="w-5 h-5 text-white" />
+                          </div>
+                          <div>
+                            <p className="text-white font-semibold text-sm">Book Anytime</p>
+                            <p className="text-gray-300 text-xs">Flexible scheduling</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
+                          <div className="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center">
+                            <Sparkles className="w-5 h-5 text-white" />
+                          </div>
+                          <div>
+                            <p className="text-white font-semibold text-sm">Premium Quality</p>
+                            <p className="text-gray-300 text-xs">Same expert service</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.section>
 
         {/* Services Preview Section */}
         <motion.section 

@@ -361,19 +361,31 @@ const UV_BookingConfirmation: React.FC = () => {
         <div className="max-w-4xl mx-auto">
           {/* Success Animation */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4 animate-scale-in">
-              <Check className="w-12 h-12 text-green-600" strokeWidth={3} />
+            <div className={`inline-flex items-center justify-center w-20 h-20 rounded-full mb-4 animate-scale-in ${serviceDetails?.name.toLowerCase().includes('call') ? 'bg-gradient-to-r from-amber-100 to-orange-100' : 'bg-green-100'}`}>
+              {serviceDetails?.name.toLowerCase().includes('call') ? (
+                <MapPin className="w-12 h-12 text-orange-600" strokeWidth={3} />
+              ) : (
+                <Check className="w-12 h-12 text-green-600" strokeWidth={3} />
+              )}
             </div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Booking Confirmed!</h1>
-            <p className="text-xl text-gray-600">Your appointment is all set</p>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+              {serviceDetails?.name.toLowerCase().includes('call') ? 'Call-Out Confirmed!' : 'Booking Confirmed!'}
+            </h1>
+            <p className="text-xl text-gray-600">
+              {serviceDetails?.name.toLowerCase().includes('call') 
+                ? 'A Master Fade barber will arrive at your location' 
+                : 'Your appointment is all set'}
+            </p>
           </div>
           
           {/* Ticket Information Card */}
           <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden mb-8">
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 lg:px-8 py-4">
+            <div className={`px-6 lg:px-8 py-4 ${serviceDetails?.name.toLowerCase().includes('call') ? 'bg-gradient-to-r from-amber-500 to-orange-500' : 'bg-gradient-to-r from-blue-600 to-indigo-600'}`}>
               <div className="flex items-center justify-between">
                 <div className="flex-1">
-                  <p className="text-blue-100 text-sm font-medium mb-1">Ticket Number</p>
+                  <p className={`text-sm font-medium mb-1 ${serviceDetails?.name.toLowerCase().includes('call') ? 'text-orange-100' : 'text-blue-100'}`}>
+                    {serviceDetails?.name.toLowerCase().includes('call') ? 'Call-Out Booking Number' : 'Ticket Number'}
+                  </p>
                   <p className="text-white text-3xl font-bold tracking-wide">{booking.ticket_number}</p>
                 </div>
                 <button
@@ -467,6 +479,29 @@ const UV_BookingConfirmation: React.FC = () => {
                 )}
               </div>
               
+              {/* Service Location (Call-Out Only) */}
+              {serviceDetails?.name.toLowerCase().includes('call') && (
+                <div className="border-l-4 border-orange-600 pl-4">
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2 flex items-center">
+                    <MapPin className="w-4 h-4 mr-1 text-orange-600" />
+                    Service Location
+                  </h3>
+                  <p className="text-gray-900 font-medium mb-1">Address provided in booking details</p>
+                  <div className="mt-3 p-4 bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 rounded-lg">
+                    <p className="text-orange-900 text-sm font-medium mb-2 flex items-center">
+                      <Clock className="w-4 h-4 mr-1" />
+                      Estimated Arrival Window
+                    </p>
+                    <p className="text-orange-800 text-sm">
+                      Our barber will arrive within 15 minutes of your appointment time: <strong>{formatTime(booking.appointment_time)}</strong>
+                    </p>
+                    <p className="text-orange-700 text-xs mt-2">
+                      You'll receive a notification when our barber is en route to your location.
+                    </p>
+                  </div>
+                </div>
+              )}
+              
               {/* Special Requests */}
               {booking.special_request && (
                 <div className="border-l-4 border-purple-600 pl-4">
@@ -501,8 +536,8 @@ const UV_BookingConfirmation: React.FC = () => {
             <div className="space-y-4">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <Check className="w-5 h-5 text-green-600" />
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${serviceDetails?.name.toLowerCase().includes('call') ? 'bg-orange-100' : 'bg-green-100'}`}>
+                    <Check className={`w-5 h-5 ${serviceDetails?.name.toLowerCase().includes('call') ? 'text-orange-600' : 'text-green-600'}`} />
                   </div>
                 </div>
                 <div>
@@ -510,6 +545,20 @@ const UV_BookingConfirmation: React.FC = () => {
                   <p className="text-gray-600 text-sm">Check your inbox and messages</p>
                 </div>
               </div>
+              
+              {serviceDetails?.name.toLowerCase().includes('call') && (
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                      <MapPin className="w-5 h-5 text-orange-600" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-gray-900 font-medium">Barber assigned and en route notification</p>
+                    <p className="text-gray-600 text-sm">You'll be notified when your barber is on the way</p>
+                  </div>
+                </div>
+              )}
               
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
@@ -522,6 +571,20 @@ const UV_BookingConfirmation: React.FC = () => {
                   <p className="text-gray-600 text-sm">So you don't forget!</p>
                 </div>
               </div>
+              
+              {serviceDetails?.name.toLowerCase().includes('call') && (
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                      <Info className="w-5 h-5 text-purple-600" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-gray-900 font-medium">Arrival within 15-minute window</p>
+                    <p className="text-gray-600 text-sm">Our barber will arrive close to your scheduled time</p>
+                  </div>
+                </div>
+              )}
               
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">

@@ -330,8 +330,8 @@ const GV_TopNav: React.FC = () => {
             isActiveLink('/admin/queue') ? 'text-white font-semibold bg-red-800/30' : ''
           }`}
         >
-          Queue & Call-Outs
-          <span className="absolute -top-1 -right-2 flex items-center">
+          Call-Outs
+          <span className="absolute -top-1 -right-1 flex items-center">
             <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
           </span>

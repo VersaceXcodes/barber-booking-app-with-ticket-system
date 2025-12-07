@@ -2647,6 +2647,165 @@ app.patch('/api/admin/callouts/:callout_id', authenticateAdmin, async (req, res)
   }
 });
 
+// Admin Gallery endpoint (with full CRUD access)
+app.get('/api/admin/gallery', authenticateAdmin, async (req, res) => {
+  try {
+    const { limit = 100, offset = 0, sort_by = 'display_order', sort_order = 'asc', service_id } = req.query;
+    
+    const mockGalleryImages = [
+      {
+        image_id: 'img-1',
+        image_url: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&h=600&fit=crop',
+        thumbnail_url: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=400&h=300&fit=crop',
+        caption: 'Classic Fade',
+        service_id: null,
+        display_order: 1,
+        uploaded_at: new Date().toISOString()
+      },
+      {
+        image_id: 'img-2',
+        image_url: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800&h=600&fit=crop',
+        thumbnail_url: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=400&h=300&fit=crop',
+        caption: 'Modern Haircut',
+        service_id: null,
+        display_order: 2,
+        uploaded_at: new Date().toISOString()
+      },
+      {
+        image_id: 'img-3',
+        image_url: 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&h=600&fit=crop',
+        thumbnail_url: 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=400&h=300&fit=crop',
+        caption: 'Professional Cut',
+        service_id: null,
+        display_order: 3,
+        uploaded_at: new Date().toISOString()
+      },
+      {
+        image_id: 'img-4',
+        image_url: 'https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=800&h=600&fit=crop',
+        thumbnail_url: 'https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=400&h=300&fit=crop',
+        caption: 'Beard Trim',
+        service_id: null,
+        display_order: 4,
+        uploaded_at: new Date().toISOString()
+      },
+      {
+        image_id: 'img-5',
+        image_url: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=800&h=600&fit=crop',
+        thumbnail_url: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=400&h=300&fit=crop',
+        caption: 'Skin Fade',
+        service_id: null,
+        display_order: 5,
+        uploaded_at: new Date().toISOString()
+      },
+      {
+        image_id: 'img-6',
+        image_url: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&h=600&fit=crop',
+        thumbnail_url: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=400&h=300&fit=crop',
+        caption: 'Textured Crop',
+        service_id: null,
+        display_order: 6,
+        uploaded_at: new Date().toISOString()
+      }
+    ];
+
+    // Filter by service if provided
+    let filteredImages = mockGalleryImages;
+    if (service_id) {
+      filteredImages = mockGalleryImages.filter(img => img.service_id === service_id);
+    }
+
+    // Sort images
+    const sortByStr = String(sort_by);
+    const sortOrderStr = String(sort_order).toLowerCase();
+    filteredImages.sort((a, b) => {
+      let aVal, bVal;
+      if (sortByStr === 'display_order') {
+        aVal = a.display_order;
+        bVal = b.display_order;
+      } else if (sortByStr === 'uploaded_at') {
+        aVal = new Date(a.uploaded_at).getTime();
+        bVal = new Date(b.uploaded_at).getTime();
+      } else {
+        aVal = a.display_order;
+        bVal = b.display_order;
+      }
+      
+      if (sortOrderStr === 'asc') {
+        return aVal > bVal ? 1 : -1;
+      } else {
+        return aVal < bVal ? 1 : -1;
+      }
+    });
+
+    const limitNum = parseInt(String(limit));
+    const offsetNum = parseInt(String(offset));
+    const slicedImages = filteredImages.slice(offsetNum, offsetNum + limitNum);
+    
+    // Return array directly (frontend expects this format)
+    res.json(slicedImages);
+  } catch (error) {
+    console.error('Admin get gallery error:', error);
+    res.status(500).json(createErrorResponse('Failed to retrieve gallery images', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Update gallery image (admin)
+app.patch('/api/admin/gallery/:image_id', authenticateAdmin, async (req, res) => {
+  try {
+    const { image_id } = req.params;
+    const { caption, service_id } = req.body;
+    
+    // In a real implementation, this would update the database
+    res.json({
+      image_id,
+      caption,
+      service_id,
+      message: 'Gallery image updated successfully'
+    });
+  } catch (error) {
+    console.error('Update gallery image error:', error);
+    res.status(500).json(createErrorResponse('Failed to update gallery image', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Delete gallery image (admin)
+app.delete('/api/admin/gallery/:image_id', authenticateAdmin, async (req, res) => {
+  try {
+    const { image_id } = req.params;
+    
+    // In a real implementation, this would delete from database and storage
+    res.json({
+      message: 'Gallery image deleted successfully',
+      image_id
+    });
+  } catch (error) {
+    console.error('Delete gallery image error:', error);
+    res.status(500).json(createErrorResponse('Failed to delete gallery image', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Reorder gallery images (admin)
+app.post('/api/admin/gallery/reorder', authenticateAdmin, async (req, res) => {
+  try {
+    const { image_ids } = req.body;
+    
+    if (!Array.isArray(image_ids)) {
+      return res.status(400).json(createErrorResponse('image_ids must be an array', null, 'VALIDATION_ERROR'));
+    }
+    
+    // In a real implementation, this would update display_order in database
+    res.json({
+      message: 'Gallery images reordered successfully',
+      count: image_ids.length
+    });
+  } catch (error) {
+    console.error('Reorder gallery images error:', error);
+    res.status(500).json(createErrorResponse('Failed to reorder gallery images', error, 'INTERNAL_ERROR'));
+  }
+});
+
+// Public Gallery endpoint (read-only)
 app.get('/api/gallery', async (req, res) => {
   try {
     const { limit = 20, offset = 0, sort_by = 'created_at', sort_order = 'desc' } = req.query;

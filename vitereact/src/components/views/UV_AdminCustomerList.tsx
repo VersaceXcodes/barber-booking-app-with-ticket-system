@@ -131,27 +131,33 @@ const UV_AdminCustomerList: React.FC = () => {
   } = useQuery<CustomersResponse>({
     queryKey: ['admin-customers', debouncedSearch, typeFilter, sort_by, sort_order, rowsPerPage, offset],
     queryFn: async () => {
-      const params: Record<string, any> = {
-        limit: rowsPerPage,
-        offset: offset,
-        sort_by: sort_by,
-        sort_order: sort_order,
-      };
+      try {
+        const params: Record<string, any> = {
+          limit: rowsPerPage,
+          offset: offset,
+          sort_by: sort_by,
+          sort_order: sort_order,
+        };
 
-      if (debouncedSearch) params.search = debouncedSearch;
-      if (typeFilter !== 'all') params.type = typeFilter;
+        if (debouncedSearch) params.search = debouncedSearch;
+        if (typeFilter !== 'all') params.type = typeFilter;
 
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/admin/customers`,
-        {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-          params,
-        }
-      );
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/admin/customers`,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+            params,
+          }
+        );
 
-      return response.data;
+        console.log('[Customers] Fetched successfully:', response.data);
+        return response.data;
+      } catch (error: any) {
+        console.error('[Customers] Fetch error:', error.response?.data || error.message);
+        throw error;
+      }
     },
     enabled: !!authToken,
     staleTime: 60000, // 1 minute
@@ -349,7 +355,9 @@ const UV_AdminCustomerList: React.FC = () => {
                   </svg>
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2">Error loading customers</h3>
-                <p className="text-gray-300 mb-4">Unable to fetch customer data. Please try again.</p>
+                <p className="text-gray-300 mb-4">
+                  {(customersError as any)?.response?.data?.message || (customersError as any)?.message || 'Unable to fetch customer data. Please try again.'}
+                </p>
                 <button
                   onClick={() => refetchCustomers()}
                   className="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"

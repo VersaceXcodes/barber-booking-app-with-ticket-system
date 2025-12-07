@@ -150,10 +150,23 @@ const UV_AdminSettings: React.FC = () => {
   } = useQuery<Settings>({
     queryKey: ['admin-settings'],
     queryFn: async () => {
-      const response = await axios.get(`${API_BASE_URL}/api/admin/settings`, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      });
-      return response.data;
+      try {
+        console.log('[Settings] Fetching from:', `${API_BASE_URL}/api/admin/settings`);
+        console.log('[Settings] Auth token:', authToken ? 'Present' : 'Missing');
+        const response = await axios.get(`${API_BASE_URL}/api/admin/settings`, {
+          headers: { Authorization: `Bearer ${authToken}` },
+        });
+        console.log('[Settings] Fetched successfully:', response.data);
+        return response.data;
+      } catch (error: any) {
+        console.error('[Settings] Fetch error:', {
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          data: error.response?.data,
+          message: error.message
+        });
+        throw error;
+      }
     },
     enabled: !!authToken,
     staleTime: 60000,
@@ -694,8 +707,13 @@ const UV_AdminSettings: React.FC = () => {
               </svg>
               <h2 className="mt-4 text-xl font-semibold text-white">Failed to Load Settings</h2>
               <p className="mt-2 text-gray-300">
-                {(settingsError as any)?.message || 'An error occurred while loading settings'}
+                {(settingsError as any)?.response?.data?.message || (settingsError as any)?.message || 'An error occurred while loading settings'}
               </p>
+              {(settingsError as any)?.response?.status === 403 && (
+                <p className="mt-2 text-sm text-gray-400">
+                  You may not have permission to access settings. Please check your admin credentials.
+                </p>
+              )}
               <button
                 onClick={() => queryClient.invalidateQueries({ queryKey: ['admin-settings'] })}
                 className="mt-6 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"

@@ -385,14 +385,25 @@ const UV_AdminBarbersList: React.FC = () => {
             <p className="mt-4 text-gray-200">Loading barbers...</p>
           </div>
         ) : barbersError ? (
-          <div className="text-center py-12">
-            <p className="text-red-400 font-semibold">Error loading barbers. Please try again.</p>
-            {import.meta.env.DEV && (
-              <p className="text-sm text-gray-300 mt-2">
-                {(barbersError as any)?.response?.data?.message || (barbersError as any)?.message || 'Unknown error'}
+          <Card className="glass-card-light border-white/25">
+            <CardContent className="text-center py-12">
+              <div className="text-red-500 mb-4">
+                <svg className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-white mb-2">Error loading barbers</h3>
+              <p className="text-gray-200 mb-4">
+                {(barbersError as any)?.response?.data?.message || (barbersError as any)?.message || 'Please try again.'}
               </p>
-            )}
-          </div>
+              <Button 
+                onClick={() => window.location.reload()}
+                className="bg-white text-gray-900 hover:bg-gray-100 font-semibold"
+              >
+                Retry
+              </Button>
+            </CardContent>
+          </Card>
         ) : barbersData?.barbers && barbersData.barbers.length === 0 ? (
           <div className="text-center py-12">
             <User className="h-16 w-16 text-gray-200 mx-auto mb-4" />

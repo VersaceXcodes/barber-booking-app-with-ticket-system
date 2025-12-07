@@ -309,10 +309,16 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
                   })()}
 
                   {/* Service Name */}
-                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 leading-tight">
+                  <h3 className={`text-lg md:text-xl font-semibold mb-2 leading-tight ${
+                    service.is_callout 
+                      ? 'text-[#3B1612]' // Dark maroon on light orange/cream background
+                      : selectedServiceId === service.service_id
+                        ? 'text-[#F6E7D8]' // Warm off-white on dark red selected background
+                        : 'text-[#3B1612]' // Dark maroon on white/light background
+                  }`}>
                     {service.name}
                     {service.is_callout && (
-                      <span className="ml-2 inline-flex items-center text-xs font-medium text-orange-600">
+                      <span className="ml-2 inline-flex items-center text-xs font-medium text-[#6A3A2E]">
                         <svg className="w-4 h-4 mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -323,14 +329,32 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
                   </h3>
 
                   {/* Service Description */}
-                  <p className="text-xs md:text-sm text-gray-300 mb-4 line-clamp-2 leading-relaxed">
+                  <p className={`text-xs md:text-sm mb-4 line-clamp-2 leading-relaxed ${
+                    service.is_callout 
+                      ? 'text-[#6A3A2E]' // Warm brown on light orange/cream background
+                      : selectedServiceId === service.service_id
+                        ? 'text-[#E8D4C4]' // Lighter warm neutral on dark red selected background
+                        : 'text-[#6A3A2E]' // Warm brown on white/light background
+                  }`}>
                     {service.description}
                   </p>
 
                   {/* Duration & Price Footer */}
-                  <div className="flex items-center justify-between pt-3 border-t border-gray-200">
+                  <div className={`flex items-center justify-between pt-3 border-t ${
+                    service.is_callout 
+                      ? 'border-[#E8B895]' // Warm border for orange cards
+                      : selectedServiceId === service.service_id
+                        ? 'border-[#5C1B1B]' // Darker red border for selected dark cards
+                        : 'border-gray-200' // Standard border for white cards
+                  }`}>
                     {/* Duration */}
-                    <div className="flex items-center text-xs md:text-sm text-gray-300">
+                    <div className={`flex items-center text-xs md:text-sm ${
+                      service.is_callout 
+                        ? 'text-[#7A4A3A]' // Darker warm brown on light background
+                        : selectedServiceId === service.service_id
+                          ? 'text-[#E8D4C4]' // Lighter warm neutral on dark red background
+                          : 'text-[#7A4A3A]' // Darker warm brown on white background
+                    }`}>
                       <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -339,7 +363,13 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
 
                     {/* Price */}
                     {service.price !== null && service.price !== undefined && (
-                      <div className={`text-xs md:text-sm font-semibold ${service.is_callout ? 'text-orange-600' : 'text-amber-400'}`}>
+                      <div className={`text-xs md:text-sm font-semibold ${
+                        service.is_callout 
+                          ? 'text-[#D97706]' // Darker warm orange on light background (better contrast)
+                          : selectedServiceId === service.service_id
+                            ? 'text-[#FCD34D]' // Warm gold on dark red background
+                            : 'text-[#D97706]' // Darker warm orange on white background
+                      }`}>
                         {service.is_callout ? '€' : 'From $'}{typeof service.price === 'number' ? service.price.toFixed(2) : parseFloat(String(service.price)).toFixed(2)}
                       </div>
                     )}

@@ -21,6 +21,8 @@ interface Booking {
   customer_phone: string;
   booking_for_name: string | null;
   service_id: string | null;
+  barber_id: string | null;
+  barber_name?: string | null;
   special_request: string | null;
   inspiration_photos: string[] | null;
   created_at: string;

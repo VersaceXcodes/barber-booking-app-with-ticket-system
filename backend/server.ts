@@ -1042,7 +1042,7 @@ app.post('/api/admin/login', async (req, res) => {
 app.get('/api/admin/bookings', authenticateAdmin, async (req, res) => {
   try {
     const { status, service_id, customer_id, appointment_date_from, appointment_date_to, query: searchQuery, limit = 50, offset = 0, sort_by = 'appointment_date', sort_order = 'desc' } = req.query;
-    let query = 'SELECT b.*, s.name as service_name FROM bookings b LEFT JOIN services s ON b.service_id = s.service_id LEFT JOIN users u ON b.user_id = u.user_id WHERE 1=1';
+    let query = 'SELECT b.*, s.name as service_name, br.name as barber_name FROM bookings b LEFT JOIN services s ON b.service_id = s.service_id LEFT JOIN barbers br ON b.barber_id = br.barber_id LEFT JOIN users u ON b.user_id = u.user_id WHERE 1=1';
     const params: any[] = [];
     let paramCount = 1;
 
@@ -1309,7 +1309,11 @@ app.get('/api/barbers', async (req, res) => {
     query += ' ORDER BY display_order ASC, name ASC';
     
     const result = await pool.query(query, params);
-    res.json({ barbers: result.rows });
+    const barbers = result.rows.map(barber => ({
+      ...barber,
+      specialties: typeof barber.specialties === 'string' ? JSON.parse(barber.specialties) : barber.specialties
+    }));
+    res.json({ barbers });
   } catch (error) {
     console.error('Get barbers error:', error);
     res.status(500).json(createErrorResponse('Failed to retrieve barbers', error, 'INTERNAL_ERROR'));
@@ -1320,7 +1324,11 @@ app.get('/api/barbers', async (req, res) => {
 app.get('/api/admin/barbers', authenticateAdmin, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM barbers ORDER BY display_order ASC, name ASC');
-    res.json({ barbers: result.rows });
+    const barbers = result.rows.map(barber => ({
+      ...barber,
+      specialties: typeof barber.specialties === 'string' ? JSON.parse(barber.specialties) : barber.specialties
+    }));
+    res.json({ barbers });
   } catch (error) {
     console.error('Admin get barbers error:', error);
     res.status(500).json(createErrorResponse('Failed to retrieve barbers', error, 'INTERNAL_ERROR'));
@@ -2299,15 +2307,15 @@ app.get('/api/admin/queue', authenticateAdmin, async (req, res) => {
   try {
     const { status } = req.query;
     
-    let query = 'SELECT * FROM walk_in_queue';
+    let query = 'SELECT q.*, b.name as barber_name FROM walk_in_queue q LEFT JOIN barbers b ON q.barber_id = b.barber_id';
     const params: any[] = [];
     
     if (status) {
-      query += ' WHERE status = $1';
+      query += ' WHERE q.status = $1';
       params.push(status);
     }
     
-    query += ' ORDER BY position ASC, created_at ASC';
+    query += ' ORDER BY q.position ASC, q.created_at ASC';
     
     const result = await pool.query(query, params);
     
@@ -2483,26 +2491,26 @@ app.get('/api/admin/callouts', authenticateAdmin, async (req, res) => {
   try {
     const { status, appointment_date_from, appointment_date_to, limit = 50, offset = 0 } = req.query;
     
-    let query = 'SELECT * FROM call_out_bookings WHERE 1=1';
+    let query = 'SELECT c.*, b.name as barber_name FROM call_out_bookings c LEFT JOIN barbers b ON c.barber_id = b.barber_id WHERE 1=1';
     const params: any[] = [];
     let paramCount = 1;
     
     if (status) {
-      query += ` AND status = $${paramCount++}`;
+      query += ` AND c.status = $${paramCount++}`;
       params.push(status);
     }
     
     if (appointment_date_from) {
-      query += ` AND appointment_date >= $${paramCount++}`;
+      query += ` AND c.appointment_date >= $${paramCount++}`;
       params.push(appointment_date_from);
     }
     
     if (appointment_date_to) {
-      query += ` AND appointment_date <= $${paramCount++}`;
+      query += ` AND c.appointment_date <= $${paramCount++}`;
       params.push(appointment_date_to);
     }
     
-    query += ' ORDER BY appointment_date ASC, appointment_time ASC';
+    query += ' ORDER BY c.appointment_date ASC, c.appointment_time ASC';
     query += ` LIMIT $${paramCount++} OFFSET $${paramCount++}`;
     params.push(parseInt(String(limit)), parseInt(String(offset)));
     

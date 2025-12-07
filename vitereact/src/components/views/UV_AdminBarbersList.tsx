@@ -85,15 +85,21 @@ const UV_AdminBarbersList: React.FC = () => {
   } = useQuery<BarbersResponse>({
     queryKey: ['admin-barbers'],
     queryFn: async () => {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/admin/barbers`,
-        {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
-      return response.data;
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/admin/barbers`,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+        console.log('[Barbers] Fetched successfully:', response.data);
+        return response.data;
+      } catch (error: any) {
+        console.error('[Barbers] Fetch error:', error.response?.data || error.message);
+        throw error;
+      }
     },
   });
 
@@ -317,6 +323,11 @@ const UV_AdminBarbersList: React.FC = () => {
         ) : barbersError ? (
           <div className="text-center py-12">
             <p className="text-red-600">Error loading barbers. Please try again.</p>
+            {import.meta.env.DEV && (
+              <p className="text-sm text-gray-400 mt-2">
+                {(barbersError as any)?.response?.data?.message || (barbersError as any)?.message || 'Unknown error'}
+              </p>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

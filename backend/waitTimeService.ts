@@ -135,12 +135,22 @@ export class WaitTimeService {
 
   /**
    * Get the number of active barbers
-   * TODO: This should query a barbers table when implemented
+   * Counts only barbers who are both active AND working today
    */
   private async getActiveBarberCount(): Promise<number> {
-    // For now, return a default value
-    // In the future, this should query a barbers/staff table
-    return DEFAULT_ACTIVE_BARBERS;
+    try {
+      const result = await this.pool.query(
+        `SELECT COUNT(*) as count 
+         FROM barbers 
+         WHERE is_active = TRUE AND is_working_today = TRUE`
+      );
+      const count = parseInt(result.rows[0]?.count || '0');
+      // Return at least 1 to avoid division by zero, or default if no barbers
+      return count > 0 ? count : DEFAULT_ACTIVE_BARBERS;
+    } catch (error) {
+      console.error('Error getting active barber count:', error);
+      return DEFAULT_ACTIVE_BARBERS;
+    }
   }
 
   /**

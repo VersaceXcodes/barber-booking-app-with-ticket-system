@@ -70,7 +70,9 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`;
     const ext = path.extname(file.originalname);
-    cb(null, `service-${uniqueSuffix}${ext}`);
+    // Determine prefix based on endpoint or field name
+    const prefix = req.path.includes('barber') || file.fieldname === 'photo' ? 'barber' : 'service';
+    cb(null, `${prefix}-${uniqueSuffix}${ext}`);
   }
 });
 
@@ -1278,6 +1280,27 @@ app.post('/api/admin/upload/service-image', authenticateAdmin, upload.single('im
   } catch (error) {
     console.error('Image upload error:', error);
     res.status(500).json(createErrorResponse('Failed to upload image', error, 'UPLOAD_ERROR'));
+  }
+});
+
+// Upload barber photo (admin)
+app.post('/api/admin/upload/barber-photo', authenticateAdmin, upload.single('photo'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json(createErrorResponse('No photo file provided', null, 'NO_FILE'));
+    }
+
+    // Return the URL path to the uploaded photo
+    const photoUrl = `/uploads/${req.file.filename}`;
+    
+    res.json({ 
+      success: true,
+      photoUrl: photoUrl,
+      message: 'Photo uploaded successfully' 
+    });
+  } catch (error) {
+    console.error('Photo upload error:', error);
+    res.status(500).json(createErrorResponse('Failed to upload photo', error, 'UPLOAD_ERROR'));
   }
 });
 

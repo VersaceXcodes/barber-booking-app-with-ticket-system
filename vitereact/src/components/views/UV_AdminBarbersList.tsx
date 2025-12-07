@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppStore } from '@/store/main';
-import { Plus, Edit2, Trash2, User, Check, X } from 'lucide-react';
+import { Plus, Edit2, Trash2, User, Check, X, Upload, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -74,6 +74,8 @@ const UV_AdminBarbersList: React.FC = () => {
     is_active: true,
     display_order: 0,
   });
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
   // ====================================================================
   // FETCH BARBERS
@@ -218,6 +220,67 @@ const UV_AdminBarbersList: React.FC = () => {
       is_active: true,
       display_order: 0,
     });
+    setPhotoPreview(null);
+    setUploadingPhoto(false);
+  };
+
+  const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error('Invalid file type. Only JPEG, PNG, GIF, and WebP images are allowed.');
+      return;
+    }
+
+    // Validate file size (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('File size must be less than 5MB.');
+      return;
+    }
+
+    // Create preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPhotoPreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+
+    // Upload file
+    setUploadingPhoto(true);
+    try {
+      const formData = new FormData();
+      formData.append('photo', file);
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}/api/admin/upload/barber-photo`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      if (response.data.photoUrl) {
+        setFormData(prev => ({ ...prev, photo_url: response.data.photoUrl }));
+        toast.success('Photo uploaded successfully');
+      }
+    } catch (error: any) {
+      console.error('Photo upload error:', error);
+      toast.error(error.response?.data?.message || 'Failed to upload photo');
+      setPhotoPreview(null);
+    } finally {
+      setUploadingPhoto(false);
+    }
+  };
+
+  const handleRemovePhoto = () => {
+    setFormData(prev => ({ ...prev, photo_url: '' }));
+    setPhotoPreview(null);
   };
 
   const handleAddBarber = () => {
@@ -235,6 +298,7 @@ const UV_AdminBarbersList: React.FC = () => {
       is_active: barber.is_active,
       display_order: barber.display_order,
     });
+    setPhotoPreview(null); // Clear preview, will use photo_url for display
     setIsEditDialogOpen(true);
   };
 
@@ -329,6 +393,16 @@ const UV_AdminBarbersList: React.FC = () => {
               </p>
             )}
           </div>
+        ) : barbersData?.barbers && barbersData.barbers.length === 0 ? (
+          <div className="text-center py-12">
+            <User className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-white mb-2">No barbers added yet</h3>
+            <p className="text-gray-300 mb-4">Click 'Add Barber' to create your first barber.</p>
+            <Button onClick={handleAddBarber}>
+              <Plus className="h-5 w-5 mr-2" />
+              Add Barber
+            </Button>
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {barbersData?.barbers.map((barber) => (
@@ -420,18 +494,6 @@ const UV_AdminBarbersList: React.FC = () => {
                 </CardContent>
               </Card>
             ))}
-
-            {barbersData?.barbers.length === 0 && (
-              <div className="col-span-3 text-center py-12">
-                <User className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-white mb-2">No barbers yet</h3>
-                <p className="text-gray-300 mb-4">Get started by adding your first barber</p>
-                <Button onClick={handleAddBarber}>
-                  <Plus className="h-5 w-5 mr-2" />
-                  Add Barber
-                </Button>
-              </div>
-            )}
           </div>
         )}
       </div>
@@ -455,15 +517,60 @@ const UV_AdminBarbersList: React.FC = () => {
                 placeholder="e.g., Ahmed, Samir, Mo"
               />
             </div>
+            
+            {/* Photo Upload Section */}
             <div className="grid gap-2">
-              <Label htmlFor="photo_url">Photo URL (optional)</Label>
-              <Input
-                id="photo_url"
-                value={formData.photo_url}
-                onChange={(e) => setFormData({ ...formData, photo_url: e.target.value })}
-                placeholder="https://example.com/photo.jpg"
-              />
+              <Label>Photo (optional)</Label>
+              <div className="space-y-3">
+                {photoPreview || formData.photo_url ? (
+                  <div className="relative">
+                    <img
+                      src={photoPreview || formData.photo_url}
+                      alt="Photo preview"
+                      className="w-32 h-32 rounded-lg object-cover border-2 border-gray-200"
+                    />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="sm"
+                      className="absolute -top-2 -right-2"
+                      onClick={handleRemovePhoto}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ) : null}
+                
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={handlePhotoUpload}
+                      disabled={uploadingPhoto}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                  {uploadingPhoto && (
+                    <div className="flex items-center text-sm text-gray-500">
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      Uploading...
+                    </div>
+                  )}
+                </div>
+                
+                <div className="text-xs text-gray-500">
+                  Or paste a photo URL below
+                </div>
+                <Input
+                  id="photo_url"
+                  value={formData.photo_url}
+                  onChange={(e) => setFormData({ ...formData, photo_url: e.target.value })}
+                  placeholder="https://example.com/photo.jpg"
+                />
+              </div>
             </div>
+
             <div className="grid gap-2">
               <Label htmlFor="specialties">Specialties (comma-separated, optional)</Label>
               <Input
@@ -530,15 +637,60 @@ const UV_AdminBarbersList: React.FC = () => {
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               />
             </div>
+            
+            {/* Photo Upload Section */}
             <div className="grid gap-2">
-              <Label htmlFor="edit_photo_url">Photo URL (optional)</Label>
-              <Input
-                id="edit_photo_url"
-                value={formData.photo_url}
-                onChange={(e) => setFormData({ ...formData, photo_url: e.target.value })}
-                placeholder="https://example.com/photo.jpg"
-              />
+              <Label>Photo (optional)</Label>
+              <div className="space-y-3">
+                {photoPreview || formData.photo_url ? (
+                  <div className="relative">
+                    <img
+                      src={photoPreview || formData.photo_url}
+                      alt="Photo preview"
+                      className="w-32 h-32 rounded-lg object-cover border-2 border-gray-200"
+                    />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="sm"
+                      className="absolute -top-2 -right-2"
+                      onClick={handleRemovePhoto}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ) : null}
+                
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={handlePhotoUpload}
+                      disabled={uploadingPhoto}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                  {uploadingPhoto && (
+                    <div className="flex items-center text-sm text-gray-500">
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      Uploading...
+                    </div>
+                  )}
+                </div>
+                
+                <div className="text-xs text-gray-500">
+                  Or paste a photo URL below
+                </div>
+                <Input
+                  id="edit_photo_url"
+                  value={formData.photo_url}
+                  onChange={(e) => setFormData({ ...formData, photo_url: e.target.value })}
+                  placeholder="https://example.com/photo.jpg"
+                />
+              </div>
             </div>
+
             <div className="grid gap-2">
               <Label htmlFor="edit_specialties">Specialties (comma-separated, optional)</Label>
               <Input

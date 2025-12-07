@@ -312,7 +312,7 @@ const UV_AdminDashboardHome: React.FC = () => {
                 <select
                   value={selectedDateRange}
                   onChange={(e) => setSelectedDateRange(e.target.value as DateRangeOption)}
-                  className="block w-full sm:w-auto px-4 py-2 bg-[#2D0808] border border-white/20 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-all"
+                  className="block w-full sm:w-auto px-4 py-2 bg-[#2D0808] border border-white/20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                   aria-label="Select date range"
                 >
                   <option value="today">Today</option>
@@ -333,21 +333,21 @@ const UV_AdminDashboardHome: React.FC = () => {
               to="/admin/bookings?status=upcoming"
               className="group"
             >
-              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl hover:scale-105 transition-all duration-200">
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-master-glow p-6 hover:shadow-xl hover:scale-105 hover:bg-white/15 transition-all duration-200">
                 {loadingStats ? (
                   <div className="animate-pulse">
-                    <div className="h-12 w-12 bg-blue-100 rounded-lg mb-4"></div>
-                    <div className="h-8 bg-gray-200 rounded mb-2"></div>
-                    <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                    <div className="h-12 w-12 bg-white/20 rounded-lg mb-4"></div>
+                    <div className="h-8 bg-white/10 rounded mb-2"></div>
+                    <div className="h-4 bg-white/10 rounded w-2/3"></div>
                   </div>
                 ) : (
                   <>
                     <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 bg-blue-100 rounded-lg">
-                        <Calendar className="w-6 h-6 text-amber-400" />
+                      <div className="p-3 bg-gradient-to-br from-amber-500 to-orange-500 rounded-lg shadow-lg">
+                        <Calendar className="w-6 h-6 text-white" />
                       </div>
                       {stats && stats.today_bookings > 0 && (
-                        <div className="flex items-center text-green-600 text-sm font-medium">
+                        <div className="flex items-center text-green-400 text-sm font-medium">
                           <TrendingUp className="w-4 h-4 mr-1" />
                           <span>Active</span>
                         </div>
@@ -369,18 +369,18 @@ const UV_AdminDashboardHome: React.FC = () => {
 
             {/* Revenue Card (conditional) */}
             {stats?.week_revenue !== null && (
-              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6">
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-master-glow p-6 hover:bg-white/15 transition-all duration-200">
                 {loadingStats ? (
                   <div className="animate-pulse">
-                    <div className="h-12 w-12 bg-green-100 rounded-lg mb-4"></div>
-                    <div className="h-8 bg-gray-200 rounded mb-2"></div>
-                    <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                    <div className="h-12 w-12 bg-white/20 rounded-lg mb-4"></div>
+                    <div className="h-8 bg-white/10 rounded mb-2"></div>
+                    <div className="h-4 bg-white/10 rounded w-2/3"></div>
                   </div>
                 ) : (
                   <>
                     <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 bg-green-100 rounded-lg">
-                        <DollarSign className="w-6 h-6 text-green-600" />
+                      <div className="p-3 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg shadow-lg">
+                        <DollarSign className="w-6 h-6 text-white" />
                       </div>
                     </div>
                     <h3 className="text-3xl font-bold text-white mb-1">
@@ -399,21 +399,21 @@ const UV_AdminDashboardHome: React.FC = () => {
               to="/admin/bookings?status=cancelled"
               className="group"
             >
-              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl hover:scale-105 transition-all duration-200">
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-master-glow p-6 hover:shadow-xl hover:scale-105 hover:bg-white/15 transition-all duration-200">
                 {loadingStats ? (
                   <div className="animate-pulse">
-                    <div className="h-12 w-12 bg-red-100 rounded-lg mb-4"></div>
-                    <div className="h-8 bg-gray-200 rounded mb-2"></div>
-                    <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                    <div className="h-12 w-12 bg-white/20 rounded-lg mb-4"></div>
+                    <div className="h-8 bg-white/10 rounded mb-2"></div>
+                    <div className="h-4 bg-white/10 rounded w-2/3"></div>
                   </div>
                 ) : (
                   <>
                     <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 bg-red-100 rounded-lg">
-                        <XCircle className="w-6 h-6 text-red-600" />
+                      <div className="p-3 bg-gradient-to-br from-red-500 to-red-700 rounded-lg shadow-lg">
+                        <XCircle className="w-6 h-6 text-white" />
                       </div>
                       {stats && stats.cancellation_rate > 0 && (
-                        <div className="flex items-center text-red-600 text-sm font-medium">
+                        <div className="flex items-center text-red-400 text-sm font-medium">
                           <TrendingDown className="w-4 h-4 mr-1" />
                           <span>{stats.cancellation_rate.toFixed(1)}%</span>
                         </div>
@@ -430,18 +430,18 @@ const UV_AdminDashboardHome: React.FC = () => {
             </Link>
 
             {/* No-Shows Card */}
-            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6">
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-master-glow p-6 hover:bg-white/15 transition-all duration-200">
               {loadingStats ? (
                 <div className="animate-pulse">
-                  <div className="h-12 w-12 bg-yellow-100 rounded-lg mb-4"></div>
-                  <div className="h-8 bg-gray-200 rounded mb-2"></div>
-                  <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                  <div className="h-12 w-12 bg-white/20 rounded-lg mb-4"></div>
+                  <div className="h-8 bg-white/10 rounded mb-2"></div>
+                  <div className="h-4 bg-white/10 rounded w-2/3"></div>
                 </div>
               ) : (
                 <>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="p-3 bg-yellow-100 rounded-lg">
-                      <AlertTriangle className="w-6 h-6 text-yellow-600" />
+                    <div className="p-3 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-lg shadow-lg">
+                      <AlertTriangle className="w-6 h-6 text-white" />
                     </div>
                   </div>
                   <h3 className="text-3xl font-bold text-white mb-1">
@@ -455,40 +455,40 @@ const UV_AdminDashboardHome: React.FC = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6 mb-8">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-master-glow p-6 mb-8">
             <h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <Link 
                 to="/admin/bookings/new"
-                className="flex flex-col items-center justify-center p-4 bg-[#2D0808] hover:bg-blue-100 rounded-lg border-2 border-blue-200 hover:border-blue-400 transition-all duration-200 group"
+                className="flex flex-col items-center justify-center p-4 bg-[#2D0808] hover:bg-[#3D0F0F] rounded-lg border-2 border-amber-500/30 hover:border-amber-500 transition-all duration-200 group shadow-lg"
               >
                 <Plus className="w-8 h-8 text-amber-400 mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-medium text-blue-900 text-center">Add Manual Booking</span>
+                <span className="text-sm font-medium text-gray-200 text-center">Add Manual Booking</span>
               </Link>
 
               <Link 
                 to="/admin/blocking"
-                className="flex flex-col items-center justify-center p-4 bg-red-50 hover:bg-red-100 rounded-lg border-2 border-red-200 hover:border-red-400 transition-all duration-200 group"
+                className="flex flex-col items-center justify-center p-4 bg-[#2D0808] hover:bg-[#3D0F0F] rounded-lg border-2 border-red-500/30 hover:border-red-500 transition-all duration-200 group shadow-lg"
               >
-                <Lock className="w-8 h-8 text-red-600 mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-medium text-red-900 text-center">Block Time Slot</span>
+                <Lock className="w-8 h-8 text-red-400 mb-2 group-hover:scale-110 transition-transform" />
+                <span className="text-sm font-medium text-gray-200 text-center">Block Time Slot</span>
               </Link>
 
               <Link 
                 to="/admin/gallery/upload"
-                className="flex flex-col items-center justify-center p-4 bg-purple-50 hover:bg-purple-100 rounded-lg border-2 border-purple-200 hover:border-purple-400 transition-all duration-200 group"
+                className="flex flex-col items-center justify-center p-4 bg-[#2D0808] hover:bg-[#3D0F0F] rounded-lg border-2 border-orange-500/30 hover:border-orange-500 transition-all duration-200 group shadow-lg"
               >
-                <Upload className="w-8 h-8 text-purple-600 mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-medium text-purple-900 text-center">Upload to Gallery</span>
+                <Upload className="w-8 h-8 text-orange-400 mb-2 group-hover:scale-110 transition-transform" />
+                <span className="text-sm font-medium text-gray-200 text-center">Upload to Gallery</span>
               </Link>
 
               <button 
                 onClick={handleExportBookings}
                 disabled={exportingCsv}
-                className="flex flex-col items-center justify-center p-4 bg-green-50 hover:bg-green-100 rounded-lg border-2 border-green-200 hover:border-green-400 transition-all duration-200 group disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex flex-col items-center justify-center p-4 bg-[#2D0808] hover:bg-[#3D0F0F] rounded-lg border-2 border-green-500/30 hover:border-green-500 transition-all duration-200 group disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
-                <Download className={`w-8 h-8 text-green-600 mb-2 group-hover:scale-110 transition-transform ${exportingCsv ? 'animate-bounce' : ''}`} />
-                <span className="text-sm font-medium text-green-900 text-center">
+                <Download className={`w-8 h-8 text-green-400 mb-2 group-hover:scale-110 transition-transform ${exportingCsv ? 'animate-bounce' : ''}`} />
+                <span className="text-sm font-medium text-gray-200 text-center">
                   {exportingCsv ? 'Exporting...' : "Export Today's Bookings"}
                 </span>
               </button>
@@ -497,12 +497,12 @@ const UV_AdminDashboardHome: React.FC = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Upcoming Appointments */}
-            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6">
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-master-glow p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold text-white">Next Appointments</h2>
                 <Link 
                   to="/admin/bookings/calendar"
-                  className="text-sm text-amber-400 hover:text-blue-700 font-medium transition-colors"
+                  className="text-sm text-amber-400 hover:text-amber-300 font-medium transition-colors"
                 >
                   View All →
                 </Link>
@@ -511,11 +511,11 @@ const UV_AdminDashboardHome: React.FC = () => {
               {loadingAppointments ? (
                 <div className="space-y-4">
                   {[1, 2, 3].map((i) => (
-                    <div key={i} className="animate-pulse flex items-center space-x-4 p-3 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg">
-                      <div className="h-10 w-10 bg-gray-200 rounded-full"></div>
+                    <div key={i} className="animate-pulse flex items-center space-x-4 p-3 bg-[#2D0808] rounded-lg">
+                      <div className="h-10 w-10 bg-white/10 rounded-full"></div>
                       <div className="flex-1 space-y-2">
-                        <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                        <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                        <div className="h-4 bg-white/10 rounded w-3/4"></div>
+                        <div className="h-3 bg-white/10 rounded w-1/2"></div>
                       </div>
                     </div>
                   ))}
@@ -525,12 +525,12 @@ const UV_AdminDashboardHome: React.FC = () => {
                   {upcomingAppointments.map((appointment) => (
                     <div 
                       key={appointment.booking_id}
-                      className="flex items-center justify-between p-3 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] hover:bg-[#3D0F0F] rounded-lg border border-white/10 transition-all duration-200"
+                      className="flex items-center justify-between p-3 bg-[#2D0808] hover:bg-[#3D0F0F] rounded-lg border border-white/10 hover:border-white/20 transition-all duration-200"
                     >
                       <div className="flex items-center space-x-3 flex-1">
                         <div className="flex-shrink-0">
-                          <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                            <Clock className="w-5 h-5 text-amber-400" />
+                          <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
+                            <Clock className="w-5 h-5 text-white" />
                           </div>
                         </div>
                         <div className="flex-1 min-w-0">
@@ -554,14 +554,14 @@ const UV_AdminDashboardHome: React.FC = () => {
                       <div className="flex items-center space-x-2 ml-4">
                         <a 
                           href={`tel:${appointment.customer_phone}`}
-                          className="p-2 text-gray-300 hover:text-amber-400 hover:bg-[#2D0808] rounded-lg transition-colors"
+                          className="p-2 text-gray-300 hover:text-amber-400 hover:bg-[#3D0F0F] rounded-lg transition-colors"
                           aria-label="Call customer"
                         >
                           <Phone className="w-4 h-4" />
                         </a>
                         <Link 
                           to={`/admin/bookings/${appointment.ticket_number}`}
-                          className="p-2 text-gray-300 hover:text-amber-400 hover:bg-[#2D0808] rounded-lg transition-colors"
+                          className="p-2 text-gray-300 hover:text-amber-400 hover:bg-[#3D0F0F] rounded-lg transition-colors"
                           aria-label="View booking details"
                         >
                           <Eye className="w-4 h-4" />
@@ -576,7 +576,7 @@ const UV_AdminDashboardHome: React.FC = () => {
                   <p className="text-gray-300 text-sm">No upcoming appointments</p>
                   <Link 
                     to="/admin/bookings/new"
-                    className="inline-block mt-3 text-amber-400 hover:text-blue-700 text-sm font-medium"
+                    className="inline-block mt-3 text-amber-400 hover:text-amber-300 text-sm font-medium"
                   >
                     Add a booking →
                   </Link>
@@ -585,7 +585,7 @@ const UV_AdminDashboardHome: React.FC = () => {
             </div>
 
             {/* Recent Activity */}
-            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6">
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-master-glow p-6">
               <h2 className="text-xl font-semibold text-white mb-4">Recent Activity</h2>
 
               {recentActivity.length > 0 ? (
@@ -593,7 +593,7 @@ const UV_AdminDashboardHome: React.FC = () => {
                   {recentActivity.map((activity) => (
                     <div 
                       key={activity.id}
-                      className="flex items-start space-x-3 p-3 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg border border-white/10"
+                      className="flex items-start space-x-3 p-3 bg-[#2D0808] rounded-lg border border-white/10 hover:border-white/20 transition-all"
                     >
                       <div className="flex-shrink-0 mt-0.5">
                         {activity.icon}
@@ -620,10 +620,10 @@ const UV_AdminDashboardHome: React.FC = () => {
 
           {/* Error State */}
           {statsError && (
-            <div className="mt-8 bg-red-50 border border-red-200 rounded-lg p-4">
+            <div className="mt-8 backdrop-blur-xl bg-red-500/10 border border-red-500/30 rounded-lg p-4">
               <div className="flex items-center">
-                <AlertTriangle className="w-5 h-5 text-red-600 mr-2" />
-                <p className="text-red-400 text-sm">
+                <AlertTriangle className="w-5 h-5 text-red-400 mr-2" />
+                <p className="text-red-200 text-sm">
                   Failed to load dashboard data. Please try refreshing the page.
                 </p>
               </div>

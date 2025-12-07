@@ -15,18 +15,18 @@ const UV_Dashboard: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
         {/* Navigation */}
-        <nav className="bg-white shadow">
+        <nav className="bg-[#2D0808] shadow">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
               <div className="flex items-center">
-                <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
+                <h1 className="text-xl font-semibold text-white">Dashboard</h1>
               </div>
               <div className="flex items-center space-x-4">
                 <Link 
                   to="/profile"
-                  className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
                   Profile
                 </Link>
@@ -44,15 +44,15 @@ const UV_Dashboard: React.FC = () => {
         {/* Main content */}
         <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
-            <div className="border-4 border-dashed border-gray-200 rounded-lg p-8">
+            <div className="border-4 border-dashed border-white/10 rounded-lg p-8">
               <div className="text-center">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                <h2 className="text-2xl font-bold text-white mb-4">
                   Welcome back, {currentUser?.name}!
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-300 mb-4">
                   This is your protected dashboard. You can only see this because you're authenticated.
                 </p>
-                <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
+                <div className="bg-[#2D0808] border border-blue-200 rounded-md p-4">
                   <p className="text-blue-700 text-sm">
                     <strong>Email:</strong> {currentUser?.email}
                   </p>

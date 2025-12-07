@@ -561,7 +561,7 @@ const UV_BookingFlow_Details: React.FC = () => {
 
           {/* Guest User Banner */}
           {!isAuthenticated && !bookingContext.is_callout && (
-            <div className="backdrop-blur-xl bg-blue-500/20 border border-blue-400/30 rounded-lg p-4 mb-6">
+            <div className="backdrop-blur-xl bg-[#2D0808]0/20 border border-blue-400/30 rounded-lg p-4 mb-6">
               <p className="text-blue-100 text-sm">
                 <strong>Tip:</strong> Create a free account to save your details for faster booking next time.{' '}
                 <Link to="/register" className="underline font-medium hover:text-blue-200">
@@ -637,7 +637,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                       aria-required="true"
                       aria-invalid={!!validationErrors.customer_name}
                       aria-describedby={validationErrors.customer_name ? "customer-name-error" : undefined}
-                      className={`block w-full pl-10 pr-3 py-3 bg-white/10 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 transition-all text-white placeholder-gray-400 ${
+                      className={`block w-full pl-10 pr-3 py-3 bg-white/10 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 transition-all text-white placeholder-gray-500 ${
                         validationErrors.customer_name
                           ? 'border-red-500 focus:border-red-500'
                           : 'border-white/30 focus:border-red-400'
@@ -675,7 +675,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                       aria-required="true"
                       aria-invalid={!!validationErrors.customer_email}
                       aria-describedby={validationErrors.customer_email ? "customer-email-error" : undefined}
-                      className={`block w-full pl-10 pr-3 py-3 bg-white/10 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 transition-all text-white placeholder-gray-400 ${
+                      className={`block w-full pl-10 pr-3 py-3 bg-white/10 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 transition-all text-white placeholder-gray-500 ${
                         validationErrors.customer_email
                           ? 'border-red-500 focus:border-red-500'
                           : 'border-white/30 focus:border-red-400'
@@ -713,7 +713,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                       aria-required="true"
                       aria-invalid={!!validationErrors.customer_phone}
                       aria-describedby={validationErrors.customer_phone ? "customer-phone-error" : undefined}
-                      className={`block w-full pl-10 pr-3 py-3 bg-white/10 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 transition-all text-white placeholder-gray-400 ${
+                      className={`block w-full pl-10 pr-3 py-3 bg-white/10 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 transition-all text-white placeholder-gray-500 ${
                         validationErrors.customer_phone
                           ? 'border-red-500 focus:border-red-500'
                           : 'border-white/30 focus:border-red-400'
@@ -765,7 +765,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                         {validationErrors.customer_address}
                       </p>
                     )}
-                    <p className="mt-1 text-sm text-gray-500">
+                    <p className="mt-1 text-sm text-gray-300">
                       <span className="flex items-center text-orange-600 font-medium">
                         <MapPin className="w-4 h-4 mr-1" />
                         A Master Fade barber will come to your location
@@ -860,7 +860,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setShowSpecialRequest(!showSpecialRequest)}
-                    className="flex items-center justify-between w-full text-left text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                    className="flex items-center justify-between w-full text-left text-amber-400 hover:text-blue-700 font-medium transition-colors"
                   >
                     <span className="flex items-center">
                       <FileText className="w-5 h-5 mr-2" />
@@ -890,11 +890,11 @@ const UV_BookingFlow_Details: React.FC = () => {
                         placeholder="e.g., 'low fade', 'beard only', 'sensitive skin', 'don't call, text only'"
                         rows={4}
                         maxLength={500}
-                        className="block w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all resize-none"
+                        className="block w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-red-100 focus:border-blue-500 transition-all resize-none"
                       />
                       <div className="flex items-center justify-between text-sm">
-                        <p className="text-gray-500">Tell us your preferences or requirements</p>
-                        <span className={`font-medium ${characterCount > 450 ? 'text-red-600' : 'text-gray-600'}`}>
+                        <p className="text-gray-400">Tell us your preferences or requirements</p>
+                        <span className={`font-medium ${characterCount > 450 ? 'text-red-600' : 'text-gray-300'}`}>
                           {characterCount}/500
                         </span>
                       </div>
@@ -920,9 +920,9 @@ const UV_BookingFlow_Details: React.FC = () => {
                           handleFieldChange('booking_for_name', '');
                         }
                       }}
-                      className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      className="w-5 h-5 text-amber-400 border-gray-300 rounded focus:ring-red-500"
                     />
-                    <span className="text-gray-900 font-medium">I'm booking this appointment for someone else</span>
+                    <span className="text-white font-medium">I'm booking this appointment for someone else</span>
                   </label>
 
                   {showBookingForField && (
@@ -937,9 +937,9 @@ const UV_BookingFlow_Details: React.FC = () => {
                         onChange={(e) => handleFieldChange('booking_for_name', e.target.value)}
                         onBlur={() => handleFieldBlur('booking_for_name')}
                         placeholder="Child's name, family member, etc."
-                        className="block w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all"
+                        className="block w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-red-100 focus:border-blue-500 transition-all"
                       />
-                      <p className="mt-1 text-sm text-gray-500">We'll still use your contact for confirmations</p>
+                      <p className="mt-1 text-sm text-gray-300">We'll still use your contact for confirmations</p>
                       {validationErrors.booking_for_name && (
                         <p className="mt-1 text-sm text-red-600 flex items-center">
                           <AlertCircle className="w-4 h-4 mr-1" />
@@ -955,7 +955,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setShowInspirationPhotos(!showInspirationPhotos)}
-                    className="flex items-center justify-between w-full text-left text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                    className="flex items-center justify-between w-full text-left text-amber-400 hover:text-blue-700 font-medium transition-colors"
                   >
                     <span className="flex items-center">
                       <Image className="w-5 h-5 mr-2" />
@@ -991,13 +991,13 @@ const UV_BookingFlow_Details: React.FC = () => {
                               }
                             }}
                             placeholder="https://example.com/image.jpg"
-                            className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all"
+                            className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-red-100 focus:border-blue-500 transition-all"
                           />
                           <button
                             type="button"
                             onClick={handlePhotoUrlAdd}
                             disabled={!photoUrlInput.trim() || (formData.inspiration_photos?.length || 0) >= 3}
-                            className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                            className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-4 focus:ring-red-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                           >
                             Add
                           </button>
@@ -1008,7 +1008,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                             {photoUrlError}
                           </p>
                         )}
-                        <p className="mt-1 text-sm text-gray-500">Maximum 3 images</p>
+                        <p className="mt-1 text-sm text-gray-300">Maximum 3 images</p>
                       </div>
 
                       {/* Photo Thumbnails */}
@@ -1048,9 +1048,9 @@ const UV_BookingFlow_Details: React.FC = () => {
                         type="checkbox"
                         checked={updateProfileWithChanges}
                         onChange={(e) => setUpdateProfileWithChanges(e.target.checked)}
-                        className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        className="w-5 h-5 text-amber-400 border-gray-300 rounded focus:ring-red-500"
                       />
-                      <span className="text-gray-900">Update my profile with these changes</span>
+                      <span className="text-white">Update my profile with these changes</span>
                     </label>
                   </div>
                 )}
@@ -1082,11 +1082,11 @@ const UV_BookingFlow_Details: React.FC = () => {
               type="button"
               role="button"
               tabIndex={0}
-              className="flex-1 px-6 py-3 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-100 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all focus:outline-none focus:ring-2 focus:ring-white/50"
+              className="flex-1 px-6 py-3 bg-white text-white rounded-lg font-medium hover:bg-gray-100 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all focus:outline-none focus:ring-2 focus:ring-white/50"
             >
               {(updateProfileMutation.isPending || isNavigating) ? (
                 <span className="flex items-center justify-center">
-                  <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-gray-900" fill="none" viewBox="0 0 24 24">
+                  <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>

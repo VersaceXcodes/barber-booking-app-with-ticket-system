@@ -321,29 +321,29 @@ const UV_AdminGalleryManage: React.FC = () => {
   
   return (
     <>
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Gallery Management</h1>
+            <h1 className="text-3xl font-bold text-white">Gallery Management</h1>
           </div>
           
           {/* Tab Navigation */}
-          <div className="mb-6 border-b border-gray-200">
+          <div className="mb-6 border-b border-white/10">
             <nav className="-mb-px flex space-x-8">
               <button
-                className="border-b-2 border-blue-500 py-4 px-1 text-sm font-medium text-blue-600"
+                className="border-b-2 border-blue-500 py-4 px-1 text-sm font-medium text-amber-400"
               >
                 All Images
               </button>
               <Link
                 to="/admin/gallery/upload"
-                className="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                className="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-gray-400 hover:border-white/20 hover:text-gray-300"
               >
                 Upload New
               </Link>
               <button
-                className="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                className="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-gray-400 hover:border-white/20 hover:text-gray-300"
               >
                 Settings
               </button>
@@ -354,13 +354,13 @@ const UV_AdminGalleryManage: React.FC = () => {
           <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center gap-4">
               {/* View Toggle */}
-              <div className="flex rounded-lg border border-gray-300 bg-white">
+              <div className="flex rounded-lg border border-white/20 bg-white">
                 <button
                   onClick={() => setViewMode('grid')}
                   className={`px-4 py-2 text-sm font-medium rounded-l-lg transition-colors ${
                     viewMode === 'grid'
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-700 hover:bg-gray-50'
+                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white'
+                      : 'text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
                   }`}
                 >
                   <Grid className="w-4 h-4" />
@@ -369,8 +369,8 @@ const UV_AdminGalleryManage: React.FC = () => {
                   onClick={() => setViewMode('list')}
                   className={`px-4 py-2 text-sm font-medium rounded-r-lg transition-colors ${
                     viewMode === 'list'
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-700 hover:bg-gray-50'
+                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white'
+                      : 'text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
                   }`}
                 >
                   <List className="w-4 h-4" />
@@ -381,7 +381,7 @@ const UV_AdminGalleryManage: React.FC = () => {
               <select
                 value={sortOrder}
                 onChange={(e) => setSortOrder(e.target.value as 'manual' | 'newest' | 'oldest')}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="rounded-lg border border-white/20 bg-[#2D0808] px-4 py-2 text-sm font-medium text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] focus:outline-none focus:ring-2 focus:ring-red-500"
               >
                 <option value="manual">Manual Order</option>
                 <option value="newest">Newest First</option>
@@ -392,7 +392,7 @@ const UV_AdminGalleryManage: React.FC = () => {
               <select
                 value={serviceFilter || ''}
                 onChange={(e) => setServiceFilter(e.target.value || null)}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="rounded-lg border border-white/20 bg-[#2D0808] px-4 py-2 text-sm font-medium text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] focus:outline-none focus:ring-2 focus:ring-red-500"
               >
                 <option value="">All Services</option>
                 {servicesList.map(service => (
@@ -405,19 +405,19 @@ const UV_AdminGalleryManage: React.FC = () => {
             
             {/* Bulk Actions Toolbar */}
             {selectedImages.size > 0 && (
-              <div className="flex items-center gap-4 bg-blue-50 border border-blue-200 rounded-lg px-4 py-2">
+              <div className="flex items-center gap-4 bg-[#2D0808] border border-blue-200 rounded-lg px-4 py-2">
                 <span className="text-sm font-medium text-blue-900">
                   {selectedImages.size} selected
                 </span>
                 <button
                   onClick={() => setDeleteModalState(Array.from(selectedImages))}
-                  className="text-sm font-medium text-red-600 hover:text-red-700"
+                  className="text-sm font-medium text-red-600 hover:text-red-300"
                 >
                   Delete Selected
                 </button>
                 <button
                   onClick={deselectAllImages}
-                  className="text-sm font-medium text-gray-600 hover:text-gray-700"
+                  className="text-sm font-medium text-gray-300 hover:text-gray-300"
                 >
                   Deselect All
                 </button>
@@ -428,7 +428,7 @@ const UV_AdminGalleryManage: React.FC = () => {
           {/* Loading State */}
           {loadingImages && (
             <div className="flex justify-center items-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
             </div>
           )}
           
@@ -436,12 +436,12 @@ const UV_AdminGalleryManage: React.FC = () => {
           {!loadingImages && galleryImages.length === 0 && (
             <div className="text-center py-12">
               <Camera className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No gallery images yet</h3>
-              <p className="mt-1 text-sm text-gray-500">Get started by uploading your first photo.</p>
+              <h3 className="mt-2 text-sm font-medium text-white">No gallery images yet</h3>
+              <p className="mt-1 text-sm text-gray-400">Get started by uploading your first photo.</p>
               <div className="mt-6">
                 <Link
                   to="/admin/gallery/upload"
-                  className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 >
                   <Upload className="mr-2 h-4 w-4" />
                   Upload Your First Photo
@@ -461,13 +461,13 @@ const UV_AdminGalleryManage: React.FC = () => {
                   onDragOver={(e) => sortOrder === 'manual' && handleDragOver(e, index)}
                   onDrop={(e) => sortOrder === 'manual' && handleDrop(e, index)}
                   onDragEnd={handleDragEnd}
-                  className={`bg-white rounded-lg shadow-md overflow-hidden border-2 transition-all ${
+                  className={`bg-[#2D0808] rounded-lg shadow-md overflow-hidden border-2 transition-all ${
                     draggingImageId === image.image_id
                       ? 'opacity-50 scale-105'
                       : dropTargetIndex === index
                       ? 'border-blue-500'
                       : 'border-transparent'
-                  } ${selectedImages.has(image.image_id) ? 'ring-2 ring-blue-500' : ''}`}
+                  } ${selectedImages.has(image.image_id) ? 'ring-2 ring-red-500' : ''}`}
                 >
                   {/* Checkbox & Drag Handle */}
                   <div className="absolute top-2 left-2 flex items-center gap-2 z-10">
@@ -475,10 +475,10 @@ const UV_AdminGalleryManage: React.FC = () => {
                       type="checkbox"
                       checked={selectedImages.has(image.image_id)}
                       onChange={() => toggleImageSelection(image.image_id)}
-                      className="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      className="h-5 w-5 rounded border-white/20 text-amber-400 focus:ring-red-500"
                     />
                     {sortOrder === 'manual' && (
-                      <div className="cursor-move bg-white rounded p-1 shadow">
+                      <div className="cursor-move bg-[#2D0808] rounded p-1 shadow">
                         <GripVertical className="w-4 h-4 text-gray-400" />
                       </div>
                     )}
@@ -502,7 +502,7 @@ const UV_AdminGalleryManage: React.FC = () => {
                         onChange={(e) => handleCaptionChange(e.target.value)}
                         onBlur={() => handleCaptionBlur(image.image_id)}
                         autoFocus
-                        className="w-full px-2 py-1 text-sm border border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-2 py-1 text-sm border border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
                       />
                     ) : (
                       <p
@@ -510,7 +510,7 @@ const UV_AdminGalleryManage: React.FC = () => {
                           setEditingCaptionId(image.image_id);
                           setTempCaptionValue(image.caption || '');
                         }}
-                        className="text-sm text-gray-900 cursor-pointer hover:bg-gray-50 px-2 py-1 rounded min-h-[28px]"
+                        className="text-sm text-white cursor-pointer hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] px-2 py-1 rounded min-h-[28px]"
                       >
                         {image.caption || 'Click to add caption...'}
                       </p>
@@ -519,7 +519,7 @@ const UV_AdminGalleryManage: React.FC = () => {
                     {/* Service Tag */}
                     {image.service_id && (
                       <div className="mt-2">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-900/30 text-blue-400">
                           {servicesList.find(s => s.service_id === image.service_id)?.name || 'Service'}
                         </span>
                       </div>
@@ -529,14 +529,14 @@ const UV_AdminGalleryManage: React.FC = () => {
                     <div className="mt-3 flex items-center gap-2">
                       <button
                         onClick={() => setEditModalState(image)}
-                        className="flex-1 inline-flex justify-center items-center px-3 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        className="flex-1 inline-flex justify-center items-center px-3 py-1.5 border border-white/20 shadow-sm text-xs font-medium rounded text-gray-300 bg-[#2D0808] hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                       >
                         <Edit2 className="mr-1 h-3 w-3" />
                         Edit
                       </button>
                       <button
                         onClick={() => setDeleteModalState(image)}
-                        className="flex-1 inline-flex justify-center items-center px-3 py-1.5 border border-red-300 shadow-sm text-xs font-medium rounded text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                        className="flex-1 inline-flex justify-center items-center px-3 py-1.5 border border-red-300 shadow-sm text-xs font-medium rounded text-red-300 bg-[#2D0808] hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                       >
                         <Trash2 className="mr-1 h-3 w-3" />
                         Delete
@@ -550,11 +550,11 @@ const UV_AdminGalleryManage: React.FC = () => {
           
           {/* List View */}
           {!loadingImages && galleryImages.length > 0 && viewMode === 'list' && (
-            <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div className="bg-[#2D0808] shadow overflow-hidden sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+                <thead className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                       <input
                         type="checkbox"
                         checked={selectedImages.size === galleryImages.length}
@@ -565,27 +565,27 @@ const UV_AdminGalleryManage: React.FC = () => {
                             selectAllImages();
                           }
                         }}
-                        className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        className="h-4 w-4 rounded border-white/20 text-amber-400 focus:ring-red-500"
                       />
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                       Image
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                       Caption
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                       Service
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                       Uploaded
                     </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-[#2D0808] divide-y divide-gray-200">
                   {galleryImages.map(image => (
                     <tr key={image.image_id}>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -593,7 +593,7 @@ const UV_AdminGalleryManage: React.FC = () => {
                           type="checkbox"
                           checked={selectedImages.has(image.image_id)}
                           onChange={() => toggleImageSelection(image.image_id)}
-                          className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          className="h-4 w-4 rounded border-white/20 text-amber-400 focus:ring-red-500"
                         />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -604,24 +604,24 @@ const UV_AdminGalleryManage: React.FC = () => {
                         />
                       </td>
                       <td className="px-6 py-4">
-                        <p className="text-sm text-gray-900">{image.caption || 'No caption'}</p>
+                        <p className="text-sm text-white">{image.caption || 'No caption'}</p>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         {image.service_id ? (
-                          <span className="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
+                          <span className="px-2 py-1 text-xs font-medium rounded-full bg-blue-900/30 text-blue-400">
                             {servicesList.find(s => s.service_id === image.service_id)?.name || 'Service'}
                           </span>
                         ) : (
-                          <span className="text-sm text-gray-500">None</span>
+                          <span className="text-sm text-gray-400">None</span>
                         )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
                         {new Date(image.uploaded_at).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <button
                           onClick={() => setEditModalState(image)}
-                          className="text-blue-600 hover:text-blue-900 mr-4"
+                          className="text-amber-400 hover:text-blue-900 mr-4"
                         >
                           Edit
                         </button>
@@ -646,15 +646,15 @@ const UV_AdminGalleryManage: React.FC = () => {
         <div className="fixed inset-0 z-50 overflow-y-auto">
           <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             <div
-              className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
+              className="fixed inset-0 transition-opacity bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]0 bg-opacity-75"
               onClick={() => setEditModalState(null)}
             ></div>
             
-            <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full sm:p-6">
+            <div className="inline-block align-bottom bg-[#2D0808] rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full sm:p-6">
               <div className="absolute top-0 right-0 pt-4 pr-4">
                 <button
                   onClick={() => setEditModalState(null)}
-                  className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none"
+                  className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-md text-gray-400 hover:text-gray-400 focus:outline-none"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -662,7 +662,7 @@ const UV_AdminGalleryManage: React.FC = () => {
               
               <div className="sm:flex sm:items-start">
                 <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
+                  <h3 className="text-lg leading-6 font-medium text-white mb-4">
                     Edit Image
                   </h3>
                   
@@ -677,7 +677,7 @@ const UV_AdminGalleryManage: React.FC = () => {
                   
                   {/* Caption Input */}
                   <div className="mb-4">
-                    <label htmlFor="edit-caption" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="edit-caption" className="block text-sm font-medium text-gray-300 mb-2">
                       Caption
                     </label>
                     <input
@@ -685,21 +685,21 @@ const UV_AdminGalleryManage: React.FC = () => {
                       type="text"
                       value={editModalState.caption || ''}
                       onChange={(e) => setEditModalState({ ...editModalState, caption: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-2 border border-white/20 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-blue-500"
                       placeholder="Enter image caption..."
                     />
                   </div>
                   
                   {/* Service Association */}
                   <div className="mb-4">
-                    <label htmlFor="edit-service" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="edit-service" className="block text-sm font-medium text-gray-300 mb-2">
                       Service Association
                     </label>
                     <select
                       id="edit-service"
                       value={editModalState.service_id || ''}
                       onChange={(e) => setEditModalState({ ...editModalState, service_id: e.target.value || null })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-2 border border-white/20 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-blue-500"
                     >
                       <option value="">None</option>
                       {servicesList.map(service => (
@@ -711,9 +711,9 @@ const UV_AdminGalleryManage: React.FC = () => {
                   </div>
                   
                   {/* Metadata */}
-                  <div className="mb-4 bg-gray-50 rounded-lg p-4">
-                    <h4 className="text-sm font-medium text-gray-700 mb-2">Metadata</h4>
-                    <p className="text-sm text-gray-600">
+                  <div className="mb-4 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg p-4">
+                    <h4 className="text-sm font-medium text-gray-300 mb-2">Metadata</h4>
+                    <p className="text-sm text-gray-300">
                       <strong>Uploaded on:</strong> {new Date(editModalState.uploaded_at).toLocaleString()}
                     </p>
                   </div>
@@ -723,13 +723,13 @@ const UV_AdminGalleryManage: React.FC = () => {
                     <button
                       onClick={handleEditModalSave}
                       disabled={updateImageMutation.isPending}
-                      className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:w-auto sm:text-sm disabled:opacity-50"
+                      className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-base font-medium text-white hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm disabled:opacity-50"
                     >
                       {updateImageMutation.isPending ? 'Saving...' : 'Save Changes'}
                     </button>
                     <button
                       onClick={() => setEditModalState(null)}
-                      className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:w-auto sm:text-sm"
+                      className="mt-3 w-full inline-flex justify-center rounded-md border border-white/20 shadow-sm px-4 py-2 bg-[#2D0808] text-base font-medium text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:w-auto sm:text-sm"
                     >
                       Cancel
                     </button>
@@ -738,7 +738,7 @@ const UV_AdminGalleryManage: React.FC = () => {
                         setDeleteModalState(editModalState);
                         setEditModalState(null);
                       }}
-                      className="mt-3 w-full inline-flex justify-center rounded-md border border-red-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-700 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:w-auto sm:text-sm"
+                      className="mt-3 w-full inline-flex justify-center rounded-md border border-red-300 shadow-sm px-4 py-2 bg-[#2D0808] text-base font-medium text-red-300 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:w-auto sm:text-sm"
                     >
                       Delete Image
                     </button>
@@ -755,27 +755,27 @@ const UV_AdminGalleryManage: React.FC = () => {
         <div className="fixed inset-0 z-50 overflow-y-auto">
           <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             <div
-              className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
+              className="fixed inset-0 transition-opacity bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]0 bg-opacity-75"
               onClick={() => setDeleteModalState(null)}
             ></div>
             
-            <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+            <div className="inline-block align-bottom bg-[#2D0808] rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
               <div className="sm:flex sm:items-start">
                 <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                   <Trash2 className="h-6 w-6 text-red-600" />
                 </div>
                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">
+                  <h3 className="text-lg leading-6 font-medium text-white">
                     Delete Image{Array.isArray(deleteModalState) && deleteModalState.length > 1 ? 's' : ''}?
                   </h3>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-400">
                       This action cannot be undone. {Array.isArray(deleteModalState)
                         ? `${deleteModalState.length} image${deleteModalState.length > 1 ? 's' : ''} will be permanently deleted.`
                         : 'This image will be permanently deleted from storage.'}
                     </p>
                     {!Array.isArray(deleteModalState) && deleteModalState.caption && (
-                      <p className="mt-2 text-sm font-medium text-gray-700">
+                      <p className="mt-2 text-sm font-medium text-gray-300">
                         "{deleteModalState.caption}"
                       </p>
                     )}
@@ -792,7 +792,7 @@ const UV_AdminGalleryManage: React.FC = () => {
                 </button>
                 <button
                   onClick={() => setDeleteModalState(null)}
-                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:w-auto sm:text-sm"
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-white/20 shadow-sm px-4 py-2 bg-[#2D0808] text-base font-medium text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:w-auto sm:text-sm"
                 >
                   Cancel
                 </button>

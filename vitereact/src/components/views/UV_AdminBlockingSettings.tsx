@@ -366,30 +366,30 @@ const UV_AdminBlockingSettings: React.FC = () => {
   // ======================================================================
   return (
     <>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
         {/* Header */}
-        <div className="bg-white shadow">
+        <div className="bg-[#2D0808] shadow">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <h1 className="text-3xl font-bold text-gray-900">Blocked Slots and Days</h1>
-            <p className="mt-2 text-sm text-gray-600">
+            <h1 className="text-3xl font-bold text-white">Blocked Slots and Days</h1>
+            <p className="mt-2 text-sm text-gray-300">
               Block specific time slots or entire days to prevent customer bookings during closures
             </p>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="bg-white border-b border-gray-200">
+        <div className="bg-[#2D0808] border-b border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav className="flex space-x-8" aria-label="Tabs">
               <button
-                className="border-b-2 border-blue-600 py-4 px-1 text-sm font-medium text-blue-600"
+                className="border-b-2 border-red-600 py-4 px-1 text-sm font-medium text-amber-400"
                 aria-current="page"
               >
                 Blocked Slots
               </button>
               <Link
                 to="/admin/capacity"
-                className="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 transition-colors"
+                className="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-gray-400 hover:text-gray-300 hover:border-white/20 transition-colors"
               >
                 Daily Overrides
               </Link>
@@ -402,13 +402,13 @@ const UV_AdminBlockingSettings: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Form Section */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-6">Add New Block</h2>
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6">
+                <h2 className="text-xl font-semibold text-white mb-6">Add New Block</h2>
                 
                 <form onSubmit={handleBlockSubmit} className="space-y-6">
                   {/* Block Type */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                    <label className="block text-sm font-medium text-gray-300 mb-3">
                       Block Type <span className="text-red-600">*</span>
                     </label>
                     <div className="space-y-3">
@@ -419,9 +419,9 @@ const UV_AdminBlockingSettings: React.FC = () => {
                           value="entire_day"
                           checked={blockTypeSelection === 'entire_day'}
                           onChange={(e) => setBlockTypeSelection(e.target.value as 'entire_day')}
-                          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                          className="h-4 w-4 text-amber-400 focus:ring-red-500 border-white/20"
                         />
-                        <span className="ml-3 text-sm text-gray-700">Entire Day</span>
+                        <span className="ml-3 text-sm text-gray-300">Entire Day</span>
                       </label>
                       <label className="flex items-center cursor-pointer">
                         <input
@@ -430,16 +430,16 @@ const UV_AdminBlockingSettings: React.FC = () => {
                           value="specific_slot"
                           checked={blockTypeSelection === 'specific_slot'}
                           onChange={(e) => setBlockTypeSelection(e.target.value as 'specific_slot')}
-                          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                          className="h-4 w-4 text-amber-400 focus:ring-red-500 border-white/20"
                         />
-                        <span className="ml-3 text-sm text-gray-700">Specific Time Slot</span>
+                        <span className="ml-3 text-sm text-gray-300">Specific Time Slot</span>
                       </label>
                     </div>
                   </div>
 
                   {/* Date Picker */}
                   <div>
-                    <label htmlFor="block_date" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="block_date" className="block text-sm font-medium text-gray-300 mb-2">
                       Date <span className="text-red-600">*</span>
                     </label>
                     <input
@@ -450,7 +450,7 @@ const UV_AdminBlockingSettings: React.FC = () => {
                         setSelectedDateForBlock(e.target.value);
                         setValidationErrors(prev => ({ ...prev, date: null }));
                       }}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all"
+                      className="w-full px-4 py-3 border-2 border-white/10 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all"
                     />
                     {validationErrors.date && (
                       <p className="mt-2 text-sm text-red-600">{validationErrors.date}</p>
@@ -460,7 +460,7 @@ const UV_AdminBlockingSettings: React.FC = () => {
                   {/* Time Slot Dropdown (conditional) */}
                   {blockTypeSelection === 'specific_slot' && (
                     <div>
-                      <label htmlFor="time_slot" className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="time_slot" className="block text-sm font-medium text-gray-300 mb-2">
                         Time Slot <span className="text-red-600">*</span>
                       </label>
                       <select
@@ -470,7 +470,7 @@ const UV_AdminBlockingSettings: React.FC = () => {
                           setSelectedTimeSlot(e.target.value);
                           setValidationErrors(prev => ({ ...prev, time_slot: null }));
                         }}
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all"
+                        className="w-full px-4 py-3 border-2 border-white/10 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all"
                       >
                         <option value="">Select a time slot</option>
                         {AVAILABLE_TIME_SLOTS.map(slot => (
@@ -485,7 +485,7 @@ const UV_AdminBlockingSettings: React.FC = () => {
 
                   {/* Reason */}
                   <div>
-                    <label htmlFor="block_reason" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="block_reason" className="block text-sm font-medium text-gray-300 mb-2">
                       Reason (Optional)
                     </label>
                     <input
@@ -494,7 +494,7 @@ const UV_AdminBlockingSettings: React.FC = () => {
                       placeholder="e.g., Vacation, Holiday, Emergency"
                       value={blockReason || ''}
                       onChange={(e) => setBlockReason(e.target.value)}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all"
+                      className="w-full px-4 py-3 border-2 border-white/10 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all"
                       maxLength={200}
                     />
                   </div>
@@ -503,7 +503,7 @@ const UV_AdminBlockingSettings: React.FC = () => {
                   <button
                     type="submit"
                     disabled={createBlockMutation.isPending}
-                    className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-lg font-medium hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-4 focus:ring-red-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {createBlockMutation.isPending ? (
                       <span className="flex items-center justify-center">
@@ -523,16 +523,16 @@ const UV_AdminBlockingSettings: React.FC = () => {
 
             {/* Blocks List Section */}
             <div className="lg:col-span-2">
-              <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
-                <div className="px-6 py-4 border-b border-gray-200">
-                  <h2 className="text-xl font-semibold text-gray-900">Blocked Slots</h2>
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                <div className="px-6 py-4 border-b border-white/10">
+                  <h2 className="text-xl font-semibold text-white">Blocked Slots</h2>
                 </div>
 
                 {/* Loading State */}
                 {loadingBlockedSlots && (
                   <div className="p-8 text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading blocked slots...</p>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-red-600 mx-auto"></div>
+                    <p className="mt-4 text-gray-300">Loading blocked slots...</p>
                   </div>
                 )}
 
@@ -544,8 +544,8 @@ const UV_AdminBlockingSettings: React.FC = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
-                    <p className="text-gray-900 font-medium">Failed to load blocked slots</p>
-                    <p className="text-gray-600 text-sm mt-1">Please try refreshing the page</p>
+                    <p className="text-white font-medium">Failed to load blocked slots</p>
+                    <p className="text-gray-300 text-sm mt-1">Please try refreshing the page</p>
                   </div>
                 )}
 
@@ -557,8 +557,8 @@ const UV_AdminBlockingSettings: React.FC = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <p className="text-gray-900 font-medium text-lg">No blocked slots</p>
-                    <p className="text-gray-600 text-sm mt-1">Add a new block using the form on the left</p>
+                    <p className="text-white font-medium text-lg">No blocked slots</p>
+                    <p className="text-gray-300 text-sm mt-1">Add a new block using the form on the left</p>
                   </div>
                 )}
 
@@ -566,44 +566,44 @@ const UV_AdminBlockingSettings: React.FC = () => {
                 {!loadingBlockedSlots && !blockedSlotsError && blockedSlots.length > 0 && (
                   <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
+                      <thead className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
                         <tr>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                             Date
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                             Time
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                             Reason
                           </th>
-                          <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
                             Actions
                           </th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
+                      <tbody className="bg-[#2D0808] divide-y divide-gray-200">
                         {blockedSlots.map((block) => (
-                          <tr key={block.block_id} className="hover:bg-gray-50 transition-colors">
+                          <tr key={block.block_id} className="hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] transition-colors">
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-gray-900">
+                              <div className="text-sm font-medium text-white">
                                 {formatDate(block.block_date)}
                               </div>
-                              <div className="text-xs text-gray-500">
+                              <div className="text-xs text-gray-400">
                                 {block.block_date}
                               </div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className={`inline-flex px-3 py-1 text-sm font-medium rounded-full ${
                                 block.time_slot 
-                                  ? 'bg-blue-100 text-blue-800' 
-                                  : 'bg-gray-100 text-gray-800'
+                                  ? 'bg-blue-900/30 text-blue-400' 
+                                  : 'bg-gray-100 text-gray-200'
                               }`}>
                                 {block.time_slot || 'All Day'}
                               </span>
                             </td>
                             <td className="px-6 py-4">
-                              <div className="text-sm text-gray-900 max-w-xs truncate">
+                              <div className="text-sm text-white max-w-xs truncate">
                                 {block.reason || <span className="text-gray-400 italic">No reason provided</span>}
                               </div>
                             </td>
@@ -628,9 +628,9 @@ const UV_AdminBlockingSettings: React.FC = () => {
 
         {/* Warning Modal - Existing Bookings */}
         {existingBookingsWarning && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="p-6 border-b border-gray-200">
+          <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-6 border-b border-white/10">
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
                     <svg className="h-8 w-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -638,8 +638,8 @@ const UV_AdminBlockingSettings: React.FC = () => {
                     </svg>
                   </div>
                   <div className="ml-4 flex-1">
-                    <h3 className="text-xl font-semibold text-gray-900">Existing Bookings Found</h3>
-                    <p className="mt-2 text-sm text-gray-600">
+                    <h3 className="text-xl font-semibold text-white">Existing Bookings Found</h3>
+                    <p className="mt-2 text-sm text-gray-300">
                       Warning: {existingBookingsWarning.bookings_count} booking{existingBookingsWarning.bookings_count > 1 ? 's' : ''} exist for this {blockTypeSelection === 'entire_day' ? 'day' : 'time slot'}. Blocking will not cancel them automatically.
                     </p>
                   </div>
@@ -649,11 +649,11 @@ const UV_AdminBlockingSettings: React.FC = () => {
               <div className="p-6">
                 {/* Affected Bookings List */}
                 <div className="mb-6">
-                  <h4 className="text-sm font-medium text-gray-900 mb-3">Affected Bookings:</h4>
-                  <div className="bg-gray-50 rounded-lg p-4 max-h-40 overflow-y-auto">
+                  <h4 className="text-sm font-medium text-white mb-3">Affected Bookings:</h4>
+                  <div className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg p-4 max-h-40 overflow-y-auto">
                     <ul className="space-y-2">
                       {existingBookingsWarning.bookings.map((booking) => (
-                        <li key={booking.booking_id} className="text-sm text-gray-700">
+                        <li key={booking.booking_id} className="text-sm text-gray-300">
                           <span className="font-medium">{booking.ticket_number}</span> - {booking.customer_name}
                         </li>
                       ))}
@@ -681,7 +681,7 @@ const UV_AdminBlockingSettings: React.FC = () => {
                         setExistingBookingsWarning(null);
                         setCancelBookingsAction(false);
                       }}
-                      className="w-full bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition-all"
+                      className="w-full bg-gray-100 text-gray-300 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition-all"
                     >
                       Cancel
                     </button>
@@ -713,7 +713,7 @@ const UV_AdminBlockingSettings: React.FC = () => {
                     </button>
                     <button
                       onClick={() => setCancelBookingsAction(false)}
-                      className="w-full bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition-all"
+                      className="w-full bg-gray-100 text-gray-300 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition-all"
                     >
                       Back
                     </button>
@@ -726,32 +726,32 @@ const UV_AdminBlockingSettings: React.FC = () => {
 
         {/* Unblock Confirmation Modal */}
         {unblockConfirmation && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
+          <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-2xl max-w-md w-full">
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Unblock Slot?</h3>
-                <p className="text-gray-600 mb-2">
-                  Unblock <span className="font-medium text-gray-900">{formatDate(unblockConfirmation.block_date)}</span>
+                <h3 className="text-xl font-semibold text-white mb-4">Unblock Slot?</h3>
+                <p className="text-gray-300 mb-2">
+                  Unblock <span className="font-medium text-white">{formatDate(unblockConfirmation.block_date)}</span>
                   {unblockConfirmation.time_slot && (
-                    <span> at <span className="font-medium text-gray-900">{unblockConfirmation.time_slot}</span></span>
+                    <span> at <span className="font-medium text-white">{unblockConfirmation.time_slot}</span></span>
                   )}
                   {!unblockConfirmation.time_slot && <span> (All Day)</span>}?
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-400">
                   This will become available for booking again.
                 </p>
               </div>
-              <div className="bg-gray-50 px-6 py-4 flex gap-3">
+              <div className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] px-6 py-4 flex gap-3">
                 <button
                   onClick={handleUnblockConfirm}
                   disabled={deleteBlockMutation.isPending}
-                  className="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {deleteBlockMutation.isPending ? 'Unblocking...' : 'Unblock'}
                 </button>
                 <button
                   onClick={() => setUnblockConfirmation(null)}
-                  className="flex-1 bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition-all"
+                  className="flex-1 bg-gray-100 text-gray-300 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition-all"
                 >
                   Cancel
                 </button>

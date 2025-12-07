@@ -96,18 +96,18 @@ const UV_UserProfile: React.FC = () => {
 
   if (!currentUser) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Loading user profile...</p>
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] flex items-center justify-center">
+        <p className="text-gray-300">Loading user profile...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Profile Settings</h1>
-          <p className="mt-2 text-gray-600">Manage your account information and preferences</p>
+          <h1 className="text-3xl font-bold text-white">Profile Settings</h1>
+          <p className="mt-2 text-gray-300">Manage your account information and preferences</p>
         </div>
 
         <Card>
@@ -142,14 +142,14 @@ const UV_UserProfile: React.FC = () => {
             {saveMessage && (
               <div className={`p-4 rounded-lg ${
                 saveMessage.type === 'success' 
-                  ? 'bg-green-50 border border-green-200 text-green-800' 
-                  : 'bg-red-50 border border-red-200 text-red-800'
+                  ? 'bg-green-50 border border-green-200 text-green-400' 
+                  : 'bg-red-50 border border-red-200 text-red-400'
               }`}>
                 <p className="text-sm font-medium">{saveMessage.text}</p>
               </div>
             )}
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div className="flex items-center justify-between p-4 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg">
                 <div className="flex items-center gap-3">
                   {currentUser.is_verified ? (
                     <CheckCircle className="h-5 w-5 text-green-600" />
@@ -157,8 +157,8 @@ const UV_UserProfile: React.FC = () => {
                     <XCircle className="h-5 w-5 text-red-600" />
                   )}
                   <div>
-                    <p className="font-medium text-gray-900">Account Status</p>
-                    <p className="text-sm text-gray-600">
+                    <p className="font-medium text-white">Account Status</p>
+                    <p className="text-sm text-gray-300">
                       {currentUser.is_verified ? 'Your account is verified' : 'Account not verified'}
                     </p>
                   </div>
@@ -182,8 +182,8 @@ const UV_UserProfile: React.FC = () => {
                     placeholder="Enter your full name"
                   />
                 ) : (
-                  <div className="p-3 bg-gray-50 rounded-md border border-gray-200">
-                    <p className="text-gray-900">{currentUser.name}</p>
+                  <div className="p-3 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-md border border-white/10">
+                    <p className="text-white">{currentUser.name}</p>
                   </div>
                 )}
               </div>
@@ -193,9 +193,9 @@ const UV_UserProfile: React.FC = () => {
                   <Mail className="h-4 w-4" />
                   Email Address
                 </Label>
-                <div className="p-3 bg-gray-50 rounded-md border border-gray-200">
-                  <p className="text-gray-900">{currentUser.email}</p>
-                  <p className="text-xs text-gray-500 mt-1">Email cannot be changed</p>
+                <div className="p-3 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-md border border-white/10">
+                  <p className="text-white">{currentUser.email}</p>
+                  <p className="text-xs text-gray-400 mt-1">Email cannot be changed</p>
                 </div>
               </div>
 
@@ -213,14 +213,14 @@ const UV_UserProfile: React.FC = () => {
                     placeholder="Enter your phone number"
                   />
                 ) : (
-                  <div className="p-3 bg-gray-50 rounded-md border border-gray-200">
-                    <p className="text-gray-900">{currentUser.phone}</p>
+                  <div className="p-3 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-md border border-white/10">
+                    <p className="text-white">{currentUser.phone}</p>
                   </div>
                 )}
               </div>
 
-              <div className="pt-4 border-t border-gray-200">
-                <p className="text-sm text-gray-600">
+              <div className="pt-4 border-t border-white/10">
+                <p className="text-sm text-gray-300">
                   <span className="font-medium">Member since:</span>{' '}
                   {new Date(currentUser.created_at).toLocaleDateString('en-US', {
                     year: 'numeric',

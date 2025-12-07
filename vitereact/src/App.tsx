@@ -83,10 +83,10 @@ const queryClient = new QueryClient({
 // ============================================================================
 
 const LoadingSpinner: React.FC = () => (
-  <div className="min-h-screen flex items-center justify-center bg-gray-50">
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
     <div className="text-center">
-      <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto"></div>
-      <p className="mt-4 text-gray-600 text-lg">Loading...</p>
+      <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600 mx-auto"></div>
+      <p className="mt-4 text-gray-300 text-lg">Loading...</p>
     </div>
   </div>
 );
@@ -200,7 +200,7 @@ const AppContent: React.FC = () => {
 
   return (
     <>
-      <div className="App min-h-screen flex flex-col bg-gray-50">
+      <div className="App min-h-screen flex flex-col bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
         {/* Global Top Navigation - appears on all pages */}
         <GV_TopNav />
 

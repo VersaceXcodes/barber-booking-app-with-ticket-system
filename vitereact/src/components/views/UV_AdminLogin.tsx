@@ -248,7 +248,7 @@ const UV_AdminLogin: React.FC = () => {
           {/* Header */}
           <div className="text-center mb-8">
             <div className="flex justify-center mb-4">
-              <div className="bg-blue-600 rounded-full p-4">
+              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-full p-4">
                 <Shield className="h-12 w-12 text-white" />
               </div>
             </div>
@@ -257,8 +257,8 @@ const UV_AdminLogin: React.FC = () => {
           </div>
 
           {/* Login Card */}
-          <div className="bg-white rounded-xl shadow-2xl p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-2xl p-8">
+            <h2 className="text-2xl font-bold text-white mb-6 text-center">
               Admin Login
             </h2>
 
@@ -268,7 +268,7 @@ const UV_AdminLogin: React.FC = () => {
                 <div className="flex items-start">
                   <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-3 flex-shrink-0" />
                   <div className="flex-1">
-                    <p className="text-sm text-red-700">{validation_errors.general}</p>
+                    <p className="text-sm text-red-300">{validation_errors.general}</p>
                     {lockoutCountdown && (
                       <p className="text-xs text-red-600 mt-1 font-mono">
                         Time remaining: {lockoutCountdown}
@@ -283,7 +283,7 @@ const UV_AdminLogin: React.FC = () => {
               <div className="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-md">
                 <div className="flex items-start">
                   <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-3 flex-shrink-0" />
-                  <p className="text-sm text-red-700">{globalErrorMessage}</p>
+                  <p className="text-sm text-red-300">{globalErrorMessage}</p>
                 </div>
               </div>
             )}
@@ -292,7 +292,7 @@ const UV_AdminLogin: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                   Admin Email <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
@@ -310,8 +310,8 @@ const UV_AdminLogin: React.FC = () => {
                     onChange={handleEmailChange}
                     placeholder="admin@example.com"
                     className={`block w-full pl-10 pr-3 py-3 border ${
-                      validation_errors.email ? 'border-red-500' : 'border-gray-300'
-                    } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
+                      validation_errors.email ? 'border-red-500' : 'border-white/20'
+                    } rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
                   />
                 </div>
                 {validation_errors.email && (
@@ -321,7 +321,7 @@ const UV_AdminLogin: React.FC = () => {
 
               {/* Password Field */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
                   Password <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
@@ -339,14 +339,14 @@ const UV_AdminLogin: React.FC = () => {
                     onChange={handlePasswordChange}
                     placeholder="••••••••"
                     className={`block w-full pl-10 pr-10 py-3 border ${
-                      validation_errors.password ? 'border-red-500' : 'border-gray-300'
-                    } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
+                      validation_errors.password ? 'border-red-500' : 'border-white/20'
+                    } rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
                   />
                   <button
                     type="button"
                     onClick={togglePasswordVisibility}
                     disabled={isFormDisabled}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-gray-600 disabled:opacity-50"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-gray-300 disabled:opacity-50"
                   >
                     {show_password ? (
                       <EyeOff className="h-5 w-5 text-gray-400" />
@@ -363,7 +363,7 @@ const UV_AdminLogin: React.FC = () => {
               {/* Two-Factor Code Field (conditional) */}
               {show_2fa_field && (
                 <div>
-                  <label htmlFor="two_factor_code" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="two_factor_code" className="block text-sm font-medium text-gray-300 mb-2">
                     Two-Factor Code <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
@@ -383,14 +383,14 @@ const UV_AdminLogin: React.FC = () => {
                       onChange={handleTwoFactorCodeChange}
                       placeholder="000000"
                       className={`block w-full pl-10 pr-3 py-3 border ${
-                        validation_errors.two_factor_code ? 'border-red-500' : 'border-gray-300'
-                      } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-mono text-center text-lg tracking-widest`}
+                        validation_errors.two_factor_code ? 'border-red-500' : 'border-white/20'
+                      } rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-mono text-center text-lg tracking-widest`}
                     />
                   </div>
                   {validation_errors.two_factor_code && (
                     <p className="mt-1 text-sm text-red-600">{validation_errors.two_factor_code}</p>
                   )}
-                  <p className="mt-1 text-xs text-gray-500">
+                  <p className="mt-1 text-xs text-gray-400">
                     Enter the 6-digit code from your authenticator app
                   </p>
                 </div>
@@ -405,9 +405,9 @@ const UV_AdminLogin: React.FC = () => {
                   disabled={isFormDisabled}
                   checked={remember_me}
                   onChange={handleRememberMeChange}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded disabled:opacity-50"
+                  className="h-4 w-4 text-amber-400 focus:ring-red-500 border-white/20 rounded disabled:opacity-50"
                 />
-                <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-700">
+                <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-300">
                   Remember me for 30 days
                 </label>
               </div>
@@ -416,7 +416,7 @@ const UV_AdminLogin: React.FC = () => {
               <button
                 type="submit"
                 disabled={isFormDisabled}
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
               >
                 {is_submitting || isLoading ? (
                   <>
@@ -448,12 +448,12 @@ const UV_AdminLogin: React.FC = () => {
               </button>
 
               {/* Secondary Links */}
-              <div className="space-y-3 pt-4 border-t border-gray-200">
+              <div className="space-y-3 pt-4 border-t border-white/10">
                 <div className="text-center">
                   <button
                     type="button"
                     disabled={isFormDisabled}
-                    className="text-sm text-blue-600 hover:text-blue-500 font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="text-sm text-amber-400 hover:text-blue-500 font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
                     Forgot Password?
                   </button>
@@ -462,7 +462,7 @@ const UV_AdminLogin: React.FC = () => {
                 <div className="text-center">
                   <Link
                     to="/login"
-                    className="text-sm text-gray-600 hover:text-gray-900 font-medium transition-colors"
+                    className="text-sm text-gray-300 hover:text-white font-medium transition-colors"
                   >
                     Customer Login →
                   </Link>
@@ -474,7 +474,7 @@ const UV_AdminLogin: React.FC = () => {
           {/* Footer */}
           <div className="mt-8 text-center">
             <p className="text-sm text-gray-400">Powered by BarberSlot</p>
-            <p className="text-xs text-gray-500 mt-1">v1.0.0</p>
+            <p className="text-xs text-gray-400 mt-1">v1.0.0</p>
           </div>
         </div>
       </div>

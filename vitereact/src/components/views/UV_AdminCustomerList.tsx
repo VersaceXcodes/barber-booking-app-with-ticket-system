@@ -253,19 +253,19 @@ const UV_AdminCustomerList: React.FC = () => {
   // ====================================================================
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
         {/* Page Header */}
-        <div className="bg-white shadow-sm border-b border-gray-200">
+        <div className="bg-[#2D0808] shadow-sm border-b border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h1 className="text-3xl font-bold text-gray-900">Customers</h1>
-            <p className="mt-2 text-gray-600">Manage and view all customer records</p>
+            <h1 className="text-3xl font-bold text-white">Customers</h1>
+            <p className="mt-2 text-gray-300">Manage and view all customer records</p>
           </div>
         </div>
 
         {/* Main Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Filter Bar */}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 mb-6">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6 mb-6">
             <div className="flex flex-col lg:flex-row gap-4">
               {/* Search Input */}
               <div className="flex-1">
@@ -278,7 +278,7 @@ const UV_AdminCustomerList: React.FC = () => {
                     placeholder="Search by name, email, or phone"
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 placeholder-gray-400"
+                    className="block w-full pl-10 pr-3 py-3 border-2 border-white/10 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all text-white placeholder-gray-500"
                   />
                 </div>
               </div>
@@ -288,7 +288,7 @@ const UV_AdminCustomerList: React.FC = () => {
                 <select
                   value={typeFilter}
                   onChange={(e) => handleTypeFilterChange(e.target.value)}
-                  className="block w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900"
+                  className="block w-full px-4 py-3 border-2 border-white/10 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all text-white"
                 >
                   <option value="all">All Customers</option>
                   <option value="registered">Registered</option>
@@ -301,7 +301,7 @@ const UV_AdminCustomerList: React.FC = () => {
                 <select
                   value={sortBy}
                   onChange={(e) => handleSortChange(e.target.value)}
-                  className="block w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900"
+                  className="block w-full px-4 py-3 border-2 border-white/10 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all text-white"
                 >
                   <option value="total_bookings_desc">Total Bookings (High to Low)</option>
                   <option value="last_booking_newest">Last Booking (Newest)</option>
@@ -331,12 +331,12 @@ const UV_AdminCustomerList: React.FC = () => {
           </div>
 
           {/* Customers Table */}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 overflow-hidden">
             {/* Loading State */}
             {loadingCustomers && (
               <div className="p-12 text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mx-auto"></div>
-                <p className="mt-4 text-gray-600">Loading customers...</p>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-red-600 mx-auto"></div>
+                <p className="mt-4 text-gray-300">Loading customers...</p>
               </div>
             )}
 
@@ -348,11 +348,11 @@ const UV_AdminCustomerList: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Error loading customers</h3>
-                <p className="text-gray-600 mb-4">Unable to fetch customer data. Please try again.</p>
+                <h3 className="text-lg font-semibold text-white mb-2">Error loading customers</h3>
+                <p className="text-gray-300 mb-4">Unable to fetch customer data. Please try again.</p>
                 <button
                   onClick={() => refetchCustomers()}
-                  className="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                  className="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"
                 >
                   Retry
                 </button>
@@ -367,8 +367,8 @@ const UV_AdminCustomerList: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No customers yet</h3>
-                <p className="text-gray-600">Customers will appear after the first booking</p>
+                <h3 className="text-lg font-semibold text-white mb-2">No customers yet</h3>
+                <p className="text-gray-300">Customers will appear after the first booking</p>
               </div>
             )}
 
@@ -377,37 +377,37 @@ const UV_AdminCustomerList: React.FC = () => {
               <>
                 <div className="overflow-x-auto">
                   <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
+                    <thead className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
                       <tr>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
                           Name
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
                           Email
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
                           Phone
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
                           Type
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
                           Total Bookings
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
                           Last Booking
                         </th>
-                        <th scope="col" className="px-6 py-4 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-4 text-right text-xs font-semibold text-gray-300 uppercase tracking-wider">
                           Actions
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
+                    <tbody className="bg-[#2D0808] divide-y divide-gray-200">
                       {customers.map((customer) => (
                         <tr
                           key={customer.customer_id}
                           onClick={() => handleRowClick(customer.customer_id)}
-                          className="hover:bg-blue-50 cursor-pointer transition-colors duration-150"
+                          className="hover:bg-[#2D0808] cursor-pointer transition-colors duration-150"
                         >
                           {/* Name with Avatar */}
                           <td className="px-6 py-4 whitespace-nowrap">
@@ -416,29 +416,29 @@ const UV_AdminCustomerList: React.FC = () => {
                                 {getInitials(customer.name)}
                               </div>
                               <div className="ml-4">
-                                <div className="text-sm font-medium text-gray-900">{customer.name}</div>
+                                <div className="text-sm font-medium text-white">{customer.name}</div>
                               </div>
                             </div>
                           </td>
 
                           {/* Email */}
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-900">{customer.email || 'N/A'}</div>
+                            <div className="text-sm text-white">{customer.email || 'N/A'}</div>
                           </td>
 
                           {/* Phone */}
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-900">{customer.phone || 'N/A'}</div>
+                            <div className="text-sm text-white">{customer.phone || 'N/A'}</div>
                           </td>
 
                           {/* Type Badge */}
                           <td className="px-6 py-4 whitespace-nowrap">
                             {customer.customer_type === 'registered' ? (
-                              <span className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                              <span className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-900/30 text-blue-400">
                                 Registered
                               </span>
                             ) : (
-                              <span className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                              <span className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#2D0808] text-gray-200">
                                 Guest
                               </span>
                             )}
@@ -446,12 +446,12 @@ const UV_AdminCustomerList: React.FC = () => {
 
                           {/* Total Bookings */}
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-semibold text-gray-900">{customer.total_bookings}</div>
+                            <div className="text-sm font-semibold text-white">{customer.total_bookings}</div>
                           </td>
 
                           {/* Last Booking */}
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-600">{formatDate(customer.last_booking_date)}</div>
+                            <div className="text-sm text-gray-300">{formatDate(customer.last_booking_date)}</div>
                           </td>
 
                           {/* Actions */}
@@ -460,7 +460,7 @@ const UV_AdminCustomerList: React.FC = () => {
                               {/* View Icon */}
                               <button
                                 onClick={(e) => handleViewCustomer(customer.customer_id, e)}
-                                className="text-blue-600 hover:text-blue-800 transition-colors p-2 rounded-lg hover:bg-blue-50"
+                                className="text-amber-400 hover:text-blue-800 transition-colors p-2 rounded-lg hover:bg-[#2D0808]"
                                 title="View Details"
                               >
                                 <Eye className="h-5 w-5" />
@@ -469,7 +469,7 @@ const UV_AdminCustomerList: React.FC = () => {
                               {/* Bookings Icon */}
                               <button
                                 onClick={(e) => handleViewBookings(customer.customer_id, e)}
-                                className="text-green-600 hover:text-green-800 transition-colors p-2 rounded-lg hover:bg-green-50"
+                                className="text-green-600 hover:text-green-400 transition-colors p-2 rounded-lg hover:bg-green-50"
                                 title="View Bookings"
                               >
                                 <Calendar className="h-5 w-5" />
@@ -479,7 +479,7 @@ const UV_AdminCustomerList: React.FC = () => {
                               <div className="relative">
                                 <button
                                   onClick={(e) => toggleContactDropdown(customer.customer_id, e)}
-                                  className="text-gray-600 hover:text-gray-800 transition-colors p-2 rounded-lg hover:bg-gray-50"
+                                  className="text-gray-300 hover:text-gray-200 transition-colors p-2 rounded-lg hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]"
                                   title="Contact"
                                 >
                                   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -488,12 +488,12 @@ const UV_AdminCustomerList: React.FC = () => {
                                 </button>
 
                                 {contactDropdownOpen === customer.customer_id && (
-                                  <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                                  <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-lg bg-[#2D0808] ring-1 ring-black ring-opacity-5 z-10">
                                     <div className="py-1">
                                       {customer.email && (
                                         <a
                                           href={`mailto:${customer.email}`}
-                                          className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                                          className="flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:bg-[#5C1B1B] transition-colors"
                                           onClick={(e) => e.stopPropagation()}
                                         >
                                           <Mail className="h-4 w-4" />
@@ -503,7 +503,7 @@ const UV_AdminCustomerList: React.FC = () => {
                                       {customer.phone && (
                                         <a
                                           href={`tel:${customer.phone}`}
-                                          className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                                          className="flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:bg-[#5C1B1B] transition-colors"
                                           onClick={(e) => e.stopPropagation()}
                                         >
                                           <Phone className="h-4 w-4" />
@@ -523,9 +523,9 @@ const UV_AdminCustomerList: React.FC = () => {
                 </div>
 
                 {/* Pagination */}
-                <div className="bg-gray-50 px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] px-6 py-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
                   {/* Showing Text */}
-                  <div className="text-sm text-gray-700">
+                  <div className="text-sm text-gray-300">
                     Showing {offset + 1}-{Math.min(offset + rowsPerPage, totalCustomers)} of {totalCustomers} customers
                   </div>
 
@@ -533,11 +533,11 @@ const UV_AdminCustomerList: React.FC = () => {
                   <div className="flex items-center gap-4">
                     {/* Rows Per Page */}
                     <div className="flex items-center gap-2">
-                      <label className="text-sm text-gray-600">Rows:</label>
+                      <label className="text-sm text-gray-300">Rows:</label>
                       <select
                         value={rowsPerPage}
                         onChange={(e) => handleRowsPerPageChange(Number(e.target.value))}
-                        className="px-3 py-1 border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                        className="px-3 py-1 border border-white/20 rounded-md text-sm focus:border-blue-500 focus:ring-2 focus:ring-red-100"
                       >
                         <option value={20}>20</option>
                         <option value={50}>50</option>
@@ -550,9 +550,9 @@ const UV_AdminCustomerList: React.FC = () => {
                       <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
-                        className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        className="p-2 rounded-lg border border-white/20 hover:bg-[#5C1B1B] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
-                        <ChevronLeft className="h-5 w-5 text-gray-600" />
+                        <ChevronLeft className="h-5 w-5 text-gray-300" />
                       </button>
 
                       <div className="flex items-center gap-1">
@@ -574,8 +574,8 @@ const UV_AdminCustomerList: React.FC = () => {
                               onClick={() => handlePageChange(pageNum)}
                               className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
                                 currentPage === pageNum
-                                  ? 'bg-blue-600 text-white'
-                                  : 'text-gray-700 hover:bg-gray-100'
+                                  ? 'bg-gradient-to-r from-red-600 to-red-700 text-white'
+                                  : 'text-gray-300 hover:bg-[#5C1B1B]'
                               }`}
                             >
                               {pageNum}
@@ -587,9 +587,9 @@ const UV_AdminCustomerList: React.FC = () => {
                       <button
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
-                        className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        className="p-2 rounded-lg border border-white/20 hover:bg-[#5C1B1B] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
-                        <ChevronRight className="h-5 w-5 text-gray-600" />
+                        <ChevronRight className="h-5 w-5 text-gray-300" />
                       </button>
                     </div>
                   </div>

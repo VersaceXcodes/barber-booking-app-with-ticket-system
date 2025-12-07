@@ -9,7 +9,21 @@ export default {
 				md: "calc(var(--radius) - 2px)",
 				sm: "calc(var(--radius) - 4px)",
 			},
-			colors: {},
+			colors: {
+				master: {
+					'bg-primary': '#2A0A0A',
+					'bg-mid': '#3D0F0F',
+					'bg-end': '#5C1B1B',
+					'panel': '#2D0808',
+					'panel-dark': '#1A0505',
+					'panel-hover': '#3D0F0F',
+					'red': '#DC2626',
+					'red-dark': '#991B1B',
+					'orange': '#EA580C',
+					'gold': '#F59E0B',
+					'gold-light': '#FCD34D',
+				},
+			},
 			keyframes: {
 				"accordion-down": {
 					from: {

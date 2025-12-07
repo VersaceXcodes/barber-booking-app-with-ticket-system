@@ -325,7 +325,7 @@ const UV_JoinQueue: React.FC = () => {
               </div>
 
               {/* Info Box */}
-              <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4">
+              <div className="bg-[#2D0808]0/20 border border-blue-500/30 rounded-lg p-4">
                 <h3 className="text-white font-semibold mb-2">What Happens Next:</h3>
                 <ul className="space-y-1 text-sm text-gray-300">
                   <li className="flex items-start gap-2">
@@ -508,7 +508,7 @@ const UV_JoinQueue: React.FC = () => {
                 onChange={(e) => handleInputChange('customer_name', e.target.value)}
                 className={`w-full px-4 py-3 bg-white/10 border ${
                   validationErrors.customer_name ? 'border-red-500' : 'border-white/30'
-                } rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                } rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 placeholder="Enter your name"
                 disabled={joinQueueMutation.isPending}
               />
@@ -532,7 +532,7 @@ const UV_JoinQueue: React.FC = () => {
                 onChange={(e) => handleInputChange('customer_phone', e.target.value)}
                 className={`w-full px-4 py-3 bg-white/10 border ${
                   validationErrors.customer_phone ? 'border-red-500' : 'border-white/30'
-                } rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                } rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 placeholder="+353 83 327 6229"
                 disabled={joinQueueMutation.isPending}
               />
@@ -567,7 +567,7 @@ const UV_JoinQueue: React.FC = () => {
                     disabled={joinQueueMutation.isPending}
                     className={`p-4 rounded-lg border-2 transition-all disabled:opacity-50 ${
                       !formData.barber_id
-                        ? 'border-blue-500 bg-blue-500/20'
+                        ? 'border-blue-500 bg-[#2D0808]0/20'
                         : 'border-white/30 bg-white/5 hover:bg-white/10'
                     }`}
                   >
@@ -591,7 +591,7 @@ const UV_JoinQueue: React.FC = () => {
                       disabled={joinQueueMutation.isPending}
                       className={`p-4 rounded-lg border-2 transition-all disabled:opacity-50 ${
                         formData.barber_id === barber.barber_id
-                          ? 'border-blue-500 bg-blue-500/20'
+                          ? 'border-blue-500 bg-[#2D0808]0/20'
                           : 'border-white/30 bg-white/5 hover:bg-white/10'
                       }`}
                     >
@@ -622,7 +622,7 @@ const UV_JoinQueue: React.FC = () => {
             </div>
 
             {/* Info Box */}
-            <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4">
+            <div className="bg-[#2D0808]0/20 border border-blue-500/30 rounded-lg p-4">
               <h3 className="text-white font-semibold mb-2">What to Expect:</h3>
               <ul className="space-y-1 text-sm text-gray-300">
                 <li className="flex items-start gap-2">

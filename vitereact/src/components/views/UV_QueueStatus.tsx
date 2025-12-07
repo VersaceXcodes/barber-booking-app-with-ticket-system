@@ -280,7 +280,7 @@ const UV_QueueStatus: React.FC = () => {
 
             {queueStatus.status === 'waiting' && (
               <div className="border-t border-white/20 pt-6">
-                <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4">
+                <div className="bg-[#2D0808]0/20 border border-blue-500/30 rounded-lg p-4">
                   <h3 className="text-white font-semibold mb-2">While You Wait</h3>
                   <ul className="space-y-1 text-sm text-gray-300">
                     <li className="flex items-start gap-2">

@@ -68,13 +68,13 @@ const getStatusBadgeClasses = (status: string): string => {
   switch (status.toLowerCase()) {
     case 'upcoming':
     case 'confirmed':
-      return 'bg-blue-100 text-blue-800 border-blue-200';
+      return 'bg-blue-900/30 text-blue-400 border-blue-200';
     case 'completed':
-      return 'bg-gray-100 text-gray-800 border-gray-200';
+      return 'bg-gray-100 text-gray-200 border-white/10';
     case 'cancelled':
-      return 'bg-red-100 text-red-800 border-red-200';
+      return 'bg-red-900/30 text-red-400 border-red-200';
     default:
-      return 'bg-gray-100 text-gray-800 border-gray-200';
+      return 'bg-gray-100 text-gray-200 border-white/10';
   }
 };
 
@@ -339,28 +339,28 @@ const UV_BookingSearch: React.FC = () => {
   // Render
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Find Your Booking</h1>
-            <p className="text-lg text-gray-600">
+            <h1 className="text-4xl font-bold text-white mb-4">Find Your Booking</h1>
+            <p className="text-lg text-gray-300">
               Search for your appointment using your ticket number or phone and date
             </p>
           </div>
 
           {/* Search Card */}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 overflow-hidden">
             {/* Tab Navigation */}
-            <div className="border-b border-gray-200">
+            <div className="border-b border-white/10">
               <div className="flex">
                 <button
                   type="button"
                   onClick={() => handleSearchMethodChange('ticket')}
                   className={`flex-1 px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                     searchMethod === 'ticket'
-                      ? 'border-blue-600 text-blue-600 bg-blue-50'
-                      : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      ? 'border-red-600 text-amber-400 bg-[#2D0808]'
+                      : 'border-transparent text-gray-300 hover:text-white hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
                   }`}
                 >
                   <Search className="inline-block size-5 mr-2" />
@@ -371,8 +371,8 @@ const UV_BookingSearch: React.FC = () => {
                   onClick={() => handleSearchMethodChange('phone_date')}
                   className={`flex-1 px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                     searchMethod === 'phone_date'
-                      ? 'border-blue-600 text-blue-600 bg-blue-50'
-                      : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      ? 'border-red-600 text-amber-400 bg-[#2D0808]'
+                      : 'border-transparent text-gray-300 hover:text-white hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
                   }`}
                 >
                   <Phone className="inline-block size-5 mr-2" />
@@ -394,7 +394,7 @@ const UV_BookingSearch: React.FC = () => {
               {searchMethod === 'ticket' && (
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="ticket-number" className="block text-sm font-medium text-gray-900 mb-2">
+                    <label htmlFor="ticket-number" className="block text-sm font-medium text-white mb-2">
                       Ticket Number
                     </label>
                       <input
@@ -420,10 +420,10 @@ const UV_BookingSearch: React.FC = () => {
                         data-form-type="other"
                         data-lpignore="true"
                         data-1p-ignore="true"
-                        className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base"
+                        className="w-full px-4 py-3 rounded-lg border-2 border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all text-white text-base"
                         autoFocus
                       />
-                    <p className="mt-2 text-sm text-gray-600">
+                    <p className="mt-2 text-sm text-gray-300">
                       Format: TKT-YYYYMMDD-XXX (e.g., TKT-20241105-003)
                     </p>
                   </div>
@@ -434,7 +434,7 @@ const UV_BookingSearch: React.FC = () => {
               {searchMethod === 'phone_date' && (
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-900 mb-2">
+                    <label htmlFor="phone" className="block text-sm font-medium text-white mb-2">
                       Phone Number
                     </label>
                     <div className="relative">
@@ -456,14 +456,14 @@ const UV_BookingSearch: React.FC = () => {
                         placeholder="+1 (555) 123-4567"
                         autoComplete="tel"
                         data-form-type="other"
-                        className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base"
+                        className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all text-white text-base"
                         autoFocus
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="date" className="block text-sm font-medium text-gray-900 mb-2">
+                    <label htmlFor="date" className="block text-sm font-medium text-white mb-2">
                       Booking Date
                     </label>
                     <div className="relative">
@@ -499,10 +499,10 @@ const UV_BookingSearch: React.FC = () => {
                           e.preventDefault();
                           setSearchError('Please enter a valid date in YYYY-MM-DD format');
                         }}
-                        className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all text-gray-900 text-base [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                        className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all text-white text-base [&::-webkit-calendar-picker-indicator]:cursor-pointer"
                       />
                     </div>
-                    <p className="mt-2 text-sm text-gray-600">
+                    <p className="mt-2 text-sm text-gray-300">
                       Enter the date of your appointment (e.g., 2024-11-08)
                     </p>
                   </div>
@@ -513,7 +513,7 @@ const UV_BookingSearch: React.FC = () => {
               {searchError && (
                 <div className="bg-red-50 border-2 border-red-200 rounded-lg p-4 flex items-start space-x-3">
                   <AlertCircle className="size-5 text-red-600 mt-0.5 flex-shrink-0" />
-                  <p className="text-sm text-red-800">{searchError}</p>
+                  <p className="text-sm text-red-400">{searchError}</p>
                 </div>
               )}
 
@@ -528,7 +528,7 @@ const UV_BookingSearch: React.FC = () => {
                 aria-live="polite"
                 aria-busy={isLoading}
                 disabled={!canSearch || isLoading}
-                className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                className="w-full px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2 focus:outline-none focus:ring-4 focus:ring-red-300"
               >
                 {isLoading ? (
                   <>
@@ -552,13 +552,13 @@ const UV_BookingSearch: React.FC = () => {
           {data && data.total > 1 && (
             <div className="mt-8 space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-gray-900">
+                <h2 className="text-2xl font-bold text-white">
                   {data.total} Bookings Found
                 </h2>
                 <button
                   type="button"
                   onClick={handleClearSearch}
-                  className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center space-x-1"
+                  className="text-sm text-amber-400 hover:text-blue-700 font-medium flex items-center space-x-1"
                 >
                   <X className="size-4" />
                   <span>Clear Search</span>
@@ -569,22 +569,22 @@ const UV_BookingSearch: React.FC = () => {
                 {data.bookings.map((booking) => (
                   <div
                     key={booking.booking_id}
-                    className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-shadow"
+                    className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-shadow"
                   >
                     <div className="flex items-start justify-between mb-4">
                       <div>
                         <div className="flex items-center space-x-3 mb-2">
-                          <h3 className="text-xl font-bold text-gray-900">{booking.ticket_number}</h3>
+                          <h3 className="text-xl font-bold text-white">{booking.ticket_number}</h3>
                           <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusBadgeClasses(booking.status)}`}>
                             {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                           </span>
                         </div>
-                        <p className="text-gray-600">
+                        <p className="text-gray-300">
                           <Calendar className="inline size-4 mr-1" />
                           {formatDate(booking.appointment_date)} at {booking.appointment_time}
                         </p>
                         {booking.service_id && (
-                          <p className="text-gray-600 text-sm mt-1">
+                          <p className="text-gray-300 text-sm mt-1">
                             Service: {booking.service_id}
                           </p>
                         )}
@@ -593,7 +593,7 @@ const UV_BookingSearch: React.FC = () => {
 
                     <button
                       onClick={() => handleViewDetails(booking)}
-                      className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+                      className="w-full px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium rounded-lg transition-colors"
                     >
                       View Details
                     </button>
@@ -605,46 +605,46 @@ const UV_BookingSearch: React.FC = () => {
 
           {/* Empty State - No Results */}
           {data && data.total === 0 && (
-            <div className="mt-8 bg-white rounded-xl shadow-lg border border-gray-100 p-8 lg:p-12 text-center">
+            <div className="mt-8 bg-[#2D0808] rounded-xl shadow-lg border border-gray-100 p-8 lg:p-12 text-center">
               <div className="max-w-md mx-auto">
                 <div className="mb-6">
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 mb-4">
                     <XCircle className="size-8 text-red-600" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">No Bookings Found</h3>
-                  <p className="text-gray-600">We couldn't find any bookings matching your search.</p>
+                  <h3 className="text-2xl font-bold text-white mb-2">No Bookings Found</h3>
+                  <p className="text-gray-300">We couldn't find any bookings matching your search.</p>
                 </div>
 
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6 text-left">
-                  <p className="font-semibold text-gray-900 mb-3">Suggestions:</p>
-                  <ul className="space-y-2 text-sm text-gray-700">
+                <div className="bg-[#2D0808] border border-blue-200 rounded-lg p-6 mb-6 text-left">
+                  <p className="font-semibold text-white mb-3">Suggestions:</p>
+                  <ul className="space-y-2 text-sm text-gray-300">
                     <li className="flex items-start">
-                      <CheckCircle className="size-4 text-blue-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="size-4 text-amber-400 mr-2 mt-0.5 flex-shrink-0" />
                       <span>Check your ticket number format (TKT-YYYYMMDD-XXX)</span>
                     </li>
                     <li className="flex items-start">
-                      <CheckCircle className="size-4 text-blue-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="size-4 text-amber-400 mr-2 mt-0.5 flex-shrink-0" />
                       <span>Try a different date or phone number format</span>
                     </li>
                     <li className="flex items-start">
-                      <CheckCircle className="size-4 text-blue-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="size-4 text-amber-400 mr-2 mt-0.5 flex-shrink-0" />
                       <span>Contact us if you need help</span>
                     </li>
                   </ul>
                 </div>
 
-                <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6 text-left">
-                  <p className="font-semibold text-gray-900 mb-3">Need Help?</p>
-                  <div className="space-y-2 text-sm text-gray-700">
+                <div className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] border border-white/10 rounded-lg p-6 mb-6 text-left">
+                  <p className="font-semibold text-white mb-3">Need Help?</p>
+                  <div className="space-y-2 text-sm text-gray-300">
                     <p>
                       <strong>Phone:</strong>{' '}
-                      <a href={`tel:${appSettings.shop_phone}`} className="text-blue-600 hover:underline">
+                      <a href={`tel:${appSettings.shop_phone}`} className="text-amber-400 hover:underline">
                         {appSettings.shop_phone || 'Not available'}
                       </a>
                     </p>
                     <p>
                       <strong>Email:</strong>{' '}
-                      <a href={`mailto:${appSettings.shop_email}`} className="text-blue-600 hover:underline">
+                      <a href={`mailto:${appSettings.shop_email}`} className="text-amber-400 hover:underline">
                         {appSettings.shop_email || 'Not available'}
                       </a>
                     </p>
@@ -654,7 +654,7 @@ const UV_BookingSearch: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleClearSearch}
-                  className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all"
+                  className="w-full px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all"
                 >
                   Try Again
                 </button>
@@ -664,14 +664,14 @@ const UV_BookingSearch: React.FC = () => {
 
           {/* Additional Help Section */}
           <div className="mt-8 text-center">
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-300 mb-4">
               Don't have an account yet?{' '}
-              <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium hover:underline">
+              <Link to="/register" className="text-amber-400 hover:text-blue-700 font-medium hover:underline">
                 Sign up
               </Link>{' '}
               for faster booking and history access.
             </p>
-            <Link to="/" className="text-gray-600 hover:text-gray-900 text-sm hover:underline">
+            <Link to="/" className="text-gray-300 hover:text-white text-sm hover:underline">
               ← Back to Home
             </Link>
           </div>

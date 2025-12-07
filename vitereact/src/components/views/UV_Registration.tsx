@@ -367,20 +367,20 @@ const UV_Registration: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full mx-auto space-y-8">
           {/* Header */}
           <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
               Create Your Account
             </h2>
-            <p className="mt-2 text-base text-gray-600 leading-relaxed">
+            <p className="mt-2 text-base text-gray-300 leading-relaxed">
               Book faster with saved details and view your history
             </p>
           </div>
 
           {/* Registration Card */}
-          <div className="bg-white shadow-lg shadow-gray-200/50 rounded-xl border border-gray-100 overflow-hidden">
+          <div className="bg-[#2D0808] shadow-lg shadow-gray-200/50 rounded-xl border border-gray-100 overflow-hidden">
             <div className="p-6 lg:p-8">
               {/* Error Message Banner */}
               {error_message && (
@@ -388,7 +388,7 @@ const UV_Registration: React.FC = () => {
                   <div className="flex items-start">
                     <XCircle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
                     <div className="ml-3">
-                      <p className="text-sm font-medium text-red-800">{error_message}</p>
+                      <p className="text-sm font-medium text-red-400">{error_message}</p>
                     </div>
                   </div>
                 </div>
@@ -398,7 +398,7 @@ const UV_Registration: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                 {/* Full Name */}
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-1">
+                  <label htmlFor="name" className="block text-sm font-medium text-white mb-1">
                     Full Name <span className="text-red-600">*</span>
                   </label>
                   <input
@@ -417,9 +417,9 @@ const UV_Registration: React.FC = () => {
                       w-full px-4 py-3 rounded-lg border-2 transition-all duration-200
                       ${validation_errors.name 
                         ? 'border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-100' 
-                        : 'border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
+                        : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
                       }
-                      focus:outline-none text-gray-900 placeholder-gray-400
+                      focus:outline-none text-white placeholder-gray-500
                     `}
                   />
                   {validation_errors.name ? (
@@ -428,7 +428,7 @@ const UV_Registration: React.FC = () => {
                       {validation_errors.name}
                     </p>
                   ) : (
-                    <p id="name-helper" className="mt-1 text-sm text-gray-500">
+                    <p id="name-helper" className="mt-1 text-sm text-gray-400">
                       First and last name
                     </p>
                   )}
@@ -436,7 +436,7 @@ const UV_Registration: React.FC = () => {
 
                 {/* Email Address */}
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-1">
+                  <label htmlFor="email" className="block text-sm font-medium text-white mb-1">
                     Email Address <span className="text-red-600">*</span>
                   </label>
                   <div className="relative">
@@ -456,14 +456,14 @@ const UV_Registration: React.FC = () => {
                         w-full px-4 py-3 rounded-lg border-2 transition-all duration-200
                         ${validation_errors.email 
                           ? 'border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-100' 
-                          : 'border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
+                          : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
                         }
-                        focus:outline-none text-gray-900 placeholder-gray-400
+                        focus:outline-none text-white placeholder-gray-500
                       `}
                     />
                     {email_checking && (
                       <div className="absolute right-3 top-3.5">
-                        <div className="animate-spin h-5 w-5 border-2 border-blue-600 border-t-transparent rounded-full"></div>
+                        <div className="animate-spin h-5 w-5 border-2 border-red-600 border-t-transparent rounded-full"></div>
                       </div>
                     )}
                   </div>
@@ -473,7 +473,7 @@ const UV_Registration: React.FC = () => {
                       {validation_errors.email}
                     </p>
                   ) : (
-                    <p id="email-helper" className="mt-1 text-sm text-gray-500">
+                    <p id="email-helper" className="mt-1 text-sm text-gray-400">
                       We'll send a verification email
                     </p>
                   )}
@@ -481,7 +481,7 @@ const UV_Registration: React.FC = () => {
 
                 {/* Phone Number */}
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-900 mb-1">
+                  <label htmlFor="phone" className="block text-sm font-medium text-white mb-1">
                     Phone Number <span className="text-red-600">*</span>
                   </label>
                   <input
@@ -500,9 +500,9 @@ const UV_Registration: React.FC = () => {
                       w-full px-4 py-3 rounded-lg border-2 transition-all duration-200
                       ${validation_errors.phone 
                         ? 'border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-100' 
-                        : 'border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
+                        : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
                       }
-                      focus:outline-none text-gray-900 placeholder-gray-400
+                      focus:outline-none text-white placeholder-gray-500
                     `}
                   />
                   {validation_errors.phone ? (
@@ -511,7 +511,7 @@ const UV_Registration: React.FC = () => {
                       {validation_errors.phone}
                     </p>
                   ) : (
-                    <p id="phone-helper" className="mt-1 text-sm text-gray-500">
+                    <p id="phone-helper" className="mt-1 text-sm text-gray-400">
                       For confirmation and reminders
                     </p>
                   )}
@@ -519,7 +519,7 @@ const UV_Registration: React.FC = () => {
 
                 {/* Create Password */}
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-900 mb-1">
+                  <label htmlFor="password" className="block text-sm font-medium text-white mb-1">
                     Create Password <span className="text-red-600">*</span>
                   </label>
                   <div className="relative">
@@ -539,15 +539,15 @@ const UV_Registration: React.FC = () => {
                         w-full px-4 py-3 pr-12 rounded-lg border-2 transition-all duration-200
                         ${validation_errors.password 
                           ? 'border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-100' 
-                          : 'border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
+                          : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
                         }
-                        focus:outline-none text-gray-900 placeholder-gray-400
+                        focus:outline-none text-white placeholder-gray-500
                       `}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!show_password)}
-                      className="absolute right-3 top-3 text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600 transition-colors"
+                      className="absolute right-3 top-3 text-gray-400 hover:text-gray-300 focus:outline-none focus:text-gray-300 transition-colors"
                       aria-label={show_password ? 'Hide password' : 'Show password'}
                     >
                       {show_password ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -558,7 +558,7 @@ const UV_Registration: React.FC = () => {
                   {form_data.password && (
                     <div className="mt-2">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-medium text-gray-600">Password strength:</span>
+                        <span className="text-xs font-medium text-gray-300">Password strength:</span>
                         <span className={`text-xs font-semibold ${
                           password_strength.color === 'red' ? 'text-red-600' :
                           password_strength.color === 'amber' ? 'text-amber-600' :
@@ -586,7 +586,7 @@ const UV_Registration: React.FC = () => {
                       {validation_errors.password}
                     </p>
                   ) : (
-                    <p id="password-helper" className="mt-1 text-sm text-gray-500">
+                    <p id="password-helper" className="mt-1 text-sm text-gray-400">
                       Minimum 8 characters, include letters and numbers
                     </p>
                   )}
@@ -594,7 +594,7 @@ const UV_Registration: React.FC = () => {
 
                 {/* Confirm Password */}
                 <div>
-                  <label htmlFor="password_confirm" className="block text-sm font-medium text-gray-900 mb-1">
+                  <label htmlFor="password_confirm" className="block text-sm font-medium text-white mb-1">
                     Confirm Password <span className="text-red-600">*</span>
                   </label>
                   <div className="relative">
@@ -616,15 +616,15 @@ const UV_Registration: React.FC = () => {
                           ? 'border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-100' 
                           : passwords_match && password_confirm
                             ? 'border-green-300 focus:border-green-500 focus:ring-4 focus:ring-green-100'
-                            : 'border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
+                            : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
                         }
-                        focus:outline-none text-gray-900 placeholder-gray-400
+                        focus:outline-none text-white placeholder-gray-500
                       `}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPasswordConfirm(!show_password_confirm)}
-                      className="absolute right-3 top-3 text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600 transition-colors"
+                      className="absolute right-3 top-3 text-gray-400 hover:text-gray-300 focus:outline-none focus:text-gray-300 transition-colors"
                       aria-label={show_password_confirm ? 'Hide password' : 'Show password'}
                     >
                       {show_password_confirm ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -641,7 +641,7 @@ const UV_Registration: React.FC = () => {
                       {validation_errors.password_confirm}
                     </p>
                   ) : (
-                    <p id="password-confirm-helper" className="mt-1 text-sm text-gray-500">
+                    <p id="password-confirm-helper" className="mt-1 text-sm text-gray-400">
                       Re-enter your password
                     </p>
                   )}
@@ -659,17 +659,17 @@ const UV_Registration: React.FC = () => {
                         onChange={(e) => handleTermsChange(e.target.checked)}
                         aria-invalid={!!validation_errors.terms}
                         aria-describedby={validation_errors.terms ? "terms-error" : undefined}
-                        className="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-4 focus:ring-blue-100 focus:ring-offset-0 transition-all cursor-pointer"
+                        className="h-5 w-5 rounded border-white/20 text-amber-400 focus:ring-4 focus:ring-red-100 focus:ring-offset-0 transition-all cursor-pointer"
                       />
                     </div>
                     <div className="ml-3">
-                      <label htmlFor="terms" className="text-sm text-gray-700 cursor-pointer">
+                      <label htmlFor="terms" className="text-sm text-gray-300 cursor-pointer">
                         I agree to the{' '}
-                        <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-medium underline">
+                        <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-blue-700 font-medium underline">
                           Terms of Service
                         </a>
                         {' '}and{' '}
-                        <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-medium underline">
+                        <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-blue-700 font-medium underline">
                           Privacy Policy
                         </a>
                         {' '}<span className="text-red-600">*</span>
@@ -693,10 +693,10 @@ const UV_Registration: React.FC = () => {
                       w-full px-6 py-3 rounded-lg font-medium text-white
                       transition-all duration-200
                       ${is_form_valid && !is_loading
-                        ? 'bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl cursor-pointer'
+                        ? 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 shadow-lg hover:shadow-xl cursor-pointer'
                         : 'bg-gray-400 cursor-not-allowed opacity-50'
                       }
-                      focus:outline-none focus:ring-4 focus:ring-blue-100
+                      focus:outline-none focus:ring-4 focus:ring-red-100
                       flex items-center justify-center
                     `}
                     aria-busy={is_loading}
@@ -717,10 +717,10 @@ const UV_Registration: React.FC = () => {
               <div className="mt-6">
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-300"></div>
+                    <div className="w-full border-t border-white/20"></div>
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="px-4 bg-white text-gray-500">Or sign up with</span>
+                    <span className="px-4 bg-[#2D0808] text-gray-400">Or sign up with</span>
                   </div>
                 </div>
 
@@ -728,7 +728,7 @@ const UV_Registration: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleSocialRegistration('google')}
-                    className="w-full inline-flex justify-center items-center px-4 py-3 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200"
+                    className="w-full inline-flex justify-center items-center px-4 py-3 border border-white/20 rounded-lg shadow-sm bg-[#2D0808] text-sm font-medium text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200"
                   >
                     <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
                       <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -742,7 +742,7 @@ const UV_Registration: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleSocialRegistration('facebook')}
-                    className="w-full inline-flex justify-center items-center px-4 py-3 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200"
+                    className="w-full inline-flex justify-center items-center px-4 py-3 border border-white/20 rounded-lg shadow-sm bg-[#2D0808] text-sm font-medium text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200"
                   >
                     <svg className="h-5 w-5 mr-2" fill="#1877F2" viewBox="0 0 24 24">
                       <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -754,9 +754,9 @@ const UV_Registration: React.FC = () => {
 
               {/* Login Link */}
               <div className="mt-6 text-center">
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-300">
                   Already have an account?{' '}
-                  <Link to="/login" className="text-blue-600 hover:text-blue-700 font-medium underline transition-colors">
+                  <Link to="/login" className="text-amber-400 hover:text-blue-700 font-medium underline transition-colors">
                     Log in
                   </Link>
                 </p>

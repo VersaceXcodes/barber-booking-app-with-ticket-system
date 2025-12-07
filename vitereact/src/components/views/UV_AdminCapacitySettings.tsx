@@ -475,33 +475,33 @@ const UV_AdminCapacitySettings: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Capacity Management</h1>
-            <p className="mt-2 text-gray-600 leading-relaxed">
+            <h1 className="text-3xl font-bold text-white">Capacity Management</h1>
+            <p className="mt-2 text-gray-300 leading-relaxed">
               Manage default slot capacity rules and date-specific overrides
             </p>
           </div>
 
           {/* Tab Navigation */}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden mb-6">
-            <div className="border-b border-gray-200">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 overflow-hidden mb-6">
+            <div className="border-b border-white/10">
               <nav className="flex -mb-px" aria-label="Tabs">
                 <button
                   onClick={() => setActiveTab('overrides')}
                   className={`py-4 px-8 text-center border-b-2 font-medium text-sm transition-all duration-200 ${
                     activeTab === 'overrides'
-                      ? 'border-blue-600 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'border-red-600 text-amber-400'
+                      : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-white/20'
                   }`}
                 >
                   Daily Overrides
                 </button>
                 <Link
                   to="/admin/blocking"
-                  className="py-4 px-8 text-center border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm transition-all duration-200"
+                  className="py-4 px-8 text-center border-b-2 border-transparent text-gray-400 hover:text-gray-300 hover:border-white/20 font-medium text-sm transition-all duration-200"
                 >
                   Blocked Slots
                 </Link>
@@ -509,8 +509,8 @@ const UV_AdminCapacitySettings: React.FC = () => {
                   onClick={() => setActiveTab('defaults')}
                   className={`py-4 px-8 text-center border-b-2 font-medium text-sm transition-all duration-200 ${
                     activeTab === 'defaults'
-                      ? 'border-blue-600 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'border-red-600 text-amber-400'
+                      : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-white/20'
                   }`}
                 >
                   Default Settings
@@ -524,15 +524,15 @@ const UV_AdminCapacitySettings: React.FC = () => {
               {activeTab === 'overrides' && (
                 <div className="space-y-8">
                   {/* Add Override Form */}
-                  <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                  <div className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg p-6 border border-white/10">
+                    <h2 className="text-xl font-semibold text-white mb-4">
                       Override Capacity for Specific Date
                     </h2>
                     
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {/* Date Picker */}
                       <div>
-                        <label htmlFor="override-date" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="override-date" className="block text-sm font-medium text-gray-300 mb-2">
                           Date <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -552,7 +552,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
                           className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
                             validationErrors.date
                               ? 'border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-100'
-                              : 'border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
+                              : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
                           }`}
                         />
                         {validationErrors.date && (
@@ -562,7 +562,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
 
                       {/* Capacity Input */}
                       <div>
-                        <label htmlFor="override-capacity" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="override-capacity" className="block text-sm font-medium text-gray-300 mb-2">
                           New Capacity <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -580,7 +580,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
                           className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
                             validationErrors.capacity
                               ? 'border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-100'
-                              : 'border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
+                              : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
                           }`}
                         />
                         {validationErrors.capacity && (
@@ -590,7 +590,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
 
                       {/* Reason Input */}
                       <div>
-                        <label htmlFor="override-reason" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="override-reason" className="block text-sm font-medium text-gray-300 mb-2">
                           Reason (Optional)
                         </label>
                         <input
@@ -599,7 +599,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
                           value={newOverrideReason || ''}
                           onChange={(e) => setNewOverrideReason(e.target.value)}
                           placeholder="e.g., Staff shortage"
-                          className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200"
+                          className="w-full px-4 py-3 rounded-lg border-2 border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all duration-200"
                         />
                       </div>
                     </div>
@@ -608,7 +608,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
                       <button
                         onClick={handleAddOverride}
                         disabled={createOverrideMutation.isPending || checkingBookings}
-                        className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {createOverrideMutation.isPending ? (
                           <span className="flex items-center">
@@ -629,61 +629,61 @@ const UV_AdminCapacitySettings: React.FC = () => {
 
                   {/* Overrides List */}
                   <div>
-                    <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    <h2 className="text-xl font-semibold text-white mb-4">
                       Existing Capacity Overrides
                     </h2>
 
                     {loadingOverrides ? (
-                      <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mx-auto"></div>
-                        <p className="mt-4 text-gray-600">Loading overrides...</p>
+                      <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-lg border border-white/10 p-12 text-center">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-red-600 mx-auto"></div>
+                        <p className="mt-4 text-gray-300">Loading overrides...</p>
                       </div>
                     ) : capacityOverrides.length === 0 ? (
-                      <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
+                      <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-lg border border-white/10 p-12 text-center">
                         <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <h3 className="mt-4 text-lg font-medium text-gray-900">No capacity overrides set</h3>
-                        <p className="mt-2 text-gray-600">Default capacity applies to all dates.</p>
+                        <h3 className="mt-4 text-lg font-medium text-white">No capacity overrides set</h3>
+                        <p className="mt-2 text-gray-300">Default capacity applies to all dates.</p>
                       </div>
                     ) : (
-                      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-lg">
+                      <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-lg border border-white/10 overflow-hidden shadow-lg">
                         <table className="min-w-full divide-y divide-gray-200">
-                          <thead className="bg-gray-50">
+                          <thead className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
                             <tr>
-                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 Date
                               </th>
-                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 Capacity
                               </th>
-                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 Reason
                               </th>
-                              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              <th className="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 Actions
                               </th>
                             </tr>
                           </thead>
-                          <tbody className="bg-white divide-y divide-gray-200">
+                          <tbody className="bg-[#2D0808] divide-y divide-gray-200">
                             {capacityOverrides.map((override) => (
-                              <tr key={override.override_id} className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              <tr key={override.override_id} className="hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] transition-colors">
+                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">
                                   {formatDate(override.override_date)}
                                 </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-900/30 text-blue-400">
                                     {override.capacity} {override.capacity === 1 ? 'slot' : 'slots'}
                                   </span>
                                 </td>
-                                <td className="px-6 py-4 text-sm text-gray-600">
+                                <td className="px-6 py-4 text-sm text-gray-300">
                                   {/* Reason not in schema but can be displayed if added */}
                                   <span className="text-gray-400 italic">N/A</span>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
                                   <button
                                     onClick={() => handleEditOverride(override)}
-                                    className="text-blue-600 hover:text-blue-900 transition-colors"
+                                    className="text-amber-400 hover:text-blue-900 transition-colors"
                                   >
                                     Edit
                                   </button>
@@ -707,29 +707,29 @@ const UV_AdminCapacitySettings: React.FC = () => {
               {/* Default Settings Tab */}
               {activeTab === 'defaults' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold text-gray-900">
+                  <h2 className="text-xl font-semibold text-white">
                     Default Capacity Rules
                   </h2>
 
                   {loadingSettings ? (
-                    <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
-                      <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mx-auto"></div>
-                      <p className="mt-4 text-gray-600">Loading settings...</p>
+                    <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-lg border border-white/10 p-12 text-center">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-red-600 mx-auto"></div>
+                      <p className="mt-4 text-gray-300">Loading settings...</p>
                     </div>
                   ) : (
                     <>
-                      <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-lg">
+                      <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-lg border border-white/10 p-6 shadow-lg">
                         <div className="space-y-4">
-                          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                            <span className="text-gray-700 font-medium">Monday - Wednesday:</span>
-                            <span className="text-2xl font-bold text-blue-600">
+                          <div className="flex items-center justify-between p-4 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg">
+                            <span className="text-gray-300 font-medium">Monday - Wednesday:</span>
+                            <span className="text-2xl font-bold text-amber-400">
                               {settings?.capacity_mon_wed ?? defaultCapacityMonWed} people per slot
                             </span>
                           </div>
 
-                          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                            <span className="text-gray-700 font-medium">Thursday - Sunday:</span>
-                            <span className="text-2xl font-bold text-blue-600">
+                          <div className="flex items-center justify-between p-4 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg">
+                            <span className="text-gray-300 font-medium">Thursday - Sunday:</span>
+                            <span className="text-2xl font-bold text-amber-400">
                               {settings?.capacity_thu_sun ?? defaultCapacityThuSun} people per slot
                             </span>
                           </div>
@@ -738,7 +738,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
 
                       <button
                         onClick={handleOpenEditDefaults}
-                        className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 shadow-lg hover:shadow-xl"
+                        className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200 shadow-lg hover:shadow-xl"
                       >
                         Edit Defaults
                       </button>
@@ -753,13 +753,13 @@ const UV_AdminCapacitySettings: React.FC = () => {
 
       {/* Edit Defaults Modal */}
       {editDefaultsModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Edit Default Capacity</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-2xl max-w-md w-full p-6">
+            <h3 className="text-2xl font-bold text-white mb-4">Edit Default Capacity</h3>
             
             <div className="space-y-4 mb-6">
               <div>
-                <label htmlFor="modal-mon-wed" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="modal-mon-wed" className="block text-sm font-medium text-gray-300 mb-2">
                   Monday - Wednesday Capacity
                 </label>
                 <input
@@ -769,12 +769,12 @@ const UV_AdminCapacitySettings: React.FC = () => {
                   max="10"
                   value={tempCapacityMonWed === null ? '' : tempCapacityMonWed}
                   onChange={(e) => setTempCapacityMonWed(e.target.value === '' ? null : parseInt(e.target.value, 10))}
-                  className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200"
+                  className="w-full px-4 py-3 rounded-lg border-2 border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all duration-200"
                 />
               </div>
 
               <div>
-                <label htmlFor="modal-thu-sun" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="modal-thu-sun" className="block text-sm font-medium text-gray-300 mb-2">
                   Thursday - Sunday Capacity
                 </label>
                 <input
@@ -784,7 +784,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
                   max="10"
                   value={tempCapacityThuSun === null ? '' : tempCapacityThuSun}
                   onChange={(e) => setTempCapacityThuSun(e.target.value === '' ? null : parseInt(e.target.value, 10))}
-                  className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200"
+                  className="w-full px-4 py-3 rounded-lg border-2 border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all duration-200"
                 />
               </div>
             </div>
@@ -792,14 +792,14 @@ const UV_AdminCapacitySettings: React.FC = () => {
             <div className="flex space-x-3">
               <button
                 onClick={() => setEditDefaultsModalOpen(false)}
-                className="flex-1 px-6 py-3 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-all duration-200"
+                className="flex-1 px-6 py-3 bg-gray-100 text-gray-300 rounded-lg font-medium hover:bg-gray-200 transition-all duration-200"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveDefaults}
                 disabled={updateSettingsMutation.isPending || tempCapacityMonWed === null || tempCapacityThuSun === null}
-                className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {updateSettingsMutation.isPending ? 'Saving...' : 'Save Changes'}
               </button>
@@ -810,13 +810,13 @@ const UV_AdminCapacitySettings: React.FC = () => {
 
       {/* Edit Override Modal */}
       {editOverrideModalState && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Edit Capacity Override</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-2xl max-w-md w-full p-6">
+            <h3 className="text-2xl font-bold text-white mb-4">Edit Capacity Override</h3>
             
             <div className="space-y-4 mb-6">
               <div>
-                <label htmlFor="edit-date" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="edit-date" className="block text-sm font-medium text-gray-300 mb-2">
                   Date
                 </label>
                 <input
@@ -829,12 +829,12 @@ const UV_AdminCapacitySettings: React.FC = () => {
                       setEditOverrideModalState({ ...editOverrideModalState, override_date: value });
                     }
                   }}
-                  className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200"
+                  className="w-full px-4 py-3 rounded-lg border-2 border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all duration-200"
                 />
               </div>
 
               <div>
-                <label htmlFor="edit-capacity" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="edit-capacity" className="block text-sm font-medium text-gray-300 mb-2">
                   Capacity
                 </label>
                 <input
@@ -844,7 +844,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
                   max="10"
                   value={editOverrideModalState.capacity}
                   onChange={(e) => setEditOverrideModalState({ ...editOverrideModalState, capacity: parseInt(e.target.value, 10) })}
-                  className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200"
+                  className="w-full px-4 py-3 rounded-lg border-2 border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all duration-200"
                 />
               </div>
             </div>
@@ -852,14 +852,14 @@ const UV_AdminCapacitySettings: React.FC = () => {
             <div className="flex space-x-3">
               <button
                 onClick={() => setEditOverrideModalState(null)}
-                className="flex-1 px-6 py-3 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-all duration-200"
+                className="flex-1 px-6 py-3 bg-gray-100 text-gray-300 rounded-lg font-medium hover:bg-gray-200 transition-all duration-200"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveEditOverride}
                 disabled={updateOverrideMutation.isPending}
-                className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {updateOverrideMutation.isPending ? 'Saving...' : 'Save Changes'}
               </button>
@@ -870,8 +870,8 @@ const UV_AdminCapacitySettings: React.FC = () => {
 
       {/* Delete Confirmation Modal */}
       {deleteOverrideConfirmation && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-2xl max-w-md w-full p-6">
             <div className="flex items-center mb-4">
               <div className="flex-shrink-0">
                 <svg className="h-12 w-12 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -879,16 +879,16 @@ const UV_AdminCapacitySettings: React.FC = () => {
                 </svg>
               </div>
               <div className="ml-4">
-                <h3 className="text-xl font-bold text-gray-900">Remove Capacity Override?</h3>
+                <h3 className="text-xl font-bold text-white">Remove Capacity Override?</h3>
               </div>
             </div>
             
-            <p className="text-gray-700 mb-2">
+            <p className="text-gray-300 mb-2">
               Are you sure you want to remove the capacity override for{' '}
               <span className="font-semibold">{formatDate(deleteOverrideConfirmation.override_date)}</span>?
             </p>
             
-            <p className="text-gray-600 text-sm mb-6">
+            <p className="text-gray-300 text-sm mb-6">
               Capacity will return to default:{' '}
               <span className="font-semibold">
                 {getDefaultCapacityForDate(deleteOverrideConfirmation.override_date)} people per slot
@@ -898,7 +898,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
             <div className="flex space-x-3">
               <button
                 onClick={() => setDeleteOverrideConfirmation(null)}
-                className="flex-1 px-6 py-3 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-all duration-200"
+                className="flex-1 px-6 py-3 bg-gray-100 text-gray-300 rounded-lg font-medium hover:bg-gray-200 transition-all duration-200"
               >
                 Cancel
               </button>
@@ -916,8 +916,8 @@ const UV_AdminCapacitySettings: React.FC = () => {
 
       {/* Booking Warning Modal */}
       {bookingWarning && bookingWarning.show && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-2xl max-w-md w-full p-6">
             <div className="flex items-center mb-4">
               <div className="flex-shrink-0">
                 <svg className="h-12 w-12 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -925,15 +925,15 @@ const UV_AdminCapacitySettings: React.FC = () => {
                 </svg>
               </div>
               <div className="ml-4">
-                <h3 className="text-xl font-bold text-gray-900">Capacity Warning</h3>
+                <h3 className="text-xl font-bold text-white">Capacity Warning</h3>
               </div>
             </div>
             
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-              <p className="text-yellow-800 font-semibold">
+              <p className="text-yellow-400 font-semibold">
                 Warning: {bookingWarning.count} bookings already scheduled for this date exceed new capacity {bookingWarning.capacity}.
               </p>
-              <p className="text-yellow-700 text-sm mt-2">
+              <p className="text-yellow-300 text-sm mt-2">
                 Existing bookings will be kept but no new bookings will be accepted.
               </p>
             </div>
@@ -941,7 +941,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
             <div className="flex space-x-3">
               <button
                 onClick={() => setBookingWarning(null)}
-                className="flex-1 px-6 py-3 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-all duration-200"
+                className="flex-1 px-6 py-3 bg-gray-100 text-gray-300 rounded-lg font-medium hover:bg-gray-200 transition-all duration-200"
               >
                 Cancel
               </button>

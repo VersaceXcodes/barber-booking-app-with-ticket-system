@@ -250,13 +250,13 @@ const UV_PasswordResetForm: React.FC = () => {
   const getStrengthTextColor = (level: string) => {
     switch (level) {
       case 'weak':
-        return 'text-red-700';
+        return 'text-red-300';
       case 'medium':
-        return 'text-yellow-700';
+        return 'text-yellow-300';
       case 'strong':
-        return 'text-green-700';
+        return 'text-green-300';
       default:
-        return 'text-gray-500';
+        return 'text-gray-400';
     }
   };
 
@@ -264,17 +264,17 @@ const UV_PasswordResetForm: React.FC = () => {
   if (validation_errors.token && !reset_token) {
     return (
       <>
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-md w-full space-y-8">
             <div className="text-center">
               <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-4">
                 <AlertCircle className="h-8 w-8 text-red-600" />
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Invalid Reset Link</h2>
-              <p className="text-gray-600 mb-6">{validation_errors.token}</p>
+              <h2 className="text-3xl font-bold text-white mb-2">Invalid Reset Link</h2>
+              <p className="text-gray-300 mb-6">{validation_errors.token}</p>
               <Link
                 to="/reset-password"
-                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 Request New Reset Link
               </Link>
@@ -291,16 +291,16 @@ const UV_PasswordResetForm: React.FC = () => {
         <div className="max-w-md mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
               Create New Password
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-300">
               Enter your new password below. Make sure it's strong and secure.
             </p>
           </div>
 
           {/* Form Card */}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 overflow-hidden">
             <div className="p-6 lg:p-8">
               {/* Token Error Banner */}
               {validation_errors.token && reset_token && (
@@ -308,12 +308,12 @@ const UV_PasswordResetForm: React.FC = () => {
                   <div className="flex items-start">
                     <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 mr-3 flex-shrink-0" />
                     <div className="flex-1">
-                      <p className="text-sm text-red-800 font-medium">
+                      <p className="text-sm text-red-400 font-medium">
                         {validation_errors.token}
                       </p>
                       <Link
                         to="/reset-password"
-                        className="text-sm text-red-600 hover:text-red-700 font-medium underline mt-2 inline-block"
+                        className="text-sm text-red-600 hover:text-red-300 font-medium underline mt-2 inline-block"
                       >
                         Request a new reset link →
                       </Link>
@@ -327,7 +327,7 @@ const UV_PasswordResetForm: React.FC = () => {
                 <div>
                   <label
                     htmlFor="new_password"
-                    className="block text-sm font-medium text-gray-900 mb-2"
+                    className="block text-sm font-medium text-white mb-2"
                   >
                     New Password <span className="text-red-500">*</span>
                   </label>
@@ -345,10 +345,10 @@ const UV_PasswordResetForm: React.FC = () => {
                         });
                       }}
                       placeholder="Enter new password"
-                      className={`w-full px-4 py-3 pr-12 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
+                      className={`w-full px-4 py-3 pr-12 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-red-100 ${
                         validation_errors.new_password
                           ? 'border-red-300 focus:border-red-500'
-                          : 'border-gray-200 focus:border-blue-500'
+                          : 'border-white/20 focus:border-blue-500'
                       }`}
                       disabled={is_submitting}
                       aria-invalid={!!validation_errors.new_password}
@@ -361,7 +361,7 @@ const UV_PasswordResetForm: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => togglePasswordVisibility('new_password')}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors"
                       aria-label={show_password.new_password ? 'Hide password' : 'Show password'}
                     >
                       {show_password.new_password ? (
@@ -376,7 +376,7 @@ const UV_PasswordResetForm: React.FC = () => {
                   {new_password && (
                     <div className="mt-3">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-medium text-gray-700">
+                        <span className="text-xs font-medium text-gray-300">
                           Password Strength:
                         </span>
                         <span
@@ -409,7 +409,7 @@ const UV_PasswordResetForm: React.FC = () => {
                       {validation_errors.new_password}
                     </p>
                   ) : (
-                    <p id="new_password_helper" className="mt-2 text-sm text-gray-600">
+                    <p id="new_password_helper" className="mt-2 text-sm text-gray-300">
                       Minimum 8 characters, include letters and numbers
                     </p>
                   )}
@@ -419,7 +419,7 @@ const UV_PasswordResetForm: React.FC = () => {
                 <div>
                   <label
                     htmlFor="confirm_password"
-                    className="block text-sm font-medium text-gray-900 mb-2"
+                    className="block text-sm font-medium text-white mb-2"
                   >
                     Confirm New Password <span className="text-red-500">*</span>
                   </label>
@@ -438,13 +438,13 @@ const UV_PasswordResetForm: React.FC = () => {
                       }}
                       onBlur={handleConfirmPasswordBlur}
                       placeholder="Re-enter new password"
-                      className={`w-full px-4 py-3 pr-12 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
+                      className={`w-full px-4 py-3 pr-12 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-red-100 ${
                         validation_errors.confirm_password
                           ? 'border-red-300 focus:border-red-500'
                           : confirm_password &&
                             new_password === confirm_password
                           ? 'border-green-300 focus:border-green-500'
-                          : 'border-gray-200 focus:border-blue-500'
+                          : 'border-white/20 focus:border-blue-500'
                       }`}
                       disabled={is_submitting}
                       aria-invalid={!!validation_errors.confirm_password}
@@ -457,7 +457,7 @@ const UV_PasswordResetForm: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => togglePasswordVisibility('confirm_password')}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors"
                       aria-label={
                         show_password.confirm_password ? 'Hide password' : 'Show password'
                       }
@@ -484,15 +484,15 @@ const UV_PasswordResetForm: React.FC = () => {
                       {validation_errors.confirm_password}
                     </p>
                   ) : (
-                    <p id="confirm_password_helper" className="mt-2 text-sm text-gray-600">
+                    <p id="confirm_password_helper" className="mt-2 text-sm text-gray-300">
                       Re-enter your new password
                     </p>
                   )}
                 </div>
 
                 {/* Password Requirements Checklist */}
-                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                  <p className="text-sm font-medium text-gray-900 mb-3">
+                <div className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg p-4 border border-white/10">
+                  <p className="text-sm font-medium text-white mb-3">
                     Password Requirements:
                   </p>
                   <ul className="space-y-2">
@@ -505,8 +505,8 @@ const UV_PasswordResetForm: React.FC = () => {
                       <span
                         className={
                           password_requirements_met.min_length
-                            ? 'text-green-700 font-medium'
-                            : 'text-gray-600'
+                            ? 'text-green-300 font-medium'
+                            : 'text-gray-300'
                         }
                       >
                         At least 8 characters
@@ -521,8 +521,8 @@ const UV_PasswordResetForm: React.FC = () => {
                       <span
                         className={
                           password_requirements_met.has_letters
-                            ? 'text-green-700 font-medium'
-                            : 'text-gray-600'
+                            ? 'text-green-300 font-medium'
+                            : 'text-gray-300'
                         }
                       >
                         Contains letters
@@ -537,8 +537,8 @@ const UV_PasswordResetForm: React.FC = () => {
                       <span
                         className={
                           password_requirements_met.has_numbers
-                            ? 'text-green-700 font-medium'
-                            : 'text-gray-600'
+                            ? 'text-green-300 font-medium'
+                            : 'text-gray-300'
                         }
                       >
                         Contains numbers
@@ -551,7 +551,7 @@ const UV_PasswordResetForm: React.FC = () => {
                 <button
                   type="submit"
                   disabled={!isFormValid || is_submitting}
-                  className="w-full px-6 py-3 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600 disabled:hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-100"
+                  className="w-full px-6 py-3 rounded-lg font-medium text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gradient-to-r from-red-600 to-red-700 disabled:hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-100"
                 >
                   {is_submitting ? (
                     <span className="flex items-center justify-center">
@@ -585,7 +585,7 @@ const UV_PasswordResetForm: React.FC = () => {
                 <div className="text-center">
                   <Link
                     to="/login"
-                    className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                    className="text-sm text-amber-400 hover:text-blue-700 font-medium transition-colors"
                   >
                     ← Back to Login
                   </Link>
@@ -596,7 +596,7 @@ const UV_PasswordResetForm: React.FC = () => {
 
           {/* Security Notice */}
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-300">
               For your security, you'll be logged out of all devices after resetting your password.
             </p>
           </div>

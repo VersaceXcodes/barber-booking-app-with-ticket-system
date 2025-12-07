@@ -16,9 +16,9 @@
 }
 
 *::selection {
-	background-color: #444;
+	background-color: #DC2626;
 	color: white;
-	/* Selected state text color */
+	/* Master Fade red selection */
 }
 
 ::-webkit-scrollbar {
@@ -29,19 +29,20 @@
 }
 
 ::-webkit-scrollbar-track {
-	background: #eee;
-	/* Light track */
+	background: #1A0505;
+	/* Dark maroon track matching Master Fade theme */
 }
 
 ::-webkit-scrollbar-thumb {
-	background: rgba(150, 150, 150, 0.4);
-	/* Light thumb */
+	background: rgba(220, 38, 38, 0.4);
+	/* Red thumb matching theme */
 	height: 50px;
 	/* Vertical scrollbar thumb height */
+	border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: #aaa;
+	background: rgba(220, 38, 38, 0.6);
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
@@ -52,12 +53,124 @@
 @layer base {
 	:root {
 		--radius: 0.5rem;
+		
+		/* ============================================================================
+		   MASTER FADE DESIGN SYSTEM - Global Theme Variables
+		   ============================================================================ */
+		
+		/* Primary Background - Deep blood-red gradient */
+		--bg-primary: linear-gradient(135deg, #2A0A0A 0%, #3D0F0F 50%, #5C1B1B 100%);
+		--bg-primary-start: #2A0A0A;
+		--bg-primary-mid: #3D0F0F;
+		--bg-primary-end: #5C1B1B;
+		
+		/* Secondary Background - Darker maroon panels */
+		--bg-secondary: #1A0505;
+		--bg-panel: #2D0808;
+		--bg-panel-hover: #3D0F0F;
+		
+		/* Accent Colors */
+		--accent-red: #DC2626;
+		--accent-orange: #EA580C;
+		--accent-warm-red: #EF4444;
+		--accent-gold: #F59E0B;
+		--accent-soft-gold: #FCD34D;
+		
+		/* Text Colors */
+		--text-primary: #FFFFFF;
+		--text-secondary: #D1D5DB;
+		--text-tertiary: #9CA3AF;
+		--text-muted: #6B7280;
+		
+		/* Border & Shadow */
+		--border-color: rgba(255, 255, 255, 0.1);
+		--border-accent: rgba(220, 38, 38, 0.3);
+		--shadow-glow: 0 4px 24px rgba(220, 38, 38, 0.15);
+		--shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+		
+		/* Glass Effect */
+		--glass-bg: rgba(255, 255, 255, 0.1);
+		--glass-border: rgba(255, 255, 255, 0.2);
+		
+		/* Status Colors */
+		--status-success: #10B981;
+		--status-warning: #F59E0B;
+		--status-error: #EF4444;
+		--status-info: #3B82F6;
 	}
 }
 
 @layer utilities {
 	.bg-gradient-radial {
 		background-image: radial-gradient(var(--tw-gradient-stops));
+	}
+	
+	/* ============================================================================
+	   MASTER FADE THEME UTILITIES
+	   ============================================================================ */
+	
+	/* Master Fade Primary Background */
+	.bg-master-fade {
+		background: linear-gradient(135deg, #2A0A0A 0%, #3D0F0F 50%, #5C1B1B 100%);
+	}
+	
+	/* Master Fade Panel Background */
+	.bg-master-panel {
+		background: #2D0808;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+	}
+	
+	/* Master Fade Glass Card */
+	.glass-card {
+		background: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(12px);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+	}
+	
+	/* Master Fade Glow Shadow */
+	.shadow-master-glow {
+		box-shadow: 0 4px 24px rgba(220, 38, 38, 0.15);
+	}
+	
+	/* Master Fade Text Gradient */
+	.text-master-gradient {
+		background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+	
+	/* Master Fade Button - Primary */
+	.btn-master-primary {
+		background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+		color: white;
+		padding: 0.75rem 2rem;
+		border-radius: 0.5rem;
+		font-weight: 600;
+		box-shadow: 0 4px 24px rgba(220, 38, 38, 0.3);
+		transition: all 0.2s ease;
+	}
+	
+	.btn-master-primary:hover {
+		box-shadow: 0 6px 32px rgba(220, 38, 38, 0.4);
+		transform: translateY(-2px);
+	}
+	
+	/* Master Fade Button - Gold/Premium */
+	.btn-master-gold {
+		background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+		color: white;
+		padding: 0.75rem 2rem;
+		border-radius: 0.5rem;
+		font-weight: 600;
+		box-shadow: 0 4px 24px rgba(245, 158, 11, 0.3);
+		transition: all 0.2s ease;
+	}
+	
+	.btn-master-gold:hover {
+		box-shadow: 0 6px 32px rgba(245, 158, 11, 0.4);
+		transform: translateY(-2px);
 	}
 }
 

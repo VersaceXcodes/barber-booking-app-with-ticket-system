@@ -47,7 +47,7 @@ const UV_PasswordResetSuccess: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full">
           {/* Success Card */}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 overflow-hidden">
             <div className="px-6 py-12 sm:px-8">
               {/* Success Icon with Animation */}
               <div className="flex justify-center mb-6">
@@ -76,23 +76,23 @@ const UV_PasswordResetSuccess: React.FC = () => {
               </div>
 
               {/* Header */}
-              <h1 className="text-3xl font-bold text-gray-900 text-center mb-4 leading-tight">
+              <h1 className="text-3xl font-bold text-white text-center mb-4 leading-tight">
                 Password Reset Successfully
               </h1>
 
               {/* Message */}
-              <p className="text-lg text-gray-700 text-center mb-2">
+              <p className="text-lg text-gray-300 text-center mb-2">
                 Your password has been updated
               </p>
 
               {/* Subtext */}
-              <p className="text-base text-gray-600 text-center mb-8">
+              <p className="text-base text-gray-300 text-center mb-8">
                 You can now log in with your new password
               </p>
 
               {/* Countdown Section */}
               {autoRedirectEnabled && (
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-center">
+                <div className="bg-[#2D0808] border border-blue-200 rounded-lg p-4 mb-6 text-center">
                   <p className="text-blue-700 text-sm font-medium mb-2">
                     Redirecting to login in{' '}
                     <span className="text-blue-900 font-bold text-lg">
@@ -103,7 +103,7 @@ const UV_PasswordResetSuccess: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleCancelRedirect}
-                    className="text-blue-600 hover:text-blue-800 text-sm font-medium underline transition-colors"
+                    className="text-amber-400 hover:text-blue-800 text-sm font-medium underline transition-colors"
                   >
                     Stay on this page
                   </button>
@@ -113,7 +113,7 @@ const UV_PasswordResetSuccess: React.FC = () => {
               {/* Primary CTA Button */}
               <button
                 onClick={handleLoginNow}
-                className="w-full flex justify-center items-center px-6 py-3 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-100"
+                className="w-full flex justify-center items-center px-6 py-3 rounded-lg font-medium text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-red-100"
               >
                 <svg
                   className="h-5 w-5 mr-2"
@@ -133,7 +133,7 @@ const UV_PasswordResetSuccess: React.FC = () => {
               </button>
 
               {/* Security Notice */}
-              <div className="mt-8 pt-6 border-t border-gray-200">
+              <div className="mt-8 pt-6 border-t border-white/10">
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                   <div className="flex items-start">
                     <svg
@@ -149,13 +149,13 @@ const UV_PasswordResetSuccess: React.FC = () => {
                       />
                     </svg>
                     <div>
-                      <p className="text-sm text-yellow-800 font-medium mb-1">
+                      <p className="text-sm text-yellow-400 font-medium mb-1">
                         Security Notice
                       </p>
-                      <p className="text-sm text-yellow-700 mb-2">
+                      <p className="text-sm text-yellow-300 mb-2">
                         If you didn't make this change, contact us immediately.
                       </p>
-                      <div className="text-sm text-yellow-800 space-y-1">
+                      <div className="text-sm text-yellow-400 space-y-1">
                         {shopPhone && (
                           <p>
                             <span className="font-medium">Phone:</span>{' '}
@@ -195,7 +195,7 @@ const UV_PasswordResetSuccess: React.FC = () => {
           <div className="mt-6 text-center">
             <Link
               to="/"
-              className="text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors"
+              className="text-gray-300 hover:text-white text-sm font-medium transition-colors"
             >
               ← Back to Home
             </Link>

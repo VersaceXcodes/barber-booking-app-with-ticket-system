@@ -261,7 +261,7 @@ const UV_CallOutBooking: React.FC = () => {
                     onChange={(e) => handleInputChange('customer_name', e.target.value)}
                     className={`w-full px-4 py-3 bg-white/10 border ${
                       validationErrors.customer_name ? 'border-red-500' : 'border-white/30'
-                    } rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500`}
+                    } rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500`}
                     placeholder="Enter your full name"
                   />
                   {validationErrors.customer_name && (
@@ -283,7 +283,7 @@ const UV_CallOutBooking: React.FC = () => {
                     onChange={(e) => handleInputChange('customer_email', e.target.value)}
                     className={`w-full px-4 py-3 bg-white/10 border ${
                       validationErrors.customer_email ? 'border-red-500' : 'border-white/30'
-                    } rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500`}
+                    } rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500`}
                     placeholder="your@email.com"
                   />
                   {validationErrors.customer_email && (
@@ -305,7 +305,7 @@ const UV_CallOutBooking: React.FC = () => {
                     onChange={(e) => handleInputChange('customer_phone', e.target.value)}
                     className={`w-full px-4 py-3 bg-white/10 border ${
                       validationErrors.customer_phone ? 'border-red-500' : 'border-white/30'
-                    } rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500`}
+                    } rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500`}
                     placeholder="+353 83 327 6229"
                   />
                   {validationErrors.customer_phone && (
@@ -328,7 +328,7 @@ const UV_CallOutBooking: React.FC = () => {
                     rows={3}
                     className={`w-full px-4 py-3 bg-white/10 border ${
                       validationErrors.customer_address ? 'border-red-500' : 'border-white/30'
-                    } rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500`}
+                    } rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500`}
                     placeholder="Street address, apartment/suite number, city, postcode"
                   />
                   {validationErrors.customer_address && (
@@ -479,7 +479,7 @@ const UV_CallOutBooking: React.FC = () => {
                   value={formData.special_request}
                   onChange={(e) => handleInputChange('special_request', e.target.value)}
                   rows={3}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500"
                   placeholder="Any special requests, parking instructions, or notes for the barber?"
                   maxLength={500}
                 />

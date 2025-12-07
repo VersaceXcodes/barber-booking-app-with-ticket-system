@@ -200,7 +200,7 @@ const UV_PasswordResetRequest: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full">
           {/* Card Container */}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 overflow-hidden">
             {!resetRequested ? (
               // ============================================================
               // INITIAL STATE - Email Input Form
@@ -209,14 +209,14 @@ const UV_PasswordResetRequest: React.FC = () => {
                 {/* Header */}
                 <div className="px-6 py-8 sm:px-8 bg-gradient-to-br from-blue-50 to-indigo-50 border-b border-gray-100">
                   <div className="flex items-center justify-center mb-4">
-                    <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center">
+                    <div className="w-16 h-16 bg-gradient-to-r from-red-600 to-red-700 rounded-full flex items-center justify-center">
                       <Mail className="w-8 h-8 text-white" />
                     </div>
                   </div>
-                  <h2 className="text-center text-3xl font-bold text-gray-900 leading-tight">
+                  <h2 className="text-center text-3xl font-bold text-white leading-tight">
                     Reset Your Password
                   </h2>
-                  <p className="mt-3 text-center text-base text-gray-600 leading-relaxed">
+                  <p className="mt-3 text-center text-base text-gray-300 leading-relaxed">
                     Enter your email and we'll send you a reset link
                   </p>
                 </div>
@@ -226,7 +226,7 @@ const UV_PasswordResetRequest: React.FC = () => {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Email Input */}
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
+                      <label htmlFor="email" className="block text-sm font-medium text-white mb-2">
                         Email Address <span className="text-red-600">*</span>
                       </label>
                       <div className="relative">
@@ -243,8 +243,8 @@ const UV_PasswordResetRequest: React.FC = () => {
                           className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
                             validationError
                               ? 'border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-100'
-                              : 'border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
-                          } text-gray-900 placeholder-gray-400 focus:outline-none`}
+                              : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
+                          } text-white placeholder-gray-600 focus:outline-none`}
                           disabled={isSubmitting}
                         />
                         {validationError && (
@@ -259,7 +259,7 @@ const UV_PasswordResetRequest: React.FC = () => {
                           {validationError}
                         </p>
                       )}
-                      <p className="mt-2 text-sm text-gray-500">
+                      <p className="mt-2 text-sm text-gray-400">
                         We'll send a password reset link to this email address
                       </p>
                     </div>
@@ -269,7 +269,7 @@ const UV_PasswordResetRequest: React.FC = () => {
                       <button
                         type="submit"
                         disabled={!isEmailValid || isSubmitting}
-                        className="w-full flex items-center justify-center px-6 py-3 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600 disabled:hover:shadow-lg"
+                        className="w-full flex items-center justify-center px-6 py-3 rounded-lg font-medium text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gradient-to-r from-red-600 to-red-700 disabled:hover:shadow-lg"
                       >
                         {isSubmitting ? (
                           <>
@@ -308,7 +308,7 @@ const UV_PasswordResetRequest: React.FC = () => {
                     <div className="text-center">
                       <Link
                         to="/login"
-                        className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                        className="inline-flex items-center text-sm font-medium text-amber-400 hover:text-blue-700 transition-colors"
                       >
                         <ArrowLeft className="w-4 h-4 mr-1" />
                         Back to Login
@@ -329,13 +329,13 @@ const UV_PasswordResetRequest: React.FC = () => {
                       <CheckCircle2 className="w-10 h-10 text-white" />
                     </div>
                   </div>
-                  <h2 className="text-center text-3xl font-bold text-gray-900 leading-tight">
+                  <h2 className="text-center text-3xl font-bold text-white leading-tight">
                     Check Your Email
                   </h2>
-                  <p className="mt-3 text-center text-base text-gray-700 leading-relaxed">
+                  <p className="mt-3 text-center text-base text-gray-300 leading-relaxed">
                     We sent a password reset link to
                   </p>
-                  <p className="mt-2 text-center text-lg font-semibold text-blue-600">
+                  <p className="mt-2 text-center text-lg font-semibold text-amber-400">
                     {email}
                   </p>
                 </div>
@@ -343,7 +343,7 @@ const UV_PasswordResetRequest: React.FC = () => {
                 {/* Success Body */}
                 <div className="px-6 py-8 sm:px-8 space-y-6">
                   {/* Important Info */}
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <div className="bg-[#2D0808] border border-blue-200 rounded-lg p-4">
                     <p className="text-sm text-blue-900 font-medium mb-2">
                       The link expires in 1 hour
                     </p>
@@ -353,20 +353,20 @@ const UV_PasswordResetRequest: React.FC = () => {
                   </div>
 
                   {/* Didn't Receive Email Section */}
-                  <div className="border-t border-gray-200 pt-6">
-                    <h3 className="text-sm font-semibold text-gray-900 mb-3">
+                  <div className="border-t border-white/10 pt-6">
+                    <h3 className="text-sm font-semibold text-white mb-3">
                       Didn't receive it?
                     </h3>
                     <ul className="space-y-2 mb-4">
-                      <li className="flex items-start text-sm text-gray-600">
+                      <li className="flex items-start text-sm text-gray-300">
                         <span className="inline-block w-1.5 h-1.5 bg-gray-400 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
                         <span>Check your spam or junk folder</span>
                       </li>
-                      <li className="flex items-start text-sm text-gray-600">
+                      <li className="flex items-start text-sm text-gray-300">
                         <span className="inline-block w-1.5 h-1.5 bg-gray-400 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
                         <span>Make sure you entered the correct email address</span>
                       </li>
-                      <li className="flex items-start text-sm text-gray-600">
+                      <li className="flex items-start text-sm text-gray-300">
                         <span className="inline-block w-1.5 h-1.5 bg-gray-400 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
                         <span>Wait a few minutes for the email to arrive</span>
                       </li>
@@ -377,12 +377,12 @@ const UV_PasswordResetRequest: React.FC = () => {
                       type="button"
                       onClick={handleResend}
                       disabled={!canResend || isSubmitting}
-                      className="w-full flex items-center justify-center px-4 py-2.5 rounded-lg font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-50"
+                      className="w-full flex items-center justify-center px-4 py-2.5 rounded-lg font-medium text-amber-400 bg-[#2D0808] hover:bg-blue-100 border border-blue-200 focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#2D0808]"
                     >
                       {isSubmitting ? (
                         <>
                           <svg
-                            className="animate-spin -ml-1 mr-2 h-4 w-4 text-blue-600"
+                            className="animate-spin -ml-1 mr-2 h-4 w-4 text-amber-400"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -414,17 +414,17 @@ const UV_PasswordResetRequest: React.FC = () => {
                     </button>
 
                     {resendAttempts > 0 && (
-                      <p className="mt-3 text-xs text-gray-500 text-center">
+                      <p className="mt-3 text-xs text-gray-400 text-center">
                         {resendAttempts === 1 ? '1 resend attempt' : `${resendAttempts} resend attempts`}
                       </p>
                     )}
                   </div>
 
                   {/* Back to Login Link */}
-                  <div className="border-t border-gray-200 pt-6">
+                  <div className="border-t border-white/10 pt-6">
                     <Link
                       to="/login"
-                      className="w-full flex items-center justify-center px-4 py-2.5 rounded-lg font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 transition-all duration-200"
+                      className="w-full flex items-center justify-center px-4 py-2.5 rounded-lg font-medium text-gray-300 bg-gray-100 hover:bg-gray-200 border border-white/20 focus:outline-none focus:ring-4 focus:ring-gray-100 transition-all duration-200"
                     >
                       <ArrowLeft className="w-4 h-4 mr-2" />
                       Back to Login
@@ -437,11 +437,11 @@ const UV_PasswordResetRequest: React.FC = () => {
 
           {/* Help Text Below Card */}
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-300">
               Need help?{' '}
               <a
                 href="tel:+15551234567"
-                className="font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                className="font-medium text-amber-400 hover:text-blue-700 transition-colors"
               >
                 Contact support
               </a>

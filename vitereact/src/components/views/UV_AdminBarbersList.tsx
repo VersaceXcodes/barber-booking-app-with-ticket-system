@@ -290,7 +290,7 @@ const UV_AdminBarbersList: React.FC = () => {
   // RENDER
   // ====================================================================
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
       {/* Header */}
       <div className="bg-gradient-to-r from-red-600 to-red-700 text-white">
         <div className="container mx-auto px-4 py-8">
@@ -312,7 +312,7 @@ const UV_AdminBarbersList: React.FC = () => {
         {loadingBarbers ? (
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading barbers...</p>
+            <p className="mt-4 text-gray-300">Loading barbers...</p>
           </div>
         ) : barbersError ? (
           <div className="text-center py-12">
@@ -343,7 +343,7 @@ const UV_AdminBarbersList: React.FC = () => {
                             {barber.is_active ? 'Active' : 'Inactive'}
                           </Badge>
                           {barber.is_working_today && barber.is_active && (
-                            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            <Badge variant="outline" className="bg-green-50 text-green-300 border-green-200">
                               Working Today
                             </Badge>
                           )}
@@ -355,12 +355,12 @@ const UV_AdminBarbersList: React.FC = () => {
                 <CardContent>
                   {barber.specialties && barber.specialties.length > 0 && (
                     <div className="mb-4">
-                      <p className="text-sm text-gray-600 mb-2">Specialties:</p>
+                      <p className="text-sm text-gray-300 mb-2">Specialties:</p>
                       <div className="flex flex-wrap gap-1">
                         {barber.specialties.map((specialty, index) => (
                           <span
                             key={index}
-                            className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded"
+                            className="text-xs bg-[#2D0808] text-gray-300 px-2 py-1 rounded"
                           >
                             {specialty}
                           </span>
@@ -371,7 +371,7 @@ const UV_AdminBarbersList: React.FC = () => {
 
                   <div className="space-y-3 mb-4">
                     <div className="flex items-center justify-between py-2 border-t border-gray-100">
-                      <span className="text-sm text-gray-600">Working Today</span>
+                      <span className="text-sm text-gray-300">Working Today</span>
                       <Switch
                         checked={barber.is_working_today}
                         onCheckedChange={() => handleToggleWorkingToday(barber)}
@@ -379,7 +379,7 @@ const UV_AdminBarbersList: React.FC = () => {
                       />
                     </div>
                     <div className="flex items-center justify-between py-2 border-t border-gray-100">
-                      <span className="text-sm text-gray-600">Active Status</span>
+                      <span className="text-sm text-gray-300">Active Status</span>
                       <Switch
                         checked={barber.is_active}
                         onCheckedChange={() => handleToggleActive(barber)}
@@ -401,7 +401,7 @@ const UV_AdminBarbersList: React.FC = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => handleDeleteBarber(barber)}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      className="text-red-600 hover:text-red-300 hover:bg-red-50"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -413,8 +413,8 @@ const UV_AdminBarbersList: React.FC = () => {
             {barbersData?.barbers.length === 0 && (
               <div className="col-span-3 text-center py-12">
                 <User className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No barbers yet</h3>
-                <p className="text-gray-600 mb-4">Get started by adding your first barber</p>
+                <h3 className="text-lg font-medium text-white mb-2">No barbers yet</h3>
+                <p className="text-gray-300 mb-4">Get started by adding your first barber</p>
                 <Button onClick={handleAddBarber}>
                   <Plus className="h-5 w-5 mr-2" />
                   Add Barber

@@ -129,15 +129,15 @@ const UV_AdminBookingDetail: React.FC = () => {
   const getStatusBadgeClass = (status: string): string => {
     switch (status) {
       case 'confirmed':
-        return 'bg-blue-100 text-blue-800 border-blue-200';
+        return 'bg-blue-900/30 text-blue-400 border-blue-200';
       case 'completed':
-        return 'bg-green-100 text-green-800 border-green-200';
+        return 'bg-green-900/30 text-green-400 border-green-200';
       case 'cancelled':
-        return 'bg-red-100 text-red-800 border-red-200';
+        return 'bg-red-900/30 text-red-400 border-red-200';
       case 'pending':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+        return 'bg-yellow-900/30 text-yellow-400 border-yellow-200';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
+        return 'bg-gray-100 text-gray-200 border-white/10';
     }
   };
 
@@ -271,10 +271,10 @@ const UV_AdminBookingDetail: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4">
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] flex items-center justify-center py-12 px-4">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600 text-lg">Loading booking details...</p>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600 mx-auto"></div>
+          <p className="mt-4 text-gray-300 text-lg">Loading booking details...</p>
         </div>
       </div>
     );
@@ -282,17 +282,17 @@ const UV_AdminBookingDetail: React.FC = () => {
 
   if (error || !booking) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4">
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] flex items-center justify-center py-12 px-4">
         <div className="max-w-md w-full text-center">
           <AlertCircle className="w-16 h-16 text-red-600 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Booking Not Found</h2>
-          <p className="text-gray-600 mb-6">
+          <h2 className="text-2xl font-bold text-white mb-2">Booking Not Found</h2>
+          <p className="text-gray-300 mb-6">
             We couldn't find a booking with ticket number: <strong>{ticket_number}</strong>
           </p>
           <div className="space-y-3">
             <Link
               to="/admin/bookings"
-              className="block w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              className="block w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"
             >
               Back to Bookings
             </Link>
@@ -304,27 +304,27 @@ const UV_AdminBookingDetail: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           <div className="mb-6">
             <Link
               to="/admin/bookings"
-              className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
+              className="inline-flex items-center text-amber-400 hover:text-blue-700 font-medium"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Bookings
             </Link>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6 mb-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="flex-1">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">Booking Details</h1>
+                <h1 className="text-3xl font-bold text-white mb-2">Booking Details</h1>
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl font-mono text-blue-600">{ticket_number}</span>
+                  <span className="text-2xl font-mono text-amber-400">{ticket_number}</span>
                   <button
                     onClick={copyTicketNumber}
-                    className="p-2 text-gray-500 hover:text-blue-600 transition-colors rounded-lg hover:bg-blue-50"
+                    className="p-2 text-gray-400 hover:text-amber-400 transition-colors rounded-lg hover:bg-[#2D0808]"
                     title="Copy ticket number"
                   >
                     {copySuccess ? (
@@ -345,17 +345,17 @@ const UV_AdminBookingDetail: React.FC = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-6">
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Appointment Details</h2>
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6">
+                <h2 className="text-xl font-semibold text-white mb-4">Appointment Details</h2>
                 <div className="space-y-3">
                   {serviceDetails && (
                     <div className="flex items-start gap-3">
                       <Calendar className="w-5 h-5 text-gray-400 mt-0.5" />
                       <div>
-                        <p className="text-sm text-gray-500">Service</p>
-                        <p className="text-base font-medium text-gray-900">{serviceDetails.name}</p>
+                        <p className="text-sm text-gray-400">Service</p>
+                        <p className="text-base font-medium text-white">{serviceDetails.name}</p>
                         {serviceDetails.price && (
-                          <p className="text-sm text-gray-600">${serviceDetails.price}</p>
+                          <p className="text-sm text-gray-300">${serviceDetails.price}</p>
                         )}
                       </div>
                     </div>
@@ -363,41 +363,41 @@ const UV_AdminBookingDetail: React.FC = () => {
                   <div className="flex items-start gap-3">
                     <Calendar className="w-5 h-5 text-gray-400 mt-0.5" />
                     <div>
-                      <p className="text-sm text-gray-500">Date</p>
-                      <p className="text-base font-medium text-gray-900">{formatDate(booking.appointment_date)}</p>
+                      <p className="text-sm text-gray-400">Date</p>
+                      <p className="text-base font-medium text-white">{formatDate(booking.appointment_date)}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <Clock className="w-5 h-5 text-gray-400 mt-0.5" />
                     <div>
-                      <p className="text-sm text-gray-500">Time</p>
-                      <p className="text-base font-medium text-gray-900">
+                      <p className="text-sm text-gray-400">Time</p>
+                      <p className="text-base font-medium text-white">
                         {formatTime(booking.appointment_time)} - {calculateEndTime(booking.appointment_time, booking.slot_duration)}
                       </p>
-                      <p className="text-sm text-gray-600">{booking.slot_duration} minutes</p>
+                      <p className="text-sm text-gray-300">{booking.slot_duration} minutes</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Customer Information</h2>
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6">
+                <h2 className="text-xl font-semibold text-white mb-4">Customer Information</h2>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <User className="w-5 h-5 text-gray-400 mt-0.5" />
                     <div>
-                      <p className="text-sm text-gray-500">Name</p>
-                      <p className="text-base font-medium text-gray-900">{booking.customer_name}</p>
+                      <p className="text-sm text-gray-400">Name</p>
+                      <p className="text-base font-medium text-white">{booking.customer_name}</p>
                       {booking.booking_for_name && (
-                        <p className="text-sm text-gray-600">Booking for: {booking.booking_for_name}</p>
+                        <p className="text-sm text-gray-300">Booking for: {booking.booking_for_name}</p>
                       )}
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <Mail className="w-5 h-5 text-gray-400 mt-0.5" />
                     <div>
-                      <p className="text-sm text-gray-500">Email</p>
-                      <a href={`mailto:${booking.customer_email}`} className="text-base font-medium text-blue-600 hover:text-blue-700">
+                      <p className="text-sm text-gray-400">Email</p>
+                      <a href={`mailto:${booking.customer_email}`} className="text-base font-medium text-amber-400 hover:text-blue-700">
                         {booking.customer_email}
                       </a>
                     </div>
@@ -405,8 +405,8 @@ const UV_AdminBookingDetail: React.FC = () => {
                   <div className="flex items-start gap-3">
                     <Phone className="w-5 h-5 text-gray-400 mt-0.5" />
                     <div>
-                      <p className="text-sm text-gray-500">Phone</p>
-                      <a href={`tel:${booking.customer_phone}`} className="text-base font-medium text-blue-600 hover:text-blue-700">
+                      <p className="text-sm text-gray-400">Phone</p>
+                      <a href={`tel:${booking.customer_phone}`} className="text-base font-medium text-amber-400 hover:text-blue-700">
                         {booking.customer_phone}
                       </a>
                     </div>
@@ -415,24 +415,24 @@ const UV_AdminBookingDetail: React.FC = () => {
               </div>
 
               {(booking.special_request || (booking.inspiration_photos && booking.inspiration_photos.length > 0)) && (
-                <div className="bg-white rounded-xl shadow-lg p-6">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-4">Special Requests</h2>
+                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6">
+                  <h2 className="text-xl font-semibold text-white mb-4">Special Requests</h2>
                   <div className="space-y-4">
                     {booking.special_request && (
                       <div>
-                        <p className="text-sm text-gray-500 mb-1">Customer Notes</p>
-                        <p className="text-base text-gray-900 bg-gray-50 p-3 rounded-lg">{booking.special_request}</p>
+                        <p className="text-sm text-gray-400 mb-1">Customer Notes</p>
+                        <p className="text-base text-white bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] p-3 rounded-lg">{booking.special_request}</p>
                       </div>
                     )}
                     {booking.inspiration_photos && booking.inspiration_photos.length > 0 && (
                       <div>
-                        <p className="text-sm text-gray-500 mb-2">Inspiration Photos</p>
+                        <p className="text-sm text-gray-400 mb-2">Inspiration Photos</p>
                         <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                           {booking.inspiration_photos.map((photo, index) => (
                             <button
                               key={index}
                               onClick={() => setSelectedPhotoIndex(index)}
-                              className="relative aspect-square rounded-lg overflow-hidden hover:ring-2 hover:ring-blue-500 transition-all"
+                              className="relative aspect-square rounded-lg overflow-hidden hover:ring-2 hover:ring-red-500 transition-all"
                             >
                               <img
                                 src={photo}
@@ -450,13 +450,13 @@ const UV_AdminBookingDetail: React.FC = () => {
             </div>
 
             <div className="space-y-6">
-              <div className="bg-white rounded-xl shadow-lg p-6">
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-semibold text-gray-900">Admin Notes</h2>
+                  <h2 className="text-xl font-semibold text-white">Admin Notes</h2>
                   {!isEditingNotes ? (
                     <button
                       onClick={() => setIsEditingNotes(true)}
-                      className="text-blue-600 hover:text-blue-700"
+                      className="text-amber-400 hover:text-blue-700"
                     >
                       <Edit className="w-5 h-5" />
                     </button>
@@ -464,7 +464,7 @@ const UV_AdminBookingDetail: React.FC = () => {
                     <button
                       onClick={handleSaveNotes}
                       disabled={saveNotesMutation.isPending}
-                      className="text-green-600 hover:text-green-700 disabled:opacity-50"
+                      className="text-green-600 hover:text-green-300 disabled:opacity-50"
                     >
                       <Save className="w-5 h-5" />
                     </button>
@@ -475,18 +475,18 @@ const UV_AdminBookingDetail: React.FC = () => {
                     value={adminNotes}
                     onChange={(e) => setAdminNotes(e.target.value)}
                     rows={6}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-4 py-2 border border-white/20 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500"
                     placeholder="Add internal notes about this booking..."
                   />
                 ) : (
-                  <div className="text-base text-gray-700 whitespace-pre-wrap bg-gray-50 p-3 rounded-lg min-h-[100px]">
+                  <div className="text-base text-gray-300 whitespace-pre-wrap bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] p-3 rounded-lg min-h-[100px]">
                     {booking.admin_notes || 'No notes added yet'}
                   </div>
                 )}
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Admin Actions</h2>
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6">
+                <h2 className="text-xl font-semibold text-white mb-4">Admin Actions</h2>
                 <div className="space-y-3">
                   {booking.status === 'confirmed' && (
                     <button
@@ -508,33 +508,33 @@ const UV_AdminBookingDetail: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Timeline</h2>
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6">
+                <h2 className="text-xl font-semibold text-white mb-4">Timeline</h2>
                 <div className="space-y-3 text-sm">
                   {booking.created_at && (
                     <div>
-                      <p className="text-gray-500">Created</p>
-                      <p className="text-gray-900">{formatTimestamp(booking.created_at)}</p>
+                      <p className="text-gray-400">Created</p>
+                      <p className="text-white">{formatTimestamp(booking.created_at)}</p>
                     </div>
                   )}
                   {booking.confirmed_at && (
                     <div>
-                      <p className="text-gray-500">Confirmed</p>
-                      <p className="text-gray-900">{formatTimestamp(booking.confirmed_at)}</p>
+                      <p className="text-gray-400">Confirmed</p>
+                      <p className="text-white">{formatTimestamp(booking.confirmed_at)}</p>
                     </div>
                   )}
                   {booking.completed_at && (
                     <div>
-                      <p className="text-gray-500">Completed</p>
-                      <p className="text-gray-900">{formatTimestamp(booking.completed_at)}</p>
+                      <p className="text-gray-400">Completed</p>
+                      <p className="text-white">{formatTimestamp(booking.completed_at)}</p>
                     </div>
                   )}
                   {booking.cancelled_at && (
                     <div>
-                      <p className="text-gray-500">Cancelled</p>
-                      <p className="text-gray-900">{formatTimestamp(booking.cancelled_at)}</p>
+                      <p className="text-gray-400">Cancelled</p>
+                      <p className="text-white">{formatTimestamp(booking.cancelled_at)}</p>
                       {booking.cancellation_reason && (
-                        <p className="text-gray-600 mt-1">Reason: {booking.cancellation_reason}</p>
+                        <p className="text-gray-300 mt-1">Reason: {booking.cancellation_reason}</p>
                       )}
                     </div>
                   )}
@@ -546,25 +546,25 @@ const UV_AdminBookingDetail: React.FC = () => {
       </div>
 
       {showCancelModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl max-w-md w-full p-6">
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">Cancel Booking</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl max-w-md w-full p-6">
+            <h3 className="text-xl font-semibold text-white mb-4">Cancel Booking</h3>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Cancellation Reason
               </label>
               <textarea
                 value={cancellationReason}
                 onChange={(e) => setCancellationReason(e.target.value)}
                 rows={3}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border border-white/20 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500"
                 placeholder="Enter reason for cancellation..."
               />
             </div>
             <div className="flex gap-3">
               <button
                 onClick={() => setShowCancelModal(false)}
-                className="flex-1 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                className="flex-1 bg-gray-100 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
               >
                 Cancel
               </button>

@@ -249,21 +249,21 @@ const UV_BookingFlow_Review: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 md:py-12 lg:py-16">
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] py-8 md:py-12 lg:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Progress Indicator */}
           <div className="mb-6 lg:mb-8">
-            <p className="text-center text-sm font-medium text-gray-600">
+            <p className="text-center text-sm font-medium text-gray-300">
               Final Step
             </p>
           </div>
 
           {/* Page Header */}
           <div className="text-center mb-8 lg:mb-12">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
+            <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
               Review Your Booking
             </h1>
-            <p className="mt-2 text-base md:text-lg text-gray-600">
+            <p className="mt-2 text-base md:text-lg text-gray-300">
               Please verify all details before confirming
             </p>
           </div>
@@ -278,7 +278,7 @@ const UV_BookingFlow_Review: React.FC = () => {
                   </svg>
                 </div>
                 <div className="ml-3 flex-1">
-                  <p className="text-sm font-medium text-red-800">
+                  <p className="text-sm font-medium text-red-400">
                     {getErrorMessage()}
                   </p>
                   <div className="mt-3 flex flex-col sm:flex-row gap-2">
@@ -291,7 +291,7 @@ const UV_BookingFlow_Review: React.FC = () => {
                     {isSlotError() && (
                       <Link
                         to="/book/time"
-                        className="inline-flex items-center px-4 py-2 bg-white text-red-700 border-2 border-red-200 rounded-lg font-medium hover:bg-red-50 transition-colors text-sm"
+                        className="inline-flex items-center px-4 py-2 bg-white text-red-300 border-2 border-red-200 rounded-lg font-medium hover:bg-red-50 transition-colors text-sm"
                       >
                         Choose New Time
                       </Link>
@@ -308,14 +308,14 @@ const UV_BookingFlow_Review: React.FC = () => {
             <div className="p-6 lg:p-8 border-b border-gray-200">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-2">
-                  <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="h-6 w-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <h2 className="text-xl font-semibold text-gray-900">Appointment Details</h2>
+                  <h2 className="text-xl font-semibold text-white">Appointment Details</h2>
                 </div>
                 <Link
                   to="/book/date"
-                  className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors"
+                  className="text-amber-400 hover:text-blue-700 text-sm font-medium transition-colors"
                   aria-label="Edit appointment details"
                 >
                   Edit
@@ -324,25 +324,25 @@ const UV_BookingFlow_Review: React.FC = () => {
               <div className="space-y-3">
                 {bookingContext.service_name && (
                   <div>
-                    <p className="text-sm text-gray-600">Service</p>
-                    <p className="text-base font-medium text-gray-900">{bookingContext.service_name}</p>
+                    <p className="text-sm text-gray-300">Service</p>
+                    <p className="text-base font-medium text-white">{bookingContext.service_name}</p>
                   </div>
                 )}
                 <div>
-                  <p className="text-sm text-gray-600">Date</p>
-                  <p className="text-base font-medium text-gray-900">
+                  <p className="text-sm text-gray-300">Date</p>
+                  <p className="text-base font-medium text-white">
                     {bookingContext.selected_date ? formatLongDate(bookingContext.selected_date) : 'Not selected'}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Time</p>
-                  <p className="text-base font-medium text-gray-900">
+                  <p className="text-sm text-gray-300">Time</p>
+                  <p className="text-base font-medium text-white">
                     {bookingContext.selected_time ? formatTimeRange(bookingContext.selected_time, 40) : 'Not selected'}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Duration</p>
-                  <p className="text-base font-medium text-gray-900">40 minutes</p>
+                  <p className="text-sm text-gray-300">Duration</p>
+                  <p className="text-base font-medium text-white">40 minutes</p>
                 </div>
               </div>
             </div>
@@ -351,14 +351,14 @@ const UV_BookingFlow_Review: React.FC = () => {
             <div className="p-6 lg:p-8 border-b border-gray-200">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-2">
-                  <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="h-6 w-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
-                  <h2 className="text-xl font-semibold text-gray-900">Contact Information</h2>
+                  <h2 className="text-xl font-semibold text-white">Contact Information</h2>
                 </div>
                 <Link
                   to="/book/details"
-                  className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors"
+                  className="text-amber-400 hover:text-blue-700 text-sm font-medium transition-colors"
                   aria-label="Edit contact information"
                 >
                   Edit
@@ -366,16 +366,16 @@ const UV_BookingFlow_Review: React.FC = () => {
               </div>
               <div className="space-y-3">
                 <div>
-                  <p className="text-sm text-gray-600">Full Name</p>
-                  <p className="text-base font-medium text-gray-900">{bookingContext.customer_name || 'Not provided'}</p>
+                  <p className="text-sm text-gray-300">Full Name</p>
+                  <p className="text-base font-medium text-white">{bookingContext.customer_name || 'Not provided'}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Email Address</p>
-                  <p className="text-base font-medium text-gray-900">{bookingContext.customer_email || 'Not provided'}</p>
+                  <p className="text-sm text-gray-300">Email Address</p>
+                  <p className="text-base font-medium text-white">{bookingContext.customer_email || 'Not provided'}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Phone Number (WhatsApp preferred)</p>
-                  <p className="text-base font-medium text-gray-900">{bookingContext.customer_phone || 'Not provided'}</p>
+                  <p className="text-sm text-gray-300">Phone Number (WhatsApp preferred)</p>
+                  <p className="text-base font-medium text-white">{bookingContext.customer_phone || 'Not provided'}</p>
                 </div>
               </div>
             </div>
@@ -385,14 +385,14 @@ const UV_BookingFlow_Review: React.FC = () => {
               <div className="p-6 lg:p-8">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
-                    <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="h-6 w-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
                     </svg>
-                    <h2 className="text-xl font-semibold text-gray-900">Special Requests</h2>
+                    <h2 className="text-xl font-semibold text-white">Special Requests</h2>
                   </div>
                   <Link
                     to="/book/details"
-                    className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors"
+                    className="text-amber-400 hover:text-blue-700 text-sm font-medium transition-colors"
                     aria-label="Edit special requests"
                   >
                     Edit
@@ -401,25 +401,25 @@ const UV_BookingFlow_Review: React.FC = () => {
                 <div className="space-y-3">
                   {bookingContext.special_request && (
                     <div>
-                      <p className="text-sm text-gray-600">Your Request</p>
-                      <p className="text-base text-gray-900">{bookingContext.special_request}</p>
+                      <p className="text-sm text-gray-300">Your Request</p>
+                      <p className="text-base text-white">{bookingContext.special_request}</p>
                     </div>
                   )}
                   {bookingContext.booking_for_name && (
                     <div>
-                      <p className="text-sm text-gray-600">Booking For</p>
-                      <p className="text-base font-medium text-gray-900">{bookingContext.booking_for_name}</p>
+                      <p className="text-sm text-gray-300">Booking For</p>
+                      <p className="text-base font-medium text-white">{bookingContext.booking_for_name}</p>
                     </div>
                   )}
                   {bookingContext.inspiration_photos && bookingContext.inspiration_photos.length > 0 && (
                     <div>
-                      <p className="text-sm text-gray-600 mb-2">Inspiration Photos</p>
+                      <p className="text-sm text-gray-300 mb-2">Inspiration Photos</p>
                       <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                         {bookingContext.inspiration_photos.map((photo, index) => (
                           <button
                             key={index}
                             onClick={() => openLightbox(index)}
-                            className="aspect-square rounded-lg overflow-hidden hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="aspect-square rounded-lg overflow-hidden hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-red-500"
                           >
                             <img
                               src={photo}
@@ -437,31 +437,31 @@ const UV_BookingFlow_Review: React.FC = () => {
           </div>
 
           {/* Important Information Card */}
-          <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6 lg:p-8 mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Important Information</h2>
+          <div className="bg-[#2D0808] border-2 border-blue-200 rounded-xl p-6 lg:p-8 mb-6">
+            <h2 className="text-lg font-semibold text-white mb-4">Important Information</h2>
             <div className="space-y-3">
               <div className="flex items-start">
-                <svg className="h-5 w-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-5 w-5 text-amber-400 mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 <div>
-                  <p className="text-sm font-medium text-gray-900">{shopSettings.shop_address || 'Address not available'}</p>
+                  <p className="text-sm font-medium text-white">{shopSettings.shop_address || 'Address not available'}</p>
                   <a
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(shopSettings.shop_address)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-blue-600 hover:text-blue-700 mt-1 inline-block"
+                    className="text-sm text-amber-400 hover:text-blue-700 mt-1 inline-block"
                   >
                     Get Directions →
                   </a>
                 </div>
               </div>
               <div className="flex items-center">
-                <svg className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-5 w-5 text-amber-400 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <a href={`tel:${shopSettings.shop_phone}`} className="text-sm font-medium text-gray-900 hover:text-blue-600">
+                <a href={`tel:${shopSettings.shop_phone}`} className="text-sm font-medium text-white hover:text-amber-400">
                   {shopSettings.shop_phone || 'Phone not available'}
                 </a>
               </div>
@@ -485,14 +485,14 @@ const UV_BookingFlow_Review: React.FC = () => {
                 onChange={handleTermsToggle}
                 data-testid="terms-checkbox"
                 aria-label="Accept terms and conditions"
-                className="mt-1 h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-4 focus:ring-blue-100 cursor-pointer"
+                className="mt-1 h-5 w-5 text-amber-400 border-gray-300 rounded focus:ring-4 focus:ring-red-100 cursor-pointer"
               />
               <span className="ml-3 text-sm text-gray-700">
                 I agree to the{' '}
                 <button
                   type="button"
                   onClick={() => window.open('/terms', '_blank')}
-                  className="text-blue-600 hover:text-blue-700 font-medium underline"
+                  className="text-amber-400 hover:text-blue-700 font-medium underline"
                 >
                   cancellation policy and terms of service
                 </button>
@@ -504,7 +504,7 @@ const UV_BookingFlow_Review: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
               to="/book/details"
-              className="flex-1 sm:flex-none sm:w-auto px-6 py-3 bg-gray-100 text-gray-900 border-2 border-gray-300 rounded-lg font-medium hover:bg-gray-200 transition-all duration-200 text-center"
+              className="flex-1 sm:flex-none sm:w-auto px-6 py-3 bg-gray-100 text-white border-2 border-gray-300 rounded-lg font-medium hover:bg-gray-200 transition-all duration-200 text-center"
             >
               Back to Edit
             </Link>
@@ -513,7 +513,7 @@ const UV_BookingFlow_Review: React.FC = () => {
               disabled={!termsAccepted || createBookingMutation.isPending}
               data-testid="confirm-booking-button"
               aria-label="Confirm booking and proceed to confirmation"
-              className="flex-1 px-8 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center"
+              className="flex-1 px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center"
             >
               {createBookingMutation.isPending ? (
                 <>
@@ -583,7 +583,7 @@ const UV_BookingFlow_Review: React.FC = () => {
                 </button>
 
                 {/* Image Counter */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm bg-black bg-opacity-50 px-3 py-1 rounded-full">
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm bg-black bg-opacity-80 px-3 py-1 rounded-full">
                   {lightboxImageIndex + 1} / {bookingContext.inspiration_photos.length}
                 </div>
               </>

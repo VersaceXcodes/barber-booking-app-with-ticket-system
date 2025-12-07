@@ -234,19 +234,19 @@ const UV_EmailVerificationSuccess: React.FC = () => {
           <div className="text-center">
             <div className="mb-6 relative">
               <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto animate-pulse">
-                <Loader2 className="w-12 h-12 animate-spin text-blue-600" strokeWidth={2.5} />
+                <Loader2 className="w-12 h-12 animate-spin text-amber-400" strokeWidth={2.5} />
               </div>
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
               Verifying Your Email...
             </h2>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-300 text-lg">
               Please wait while we confirm your account
             </p>
             <div className="mt-6 flex justify-center space-x-1">
-              <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-              <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-              <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+              <div className="w-2 h-2 bg-gradient-to-r from-red-600 to-red-700 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+              <div className="w-2 h-2 bg-gradient-to-r from-red-600 to-red-700 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+              <div className="w-2 h-2 bg-gradient-to-r from-red-600 to-red-700 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
             </div>
           </div>
         </div>
@@ -261,9 +261,9 @@ const UV_EmailVerificationSuccess: React.FC = () => {
   if (verifyEmailMutation.isError || !verification_token) {
     return (
       <>
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] px-4 py-12">
           <div className="max-w-md w-full">
-            <div className="bg-white rounded-xl shadow-lg border border-red-100 overflow-hidden">
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-red-100 overflow-hidden">
               {/* Error Header */}
               <div className="bg-gradient-to-br from-red-500 to-red-600 px-8 py-10 text-center">
                 <div className="mb-4">
@@ -278,13 +278,13 @@ const UV_EmailVerificationSuccess: React.FC = () => {
               <div className="px-8 py-8">
                 <div className="mb-6">
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                    <p className="text-red-800 text-sm leading-relaxed">
+                    <p className="text-red-400 text-sm leading-relaxed">
                       <strong className="font-semibold">The verification link is invalid or has expired.</strong>
                     </p>
-                    <p className="text-red-700 text-sm mt-2">
+                    <p className="text-red-300 text-sm mt-2">
                       This can happen if:
                     </p>
-                    <ul className="text-red-700 text-sm mt-2 ml-4 list-disc space-y-1">
+                    <ul className="text-red-300 text-sm mt-2 ml-4 list-disc space-y-1">
                       <li>The link is more than 24 hours old</li>
                       <li>The link has already been used</li>
                       <li>The link was copied incorrectly</li>
@@ -295,17 +295,17 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                 <div className="space-y-3">
                   <Link
                     to="/login"
-                    className="block w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold text-center hover:bg-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                    className="block w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-lg font-semibold text-center hover:from-red-700 hover:to-red-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
                   >
                     Go to Login
                   </Link>
-                  <p className="text-sm text-gray-600 text-center px-4">
+                  <p className="text-sm text-gray-300 text-center px-4">
                     You can request a new verification email from the login page
                   </p>
-                  <div className="pt-3 border-t border-gray-200">
+                  <div className="pt-3 border-t border-white/10">
                     <Link
                       to="/"
-                      className="block text-center text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors"
+                      className="block text-center text-gray-300 hover:text-white text-sm font-medium transition-colors"
                     >
                       ← Return to Home
                     </Link>
@@ -327,17 +327,17 @@ const UV_EmailVerificationSuccess: React.FC = () => {
     <>
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-blue-50 to-indigo-100 px-4 py-12">
         <div className="max-w-2xl w-full">
-          <div className="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-xl border border-gray-100 overflow-hidden">
             {/* Success Header with Animation */}
             <div className="bg-gradient-to-br from-green-500 to-emerald-600 px-8 py-12 text-center relative overflow-hidden">
               {/* Decorative circles */}
-              <div className="absolute top-0 left-0 w-32 h-32 bg-white opacity-10 rounded-full -translate-x-16 -translate-y-16"></div>
-              <div className="absolute bottom-0 right-0 w-40 h-40 bg-white opacity-10 rounded-full translate-x-20 translate-y-20"></div>
+              <div className="absolute top-0 left-0 w-32 h-32 bg-[#2D0808] opacity-10 rounded-full -translate-x-16 -translate-y-16"></div>
+              <div className="absolute bottom-0 right-0 w-40 h-40 bg-[#2D0808] opacity-10 rounded-full translate-x-20 translate-y-20"></div>
               
               <div className="relative z-10">
                 <div className="mb-6 inline-block">
                   <div className="relative">
-                    <div className="absolute inset-0 bg-white opacity-20 rounded-full animate-ping"></div>
+                    <div className="absolute inset-0 bg-[#2D0808] opacity-20 rounded-full animate-ping"></div>
                     <CheckCircle 
                       className="w-20 h-20 text-white relative z-10 animate-bounce" 
                       strokeWidth={2.5} 
@@ -362,12 +362,12 @@ const UV_EmailVerificationSuccess: React.FC = () => {
             <div className="px-6 sm:px-8 py-10">
               {/* Feature Highlights */}
               <div className="mb-8">
-                <h3 className="text-lg font-semibold text-gray-900 mb-5 text-center">
+                <h3 className="text-lg font-semibold text-white mb-5 text-center">
                   What you can do now:
                 </h3>
                 <div className="grid md:grid-cols-3 gap-4">
                   {/* Feature 1: Faster Booking */}
-                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-5 border border-blue-200 hover:shadow-md transition-shadow">
+                  <div className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg p-5 border border-blue-200 hover:shadow-md transition-shadow">
                     <div className="flex items-start">
                       <div className="flex-shrink-0">
                         <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-lg">
@@ -377,10 +377,10 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                         </div>
                       </div>
                       <div className="ml-3">
-                        <h4 className="text-sm font-semibold text-gray-900 mb-1">
+                        <h4 className="text-sm font-semibold text-white mb-1">
                           Faster Booking
                         </h4>
-                        <p className="text-xs text-gray-700 leading-relaxed">
+                        <p className="text-xs text-gray-300 leading-relaxed">
                           Your details are saved for quick appointments
                         </p>
                       </div>
@@ -398,10 +398,10 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                         </div>
                       </div>
                       <div className="ml-3">
-                        <h4 className="text-sm font-semibold text-gray-900 mb-1">
+                        <h4 className="text-sm font-semibold text-white mb-1">
                           Booking History
                         </h4>
-                        <p className="text-xs text-gray-700 leading-relaxed">
+                        <p className="text-xs text-gray-300 leading-relaxed">
                           Track all your past and upcoming visits
                         </p>
                       </div>
@@ -419,10 +419,10 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                         </div>
                       </div>
                       <div className="ml-3">
-                        <h4 className="text-sm font-semibold text-gray-900 mb-1">
+                        <h4 className="text-sm font-semibold text-white mb-1">
                           Easy Management
                         </h4>
-                        <p className="text-xs text-gray-700 leading-relaxed">
+                        <p className="text-xs text-gray-300 leading-relaxed">
                           Cancel or reschedule appointments anytime
                         </p>
                       </div>
@@ -481,7 +481,7 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                   <button
                     onClick={handleBookFirstAppointment}
                     disabled={isRedirecting}
-                    className="w-full bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg border-2 border-blue-600 hover:bg-blue-50 transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center"
+                    className="w-full bg-[#2D0808] text-amber-400 px-8 py-4 rounded-lg font-semibold text-lg border-2 border-red-600 hover:bg-[#2D0808] transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center"
                   >
                     <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -494,7 +494,7 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                 <div className="text-center pt-2">
                   <Link
                     to="/"
-                    className="text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors inline-flex items-center group"
+                    className="text-gray-300 hover:text-white text-sm font-medium transition-colors inline-flex items-center group"
                   >
                     <svg className="w-4 h-4 mr-1 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -509,8 +509,8 @@ const UV_EmailVerificationSuccess: React.FC = () => {
           {/* Additional Info - Email Confirmation */}
           {verifiedEmail && (
             <div className="mt-6 text-center">
-              <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-lg px-6 py-4 border border-gray-200 shadow-sm">
-                <p className="text-sm text-gray-700 leading-relaxed">
+              <div className="bg-[#2D0808] bg-opacity-80 backdrop-blur-sm rounded-lg px-6 py-4 border border-white/10 shadow-sm">
+                <p className="text-sm text-gray-300 leading-relaxed">
                   <span className="inline-flex items-center">
                     <svg className="w-4 h-4 mr-1.5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -518,7 +518,7 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                     A confirmation email has been sent to
                   </span>
                   <br />
-                  <span className="font-semibold text-gray-900">{verifiedEmail}</span>
+                  <span className="font-semibold text-white">{verifiedEmail}</span>
                 </p>
               </div>
             </div>

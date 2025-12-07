@@ -219,7 +219,7 @@ const UV_AdminDashboardHome: React.FC = () => {
         type: 'new_booking',
         description: `New booking: ${booking.customer_name} at ${formatTime(booking.appointment_time)}`,
         timestamp: booking.created_at,
-        icon: <Calendar className="w-4 h-4 text-blue-600" />
+        icon: <Calendar className="w-4 h-4 text-amber-400" />
       });
       
       // Cancellation activity
@@ -295,14 +295,14 @@ const UV_AdminDashboardHome: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
         {/* Page Header */}
-        <div className="bg-white shadow-sm border-b border-gray-200">
+        <div className="bg-[#2D0808] shadow-sm border-b border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-                <p className="mt-1 text-sm text-gray-600">
+                <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+                <p className="mt-1 text-sm text-gray-300">
                   Welcome back, {currentUser?.name || 'Admin'}
                 </p>
               </div>
@@ -312,7 +312,7 @@ const UV_AdminDashboardHome: React.FC = () => {
                 <select
                   value={selectedDateRange}
                   onChange={(e) => setSelectedDateRange(e.target.value as DateRangeOption)}
-                  className="block w-full sm:w-auto px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  className="block w-full sm:w-auto px-4 py-2 bg-[#2D0808] border border-white/20 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-all"
                   aria-label="Select date range"
                 >
                   <option value="today">Today</option>
@@ -333,7 +333,7 @@ const UV_AdminDashboardHome: React.FC = () => {
               to="/admin/bookings?status=upcoming"
               className="group"
             >
-              <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl hover:scale-105 transition-all duration-200">
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl hover:scale-105 transition-all duration-200">
                 {loadingStats ? (
                   <div className="animate-pulse">
                     <div className="h-12 w-12 bg-blue-100 rounded-lg mb-4"></div>
@@ -344,7 +344,7 @@ const UV_AdminDashboardHome: React.FC = () => {
                   <>
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-3 bg-blue-100 rounded-lg">
-                        <Calendar className="w-6 h-6 text-blue-600" />
+                        <Calendar className="w-6 h-6 text-amber-400" />
                       </div>
                       {stats && stats.today_bookings > 0 && (
                         <div className="flex items-center text-green-600 text-sm font-medium">
@@ -353,11 +353,11 @@ const UV_AdminDashboardHome: React.FC = () => {
                         </div>
                       )}
                     </div>
-                    <h3 className="text-3xl font-bold text-gray-900 mb-1">
+                    <h3 className="text-3xl font-bold text-white mb-1">
                       {stats?.today_bookings || 0}
                     </h3>
-                    <p className="text-sm text-gray-600 mb-2">Today's Bookings</p>
-                    <div className="flex items-center space-x-4 text-xs text-gray-500">
+                    <p className="text-sm text-gray-300 mb-2">Today's Bookings</p>
+                    <div className="flex items-center space-x-4 text-xs text-gray-400">
                       <span>{stats?.today_completed || 0} completed</span>
                       <span>•</span>
                       <span>{stats?.today_upcoming || 0} upcoming</span>
@@ -369,7 +369,7 @@ const UV_AdminDashboardHome: React.FC = () => {
 
             {/* Revenue Card (conditional) */}
             {stats?.week_revenue !== null && (
-              <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6">
                 {loadingStats ? (
                   <div className="animate-pulse">
                     <div className="h-12 w-12 bg-green-100 rounded-lg mb-4"></div>
@@ -383,10 +383,10 @@ const UV_AdminDashboardHome: React.FC = () => {
                         <DollarSign className="w-6 h-6 text-green-600" />
                       </div>
                     </div>
-                    <h3 className="text-3xl font-bold text-gray-900 mb-1">
+                    <h3 className="text-3xl font-bold text-white mb-1">
                       ${stats?.week_revenue?.toFixed(2) || '0.00'}
                     </h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-300">
                       {selectedDateRange === 'this_week' ? 'This Week' : 'This Month'}
                     </p>
                   </>
@@ -399,7 +399,7 @@ const UV_AdminDashboardHome: React.FC = () => {
               to="/admin/bookings?status=cancelled"
               className="group"
             >
-              <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl hover:scale-105 transition-all duration-200">
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-xl hover:scale-105 transition-all duration-200">
                 {loadingStats ? (
                   <div className="animate-pulse">
                     <div className="h-12 w-12 bg-red-100 rounded-lg mb-4"></div>
@@ -419,18 +419,18 @@ const UV_AdminDashboardHome: React.FC = () => {
                         </div>
                       )}
                     </div>
-                    <h3 className="text-3xl font-bold text-gray-900 mb-1">
+                    <h3 className="text-3xl font-bold text-white mb-1">
                       {stats?.week_cancelled || 0}
                     </h3>
-                    <p className="text-sm text-gray-600 mb-2">Cancellations</p>
-                    <p className="text-xs text-gray-500">This week</p>
+                    <p className="text-sm text-gray-300 mb-2">Cancellations</p>
+                    <p className="text-xs text-gray-400">This week</p>
                   </>
                 )}
               </div>
             </Link>
 
             {/* No-Shows Card */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6">
               {loadingStats ? (
                 <div className="animate-pulse">
                   <div className="h-12 w-12 bg-yellow-100 rounded-lg mb-4"></div>
@@ -444,25 +444,25 @@ const UV_AdminDashboardHome: React.FC = () => {
                       <AlertTriangle className="w-6 h-6 text-yellow-600" />
                     </div>
                   </div>
-                  <h3 className="text-3xl font-bold text-gray-900 mb-1">
+                  <h3 className="text-3xl font-bold text-white mb-1">
                     {stats?.month_no_shows || 0}
                   </h3>
-                  <p className="text-sm text-gray-600 mb-2">No-Shows</p>
-                  <p className="text-xs text-gray-500">This month</p>
+                  <p className="text-sm text-gray-300 mb-2">No-Shows</p>
+                  <p className="text-xs text-gray-400">This month</p>
                 </>
               )}
             </div>
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6 mb-8">
+            <h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <Link 
                 to="/admin/bookings/new"
-                className="flex flex-col items-center justify-center p-4 bg-blue-50 hover:bg-blue-100 rounded-lg border-2 border-blue-200 hover:border-blue-400 transition-all duration-200 group"
+                className="flex flex-col items-center justify-center p-4 bg-[#2D0808] hover:bg-blue-100 rounded-lg border-2 border-blue-200 hover:border-blue-400 transition-all duration-200 group"
               >
-                <Plus className="w-8 h-8 text-blue-600 mb-2 group-hover:scale-110 transition-transform" />
+                <Plus className="w-8 h-8 text-amber-400 mb-2 group-hover:scale-110 transition-transform" />
                 <span className="text-sm font-medium text-blue-900 text-center">Add Manual Booking</span>
               </Link>
 
@@ -497,12 +497,12 @@ const UV_AdminDashboardHome: React.FC = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Upcoming Appointments */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">Next Appointments</h2>
+                <h2 className="text-xl font-semibold text-white">Next Appointments</h2>
                 <Link 
                   to="/admin/bookings/calendar"
-                  className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                  className="text-sm text-amber-400 hover:text-blue-700 font-medium transition-colors"
                 >
                   View All →
                 </Link>
@@ -511,7 +511,7 @@ const UV_AdminDashboardHome: React.FC = () => {
               {loadingAppointments ? (
                 <div className="space-y-4">
                   {[1, 2, 3].map((i) => (
-                    <div key={i} className="animate-pulse flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
+                    <div key={i} className="animate-pulse flex items-center space-x-4 p-3 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg">
                       <div className="h-10 w-10 bg-gray-200 rounded-full"></div>
                       <div className="flex-1 space-y-2">
                         <div className="h-4 bg-gray-200 rounded w-3/4"></div>
@@ -525,27 +525,27 @@ const UV_AdminDashboardHome: React.FC = () => {
                   {upcomingAppointments.map((appointment) => (
                     <div 
                       key={appointment.booking_id}
-                      className="flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-lg border border-gray-200 transition-all duration-200"
+                      className="flex items-center justify-between p-3 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] hover:bg-[#3D0F0F] rounded-lg border border-white/10 transition-all duration-200"
                     >
                       <div className="flex items-center space-x-3 flex-1">
                         <div className="flex-shrink-0">
                           <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                            <Clock className="w-5 h-5 text-blue-600" />
+                            <Clock className="w-5 h-5 text-amber-400" />
                           </div>
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-bold text-gray-900">
+                          <p className="text-sm font-bold text-white">
                             {formatTime(appointment.appointment_time)}
                           </p>
-                          <p className="text-sm text-gray-600 truncate">
+                          <p className="text-sm text-gray-300 truncate">
                             {appointment.customer_name}
                           </p>
                           <div className="flex items-center space-x-2 mt-1">
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-gray-400">
                               {appointment.service_name}
                             </span>
                             <span className="text-xs text-gray-400">•</span>
-                            <span className="text-xs text-gray-500 font-mono">
+                            <span className="text-xs text-gray-400 font-mono">
                               {appointment.ticket_number}
                             </span>
                           </div>
@@ -554,14 +554,14 @@ const UV_AdminDashboardHome: React.FC = () => {
                       <div className="flex items-center space-x-2 ml-4">
                         <a 
                           href={`tel:${appointment.customer_phone}`}
-                          className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          className="p-2 text-gray-300 hover:text-amber-400 hover:bg-[#2D0808] rounded-lg transition-colors"
                           aria-label="Call customer"
                         >
                           <Phone className="w-4 h-4" />
                         </a>
                         <Link 
                           to={`/admin/bookings/${appointment.ticket_number}`}
-                          className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          className="p-2 text-gray-300 hover:text-amber-400 hover:bg-[#2D0808] rounded-lg transition-colors"
                           aria-label="View booking details"
                         >
                           <Eye className="w-4 h-4" />
@@ -573,10 +573,10 @@ const UV_AdminDashboardHome: React.FC = () => {
               ) : (
                 <div className="text-center py-8">
                   <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-600 text-sm">No upcoming appointments</p>
+                  <p className="text-gray-300 text-sm">No upcoming appointments</p>
                   <Link 
                     to="/admin/bookings/new"
-                    className="inline-block mt-3 text-blue-600 hover:text-blue-700 text-sm font-medium"
+                    className="inline-block mt-3 text-amber-400 hover:text-blue-700 text-sm font-medium"
                   >
                     Add a booking →
                   </Link>
@@ -585,24 +585,24 @@ const UV_AdminDashboardHome: React.FC = () => {
             </div>
 
             {/* Recent Activity */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Recent Activity</h2>
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6">
+              <h2 className="text-xl font-semibold text-white mb-4">Recent Activity</h2>
 
               {recentActivity.length > 0 ? (
                 <div className="space-y-3 max-h-96 overflow-y-auto">
                   {recentActivity.map((activity) => (
                     <div 
                       key={activity.id}
-                      className="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg border border-gray-200"
+                      className="flex items-start space-x-3 p-3 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg border border-white/10"
                     >
                       <div className="flex-shrink-0 mt-0.5">
                         {activity.icon}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm text-gray-800">
+                        <p className="text-sm text-gray-200">
                           {activity.description}
                         </p>
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-gray-400 mt-1">
                           {getRelativeTime(activity.timestamp)}
                         </p>
                       </div>
@@ -612,7 +612,7 @@ const UV_AdminDashboardHome: React.FC = () => {
               ) : (
                 <div className="text-center py-8">
                   <Clock className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-600 text-sm">No recent activity</p>
+                  <p className="text-gray-300 text-sm">No recent activity</p>
                 </div>
               )}
             </div>
@@ -623,7 +623,7 @@ const UV_AdminDashboardHome: React.FC = () => {
             <div className="mt-8 bg-red-50 border border-red-200 rounded-lg p-4">
               <div className="flex items-center">
                 <AlertTriangle className="w-5 h-5 text-red-600 mr-2" />
-                <p className="text-red-800 text-sm">
+                <p className="text-red-400 text-sm">
                   Failed to load dashboard data. Please try refreshing the page.
                 </p>
               </div>

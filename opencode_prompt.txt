@@ -1,34 +1,385 @@
-## BUILD FAILURE - Fix Required (Attempt 2/3)
+The site currently has an inconsistent design system:
 
-The Vite build process failed. Analyze the error output below and fix the issue.
+The landing page uses the new blood-red Master Fade theme, which is correct.
 
-## Build Error Output:
-```
-NODE_ENV=production is not supported in the .env file. Only NODE_ENV=development is supported to create a development build of your project. If you need to set process.env.NODE_ENV, you can set it in the Vite config instead.
-x Build failed in 4.95s
-error during build:
-[vite:load-fallback] Could not load /app/vitereact/src/components/ui/switch (imported by src/components/views/UV_AdminBarbersList.tsx): ENOENT: no such file or directory, open '/app/vitereact/src/components/ui/switch'
-Error: Could not load /app/vitereact/src/components/ui/switch (imported by src/components/views/UV_AdminBarbersList.tsx): ENOENT: no such file or directory, open '/app/vitereact/src/components/ui/switch'
+Other pages (Bookings flow, Dashboard, Customers, Services, etc.) still use the old blue/light theme or mixed designs.
 
-```
+I want you to fully unify the design system.
 
-## Build Directory: /app/vitereact
+1. Define the NEW global theme (based on the landing page)
 
-## Your Task:
-1. **Analyze the Error**: Read the error output carefully to understand what went wrong
-2. **Locate the Problem**: Find the file(s) mentioned in the error
-3. **Apply the Fix**: 
-   - Missing file/component? CREATE it with correct exports
-   - Wrong import path? FIX the import statement  
-   - Syntax error? FIX the syntax in the affected file
-   - Type error? FIX the TypeScript types
-   - Missing dependency? Check if it needs to be installed or if it's a local import issue
-4. **Verify**: After fixing, ensure all imports resolve correctly
+This theme should be applied across the entire app unless stated otherwise.
 
-## IMPORTANT:
-- The build CANNOT succeed until this error is fixed
-- If creating a missing component, ensure exports match what's being imported (default vs named)
-- If the error mentions a specific line number, check that line in the source file
-- Run `npx tsc --noEmit` after fixing to verify no TypeScript errors remain
+Global color palette (use these site-wide):
 
-Fix this error so the build can succeed on retry.
+Primary background: deep blood-red gradient with subtle texture
+
+Secondary background: darker maroon panels
+
+Accents:
+
+Warm reds/oranges (for highlights, active states, badges)
+
+Soft gold for premium indicators
+
+Text colors:
+
+White / light gray for main text
+
+Soft gray for secondary text
+
+Border radiuses: rounded, same as landing page
+
+Shadows: soft ambient glows like on the landing page cards
+
+Icons: outlined, minimalist, matching landing page style
+
+Typography
+
+Use the exact font family, weights, and spacing from the landing page across all pages
+
+Headings should match the bold landing page style
+
+Body text: light gray, medium weight
+
+This landing page theme becomes the official global UI system.
+
+2. Apply this theme to ALL pages
+
+Update the following so they visually match the landing page:
+
+Bookings / Appointment Flow
+
+Call-Outs page
+
+Live Queue page
+
+Services
+
+Gallery
+
+Customers
+
+Barbers
+
+Bookings admin pages
+
+Dashboard
+
+Settings
+
+Replace all of the following old elements:
+
+Light blue backgrounds
+
+Blue buttons
+
+Gray/white empty layouts
+
+Old card styles
+
+Old shadows
+
+Old navbar spacing
+
+White/blue headers
+
+Make sure no page uses the old design components or styles.
+
+3. Give each page its own variation while staying on brand
+
+Each page should look unique but still part of the Master Fade identity.
+
+Examples:
+Dashboard
+
+Use darker maroon background panels
+
+Gold or orange accent highlights for “statistics”
+
+Use the rounded, soft-shadow cards from the landing page
+
+Replace green/blue stat cards with maroon variants
+
+Customers page
+
+Keep a clean table layout but use:
+
+Maroon header bar
+
+Darker red row hover states
+
+Light gray text on dark backgrounds
+
+Red/gold pill tags instead of blue
+
+Bookings page
+
+Use blood-red themed progress steps (Service → Date → Time → Details)
+
+Replace blue selection glow with orange/red outline and soft shadow
+
+Replace light-blue service cards with darker maroon cards
+
+Live Queue
+
+Match the dark red landing page card style
+
+Use green accents ONLY for “No Wait” or positive states
+
+Background should match landing page pattern
+
+Call-Outs page
+
+Premium aesthetic (slightly more gold accents)
+
+Dark rich maroons
+
+Highlight €150 with a premium badge
+
+Match spacing and typography used in landing page hero
+
+4. Navbar & Footer
+
+Navbar must match landing page styling everywhere (dark red background, white text, subtle underline on hover).
+
+Remove the orange “CALL-OUTS” pill style unless intentionally part of the theme — replace with subtle red hover or gold small badge.
+
+Keep the Master Fade logo and spacing the same everywhere.
+
+5. Replace all legacy blue/light UI components
+
+Search the project for any old components or design tokens and replace them with:
+
+blood-red backgrounds
+
+maroon cards
+
+red/orange/gold accents
+
+landing-page typography
+
+dark backgrounds for admin tables and cards
+
+Ensure no page inherits default blue/light themes.
+
+6. Keep functionality exactly the same
+
+Do not revert or remove features such as:
+
+Multi-barber support
+
+Live walk-in queue
+
+Call-outs booking
+
+Dynamic wait calculation
+
+Admin dashboard tools
+
+This change is visual only unless styling requires minor layout fixes.
+
+7. Consistency rules
+
+If a conflict arises between design systems:
+Always match the landing page theme: blood-red, premium, modern, dark.
+
+Implement these changes so the entire app feels like one cohesive brand, visually aligned with the landing page, while giving each page its own personality within the same red Master Fade theme.
+
+When the user mentions generic pages, map them to concrete files/components by scanning for headings and routes. Examples you MUST follow:
+- If the user says "login" or "sign in", search for components containing the literal heading "Sign in to your account" and edit that file.
+- If the user says "sign up" or "register", search for "Create your account" or equivalent.
+- Always return an explicit list of changed file paths. If your first attempt doesn't change the UI, re-search by heading text and update the correct file.
+
+⚠️ PRIORITY INSTRUCTIONS:
+- The user's request above is the PRIMARY task. Complete it first.
+- Ignore any existing errors, warnings, or issues you detect in the project unless they directly prevent you from completing the user's requested task.
+- Do NOT automatically fix unrelated errors or refactor code unless explicitly requested.
+- Focus solely on implementing the user's request: "The site currently has an inconsistent design system:
+
+The landing page uses the new blood-red Master Fade theme, which is correct.
+
+Other pages (Bookings flow, Dashboard, Customers, Services, etc.) still use the old blue/light theme or mixed designs.
+
+I want you to fully unify the design system.
+
+1. Define the NEW global theme (based on the landing page)
+
+This theme should be applied across the entire app unless stated otherwise.
+
+Global color palette (use these site-wide):
+
+Primary background: deep blood-red gradient with subtle texture
+
+Secondary background: darker maroon panels
+
+Accents:
+
+Warm reds/oranges (for highlights, active states, badges)
+
+Soft gold for premium indicators
+
+Text colors:
+
+White / light gray for main text
+
+Soft gray for secondary text
+
+Border radiuses: rounded, same as landing page
+
+Shadows: soft ambient glows like on the landing page cards
+
+Icons: outlined, minimalist, matching landing page style
+
+Typography
+
+Use the exact font family, weights, and spacing from the landing page across all pages
+
+Headings should match the bold landing page style
+
+Body text: light gray, medium weight
+
+This landing page theme becomes the official global UI system.
+
+2. Apply this theme to ALL pages
+
+Update the following so they visually match the landing page:
+
+Bookings / Appointment Flow
+
+Call-Outs page
+
+Live Queue page
+
+Services
+
+Gallery
+
+Customers
+
+Barbers
+
+Bookings admin pages
+
+Dashboard
+
+Settings
+
+Replace all of the following old elements:
+
+Light blue backgrounds
+
+Blue buttons
+
+Gray/white empty layouts
+
+Old card styles
+
+Old shadows
+
+Old navbar spacing
+
+White/blue headers
+
+Make sure no page uses the old design components or styles.
+
+3. Give each page its own variation while staying on brand
+
+Each page should look unique but still part of the Master Fade identity.
+
+Examples:
+Dashboard
+
+Use darker maroon background panels
+
+Gold or orange accent highlights for “statistics”
+
+Use the rounded, soft-shadow cards from the landing page
+
+Replace green/blue stat cards with maroon variants
+
+Customers page
+
+Keep a clean table layout but use:
+
+Maroon header bar
+
+Darker red row hover states
+
+Light gray text on dark backgrounds
+
+Red/gold pill tags instead of blue
+
+Bookings page
+
+Use blood-red themed progress steps (Service → Date → Time → Details)
+
+Replace blue selection glow with orange/red outline and soft shadow
+
+Replace light-blue service cards with darker maroon cards
+
+Live Queue
+
+Match the dark red landing page card style
+
+Use green accents ONLY for “No Wait” or positive states
+
+Background should match landing page pattern
+
+Call-Outs page
+
+Premium aesthetic (slightly more gold accents)
+
+Dark rich maroons
+
+Highlight €150 with a premium badge
+
+Match spacing and typography used in landing page hero
+
+4. Navbar & Footer
+
+Navbar must match landing page styling everywhere (dark red background, white text, subtle underline on hover).
+
+Remove the orange “CALL-OUTS” pill style unless intentionally part of the theme — replace with subtle red hover or gold small badge.
+
+Keep the Master Fade logo and spacing the same everywhere.
+
+5. Replace all legacy blue/light UI components
+
+Search the project for any old components or design tokens and replace them with:
+
+blood-red backgrounds
+
+maroon cards
+
+red/orange/gold accents
+
+landing-page typography
+
+dark backgrounds for admin tables and cards
+
+Ensure no page inherits default blue/light themes.
+
+6. Keep functionality exactly the same
+
+Do not revert or remove features such as:
+
+Multi-barber support
+
+Live walk-in queue
+
+Call-outs booking
+
+Dynamic wait calculation
+
+Admin dashboard tools
+
+This change is visual only unless styling requires minor layout fixes.
+
+7. Consistency rules
+
+If a conflict arises between design systems:
+Always match the landing page theme: blood-red, premium, modern, dark.
+
+Implement these changes so the entire app feels like one cohesive brand, visually aligned with the landing page, while giving each page its own personality within the same red Master Fade theme."
+- Only address errors if they block the specific functionality requested by the user.

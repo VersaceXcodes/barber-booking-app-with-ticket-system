@@ -364,18 +364,18 @@ const UV_AdminReports: React.FC = () => {
   
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Page Header */}
           <div className="mb-8">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 leading-tight">Reports and Analytics</h1>
-                <p className="mt-2 text-sm text-gray-600">Business intelligence and booking insights for {shopName}</p>
+                <h1 className="text-3xl font-bold text-white leading-tight">Reports and Analytics</h1>
+                <p className="mt-2 text-sm text-gray-300">Business intelligence and booking insights for {shopName}</p>
               </div>
               <Link
                 to="/admin"
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                className="px-4 py-2 text-sm font-medium text-gray-300 bg-[#2D0808] border border-white/20 rounded-lg hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] transition-colors duration-200"
               >
                 ← Back to Dashboard
               </Link>
@@ -383,18 +383,18 @@ const UV_AdminReports: React.FC = () => {
           </div>
           
           {/* Date Range Selector */}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-6">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-white/10 p-6 mb-6">
             <div className="space-y-4">
               <div className="flex flex-wrap items-center gap-4">
                 <div className="flex-1 min-w-[200px]">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Date Range</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Date Range</label>
                   <div className="flex flex-wrap gap-2">
                     <button
                       onClick={() => handlePresetChange('today')}
                       className={`px-4 py-2 text-sm font-medium rounded-lg border transition-all duration-200 ${
                         dateRange.preset === 'today'
-                          ? 'bg-blue-600 text-white border-blue-600 shadow-md'
-                          : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                          ? 'bg-gradient-to-r from-red-600 to-red-700 text-white border-red-600 shadow-md'
+                          : 'bg-[#2D0808] text-gray-300 border-white/20 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
                       }`}
                     >
                       Today
@@ -403,8 +403,8 @@ const UV_AdminReports: React.FC = () => {
                       onClick={() => handlePresetChange('this_week')}
                       className={`px-4 py-2 text-sm font-medium rounded-lg border transition-all duration-200 ${
                         dateRange.preset === 'this_week'
-                          ? 'bg-blue-600 text-white border-blue-600 shadow-md'
-                          : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                          ? 'bg-gradient-to-r from-red-600 to-red-700 text-white border-red-600 shadow-md'
+                          : 'bg-[#2D0808] text-gray-300 border-white/20 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
                       }`}
                     >
                       This Week
@@ -413,8 +413,8 @@ const UV_AdminReports: React.FC = () => {
                       onClick={() => handlePresetChange('this_month')}
                       className={`px-4 py-2 text-sm font-medium rounded-lg border transition-all duration-200 ${
                         dateRange.preset === 'this_month'
-                          ? 'bg-blue-600 text-white border-blue-600 shadow-md'
-                          : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                          ? 'bg-gradient-to-r from-red-600 to-red-700 text-white border-red-600 shadow-md'
+                          : 'bg-[#2D0808] text-gray-300 border-white/20 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
                       }`}
                     >
                       This Month
@@ -423,8 +423,8 @@ const UV_AdminReports: React.FC = () => {
                       onClick={() => handlePresetChange('custom')}
                       className={`px-4 py-2 text-sm font-medium rounded-lg border transition-all duration-200 ${
                         dateRange.preset === 'custom'
-                          ? 'bg-blue-600 text-white border-blue-600 shadow-md'
-                          : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                          ? 'bg-gradient-to-r from-red-600 to-red-700 text-white border-red-600 shadow-md'
+                          : 'bg-[#2D0808] text-gray-300 border-white/20 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
                       }`}
                     >
                       Custom Range
@@ -435,28 +435,28 @@ const UV_AdminReports: React.FC = () => {
                 {dateRange.preset === 'custom' && (
                   <div className="flex items-end gap-3">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">From</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-1">From</label>
                       <input
                         type="date"
                         value={customStartDate}
                         onChange={(e) => setCustomStartDate(e.target.value)}
                         max={formatDate(new Date())}
-                        className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="px-3 py-2 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">To</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-1">To</label>
                       <input
                         type="date"
                         value={customEndDate}
                         onChange={(e) => setCustomEndDate(e.target.value)}
                         max={formatDate(new Date())}
-                        className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="px-3 py-2 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500"
                       />
                     </div>
                     <button
                       onClick={handleCustomDateChange}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
+                      className="px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-colors duration-200 font-medium"
                     >
                       Apply
                     </button>
@@ -467,7 +467,7 @@ const UV_AdminReports: React.FC = () => {
                   <button
                     onClick={handleGenerateReport}
                     disabled={loadingReport}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200 font-medium shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-200 font-medium shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loadingReport ? (
                       <span className="flex items-center">
@@ -494,8 +494,8 @@ const UV_AdminReports: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <div>
-                  <h3 className="text-sm font-medium text-red-800">Failed to load report</h3>
-                  <p className="text-sm text-red-700 mt-1">
+                  <h3 className="text-sm font-medium text-red-400">Failed to load report</h3>
+                  <p className="text-sm text-red-300 mt-1">
                     {reportError instanceof Error ? reportError.message : 'An error occurred while fetching the report data.'}
                   </p>
                 </div>
@@ -505,31 +505,31 @@ const UV_AdminReports: React.FC = () => {
           
           {/* Loading State */}
           {loadingReport && (
-            <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-12 mb-6">
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-white/10 p-12 mb-6">
               <div className="flex flex-col items-center justify-center">
-                <svg className="animate-spin h-12 w-12 text-blue-600 mb-4" fill="none" viewBox="0 0 24 24">
+                <svg className="animate-spin h-12 w-12 text-amber-400 mb-4" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <p className="text-gray-600 font-medium">Loading report data...</p>
+                <p className="text-gray-300 font-medium">Loading report data...</p>
               </div>
             </div>
           )}
           
           {/* Empty State */}
           {!loadingReport && !reportError && summaryStats.total_bookings === 0 && (
-            <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-12 mb-6">
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-white/10 p-12 mb-6">
               <div className="text-center">
                 <svg className="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No bookings in selected date range</h3>
-                <p className="text-sm text-gray-600 mb-4">
+                <h3 className="text-lg font-medium text-white mb-2">No bookings in selected date range</h3>
+                <p className="text-sm text-gray-300 mb-4">
                   Try expanding your date range or adjusting your filters to see data.
                 </p>
                 <button
                   onClick={() => handlePresetChange('this_month')}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                  className="px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-colors duration-200"
                 >
                   View This Month
                 </button>
@@ -623,29 +623,29 @@ const UV_AdminReports: React.FC = () => {
               
               {/* Breakdown by Service */}
               {breakdownByService.length > 0 && (
-                <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-6">
-                  <h2 className="text-xl font-bold text-gray-900 mb-4">Breakdown by Service</h2>
+                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-white/10 p-6 mb-6">
+                  <h2 className="text-xl font-bold text-white mb-4">Breakdown by Service</h2>
                   <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">
                       <thead>
                         <tr>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service Name</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Count</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Percentage</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Visual</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Service Name</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Count</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Percentage</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Visual</th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
+                      <tbody className="bg-[#2D0808] divide-y divide-gray-200">
                         {breakdownByService.map((item, index) => (
-                          <tr key={index} className="hover:bg-gray-50 transition-colors duration-150">
-                            <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.service_name || 'No Service'}</td>
-                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{item.count}</td>
-                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{item.percentage.toFixed(1)}%</td>
+                          <tr key={index} className="hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] transition-colors duration-150">
+                            <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-white">{item.service_name || 'No Service'}</td>
+                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-300">{item.count}</td>
+                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-300">{item.percentage.toFixed(1)}%</td>
                             <td className="px-4 py-4 whitespace-nowrap">
                               <div className="flex items-center">
                                 <div className="w-full max-w-xs bg-gray-200 rounded-full h-4 overflow-hidden">
                                   <div
-                                    className="bg-blue-600 h-4 rounded-full transition-all duration-500"
+                                    className="bg-gradient-to-r from-red-600 to-red-700 h-4 rounded-full transition-all duration-500"
                                     style={{ width: `${Math.min(item.percentage, 100)}%` }}
                                   ></div>
                                 </div>
@@ -661,23 +661,23 @@ const UV_AdminReports: React.FC = () => {
               
               {/* Breakdown by Day of Week */}
               {breakdownByDayOfWeek.length > 0 && (
-                <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-6">
-                  <h2 className="text-xl font-bold text-gray-900 mb-4">Breakdown by Day of Week</h2>
+                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-white/10 p-6 mb-6">
+                  <h2 className="text-xl font-bold text-white mb-4">Breakdown by Day of Week</h2>
                   <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">
                       <thead>
                         <tr>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Day</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Count</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Average per Week</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Day</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Count</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Average per Week</th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
+                      <tbody className="bg-[#2D0808] divide-y divide-gray-200">
                         {breakdownByDayOfWeek.map((item, index) => (
-                          <tr key={index} className="hover:bg-gray-50 transition-colors duration-150">
-                            <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.day}</td>
-                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{item.count}</td>
-                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{item.average.toFixed(1)}</td>
+                          <tr key={index} className="hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] transition-colors duration-150">
+                            <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-white">{item.day}</td>
+                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-300">{item.count}</td>
+                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-300">{item.average.toFixed(1)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -688,24 +688,24 @@ const UV_AdminReports: React.FC = () => {
               
               {/* Breakdown by Time Slot */}
               {breakdownByTimeSlot.length > 0 && (
-                <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-6">
-                  <h2 className="text-xl font-bold text-gray-900 mb-4">Breakdown by Time Slot</h2>
+                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-white/10 p-6 mb-6">
+                  <h2 className="text-xl font-bold text-white mb-4">Breakdown by Time Slot</h2>
                   <div className="overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">
                       <thead>
                         <tr>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Count</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Utilization</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Visual</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Time</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Count</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Utilization</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Visual</th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
+                      <tbody className="bg-[#2D0808] divide-y divide-gray-200">
                         {breakdownByTimeSlot.map((item, index) => (
-                          <tr key={index} className="hover:bg-gray-50 transition-colors duration-150">
-                            <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.time}</td>
-                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{item.count}</td>
-                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">{item.utilization.toFixed(1)}%</td>
+                          <tr key={index} className="hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] transition-colors duration-150">
+                            <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-white">{item.time}</td>
+                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-300">{item.count}</td>
+                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-300">{item.utilization.toFixed(1)}%</td>
                             <td className="px-4 py-4 whitespace-nowrap">
                               <div className="flex items-center">
                                 <div className="w-full max-w-xs bg-gray-200 rounded-full h-4 overflow-hidden">
@@ -728,12 +728,12 @@ const UV_AdminReports: React.FC = () => {
               
               {/* Breakdown by Status */}
               {breakdownByStatus.length > 0 && (
-                <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-6">
-                  <h2 className="text-xl font-bold text-gray-900 mb-4">Breakdown by Status</h2>
+                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-white/10 p-6 mb-6">
+                  <h2 className="text-xl font-bold text-white mb-4">Breakdown by Status</h2>
                   <div className="space-y-4">
                     {breakdownByStatus.map((item, index) => (
                       <div key={index} className="flex items-center">
-                        <div className="flex-shrink-0 w-32 text-sm font-medium text-gray-900">{item.status}</div>
+                        <div className="flex-shrink-0 w-32 text-sm font-medium text-white">{item.status}</div>
                         <div className="flex-1 ml-4">
                           <div className="flex items-center">
                             <div className="w-full bg-gray-200 rounded-full h-8 overflow-hidden">
@@ -746,7 +746,7 @@ const UV_AdminReports: React.FC = () => {
                                 {item.percentage > 10 && `${item.percentage.toFixed(1)}%`}
                               </div>
                             </div>
-                            <div className="ml-3 text-sm font-medium text-gray-900 whitespace-nowrap">
+                            <div className="ml-3 text-sm font-medium text-white whitespace-nowrap">
                               {item.count} ({item.percentage.toFixed(1)}%)
                             </div>
                           </div>
@@ -758,14 +758,14 @@ const UV_AdminReports: React.FC = () => {
               )}
               
               {/* Trend Graph Placeholder */}
-              <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Booking Trend</h2>
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-white/10 p-6 mb-6">
+                <h2 className="text-xl font-bold text-white mb-4">Booking Trend</h2>
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border-2 border-dashed border-blue-200 p-12 text-center">
                   <svg className="mx-auto h-16 w-16 text-blue-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
                   </svg>
-                  <p className="text-gray-600 font-medium mb-2">Trend Chart Coming Soon</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-gray-300 font-medium mb-2">Trend Chart Coming Soon</p>
+                  <p className="text-sm text-gray-400">
                     The time series trend endpoint is currently being implemented.
                     <br />
                     This will show booking trends over the selected date range.
@@ -774,11 +774,11 @@ const UV_AdminReports: React.FC = () => {
               </div>
               
               {/* Export Options */}
-              <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-white/10 p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h2 className="text-xl font-bold text-gray-900">Export Data</h2>
-                    <p className="text-sm text-gray-600 mt-1">Download your report data as a CSV file</p>
+                    <h2 className="text-xl font-bold text-white">Export Data</h2>
+                    <p className="text-sm text-gray-300 mt-1">Download your report data as a CSV file</p>
                   </div>
                   <button
                     onClick={() => setShowExportModal(true)}
@@ -795,14 +795,14 @@ const UV_AdminReports: React.FC = () => {
       
       {/* Export Modal */}
       {showExportModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b border-gray-200">
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
+          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-white/10">
               <div className="flex items-center justify-between">
-                <h3 className="text-xl font-bold text-gray-900">Export to CSV</h3>
+                <h3 className="text-xl font-bold text-white">Export to CSV</h3>
                 <button
                   onClick={() => setShowExportModal(false)}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                  className="text-gray-400 hover:text-gray-300 transition-colors"
                 >
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -814,9 +814,9 @@ const UV_AdminReports: React.FC = () => {
             <div className="p-6 space-y-6">
               {/* Date Range Display */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Date Range</label>
-                <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-                  <p className="text-sm text-gray-900">
+                <label className="block text-sm font-medium text-gray-300 mb-2">Date Range</label>
+                <div className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg p-3 border border-white/10">
+                  <p className="text-sm text-white">
                     {exportConfig.date_range.start_date} to {exportConfig.date_range.end_date}
                   </p>
                 </div>
@@ -824,7 +824,7 @@ const UV_AdminReports: React.FC = () => {
               
               {/* Field Selection */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">Include Fields</label>
+                <label className="block text-sm font-medium text-gray-300 mb-3">Include Fields</label>
                 <div className="grid grid-cols-2 gap-3">
                   {availableFields.map((field) => (
                     <label key={field.value} className="flex items-center space-x-3 cursor-pointer">
@@ -832,19 +832,19 @@ const UV_AdminReports: React.FC = () => {
                         type="checkbox"
                         checked={exportConfig.include_fields.includes(field.value)}
                         onChange={() => handleFieldToggle(field.value)}
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        className="h-4 w-4 text-amber-400 focus:ring-red-500 border-white/20 rounded"
                       />
-                      <span className="text-sm text-gray-700">{field.label}</span>
+                      <span className="text-sm text-gray-300">{field.label}</span>
                     </label>
                   ))}
                 </div>
               </div>
             </div>
             
-            <div className="p-6 border-t border-gray-200 flex justify-end space-x-3">
+            <div className="p-6 border-t border-white/10 flex justify-end space-x-3">
               <button
                 onClick={() => setShowExportModal(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                className="px-4 py-2 text-sm font-medium text-gray-300 bg-[#2D0808] border border-white/20 rounded-lg hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] transition-colors duration-200"
               >
                 Cancel
               </button>

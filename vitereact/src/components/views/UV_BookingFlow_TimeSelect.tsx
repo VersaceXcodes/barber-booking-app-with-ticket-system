@@ -200,19 +200,19 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
   // Get slot status styling
   const getSlotStatusClass = (slot: TimeSlot, isSelected: boolean): string => {
     if (isSelected) {
-      return 'bg-blue-600 border-blue-600 text-white';
+      return 'bg-gradient-to-r from-red-600 to-red-700 border-red-600 text-white';
     }
     
     switch (slot.status) {
       case 'available':
-        return 'bg-white border-gray-300 text-gray-900 hover:border-blue-500 hover:shadow-md';
+        return 'bg-[#2D0808] border-gray-300 text-white hover:border-blue-500 hover:shadow-md';
       case 'limited':
-        return 'bg-amber-50 border-amber-400 text-gray-900 hover:border-amber-500 hover:shadow-md';
+        return 'bg-amber-50 border-amber-400 text-white hover:border-amber-500 hover:shadow-md';
       case 'full':
       case 'blocked':
-        return 'bg-gray-100 border-gray-300 text-gray-500 cursor-not-allowed';
+        return 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed';
       default:
-        return 'bg-white border-gray-300 text-gray-900';
+        return 'bg-[#2D0808] border-gray-300 text-white';
     }
   };
 
@@ -241,32 +241,32 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="mb-8">
             <div className="flex items-center justify-between mb-4">
               <Link
                 to="/book/date"
-                className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors"
+                className="inline-flex items-center text-amber-400 hover:text-amber-300 font-medium transition-colors"
               >
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
                 Back
               </Link>
-              <span className="text-sm text-gray-600 font-medium">Step 3 of 4</span>
+              <span className="text-sm text-gray-300 font-medium">Step 3 of 4</span>
             </div>
             
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 leading-tight">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 leading-tight">
               What time works for you?
             </h1>
             <p className="text-xl text-gray-700 mb-1">{formattedDate}</p>
-            <p className="text-sm text-gray-600">Each appointment is 40 minutes</p>
+            <p className="text-sm text-gray-300">Each appointment is 40 minutes</p>
             
             <Link
               to="/book/date"
-              className="inline-block mt-3 text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
+              className="inline-block mt-3 text-amber-400 hover:text-amber-300 font-medium text-sm transition-colors"
             >
               Change Date
             </Link>
@@ -289,7 +289,7 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
               <svg className="w-12 h-12 text-red-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <p className="text-red-800 font-medium mb-2">Failed to load time slots</p>
+              <p className="text-red-400 font-medium mb-2">Failed to load time slots</p>
               <p className="text-red-600 text-sm mb-4">Please try again</p>
               <button
                 onClick={() => refetch()}
@@ -306,15 +306,15 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
               <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <h2 className="text-xl font-bold text-gray-900 mb-2">
+              <h2 className="text-xl font-bold text-white mb-2">
                 No slots available for this date
               </h2>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-300 mb-6">
                 Please choose another day
               </p>
               <Link
                 to="/book/date"
-                className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-lg"
+                className="inline-block px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors shadow-lg"
               >
                 Change Date
               </Link>
@@ -340,7 +340,7 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
                           <div className="flex items-center">
-                            <p className={`text-2xl font-bold ${isSelected ? 'text-white' : 'text-gray-900'}`}>
+                            <p className={`text-2xl font-bold ${isSelected ? 'text-white' : 'text-white'}`}>
                               {formatTime(slot.time)}
                             </p>
                             {isSelected && (
@@ -349,7 +349,7 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
                               </svg>
                             )}
                           </div>
-                          <p className={`text-sm mt-1 ${isSelected ? 'text-blue-100' : slot.status === 'limited' ? 'text-amber-700 font-semibold' : 'text-gray-600'}`}>
+                          <p className={`text-sm mt-1 ${isSelected ? 'text-blue-100' : slot.status === 'limited' ? 'text-amber-700 font-semibold' : 'text-gray-300'}`}>
                             {getCapacityText(slot)}
                           </p>
                         </div>
@@ -359,7 +359,7 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
                             <span className={`inline-block px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
                               slot.status === 'limited' 
                                 ? 'bg-amber-600 text-white hover:bg-amber-700'
-                                : 'bg-blue-600 text-white hover:bg-blue-700'
+                                : 'bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800'
                             }`}>
                               Select
                             </span>
@@ -368,7 +368,7 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
                         
                         {isSelected && (
                           <div className="ml-4">
-                            <span className="inline-block px-4 py-2 rounded-lg font-medium text-sm bg-white text-blue-600">
+                            <span className="inline-block px-4 py-2 rounded-lg font-medium text-sm bg-white text-amber-400">
                               Selected ✓
                             </span>
                           </div>
@@ -376,7 +376,7 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
                         
                         {isDisabled && (
                           <div className="ml-4">
-                            <span className="inline-block px-4 py-2 rounded-lg font-medium text-sm bg-gray-300 text-gray-600">
+                            <span className="inline-block px-4 py-2 rounded-lg font-medium text-sm bg-gray-300 text-gray-300">
                               {!slot.is_available ? 'Blocked' : 'Fully Booked'}
                             </span>
                           </div>
@@ -394,8 +394,8 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
                   disabled={!hasValidSelection || isNavigating}
                   className={`w-full py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-200 shadow-lg flex items-center justify-center ${
                     hasValidSelection && !isNavigating
-                      ? 'bg-blue-600 text-white hover:bg-blue-700 hover:shadow-xl transform hover:scale-105'
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 hover:shadow-xl transform hover:scale-105'
+                      : 'bg-gray-300 text-gray-400 cursor-not-allowed'
                   }`}
                 >
                   {isNavigating ? (

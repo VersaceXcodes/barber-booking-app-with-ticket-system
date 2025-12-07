@@ -660,10 +660,10 @@ const UV_AdminSettings: React.FC = () => {
   if (loadingSettings) {
     return (
       <>
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600 text-lg">Loading settings...</p>
+            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600 mx-auto"></div>
+            <p className="mt-4 text-gray-300 text-lg">Loading settings...</p>
           </div>
         </div>
       </>
@@ -676,8 +676,8 @@ const UV_AdminSettings: React.FC = () => {
   if (settingsError) {
     return (
       <>
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-          <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] px-4">
+          <div className="max-w-md w-full bg-[#2D0808] rounded-lg shadow-lg p-8">
             <div className="text-center">
               <svg
                 className="mx-auto h-12 w-12 text-red-500"
@@ -692,13 +692,13 @@ const UV_AdminSettings: React.FC = () => {
                   d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
                 />
               </svg>
-              <h2 className="mt-4 text-xl font-semibold text-gray-900">Failed to Load Settings</h2>
-              <p className="mt-2 text-gray-600">
+              <h2 className="mt-4 text-xl font-semibold text-white">Failed to Load Settings</h2>
+              <p className="mt-2 text-gray-300">
                 {(settingsError as any)?.message || 'An error occurred while loading settings'}
               </p>
               <button
                 onClick={() => queryClient.invalidateQueries({ queryKey: ['admin-settings'] })}
-                className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                className="mt-6 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"
               >
                 Retry
               </button>
@@ -714,20 +714,20 @@ const UV_AdminSettings: React.FC = () => {
   // ======================================================================
   return (
     <>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
         {/* Header */}
-        <div className="bg-white border-b border-gray-200">
+        <div className="bg-[#2D0808] border-b border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
-                <p className="mt-1 text-sm text-gray-600">
+                <h1 className="text-3xl font-bold text-white">Settings</h1>
+                <p className="mt-1 text-sm text-gray-300">
                   Manage your shop information, booking rules, and preferences
                 </p>
               </div>
               <Link
                 to="/admin"
-                className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                className="inline-flex items-center px-4 py-2 border border-white/20 rounded-lg text-sm font-medium text-gray-300 bg-[#2D0808] hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] transition-colors"
               >
                 <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -750,7 +750,7 @@ const UV_AdminSettings: React.FC = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <p className="text-green-800 font-medium">{successMessage}</p>
+                <p className="text-green-400 font-medium">{successMessage}</p>
               </div>
             </div>
           </div>
@@ -767,7 +767,7 @@ const UV_AdminSettings: React.FC = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <p className="text-red-800 font-medium">{errorMessage}</p>
+                <p className="text-red-400 font-medium">{errorMessage}</p>
               </div>
             </div>
           </div>
@@ -778,13 +778,13 @@ const UV_AdminSettings: React.FC = () => {
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">
             {/* Sidebar Navigation */}
             <div className="lg:col-span-3">
-              <nav className="space-y-1 bg-white rounded-lg shadow-sm border border-gray-200 p-2 sticky top-4">
+              <nav className="space-y-1 bg-[#2D0808] rounded-lg shadow-sm border border-white/10 p-2 sticky top-4">
                 <button
                   onClick={() => handleSectionSwitch('shop')}
                   className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                     activeSection === 'shop'
-                      ? 'bg-blue-50 text-blue-700 border-l-4 border-blue-600'
-                      : 'text-gray-700 hover:bg-gray-50'
+                      ? 'bg-[#2D0808] text-blue-700 border-l-4 border-red-600'
+                      : 'text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
                   }`}
                 >
                   <svg className="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -797,8 +797,8 @@ const UV_AdminSettings: React.FC = () => {
                   onClick={() => handleSectionSwitch('booking')}
                   className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                     activeSection === 'booking'
-                      ? 'bg-blue-50 text-blue-700 border-l-4 border-blue-600'
-                      : 'text-gray-700 hover:bg-gray-50'
+                      ? 'bg-[#2D0808] text-blue-700 border-l-4 border-red-600'
+                      : 'text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
                   }`}
                 >
                   <svg className="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -811,8 +811,8 @@ const UV_AdminSettings: React.FC = () => {
                   onClick={() => handleSectionSwitch('notifications')}
                   className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                     activeSection === 'notifications'
-                      ? 'bg-blue-50 text-blue-700 border-l-4 border-blue-600'
-                      : 'text-gray-700 hover:bg-gray-50'
+                      ? 'bg-[#2D0808] text-blue-700 border-l-4 border-red-600'
+                      : 'text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
                   }`}
                 >
                   <svg className="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -825,8 +825,8 @@ const UV_AdminSettings: React.FC = () => {
                   onClick={() => handleSectionSwitch('services')}
                   className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                     activeSection === 'services'
-                      ? 'bg-blue-50 text-blue-700 border-l-4 border-blue-600'
-                      : 'text-gray-700 hover:bg-gray-50'
+                      ? 'bg-[#2D0808] text-blue-700 border-l-4 border-red-600'
+                      : 'text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
                   }`}
                 >
                   <svg className="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -850,17 +850,17 @@ const UV_AdminSettings: React.FC = () => {
 
             {/* Content Area */}
             <div className="mt-8 lg:mt-0 lg:col-span-9">
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 lg:p-8">
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-lg shadow-sm border border-white/10 p-6 lg:p-8">
                 {/* SHOP INFORMATION SECTION */}
                 {activeSection === 'shop' && (
                   <div className="space-y-8">
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-900 mb-6">Shop Information</h2>
+                      <h2 className="text-2xl font-bold text-white mb-6">Shop Information</h2>
                       
                       <div className="space-y-6">
                         {/* Shop Name */}
                         <div>
-                          <label htmlFor="shop_name" className="block text-sm font-medium text-gray-700 mb-2">
+                          <label htmlFor="shop_name" className="block text-sm font-medium text-gray-300 mb-2">
                             Shop Name <span className="text-red-500">*</span>
                           </label>
                           <input
@@ -868,8 +868,8 @@ const UV_AdminSettings: React.FC = () => {
                             id="shop_name"
                             value={formData.shop_name}
                             onChange={(e) => handleFormChange('shop_name', e.target.value)}
-                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                              validationErrors.shop_name ? 'border-red-500' : 'border-gray-300'
+                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors ${
+                              validationErrors.shop_name ? 'border-red-500' : 'border-white/20'
                             }`}
                             placeholder="BarberSlot Premium Cuts"
                           />
@@ -880,7 +880,7 @@ const UV_AdminSettings: React.FC = () => {
 
                         {/* Address */}
                         <div>
-                          <label htmlFor="shop_address" className="block text-sm font-medium text-gray-700 mb-2">
+                          <label htmlFor="shop_address" className="block text-sm font-medium text-gray-300 mb-2">
                             Address
                           </label>
                           <textarea
@@ -888,7 +888,7 @@ const UV_AdminSettings: React.FC = () => {
                             rows={3}
                             value={formData.shop_address}
                             onChange={(e) => handleFormChange('shop_address', e.target.value)}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                            className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors"
                             placeholder="123 Main St, City, State 12345"
                           />
                         </div>
@@ -896,7 +896,7 @@ const UV_AdminSettings: React.FC = () => {
                         {/* Phone and Email */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div>
-                            <label htmlFor="shop_phone" className="block text-sm font-medium text-gray-700 mb-2">
+                            <label htmlFor="shop_phone" className="block text-sm font-medium text-gray-300 mb-2">
                               Phone Number
                             </label>
                             <input
@@ -904,13 +904,13 @@ const UV_AdminSettings: React.FC = () => {
                               id="shop_phone"
                               value={formData.shop_phone}
                               onChange={(e) => handleFormChange('shop_phone', e.target.value)}
-                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                              className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors"
                               placeholder="+1 (555) 123-4567"
                             />
                           </div>
 
                           <div>
-                            <label htmlFor="shop_email" className="block text-sm font-medium text-gray-700 mb-2">
+                            <label htmlFor="shop_email" className="block text-sm font-medium text-gray-300 mb-2">
                               Email <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -918,8 +918,8 @@ const UV_AdminSettings: React.FC = () => {
                               id="shop_email"
                               value={formData.shop_email}
                               onChange={(e) => handleFormChange('shop_email', e.target.value)}
-                              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                                validationErrors.shop_email ? 'border-red-500' : 'border-gray-300'
+                              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors ${
+                                validationErrors.shop_email ? 'border-red-500' : 'border-white/20'
                               }`}
                               placeholder="info@barberslot.com"
                             />
@@ -931,7 +931,7 @@ const UV_AdminSettings: React.FC = () => {
 
                         {/* Operating Hours */}
                         <div>
-                          <label htmlFor="operating_hours" className="block text-sm font-medium text-gray-700 mb-2">
+                          <label htmlFor="operating_hours" className="block text-sm font-medium text-gray-300 mb-2">
                             Operating Hours
                           </label>
                           <textarea
@@ -939,27 +939,27 @@ const UV_AdminSettings: React.FC = () => {
                             rows={3}
                             value={formData.operating_hours}
                             onChange={(e) => handleFormChange('operating_hours', e.target.value)}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                            className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors"
                             placeholder="Monday - Friday: 9:00 AM - 7:00 PM&#10;Saturday: 10:00 AM - 6:00 PM&#10;Sunday: Closed"
                           />
-                          <p className="mt-1 text-xs text-gray-500">Display information only, not enforced by booking system</p>
+                          <p className="mt-1 text-xs text-gray-400">Display information only, not enforced by booking system</p>
                         </div>
                       </div>
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
+                    <div className="flex items-center justify-end space-x-4 pt-6 border-t border-white/10">
                       <button
                         onClick={handleCancelChanges}
                         disabled={!hasUnsavedChanges}
-                        className="px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        className="px-6 py-3 border border-white/20 rounded-lg text-sm font-medium text-gray-300 bg-[#2D0808] hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
                         Cancel
                       </button>
                       <button
                         onClick={handleSaveSettings}
                         disabled={!hasUnsavedChanges || updateSettingsMutation.isPending}
-                        className="px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center"
+                        className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg text-sm font-medium hover:from-red-700 hover:to-red-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center"
                       >
                         {updateSettingsMutation.isPending ? (
                           <>
@@ -981,15 +981,15 @@ const UV_AdminSettings: React.FC = () => {
                 {activeSection === 'booking' && (
                   <div className="space-y-8">
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-900 mb-6">Booking Settings</h2>
+                      <h2 className="text-2xl font-bold text-white mb-6">Booking Settings</h2>
                       
                       <div className="space-y-8">
                         {/* Capacity Rules */}
-                        <div className="bg-gray-50 rounded-lg p-6">
-                          <h3 className="text-lg font-semibold text-gray-900 mb-4">Capacity Rules</h3>
+                        <div className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg p-6">
+                          <h3 className="text-lg font-semibold text-white mb-4">Capacity Rules</h3>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                              <label htmlFor="capacity_mon_wed" className="block text-sm font-medium text-gray-700 mb-2">
+                              <label htmlFor="capacity_mon_wed" className="block text-sm font-medium text-gray-300 mb-2">
                                 Monday - Wednesday Capacity
                               </label>
                               <input
@@ -998,8 +998,8 @@ const UV_AdminSettings: React.FC = () => {
                                 min="0"
                                 value={formData.capacity_mon_wed}
                                 onChange={(e) => handleFormChange('capacity_mon_wed', parseInt(e.target.value) || 0)}
-                                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                                  validationErrors.capacity_mon_wed ? 'border-red-500' : 'border-gray-300'
+                                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors ${
+                                  validationErrors.capacity_mon_wed ? 'border-red-500' : 'border-white/20'
                                 }`}
                               />
                               {validationErrors.capacity_mon_wed && (
@@ -1008,7 +1008,7 @@ const UV_AdminSettings: React.FC = () => {
                             </div>
 
                             <div>
-                              <label htmlFor="capacity_thu_sun" className="block text-sm font-medium text-gray-700 mb-2">
+                              <label htmlFor="capacity_thu_sun" className="block text-sm font-medium text-gray-300 mb-2">
                                 Thursday - Sunday Capacity
                               </label>
                               <input
@@ -1017,8 +1017,8 @@ const UV_AdminSettings: React.FC = () => {
                                 min="0"
                                 value={formData.capacity_thu_sun}
                                 onChange={(e) => handleFormChange('capacity_thu_sun', parseInt(e.target.value) || 0)}
-                                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                                  validationErrors.capacity_thu_sun ? 'border-red-500' : 'border-gray-300'
+                                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors ${
+                                  validationErrors.capacity_thu_sun ? 'border-red-500' : 'border-white/20'
                                 }`}
                               />
                               {validationErrors.capacity_thu_sun && (
@@ -1026,12 +1026,12 @@ const UV_AdminSettings: React.FC = () => {
                               )}
                             </div>
                           </div>
-                          <p className="mt-2 text-xs text-gray-600">Maximum number of customers per time slot</p>
+                          <p className="mt-2 text-xs text-gray-300">Maximum number of customers per time slot</p>
                         </div>
 
                         {/* Booking Window */}
                         <div>
-                          <label htmlFor="booking_window_days" className="block text-sm font-medium text-gray-700 mb-2">
+                          <label htmlFor="booking_window_days" className="block text-sm font-medium text-gray-300 mb-2">
                             Booking Window (days in advance)
                           </label>
                           <input
@@ -1040,19 +1040,19 @@ const UV_AdminSettings: React.FC = () => {
                             min="1"
                             value={formData.booking_window_days}
                             onChange={(e) => handleFormChange('booking_window_days', parseInt(e.target.value) || 1)}
-                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                              validationErrors.booking_window_days ? 'border-red-500' : 'border-gray-300'
+                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors ${
+                              validationErrors.booking_window_days ? 'border-red-500' : 'border-white/20'
                             }`}
                           />
                           {validationErrors.booking_window_days && (
                             <p className="mt-1 text-sm text-red-600">{validationErrors.booking_window_days}</p>
                           )}
-                          <p className="mt-1 text-xs text-gray-600">Customers can book up to this many days in advance</p>
+                          <p className="mt-1 text-xs text-gray-300">Customers can book up to this many days in advance</p>
                         </div>
 
                         {/* Same-Day Cutoff */}
                         <div>
-                          <label htmlFor="same_day_cutoff_hours" className="block text-sm font-medium text-gray-700 mb-2">
+                          <label htmlFor="same_day_cutoff_hours" className="block text-sm font-medium text-gray-300 mb-2">
                             Same-Day Booking Cutoff (hours)
                           </label>
                           <input
@@ -1061,19 +1061,19 @@ const UV_AdminSettings: React.FC = () => {
                             min="0"
                             value={formData.same_day_cutoff_hours}
                             onChange={(e) => handleFormChange('same_day_cutoff_hours', parseInt(e.target.value) || 0)}
-                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                              validationErrors.same_day_cutoff_hours ? 'border-red-500' : 'border-gray-300'
+                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors ${
+                              validationErrors.same_day_cutoff_hours ? 'border-red-500' : 'border-white/20'
                             }`}
                           />
                           {validationErrors.same_day_cutoff_hours && (
                             <p className="mt-1 text-sm text-red-600">{validationErrors.same_day_cutoff_hours}</p>
                           )}
-                          <p className="mt-1 text-xs text-gray-600">Bookings must be made at least this many hours before the appointment</p>
+                          <p className="mt-1 text-xs text-gray-300">Bookings must be made at least this many hours before the appointment</p>
                         </div>
 
                         {/* Cancellation Policy */}
                         <div>
-                          <label htmlFor="cancellation_policy_text" className="block text-sm font-medium text-gray-700 mb-2">
+                          <label htmlFor="cancellation_policy_text" className="block text-sm font-medium text-gray-300 mb-2">
                             Cancellation Policy
                           </label>
                           <textarea
@@ -1081,27 +1081,27 @@ const UV_AdminSettings: React.FC = () => {
                             rows={4}
                             value={formData.cancellation_policy_text}
                             onChange={(e) => handleFormChange('cancellation_policy_text', e.target.value)}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                            className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors"
                             placeholder="You can cancel up to 2 hours before your appointment without penalty."
                           />
-                          <p className="mt-1 text-xs text-gray-600">Displayed to customers during booking and in confirmation</p>
+                          <p className="mt-1 text-xs text-gray-300">Displayed to customers during booking and in confirmation</p>
                         </div>
                       </div>
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
+                    <div className="flex items-center justify-end space-x-4 pt-6 border-t border-white/10">
                       <button
                         onClick={handleCancelChanges}
                         disabled={!hasUnsavedChanges}
-                        className="px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        className="px-6 py-3 border border-white/20 rounded-lg text-sm font-medium text-gray-300 bg-[#2D0808] hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
                         Cancel
                       </button>
                       <button
                         onClick={handleSaveSettings}
                         disabled={!hasUnsavedChanges || updateSettingsMutation.isPending}
-                        className="px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center"
+                        className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg text-sm font-medium hover:from-red-700 hover:to-red-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center"
                       >
                         {updateSettingsMutation.isPending ? (
                           <>
@@ -1123,25 +1123,25 @@ const UV_AdminSettings: React.FC = () => {
                 {activeSection === 'notifications' && (
                   <div className="space-y-8">
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-900 mb-6">Notification Settings</h2>
+                      <h2 className="text-2xl font-bold text-white mb-6">Notification Settings</h2>
                       
                       <div className="space-y-8">
                         {/* Email Notifications */}
-                        <div className="bg-gray-50 rounded-lg p-6">
-                          <h3 className="text-lg font-semibold text-gray-900 mb-4">Email Notifications</h3>
+                        <div className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg p-6">
+                          <h3 className="text-lg font-semibold text-white mb-4">Email Notifications</h3>
                           
                           <div className="space-y-4">
                             {/* Toggles */}
                             <div className="flex items-center justify-between">
-                              <span className="text-sm font-medium text-gray-700">Enable booking confirmation email</span>
+                              <span className="text-sm font-medium text-gray-300">Enable booking confirmation email</span>
                               <button
                                 onClick={() => handleFormChange('email_confirmation_enabled', !formData.email_confirmation_enabled)}
                                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                                  formData.email_confirmation_enabled ? 'bg-blue-600' : 'bg-gray-300'
+                                  formData.email_confirmation_enabled ? 'bg-gradient-to-r from-red-600 to-red-700' : 'bg-gray-300'
                                 }`}
                               >
                                 <span
-                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                  className={`inline-block h-4 w-4 transform rounded-full bg-[#2D0808] transition-transform ${
                                     formData.email_confirmation_enabled ? 'translate-x-6' : 'translate-x-1'
                                   }`}
                                 />
@@ -1149,15 +1149,15 @@ const UV_AdminSettings: React.FC = () => {
                             </div>
 
                             <div className="flex items-center justify-between">
-                              <span className="text-sm font-medium text-gray-700">Enable booking reminder email</span>
+                              <span className="text-sm font-medium text-gray-300">Enable booking reminder email</span>
                               <button
                                 onClick={() => handleFormChange('email_reminder_enabled', !formData.email_reminder_enabled)}
                                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                                  formData.email_reminder_enabled ? 'bg-blue-600' : 'bg-gray-300'
+                                  formData.email_reminder_enabled ? 'bg-gradient-to-r from-red-600 to-red-700' : 'bg-gray-300'
                                 }`}
                               >
                                 <span
-                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                  className={`inline-block h-4 w-4 transform rounded-full bg-[#2D0808] transition-transform ${
                                     formData.email_reminder_enabled ? 'translate-x-6' : 'translate-x-1'
                                   }`}
                                 />
@@ -1167,7 +1167,7 @@ const UV_AdminSettings: React.FC = () => {
                             {/* Sender Info */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                               <div>
-                                <label htmlFor="email_sender_name" className="block text-sm font-medium text-gray-700 mb-2">
+                                <label htmlFor="email_sender_name" className="block text-sm font-medium text-gray-300 mb-2">
                                   Sender Name
                                 </label>
                                 <input
@@ -1175,13 +1175,13 @@ const UV_AdminSettings: React.FC = () => {
                                   id="email_sender_name"
                                   value={formData.email_sender_name}
                                   onChange={(e) => handleFormChange('email_sender_name', e.target.value)}
-                                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                                  className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors"
                                   placeholder="BarberSlot"
                                 />
                               </div>
 
                               <div>
-                                <label htmlFor="email_sender_address" className="block text-sm font-medium text-gray-700 mb-2">
+                                <label htmlFor="email_sender_address" className="block text-sm font-medium text-gray-300 mb-2">
                                   Sender Email
                                 </label>
                                 <input
@@ -1189,16 +1189,16 @@ const UV_AdminSettings: React.FC = () => {
                                   id="email_sender_address"
                                   value={formData.email_sender_address}
                                   onChange={(e) => handleFormChange('email_sender_address', e.target.value)}
-                                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                                  className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors"
                                   placeholder="noreply@barberslot.com"
                                 />
                               </div>
                             </div>
 
                             {/* Test Email */}
-                            <div className="flex items-end space-x-3 mt-4 pt-4 border-t border-gray-200">
+                            <div className="flex items-end space-x-3 mt-4 pt-4 border-t border-white/10">
                               <div className="flex-1">
-                                <label htmlFor="test_email_recipient" className="block text-sm font-medium text-gray-700 mb-2">
+                                <label htmlFor="test_email_recipient" className="block text-sm font-medium text-gray-300 mb-2">
                                   Test Recipient
                                 </label>
                                 <input
@@ -1206,7 +1206,7 @@ const UV_AdminSettings: React.FC = () => {
                                   id="test_email_recipient"
                                   value={testEmailRecipient}
                                   onChange={(e) => setTestEmailRecipient(e.target.value)}
-                                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                                  className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors"
                                   placeholder={formData.email_sender_address || "recipient@example.com"}
                                 />
                               </div>
@@ -1232,21 +1232,21 @@ const UV_AdminSettings: React.FC = () => {
                         </div>
 
                         {/* SMS Notifications */}
-                        <div className="bg-gray-50 rounded-lg p-6">
-                          <h3 className="text-lg font-semibold text-gray-900 mb-4">SMS Notifications</h3>
+                        <div className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg p-6">
+                          <h3 className="text-lg font-semibold text-white mb-4">SMS Notifications</h3>
                           
                           <div className="space-y-4">
                             {/* Master Toggle */}
-                            <div className="flex items-center justify-between pb-4 border-b border-gray-200">
-                              <span className="text-sm font-medium text-gray-700">Enable SMS notifications</span>
+                            <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                              <span className="text-sm font-medium text-gray-300">Enable SMS notifications</span>
                               <button
                                 onClick={() => handleFormChange('sms_enabled', !formData.sms_enabled)}
                                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                                  formData.sms_enabled ? 'bg-blue-600' : 'bg-gray-300'
+                                  formData.sms_enabled ? 'bg-gradient-to-r from-red-600 to-red-700' : 'bg-gray-300'
                                 }`}
                               >
                                 <span
-                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                  className={`inline-block h-4 w-4 transform rounded-full bg-[#2D0808] transition-transform ${
                                     formData.sms_enabled ? 'translate-x-6' : 'translate-x-1'
                                   }`}
                                 />
@@ -1257,7 +1257,7 @@ const UV_AdminSettings: React.FC = () => {
                               <>
                                 {/* SMS Sender */}
                                 <div>
-                                  <label htmlFor="sms_sender_name" className="block text-sm font-medium text-gray-700 mb-2">
+                                  <label htmlFor="sms_sender_name" className="block text-sm font-medium text-gray-300 mb-2">
                                     SMS Sender Name
                                   </label>
                                   <input
@@ -1265,15 +1265,15 @@ const UV_AdminSettings: React.FC = () => {
                                     id="sms_sender_name"
                                     value={formData.sms_sender_name}
                                     onChange={(e) => handleFormChange('sms_sender_name', e.target.value)}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                                    className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors"
                                     placeholder="BarberSlot"
                                   />
                                 </div>
 
                                 {/* Test SMS */}
-                                <div className="flex items-end space-x-3 mt-4 pt-4 border-t border-gray-200">
+                                <div className="flex items-end space-x-3 mt-4 pt-4 border-t border-white/10">
                                   <div className="flex-1">
-                                    <label htmlFor="test_sms_recipient" className="block text-sm font-medium text-gray-700 mb-2">
+                                    <label htmlFor="test_sms_recipient" className="block text-sm font-medium text-gray-300 mb-2">
                                       Test Recipient Phone
                                     </label>
                                     <input
@@ -1281,7 +1281,7 @@ const UV_AdminSettings: React.FC = () => {
                                       id="test_sms_recipient"
                                       value={testSmsRecipient}
                                       onChange={(e) => setTestSmsRecipient(e.target.value)}
-                                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                                      className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors"
                                       placeholder="+1 (555) 123-4567"
                                     />
                                   </div>
@@ -1310,7 +1310,7 @@ const UV_AdminSettings: React.FC = () => {
 
                         {/* Reminder Timing */}
                         <div>
-                          <label htmlFor="reminder_hours_before" className="block text-sm font-medium text-gray-700 mb-2">
+                          <label htmlFor="reminder_hours_before" className="block text-sm font-medium text-gray-300 mb-2">
                             Send reminder (hours before appointment)
                           </label>
                           <input
@@ -1320,31 +1320,31 @@ const UV_AdminSettings: React.FC = () => {
                             max="24"
                             value={formData.reminder_hours_before}
                             onChange={(e) => handleFormChange('reminder_hours_before', parseInt(e.target.value) || 2)}
-                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                              validationErrors.reminder_hours_before ? 'border-red-500' : 'border-gray-300'
+                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors ${
+                              validationErrors.reminder_hours_before ? 'border-red-500' : 'border-white/20'
                             }`}
                           />
                           {validationErrors.reminder_hours_before && (
                             <p className="mt-1 text-sm text-red-600">{validationErrors.reminder_hours_before}</p>
                           )}
-                          <p className="mt-1 text-xs text-gray-600">Reminder will be sent this many hours before the appointment (1-24)</p>
+                          <p className="mt-1 text-xs text-gray-300">Reminder will be sent this many hours before the appointment (1-24)</p>
                         </div>
                       </div>
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
+                    <div className="flex items-center justify-end space-x-4 pt-6 border-t border-white/10">
                       <button
                         onClick={handleCancelChanges}
                         disabled={!hasUnsavedChanges}
-                        className="px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        className="px-6 py-3 border border-white/20 rounded-lg text-sm font-medium text-gray-300 bg-[#2D0808] hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
                         Cancel
                       </button>
                       <button
                         onClick={handleSaveSettings}
                         disabled={!hasUnsavedChanges || updateSettingsMutation.isPending}
-                        className="px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center"
+                        className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg text-sm font-medium hover:from-red-700 hover:to-red-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center"
                       >
                         {updateSettingsMutation.isPending ? (
                           <>
@@ -1366,10 +1366,10 @@ const UV_AdminSettings: React.FC = () => {
                 {activeSection === 'services' && (
                   <div className="space-y-6">
                     <div className="flex items-center justify-between">
-                      <h2 className="text-2xl font-bold text-gray-900">Services</h2>
+                      <h2 className="text-2xl font-bold text-white">Services</h2>
                       <button
                         onClick={() => handleOpenServiceModal('add')}
-                        className="px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors inline-flex items-center"
+                        className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg text-sm font-medium hover:from-red-700 hover:to-red-800 transition-colors inline-flex items-center"
                       >
                         <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -1380,19 +1380,19 @@ const UV_AdminSettings: React.FC = () => {
 
                     {loadingServices ? (
                       <div className="text-center py-12">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mx-auto"></div>
-                        <p className="mt-4 text-gray-600">Loading services...</p>
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-red-600 mx-auto"></div>
+                        <p className="mt-4 text-gray-300">Loading services...</p>
                       </div>
                     ) : servicesList.length === 0 ? (
-                      <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+                      <div className="text-center py-12 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg border-2 border-dashed border-white/20">
                         <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                         </svg>
-                        <h3 className="mt-4 text-lg font-medium text-gray-900">No services yet</h3>
-                        <p className="mt-2 text-gray-600">Get started by creating your first service</p>
+                        <h3 className="mt-4 text-lg font-medium text-white">No services yet</h3>
+                        <p className="mt-2 text-gray-300">Get started by creating your first service</p>
                         <button
                           onClick={() => handleOpenServiceModal('add')}
-                          className="mt-4 px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                          className="mt-4 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg text-sm font-medium hover:from-red-700 hover:to-red-800 transition-colors"
                         >
                           Create First Service
                         </button>
@@ -1406,7 +1406,7 @@ const UV_AdminSettings: React.FC = () => {
                             onDragStart={() => handleDragStart(service.service_id)}
                             onDragOver={(e) => handleDragOver(e, service.service_id)}
                             onDragEnd={handleDragEnd}
-                            className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-move"
+                            className="bg-[#2D0808] border border-white/10 rounded-lg p-4 hover:shadow-md transition-shadow cursor-move"
                           >
                             <div className="flex items-center">
                               {/* Drag Handle */}
@@ -1462,9 +1462,9 @@ const UV_AdminSettings: React.FC = () => {
 
                               {/* Service Info */}
                               <div className="flex-1">
-                                <h4 className="text-lg font-semibold text-gray-900">{service.name}</h4>
-                                <p className="text-sm text-gray-600 line-clamp-2">{service.description}</p>
-                                <div className="flex items-center mt-2 space-x-4 text-sm text-gray-500">
+                                <h4 className="text-lg font-semibold text-white">{service.name}</h4>
+                                <p className="text-sm text-gray-300 line-clamp-2">{service.description}</p>
+                                <div className="flex items-center mt-2 space-x-4 text-sm text-gray-400">
                                   <span>{service.duration} min</span>
                                   {service.price !== null && (
                                     <span>${typeof service.price === 'number' ? service.price.toFixed(2) : parseFloat(String(service.price)).toFixed(2)}</span>
@@ -1474,14 +1474,14 @@ const UV_AdminSettings: React.FC = () => {
 
                               {/* Active Toggle */}
                               <div className="flex items-center space-x-2 mr-4">
-                                <span className="text-sm text-gray-600">Active</span>
+                                <span className="text-sm text-gray-300">Active</span>
                                 <div
                                   className={`w-10 h-6 rounded-full transition-colors ${
                                     service.is_active ? 'bg-green-500' : 'bg-gray-300'
                                   }`}
                                 >
                                   <div
-                                    className={`w-4 h-4 mt-1 rounded-full bg-white transition-transform ${
+                                    className={`w-4 h-4 mt-1 rounded-full bg-[#2D0808] transition-transform ${
                                       service.is_active ? 'ml-5' : 'ml-1'
                                     }`}
                                   />
@@ -1492,7 +1492,7 @@ const UV_AdminSettings: React.FC = () => {
                               <div className="flex items-center space-x-2">
                                 <button
                                   onClick={() => handleOpenServiceModal('edit', service)}
-                                  className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                  className="p-2 text-amber-400 hover:bg-[#2D0808] rounded-lg transition-colors"
                                   title="Edit"
                                 >
                                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1523,10 +1523,10 @@ const UV_AdminSettings: React.FC = () => {
 
         {/* SERVICE MODAL */}
         {showServiceModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="p-6 border-b border-gray-200">
-                <h3 className="text-xl font-bold text-gray-900">
+          <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-6 border-b border-white/10">
+                <h3 className="text-xl font-bold text-white">
                   {serviceModalMode === 'add' ? 'Add New Service' : 'Edit Service'}
                 </h3>
               </div>
@@ -1534,7 +1534,7 @@ const UV_AdminSettings: React.FC = () => {
               <div className="p-6 space-y-4">
                 {/* Service Name */}
                 <div>
-                  <label htmlFor="service_name" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="service_name" className="block text-sm font-medium text-gray-300 mb-2">
                     Service Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -1542,8 +1542,8 @@ const UV_AdminSettings: React.FC = () => {
                     id="service_name"
                     value={serviceFormData.name}
                     onChange={(e) => setServiceFormData({ ...serviceFormData, name: e.target.value })}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                      validationErrors.name ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors ${
+                      validationErrors.name ? 'border-red-500' : 'border-white/20'
                     }`}
                     placeholder="Haircut"
                   />
@@ -1554,7 +1554,7 @@ const UV_AdminSettings: React.FC = () => {
 
                 {/* Description */}
                 <div>
-                  <label htmlFor="service_description" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="service_description" className="block text-sm font-medium text-gray-300 mb-2">
                     Description <span className="text-red-500">*</span>
                   </label>
                   <textarea
@@ -1562,12 +1562,12 @@ const UV_AdminSettings: React.FC = () => {
                     rows={4}
                     value={serviceFormData.description}
                     onChange={(e) => setServiceFormData({ ...serviceFormData, description: e.target.value })}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-                      validationErrors.description ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors ${
+                      validationErrors.description ? 'border-red-500' : 'border-white/20'
                     }`}
                     placeholder="Professional haircut service..."
                   />
-                  <p className="mt-1 text-xs text-gray-500">
+                  <p className="mt-1 text-xs text-gray-400">
                     {serviceFormData.description.length}/500 characters
                   </p>
                   {validationErrors.description && (
@@ -1578,7 +1578,7 @@ const UV_AdminSettings: React.FC = () => {
                 {/* Duration and Price */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="service_duration" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="service_duration" className="block text-sm font-medium text-gray-300 mb-2">
                       Duration (minutes)
                     </label>
                     <input
@@ -1587,12 +1587,12 @@ const UV_AdminSettings: React.FC = () => {
                       min="1"
                       value={serviceFormData.duration}
                       onChange={(e) => setServiceFormData({ ...serviceFormData, duration: parseInt(e.target.value) || 40 })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="service_price" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="service_price" className="block text-sm font-medium text-gray-300 mb-2">
                       Price (optional)
                     </label>
                     <input
@@ -1602,7 +1602,7 @@ const UV_AdminSettings: React.FC = () => {
                       step="0.01"
                       value={serviceFormData.price || ''}
                       onChange={(e) => setServiceFormData({ ...serviceFormData, price: e.target.value ? parseFloat(e.target.value) : null })}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors"
                       placeholder="25.00"
                     />
                   </div>
@@ -1611,7 +1611,7 @@ const UV_AdminSettings: React.FC = () => {
                 {/* Image Upload / URL */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-300">
                       Service Image (optional)
                     </label>
                     <div className="flex items-center space-x-2">
@@ -1620,8 +1620,8 @@ const UV_AdminSettings: React.FC = () => {
                         onClick={() => setImageInputMode('upload')}
                         className={`text-xs px-3 py-1 rounded ${
                           imageInputMode === 'upload'
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            ? 'bg-gradient-to-r from-red-600 to-red-700 text-white'
+                            : 'bg-gray-200 text-gray-300 hover:bg-gray-300'
                         }`}
                       >
                         Upload
@@ -1631,8 +1631,8 @@ const UV_AdminSettings: React.FC = () => {
                         onClick={() => setImageInputMode('url')}
                         className={`text-xs px-3 py-1 rounded ${
                           imageInputMode === 'url'
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            ? 'bg-gradient-to-r from-red-600 to-red-700 text-white'
+                            : 'bg-gray-200 text-gray-300 hover:bg-gray-300'
                         }`}
                       >
                         URL
@@ -1648,7 +1648,7 @@ const UV_AdminSettings: React.FC = () => {
                           <img
                             src={imagePreviewUrl.startsWith('/') ? `${API_BASE_URL}${imagePreviewUrl}` : imagePreviewUrl}
                             alt="Preview"
-                            className="w-full h-48 object-cover rounded-lg border border-gray-300"
+                            className="w-full h-48 object-cover rounded-lg border border-white/20"
                           />
                           <button
                             type="button"
@@ -1664,7 +1664,7 @@ const UV_AdminSettings: React.FC = () => {
 
                       {/* File Upload Input */}
                       {!imagePreviewUrl && (
-                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-500 transition-colors">
+                        <div className="border-2 border-dashed border-white/20 rounded-lg p-6 text-center hover:border-blue-500 transition-colors">
                           <input
                             type="file"
                             id="service_image_file"
@@ -1679,21 +1679,21 @@ const UV_AdminSettings: React.FC = () => {
                           >
                             {uploadingImage ? (
                               <>
-                                <svg className="animate-spin h-10 w-10 text-blue-600 mb-3" fill="none" viewBox="0 0 24 24">
+                                <svg className="animate-spin h-10 w-10 text-amber-400 mb-3" fill="none" viewBox="0 0 24 24">
                                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
-                                <span className="text-sm text-gray-600">Uploading...</span>
+                                <span className="text-sm text-gray-300">Uploading...</span>
                               </>
                             ) : (
                               <>
                                 <svg className="w-10 h-10 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                                 </svg>
-                                <span className="text-sm font-medium text-gray-700 mb-1">
+                                <span className="text-sm font-medium text-gray-300 mb-1">
                                   Click to upload or drag and drop
                                 </span>
-                                <span className="text-xs text-gray-500">
+                                <span className="text-xs text-gray-400">
                                   JPEG, PNG, GIF, WebP (max 5MB)
                                 </span>
                               </>
@@ -1711,23 +1711,23 @@ const UV_AdminSettings: React.FC = () => {
                         setServiceFormData({ ...serviceFormData, image_url: e.target.value || null });
                         setImagePreviewUrl(e.target.value || null);
                       }}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-3 border border-white/20 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors"
                       placeholder="https://example.com/image.jpg"
                     />
                   )}
                 </div>
 
                 {/* Active Toggle */}
-                <div className="flex items-center justify-between py-3 border-t border-gray-200">
-                  <span className="text-sm font-medium text-gray-700">Service is active</span>
+                <div className="flex items-center justify-between py-3 border-t border-white/10">
+                  <span className="text-sm font-medium text-gray-300">Service is active</span>
                   <button
                     onClick={() => setServiceFormData({ ...serviceFormData, is_active: !serviceFormData.is_active })}
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      serviceFormData.is_active ? 'bg-blue-600' : 'bg-gray-300'
+                      serviceFormData.is_active ? 'bg-gradient-to-r from-red-600 to-red-700' : 'bg-gray-300'
                     }`}
                   >
                     <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                      className={`inline-block h-4 w-4 transform rounded-full bg-[#2D0808] transition-transform ${
                         serviceFormData.is_active ? 'translate-x-6' : 'translate-x-1'
                       }`}
                     />
@@ -1735,9 +1735,9 @@ const UV_AdminSettings: React.FC = () => {
                 </div>
 
                 {/* Call-Out Service Toggle */}
-                <div className="flex items-center justify-between py-3 border-t border-gray-200">
+                <div className="flex items-center justify-between py-3 border-t border-white/10">
                   <div className="flex items-center space-x-2">
-                    <span className="text-sm font-medium text-gray-700">Call-Out Service (Premium)</span>
+                    <span className="text-sm font-medium text-gray-300">Call-Out Service (Premium)</span>
                     <div className="group relative">
                       <svg className="w-4 h-4 text-gray-400 cursor-help" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -1754,7 +1754,7 @@ const UV_AdminSettings: React.FC = () => {
                     }`}
                   >
                     <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                      className={`inline-block h-4 w-4 transform rounded-full bg-[#2D0808] transition-transform ${
                         serviceFormData.is_callout ? 'translate-x-6' : 'translate-x-1'
                       }`}
                     />
@@ -1762,7 +1762,7 @@ const UV_AdminSettings: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-6 border-t border-gray-200 flex justify-end space-x-4">
+              <div className="p-6 border-t border-white/10 flex justify-end space-x-4">
                 <button
                   onClick={() => {
                     setShowServiceModal(false);
@@ -1770,14 +1770,14 @@ const UV_AdminSettings: React.FC = () => {
                     setUploadedImageFile(null);
                     setImagePreviewUrl(null);
                   }}
-                  className="px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                  className="px-6 py-3 border border-white/20 rounded-lg text-sm font-medium text-gray-300 bg-[#2D0808] hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSaveService}
                   disabled={createServiceMutation.isPending || updateServiceMutation.isPending}
-                  className="px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center"
+                  className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg text-sm font-medium hover:from-red-700 hover:to-red-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center"
                 >
                   {(createServiceMutation.isPending || updateServiceMutation.isPending) ? (
                     <>
@@ -1798,8 +1798,8 @@ const UV_AdminSettings: React.FC = () => {
 
         {/* DELETE CONFIRMATION MODAL */}
         {deleteConfirmService && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+          <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-lg shadow-xl max-w-md w-full">
               <div className="p-6">
                 <div className="flex items-center mb-4">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
@@ -1807,21 +1807,21 @@ const UV_AdminSettings: React.FC = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
                   </div>
-                  <h3 className="ml-4 text-xl font-bold text-gray-900">Delete Service?</h3>
+                  <h3 className="ml-4 text-xl font-bold text-white">Delete Service?</h3>
                 </div>
                 
-                <p className="text-gray-600 mb-2">
+                <p className="text-gray-300 mb-2">
                   Are you sure you want to delete <strong>{deleteConfirmService.name}</strong>?
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-400">
                   Existing bookings will retain this service for records.
                 </p>
               </div>
 
-              <div className="bg-gray-50 px-6 py-4 flex justify-end space-x-3 rounded-b-lg">
+              <div className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] px-6 py-4 flex justify-end space-x-3 rounded-b-lg">
                 <button
                   onClick={() => setDeleteConfirmService(null)}
-                  className="px-6 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                  className="px-6 py-2 border border-white/20 rounded-lg text-sm font-medium text-gray-300 bg-[#2D0808] hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] transition-colors"
                 >
                   Cancel
                 </button>

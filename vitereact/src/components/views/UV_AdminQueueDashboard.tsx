@@ -242,14 +242,14 @@ const UV_AdminQueueDashboard: React.FC = () => {
   const callouts: CallOutBooking[] = calloutsData?.callouts || [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
+    <div className="min-h-screen bg-gradient-to-br from-[#600000] via-[#730000] to-[#8b0000]">
       {/* Page Header */}
-      <div className="bg-[#2D0808] shadow-sm border-b border-white/10">
+      <div className="bg-gradient-to-r from-[#730000] to-[#8b0000] shadow-master-elevated border-b border-white/15">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-white">Queue & Call-Out Management</h1>
-              <p className="mt-1 text-sm text-gray-300">
+              <p className="mt-1 text-sm text-gray-200">
                 Manage walk-in queue and call-out bookings in real-time
               </p>
             </div>
@@ -259,7 +259,7 @@ const UV_AdminQueueDashboard: React.FC = () => {
                   queryClient.invalidateQueries({ queryKey: ['admin-queue'] });
                   queryClient.invalidateQueries({ queryKey: ['admin-callouts'] });
                 }}
-                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-white text-gray-900 rounded-lg hover:bg-gray-100 transition-colors font-semibold shadow-lg"
               >
                 <RefreshCw className="w-4 h-4" />
                 Refresh
@@ -273,60 +273,60 @@ const UV_AdminQueueDashboard: React.FC = () => {
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
           
           {/* LIVE WALK-IN QUEUE SECTION */}
-          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-sm border border-white/10 p-6">
+          <div className="glass-card-light rounded-xl shadow-master-elevated border-white/25 p-6">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <div className="p-3 bg-blue-100 rounded-lg">
-                  <Users className="w-6 h-6 text-amber-400" />
+                <div className="p-3 bg-blue-600/30 rounded-lg border border-blue-500/30">
+                  <Users className="w-6 h-6 text-blue-200" />
                 </div>
                 <div>
                   <h2 className="text-xl font-bold text-white">Live Walk-In Queue</h2>
-                  <p className="text-sm text-gray-300">{queue.filter(q => q.status === 'waiting').length} customers waiting</p>
+                  <p className="text-sm text-gray-100 font-medium">{queue.filter(q => q.status === 'waiting').length} customers waiting</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-sm text-gray-300">Live</span>
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>
+                <span className="text-sm text-gray-100 font-medium">Live</span>
               </div>
             </div>
 
             {loadingQueue ? (
               <div className="flex items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500"></div>
               </div>
             ) : queue.length === 0 ? (
               <div className="text-center py-12">
-                <Users className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                <p className="text-gray-300">No one in queue</p>
+                <Users className="w-12 h-12 text-gray-200 mx-auto mb-3" />
+                <p className="text-gray-200">No one in queue</p>
               </div>
             ) : (
               <div className="space-y-3 max-h-[600px] overflow-y-auto">
                 {queue.map((entry) => (
                   <motion.div
                     key={entry.queue_id}
-                    className="border border-white/10 rounded-lg p-4 hover:shadow-md transition-shadow"
+                    className="bg-white/10 border border-white/20 rounded-lg p-4 hover:shadow-master-glow hover:bg-white/15 transition-all"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                   >
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full font-bold text-amber-400">
+                        <div className="flex items-center justify-center w-10 h-10 bg-amber-600/30 border border-amber-500/50 rounded-full font-bold text-amber-200">
                           #{entry.position}
                         </div>
                         <div>
                           <h3 className="font-semibold text-white">{entry.customer_name}</h3>
-                          <div className="flex items-center gap-2 text-sm text-gray-300">
+                          <div className="flex items-center gap-2 text-sm text-gray-100">
                             <Phone className="w-4 h-4" />
                             {entry.customer_phone}
                           </div>
                         </div>
                       </div>
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(entry.status)}`}>
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(entry.status)}`}>
                         {entry.status.replace('_', ' ').toUpperCase()}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-4 text-sm text-gray-300 mb-3">
+                    <div className="flex items-center gap-4 text-sm text-gray-100 mb-3 font-medium">
                       <div className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />
                         <span>~{entry.estimated_wait_minutes} min wait</span>
@@ -338,17 +338,17 @@ const UV_AdminQueueDashboard: React.FC = () => {
                     </div>
 
                     {entry.status === 'waiting' && (
-                      <div className="flex gap-2 pt-3 border-t border-white/10">
+                      <div className="flex gap-2 pt-3 border-t border-white/15">
                         <button
                           onClick={() => handleQueueStatusChange(entry.queue_id, 'in_service')}
-                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors text-sm font-medium"
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-yellow-600 to-yellow-700 text-white rounded-lg hover:from-yellow-700 hover:to-yellow-800 transition-colors text-sm font-semibold shadow-lg"
                         >
                           <PlayCircle className="w-4 h-4" />
                           Start Service
                         </button>
                         <button
                           onClick={() => handleQueueStatusChange(entry.queue_id, 'no_show')}
-                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-medium"
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-colors text-sm font-semibold shadow-lg"
                         >
                           <XCircle className="w-4 h-4" />
                           No-Show
@@ -357,10 +357,10 @@ const UV_AdminQueueDashboard: React.FC = () => {
                     )}
 
                     {entry.status === 'in_service' && (
-                      <div className="flex gap-2 pt-3 border-t border-white/10">
+                      <div className="flex gap-2 pt-3 border-t border-white/15">
                         <button
                           onClick={() => handleQueueStatusChange(entry.queue_id, 'completed')}
-                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg hover:from-green-700 hover:to-green-800 transition-colors text-sm font-semibold shadow-lg"
                         >
                           <CheckCircle className="w-4 h-4" />
                           Complete
@@ -374,44 +374,44 @@ const UV_AdminQueueDashboard: React.FC = () => {
           </div>
 
           {/* CALL-OUT JOBS SECTION */}
-          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-sm border border-white/10 p-6">
+          <div className="glass-card-light rounded-xl shadow-master-elevated border-white/25 p-6">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <div className="p-3 bg-amber-100 rounded-lg">
-                  <Car className="w-6 h-6 text-amber-600" />
+                <div className="p-3 bg-orange-600/30 rounded-lg border border-orange-500/30">
+                  <Car className="w-6 h-6 text-orange-200" />
                 </div>
                 <div>
                   <h2 className="text-xl font-bold text-white">Call-Out Jobs</h2>
-                  <p className="text-sm text-gray-300">{callouts.length} bookings</p>
+                  <p className="text-sm text-gray-100 font-medium">{callouts.length} bookings</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setCalloutFilter('all')}
-                  className={`px-3 py-1 text-sm font-medium rounded-lg transition-colors ${
+                  className={`px-3 py-1 text-sm font-semibold rounded-lg transition-colors ${
                     calloutFilter === 'all' 
-                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white' 
-                      : 'bg-gray-100 text-gray-300 hover:bg-gray-200'
+                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg' 
+                      : 'bg-white/10 text-gray-100 hover:bg-white/20 border border-white/20'
                   }`}
                 >
                   All
                 </button>
                 <button
                   onClick={() => setCalloutFilter('today')}
-                  className={`px-3 py-1 text-sm font-medium rounded-lg transition-colors ${
+                  className={`px-3 py-1 text-sm font-semibold rounded-lg transition-colors ${
                     calloutFilter === 'today' 
-                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white' 
-                      : 'bg-gray-100 text-gray-300 hover:bg-gray-200'
+                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg' 
+                      : 'bg-white/10 text-gray-100 hover:bg-white/20 border border-white/20'
                   }`}
                 >
                   Today
                 </button>
                 <button
                   onClick={() => setCalloutFilter('upcoming')}
-                  className={`px-3 py-1 text-sm font-medium rounded-lg transition-colors ${
+                  className={`px-3 py-1 text-sm font-semibold rounded-lg transition-colors ${
                     calloutFilter === 'upcoming' 
-                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white' 
-                      : 'bg-gray-100 text-gray-300 hover:bg-gray-200'
+                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg' 
+                      : 'bg-white/10 text-gray-100 hover:bg-white/20 border border-white/20'
                   }`}
                 >
                   Upcoming
@@ -421,12 +421,12 @@ const UV_AdminQueueDashboard: React.FC = () => {
 
             {loadingCallouts ? (
               <div className="flex items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
               </div>
             ) : callouts.length === 0 ? (
               <div className="text-center py-12">
-                <Car className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                <p className="text-gray-300">No call-out bookings</p>
+                <Car className="w-12 h-12 text-gray-200 mx-auto mb-3" />
+                <p className="text-gray-200">No call-out bookings</p>
               </div>
             ) : (
               <div className="space-y-3 max-h-[600px] overflow-y-auto">

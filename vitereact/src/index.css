@@ -55,48 +55,56 @@
 		--radius: 0.5rem;
 		
 		/* ============================================================================
-		   MASTER FADE DESIGN SYSTEM - Global Theme Variables
+		   MASTER FADE DESIGN SYSTEM - Global Theme Variables (WCAG AA Compliant)
 		   ============================================================================ */
 		
-		/* Primary Background - Deep blood-red gradient */
-		--bg-primary: linear-gradient(135deg, #2A0A0A 0%, #3D0F0F 50%, #5C1B1B 100%);
-		--bg-primary-start: #2A0A0A;
-		--bg-primary-mid: #3D0F0F;
-		--bg-primary-end: #5C1B1B;
+		/* Primary Background - Deep barbershop red gradient (#600000 to #8b0000) */
+		--bg-primary: linear-gradient(135deg, #600000 0%, #730000 35%, #8b0000 100%);
+		--bg-primary-start: #600000;
+		--bg-primary-mid: #730000;
+		--bg-primary-end: #8b0000;
 		
-		/* Secondary Background - Darker maroon panels */
-		--bg-secondary: #1A0505;
-		--bg-panel: #2D0808;
-		--bg-panel-hover: #3D0F0F;
+		/* Secondary Background - Warm burgundy panels for better readability */
+		--bg-secondary: #3D0F0F;
+		--bg-panel: #4A1515;
+		--bg-panel-hover: #5C1B1B;
+		--bg-panel-light: #6B2020;
 		
-		/* Accent Colors */
+		/* Accent Colors - Brand consistent */
 		--accent-red: #DC2626;
-		--accent-orange: #EA580C;
+		--accent-orange: #F97316;
 		--accent-warm-red: #EF4444;
 		--accent-gold: #F59E0B;
 		--accent-soft-gold: #FCD34D;
 		
-		/* Text Colors */
+		/* Text Colors - Enhanced contrast for WCAG AA */
 		--text-primary: #FFFFFF;
-		--text-secondary: #D1D5DB;
-		--text-tertiary: #9CA3AF;
-		--text-muted: #6B7280;
+		--text-secondary: #F3F4F6;
+		--text-tertiary: #D1D5DB;
+		--text-muted: #9CA3AF;
+		--text-on-dark-red: #FECACA;
 		
-		/* Border & Shadow */
-		--border-color: rgba(255, 255, 255, 0.1);
-		--border-accent: rgba(220, 38, 38, 0.3);
-		--shadow-glow: 0 4px 24px rgba(220, 38, 38, 0.15);
-		--shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+		/* Border & Shadow - Improved visibility */
+		--border-color: rgba(255, 255, 255, 0.15);
+		--border-accent: rgba(220, 38, 38, 0.4);
+		--shadow-glow: 0 4px 24px rgba(220, 38, 38, 0.2);
+		--shadow-card: 0 8px 32px rgba(0, 0, 0, 0.5);
+		--shadow-elevated: 0 12px 40px rgba(0, 0, 0, 0.6);
 		
-		/* Glass Effect */
-		--glass-bg: rgba(255, 255, 255, 0.1);
-		--glass-border: rgba(255, 255, 255, 0.2);
+		/* Glass Effect - Lighter burgundy panels */
+		--glass-bg: rgba(107, 32, 32, 0.5);
+		--glass-bg-light: rgba(139, 45, 45, 0.6);
+		--glass-border: rgba(255, 255, 255, 0.25);
 		
-		/* Status Colors */
-		--status-success: #10B981;
+		/* Status Colors - Enhanced contrast */
+		--status-success: #22C55E;
+		--status-success-bg: rgba(34, 197, 94, 0.15);
 		--status-warning: #F59E0B;
+		--status-warning-bg: rgba(245, 158, 11, 0.15);
 		--status-error: #EF4444;
+		--status-error-bg: rgba(239, 68, 68, 0.15);
 		--status-info: #3B82F6;
+		--status-info-bg: rgba(59, 130, 246, 0.15);
 	}
 }
 
@@ -109,33 +117,46 @@
 	   MASTER FADE THEME UTILITIES
 	   ============================================================================ */
 	
-	/* Master Fade Primary Background */
+	/* Master Fade Primary Background - Deep barbershop red */
 	.bg-master-fade {
-		background: linear-gradient(135deg, #2A0A0A 0%, #3D0F0F 50%, #5C1B1B 100%);
+		background: linear-gradient(135deg, #600000 0%, #730000 35%, #8b0000 100%);
 	}
 	
-	/* Master Fade Panel Background */
+	/* Master Fade Panel Background - Lighter burgundy for readability */
 	.bg-master-panel {
-		background: #2D0808;
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: #4A1515;
+		border: 1px solid rgba(255, 255, 255, 0.15);
 	}
 	
-	/* Master Fade Glass Card */
+	/* Master Fade Glass Card - Burgundy tint */
 	.glass-card {
-		background: rgba(255, 255, 255, 0.1);
-		backdrop-filter: blur(12px);
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+		background: rgba(107, 32, 32, 0.5);
+		backdrop-filter: blur(16px);
+		border: 1px solid rgba(255, 255, 255, 0.25);
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+	}
+	
+	/* Master Fade Glass Card Light - For text-heavy areas */
+	.glass-card-light {
+		background: rgba(139, 45, 45, 0.6);
+		backdrop-filter: blur(16px);
+		border: 1px solid rgba(255, 255, 255, 0.25);
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
 	}
 	
 	/* Master Fade Glow Shadow */
 	.shadow-master-glow {
-		box-shadow: 0 4px 24px rgba(220, 38, 38, 0.15);
+		box-shadow: 0 4px 24px rgba(220, 38, 38, 0.2);
+	}
+	
+	/* Master Fade Elevated Shadow */
+	.shadow-master-elevated {
+		box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
 	}
 	
 	/* Master Fade Text Gradient */
 	.text-master-gradient {
-		background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
+		background: linear-gradient(135deg, #F59E0B 0%, #F97316 100%);
 		-webkit-background-clip: text;
 		background-clip: text;
 		-webkit-text-fill-color: transparent;

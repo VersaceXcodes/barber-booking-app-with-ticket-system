@@ -360,16 +360,16 @@ const UV_AdminBarbersList: React.FC = () => {
   // RENDER
   // ====================================================================
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
+    <div className="min-h-screen bg-gradient-to-br from-[#600000] via-[#730000] to-[#8b0000]">
       {/* Header */}
-      <div className="bg-gradient-to-r from-red-600 to-red-700 text-white">
+      <div className="bg-gradient-to-r from-[#730000] to-[#8b0000] text-white shadow-master-elevated border-b border-white/15">
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-bold mb-2">Barber Management</h1>
-              <p className="text-red-100">Manage your barbers and their availability</p>
+              <h1 className="text-3xl font-bold mb-2 text-white">Barber Management</h1>
+              <p className="text-gray-200">Manage your barbers and their availability</p>
             </div>
-            <Button onClick={handleAddBarber} variant="secondary" className="flex items-center gap-2">
+            <Button onClick={handleAddBarber} className="flex items-center gap-2 bg-white text-gray-900 hover:bg-gray-100 font-semibold shadow-lg">
               <Plus className="h-5 w-5" />
               Add Barber
             </Button>
@@ -381,24 +381,24 @@ const UV_AdminBarbersList: React.FC = () => {
       <div className="container mx-auto px-4 py-8">
         {loadingBarbers ? (
           <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
-            <p className="mt-4 text-gray-300">Loading barbers...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500 mx-auto"></div>
+            <p className="mt-4 text-gray-200">Loading barbers...</p>
           </div>
         ) : barbersError ? (
           <div className="text-center py-12">
-            <p className="text-red-600">Error loading barbers. Please try again.</p>
+            <p className="text-red-400 font-semibold">Error loading barbers. Please try again.</p>
             {import.meta.env.DEV && (
-              <p className="text-sm text-gray-400 mt-2">
+              <p className="text-sm text-gray-300 mt-2">
                 {(barbersError as any)?.response?.data?.message || (barbersError as any)?.message || 'Unknown error'}
               </p>
             )}
           </div>
         ) : barbersData?.barbers && barbersData.barbers.length === 0 ? (
           <div className="text-center py-12">
-            <User className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+            <User className="h-16 w-16 text-gray-200 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-white mb-2">No barbers added yet</h3>
-            <p className="text-gray-300 mb-4">Click 'Add Barber' to create your first barber.</p>
-            <Button onClick={handleAddBarber}>
+            <p className="text-gray-200 mb-4">Click 'Add Barber' to create your first barber.</p>
+            <Button onClick={handleAddBarber} className="bg-white text-gray-900 hover:bg-gray-100 font-semibold">
               <Plus className="h-5 w-5 mr-2" />
               Add Barber
             </Button>
@@ -406,29 +406,29 @@ const UV_AdminBarbersList: React.FC = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {barbersData?.barbers.map((barber) => (
-              <Card key={barber.barber_id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
+              <Card key={barber.barber_id} className="glass-card-light hover:shadow-master-elevated transition-shadow border-white/25">
+                <CardHeader className="border-b border-white/15">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-4">
                       {barber.photo_url ? (
                         <img
                           src={barber.photo_url}
                           alt={barber.name}
-                          className="w-16 h-16 rounded-full object-cover"
+                          className="w-16 h-16 rounded-full object-cover border-2 border-white/20"
                         />
                       ) : (
-                        <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center">
-                          <User className="h-8 w-8 text-red-600" />
+                        <div className="w-16 h-16 rounded-full bg-[#6B2020] border-2 border-white/20 flex items-center justify-center">
+                          <User className="h-8 w-8 text-gray-100" />
                         </div>
                       )}
                       <div>
-                        <CardTitle className="text-xl">{barber.name}</CardTitle>
+                        <CardTitle className="text-xl text-white">{barber.name}</CardTitle>
                         <div className="flex gap-2 mt-2">
-                          <Badge variant={barber.is_active ? 'default' : 'secondary'}>
+                          <Badge variant={barber.is_active ? 'default' : 'secondary'} className={barber.is_active ? 'bg-blue-600 text-white border-blue-500' : 'bg-gray-700 text-gray-200 border-gray-600'}>
                             {barber.is_active ? 'Active' : 'Inactive'}
                           </Badge>
                           {barber.is_working_today && barber.is_active && (
-                            <Badge variant="outline" className="bg-green-50 text-green-300 border-green-200">
+                            <Badge variant="outline" className="bg-green-600/20 text-green-200 border-green-500/50 font-semibold">
                               Working Today
                             </Badge>
                           )}
@@ -437,15 +437,15 @@ const UV_AdminBarbersList: React.FC = () => {
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-4">
                   {barber.specialties && barber.specialties.length > 0 && (
                     <div className="mb-4">
-                      <p className="text-sm text-gray-300 mb-2">Specialties:</p>
+                      <p className="text-sm text-gray-200 font-semibold mb-2">Specialties:</p>
                       <div className="flex flex-wrap gap-1">
                         {barber.specialties.map((specialty, index) => (
                           <span
                             key={index}
-                            className="text-xs bg-[#2D0808] text-gray-300 px-2 py-1 rounded"
+                            className="text-xs bg-[#6B2020] text-gray-100 px-2 py-1 rounded border border-white/10"
                           >
                             {specialty}
                           </span>
@@ -455,16 +455,16 @@ const UV_AdminBarbersList: React.FC = () => {
                   )}
 
                   <div className="space-y-3 mb-4">
-                    <div className="flex items-center justify-between py-2 border-t border-gray-100">
-                      <span className="text-sm text-gray-300">Working Today</span>
+                    <div className="flex items-center justify-between py-2 border-t border-white/15">
+                      <span className="text-sm text-gray-100 font-medium">Working Today</span>
                       <Switch
                         checked={barber.is_working_today}
                         onCheckedChange={() => handleToggleWorkingToday(barber)}
                         disabled={!barber.is_active}
                       />
                     </div>
-                    <div className="flex items-center justify-between py-2 border-t border-gray-100">
-                      <span className="text-sm text-gray-300">Active Status</span>
+                    <div className="flex items-center justify-between py-2 border-t border-white/15">
+                      <span className="text-sm text-gray-100 font-medium">Active Status</span>
                       <Switch
                         checked={barber.is_active}
                         onCheckedChange={() => handleToggleActive(barber)}
@@ -477,7 +477,7 @@ const UV_AdminBarbersList: React.FC = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => handleEditBarber(barber)}
-                      className="flex-1"
+                      className="flex-1 bg-white/10 text-white border-white/25 hover:bg-white/20 hover:text-white font-medium"
                     >
                       <Edit2 className="h-4 w-4 mr-2" />
                       Edit
@@ -486,7 +486,7 @@ const UV_AdminBarbersList: React.FC = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => handleDeleteBarber(barber)}
-                      className="text-red-600 hover:text-red-300 hover:bg-red-50"
+                      className="text-red-300 border-red-500/50 bg-red-600/20 hover:text-red-200 hover:bg-red-600/30 hover:border-red-500/70 font-medium"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>

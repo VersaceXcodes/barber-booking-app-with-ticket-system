@@ -1,190 +1,102 @@
-The site currently has an inconsistent design system:
+1. Improve text readability everywhere
 
-The landing page uses the new blood-red Master Fade theme, which is correct.
+Increase contrast between text and background — especially on:
 
-Other pages (Bookings flow, Dashboard, Customers, Services, etc.) still use the old blue/light theme or mixed designs.
+The dark red gradient sections
 
-I want you to fully unify the design system.
+Calendar cells
 
-1. Define the NEW global theme (based on the landing page)
+Cards with semi-transparent backgrounds
 
-This theme should be applied across the entire app unless stated otherwise.
+Admin table rows
 
-Global color palette (use these site-wide):
+Ensure all headings, labels, buttons, and body text meet WCAG AA contrast minimums.
 
-Primary background: deep blood-red gradient with subtle texture
+Lighten page backgrounds slightly where needed to avoid low-contrast grey text.
 
-Secondary background: darker maroon panels
+Do not change the brand colors — only adjust shades for visibility.
 
-Accents:
+2. Make the color system consistent across ALL pages
 
-Warm reds/oranges (for highlights, active states, badges)
+Apply a unified theme derived from the landing page:
 
-Soft gold for premium indicators
+Primary: deep barbershop red (#600000 to #8b0000 gradient)
+Secondary: warm dark brown / burgundy
+Accent: bright red/orange for highlights
+Success / Good: barbershop green
+Surface cards: slightly lighter or blurred burgundy—not pure black
 
-Text colors:
+Pages that must use this updated palette consistently:
 
-White / light gray for main text
+Barber Management
 
-Soft gray for secondary text
+Bookings Calendar
 
-Border radiuses: rounded, same as landing page
+Daily Booking View
 
-Shadows: soft ambient glows like on the landing page cards
+Services Setup
 
-Icons: outlined, minimalist, matching landing page style
-
-Typography
-
-Use the exact font family, weights, and spacing from the landing page across all pages
-
-Headings should match the bold landing page style
-
-Body text: light gray, medium weight
-
-This landing page theme becomes the official global UI system.
-
-2. Apply this theme to ALL pages
-
-Update the following so they visually match the landing page:
-
-Bookings / Appointment Flow
-
-Call-Outs page
-
-Live Queue page
-
-Services
-
-Gallery
-
-Customers
-
-Barbers
-
-Bookings admin pages
-
-Dashboard
+Call-Outs
 
 Settings
 
-Replace all of the following old elements:
+Customers
 
-Light blue backgrounds
-
-Blue buttons
-
-Gray/white empty layouts
-
-Old card styles
-
-Old shadows
-
-Old navbar spacing
-
-White/blue headers
-
-Make sure no page uses the old design components or styles.
-
-3. Give each page its own variation while staying on brand
-
-Each page should look unique but still part of the Master Fade identity.
-
-Examples:
 Dashboard
 
-Use darker maroon background panels
+These should feel like they belong to the same brand as the landing page.
 
-Gold or orange accent highlights for “statistics”
+3. Update surfaces for better readability
 
-Use the rounded, soft-shadow cards from the landing page
+For cards, tables, modals, and calendars:
 
-Replace green/blue stat cards with maroon variants
+Use lighter burgundy or blurred glass panels rather than near-black backgrounds.
 
-Customers page
+Avoid pure dark red backgrounds under small text; instead use tinted surfaces.
 
-Keep a clean table layout but use:
+Add subtle shadows to separate cards from backgrounds.
 
-Maroon header bar
+4. Improve calendar readability
 
-Darker red row hover states
+Fix:
 
-Light gray text on dark backgrounds
+Light grey text that turns invisible on pale backgrounds
 
-Red/gold pill tags instead of blue
+Days and numbers that blend into the gradient
+Apply:
 
-Bookings page
+Stronger day labels
 
-Use blood-red themed progress steps (Service → Date → Time → Details)
+Clearer appointment availability text
 
-Replace blue selection glow with orange/red outline and soft shadow
+Hover states with defined outlines
 
-Replace light-blue service cards with darker maroon cards
+5. Improve toggles, tags, badges, and labels
 
-Live Queue
+Ensure toggle labels “Working Today” / “Active Status” are readable.
 
-Match the dark red landing page card style
+Increase contrast of specialty tags.
 
-Use green accents ONLY for “No Wait” or positive states
+Ensure green “Available” text is readable on light backgrounds.
 
-Background should match landing page pattern
+6. Keep layouts EXACTLY the same — only improve styling
 
-Call-Outs page
+Do not change structure, spacing, card layout, or feature placement.
+Only improve:
 
-Premium aesthetic (slightly more gold accents)
+Colors
 
-Dark rich maroons
+Opacity
 
-Highlight €150 with a premium badge
+Contrast
 
-Match spacing and typography used in landing page hero
+Readability
 
-4. Navbar & Footer
+Consistency
 
-Navbar must match landing page styling everywhere (dark red background, white text, subtle underline on hover).
+Goal Summary
 
-Remove the orange “CALL-OUTS” pill style unless intentionally part of the theme — replace with subtle red hover or gold small badge.
-
-Keep the Master Fade logo and spacing the same everywhere.
-
-5. Replace all legacy blue/light UI components
-
-Search the project for any old components or design tokens and replace them with:
-
-blood-red backgrounds
-
-maroon cards
-
-red/orange/gold accents
-
-landing-page typography
-
-dark backgrounds for admin tables and cards
-
-Ensure no page inherits default blue/light themes.
-
-6. Keep functionality exactly the same
-
-Do not revert or remove features such as:
-
-Multi-barber support
-
-Live walk-in queue
-
-Call-outs booking
-
-Dynamic wait calculation
-
-Admin dashboard tools
-
-This change is visual only unless styling requires minor layout fixes.
-
-7. Consistency rules
-
-If a conflict arises between design systems:
-Always match the landing page theme: blood-red, premium, modern, dark.
-
-Implement these changes so the entire app feels like one cohesive brand, visually aligned with the landing page, while giving each page its own personality within the same red Master Fade theme.
+Make the entire UI visually consistent, easier on the eyes, more accessible, and fully aligned with the premium red theme from the landing page, without losing any functionality or layout.
 
 When the user mentions generic pages, map them to concrete files/components by scanning for headings and routes. Examples you MUST follow:
 - If the user says "login" or "sign in", search for components containing the literal heading "Sign in to your account" and edit that file.
@@ -195,191 +107,103 @@ When the user mentions generic pages, map them to concrete files/components by s
 - The user's request above is the PRIMARY task. Complete it first.
 - Ignore any existing errors, warnings, or issues you detect in the project unless they directly prevent you from completing the user's requested task.
 - Do NOT automatically fix unrelated errors or refactor code unless explicitly requested.
-- Focus solely on implementing the user's request: "The site currently has an inconsistent design system:
+- Focus solely on implementing the user's request: "1. Improve text readability everywhere
 
-The landing page uses the new blood-red Master Fade theme, which is correct.
+Increase contrast between text and background — especially on:
 
-Other pages (Bookings flow, Dashboard, Customers, Services, etc.) still use the old blue/light theme or mixed designs.
+The dark red gradient sections
 
-I want you to fully unify the design system.
+Calendar cells
 
-1. Define the NEW global theme (based on the landing page)
+Cards with semi-transparent backgrounds
 
-This theme should be applied across the entire app unless stated otherwise.
+Admin table rows
 
-Global color palette (use these site-wide):
+Ensure all headings, labels, buttons, and body text meet WCAG AA contrast minimums.
 
-Primary background: deep blood-red gradient with subtle texture
+Lighten page backgrounds slightly where needed to avoid low-contrast grey text.
 
-Secondary background: darker maroon panels
+Do not change the brand colors — only adjust shades for visibility.
 
-Accents:
+2. Make the color system consistent across ALL pages
 
-Warm reds/oranges (for highlights, active states, badges)
+Apply a unified theme derived from the landing page:
 
-Soft gold for premium indicators
+Primary: deep barbershop red (#600000 to #8b0000 gradient)
+Secondary: warm dark brown / burgundy
+Accent: bright red/orange for highlights
+Success / Good: barbershop green
+Surface cards: slightly lighter or blurred burgundy—not pure black
 
-Text colors:
+Pages that must use this updated palette consistently:
 
-White / light gray for main text
+Barber Management
 
-Soft gray for secondary text
+Bookings Calendar
 
-Border radiuses: rounded, same as landing page
+Daily Booking View
 
-Shadows: soft ambient glows like on the landing page cards
+Services Setup
 
-Icons: outlined, minimalist, matching landing page style
-
-Typography
-
-Use the exact font family, weights, and spacing from the landing page across all pages
-
-Headings should match the bold landing page style
-
-Body text: light gray, medium weight
-
-This landing page theme becomes the official global UI system.
-
-2. Apply this theme to ALL pages
-
-Update the following so they visually match the landing page:
-
-Bookings / Appointment Flow
-
-Call-Outs page
-
-Live Queue page
-
-Services
-
-Gallery
-
-Customers
-
-Barbers
-
-Bookings admin pages
-
-Dashboard
+Call-Outs
 
 Settings
 
-Replace all of the following old elements:
+Customers
 
-Light blue backgrounds
-
-Blue buttons
-
-Gray/white empty layouts
-
-Old card styles
-
-Old shadows
-
-Old navbar spacing
-
-White/blue headers
-
-Make sure no page uses the old design components or styles.
-
-3. Give each page its own variation while staying on brand
-
-Each page should look unique but still part of the Master Fade identity.
-
-Examples:
 Dashboard
 
-Use darker maroon background panels
+These should feel like they belong to the same brand as the landing page.
 
-Gold or orange accent highlights for “statistics”
+3. Update surfaces for better readability
 
-Use the rounded, soft-shadow cards from the landing page
+For cards, tables, modals, and calendars:
 
-Replace green/blue stat cards with maroon variants
+Use lighter burgundy or blurred glass panels rather than near-black backgrounds.
 
-Customers page
+Avoid pure dark red backgrounds under small text; instead use tinted surfaces.
 
-Keep a clean table layout but use:
+Add subtle shadows to separate cards from backgrounds.
 
-Maroon header bar
+4. Improve calendar readability
 
-Darker red row hover states
+Fix:
 
-Light gray text on dark backgrounds
+Light grey text that turns invisible on pale backgrounds
 
-Red/gold pill tags instead of blue
+Days and numbers that blend into the gradient
+Apply:
 
-Bookings page
+Stronger day labels
 
-Use blood-red themed progress steps (Service → Date → Time → Details)
+Clearer appointment availability text
 
-Replace blue selection glow with orange/red outline and soft shadow
+Hover states with defined outlines
 
-Replace light-blue service cards with darker maroon cards
+5. Improve toggles, tags, badges, and labels
 
-Live Queue
+Ensure toggle labels “Working Today” / “Active Status” are readable.
 
-Match the dark red landing page card style
+Increase contrast of specialty tags.
 
-Use green accents ONLY for “No Wait” or positive states
+Ensure green “Available” text is readable on light backgrounds.
 
-Background should match landing page pattern
+6. Keep layouts EXACTLY the same — only improve styling
 
-Call-Outs page
+Do not change structure, spacing, card layout, or feature placement.
+Only improve:
 
-Premium aesthetic (slightly more gold accents)
+Colors
 
-Dark rich maroons
+Opacity
 
-Highlight €150 with a premium badge
+Contrast
 
-Match spacing and typography used in landing page hero
+Readability
 
-4. Navbar & Footer
+Consistency
 
-Navbar must match landing page styling everywhere (dark red background, white text, subtle underline on hover).
+Goal Summary
 
-Remove the orange “CALL-OUTS” pill style unless intentionally part of the theme — replace with subtle red hover or gold small badge.
-
-Keep the Master Fade logo and spacing the same everywhere.
-
-5. Replace all legacy blue/light UI components
-
-Search the project for any old components or design tokens and replace them with:
-
-blood-red backgrounds
-
-maroon cards
-
-red/orange/gold accents
-
-landing-page typography
-
-dark backgrounds for admin tables and cards
-
-Ensure no page inherits default blue/light themes.
-
-6. Keep functionality exactly the same
-
-Do not revert or remove features such as:
-
-Multi-barber support
-
-Live walk-in queue
-
-Call-outs booking
-
-Dynamic wait calculation
-
-Admin dashboard tools
-
-This change is visual only unless styling requires minor layout fixes.
-
-7. Consistency rules
-
-If a conflict arises between design systems:
-Always match the landing page theme: blood-red, premium, modern, dark.
-
-Implement these changes so the entire app feels like one cohesive brand, visually aligned with the landing page, while giving each page its own personality within the same red Master Fade theme."
+Make the entire UI visually consistent, easier on the eyes, more accessible, and fully aligned with the premium red theme from the landing page, without losing any functionality or layout."
 - Only address errors if they block the specific functionality requested by the user.

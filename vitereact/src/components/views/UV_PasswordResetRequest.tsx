@@ -254,7 +254,7 @@ const UV_PasswordResetRequest: React.FC = () => {
                         )}
                       </div>
                       {validationError && (
-                        <p className="mt-2 text-sm text-red-600 flex items-center" role="alert">
+                        <p className="mt-2 form-error-text flex items-center" role="alert">
                           <AlertCircle className="w-4 h-4 mr-1 flex-shrink-0" />
                           {validationError}
                         </p>

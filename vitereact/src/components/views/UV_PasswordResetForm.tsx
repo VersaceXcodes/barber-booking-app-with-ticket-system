@@ -403,7 +403,7 @@ const UV_PasswordResetForm: React.FC = () => {
                   {validation_errors.new_password ? (
                     <p
                       id="new_password_error"
-                      className="mt-2 text-sm text-red-600 flex items-start"
+                      className="mt-2 form-error-text flex items-start"
                     >
                       <X className="h-4 w-4 mr-1 mt-0.5 flex-shrink-0" />
                       {validation_errors.new_password}
@@ -478,7 +478,7 @@ const UV_PasswordResetForm: React.FC = () => {
                   {validation_errors.confirm_password ? (
                     <p
                       id="confirm_password_error"
-                      className="mt-2 text-sm text-red-600 flex items-start"
+                      className="mt-2 form-error-text flex items-start"
                     >
                       <X className="h-4 w-4 mr-1 mt-0.5 flex-shrink-0" />
                       {validation_errors.confirm_password}

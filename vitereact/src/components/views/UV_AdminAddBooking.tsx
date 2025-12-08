@@ -620,7 +620,7 @@ const UV_AdminAddBooking: React.FC = () => {
                       } focus:ring-4 transition-all duration-200 outline-none`}
                     />
                     {validationErrors.appointment_date && (
-                      <p className="mt-1 text-sm text-red-600">{validationErrors.appointment_date}</p>
+                      <p className="mt-1 form-error-text">{validationErrors.appointment_date}</p>
                     )}
                     <p className="mt-2 text-sm text-master-text-muted-dark">
                       Past dates allowed for record-keeping
@@ -655,7 +655,7 @@ const UV_AdminAddBooking: React.FC = () => {
                       })}
                     </select>
                     {validationErrors.appointment_time && (
-                      <p className="mt-1 text-sm text-red-600">{validationErrors.appointment_time}</p>
+                      <p className="mt-1 form-error-text">{validationErrors.appointment_time}</p>
                     )}
                     {isLoadingAvailability && (
                       <p className="mt-2 text-sm text-master-text-muted-dark flex items-center">
@@ -758,7 +758,7 @@ const UV_AdminAddBooking: React.FC = () => {
                       } focus:ring-4 transition-all duration-200 outline-none`}
                     />
                     {validationErrors.customer_name && (
-                      <p className="mt-1 text-sm text-red-600">{validationErrors.customer_name}</p>
+                      <p className="mt-1 form-error-text">{validationErrors.customer_name}</p>
                     )}
                   </div>
 
@@ -780,7 +780,7 @@ const UV_AdminAddBooking: React.FC = () => {
                       } focus:ring-4 transition-all duration-200 outline-none`}
                     />
                     {validationErrors.customer_email && (
-                      <p className="mt-1 text-sm text-red-600">{validationErrors.customer_email}</p>
+                      <p className="mt-1 form-error-text">{validationErrors.customer_email}</p>
                     )}
                   </div>
 
@@ -802,7 +802,7 @@ const UV_AdminAddBooking: React.FC = () => {
                       } focus:ring-4 transition-all duration-200 outline-none`}
                     />
                     {validationErrors.customer_phone && (
-                      <p className="mt-1 text-sm text-red-600">{validationErrors.customer_phone}</p>
+                      <p className="mt-1 form-error-text">{validationErrors.customer_phone}</p>
                     )}
                   </div>
                 </div>
@@ -874,7 +874,7 @@ const UV_AdminAddBooking: React.FC = () => {
                     <p className="text-sm text-master-text-muted-dark">{formData.special_request.length}/1000</p>
                   </div>
                   {validationErrors.special_request && (
-                    <p className="mt-1 text-sm text-red-600">{validationErrors.special_request}</p>
+                    <p className="mt-1 form-error-text">{validationErrors.special_request}</p>
                   )}
                 </div>
 
@@ -901,7 +901,7 @@ const UV_AdminAddBooking: React.FC = () => {
                     <p className="text-sm text-master-text-muted-dark">{formData.admin_notes.length}/2000</p>
                   </div>
                   {validationErrors.admin_notes && (
-                    <p className="mt-1 text-sm text-red-600">{validationErrors.admin_notes}</p>
+                    <p className="mt-1 form-error-text">{validationErrors.admin_notes}</p>
                   )}
                 </div>
 

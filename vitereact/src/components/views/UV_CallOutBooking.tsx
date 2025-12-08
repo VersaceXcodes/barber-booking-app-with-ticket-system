@@ -265,7 +265,7 @@ const UV_CallOutBooking: React.FC = () => {
                     placeholder="Enter your full name"
                   />
                   {validationErrors.customer_name && (
-                    <p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    <p className="form-error-text mt-1 flex items-center gap-1">
                       <AlertCircle className="w-4 h-4" />
                       {validationErrors.customer_name}
                     </p>
@@ -287,7 +287,7 @@ const UV_CallOutBooking: React.FC = () => {
                     placeholder="your@email.com"
                   />
                   {validationErrors.customer_email && (
-                    <p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    <p className="form-error-text mt-1 flex items-center gap-1">
                       <AlertCircle className="w-4 h-4" />
                       {validationErrors.customer_email}
                     </p>
@@ -309,7 +309,7 @@ const UV_CallOutBooking: React.FC = () => {
                     placeholder="+353 83 327 6229"
                   />
                   {validationErrors.customer_phone && (
-                    <p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    <p className="form-error-text mt-1 flex items-center gap-1">
                       <AlertCircle className="w-4 h-4" />
                       {validationErrors.customer_phone}
                     </p>
@@ -332,7 +332,7 @@ const UV_CallOutBooking: React.FC = () => {
                     placeholder="Street address, apartment/suite number, city, postcode"
                   />
                   {validationErrors.customer_address && (
-                    <p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    <p className="form-error-text mt-1 flex items-center gap-1">
                       <AlertCircle className="w-4 h-4" />
                       {validationErrors.customer_address}
                     </p>
@@ -367,7 +367,7 @@ const UV_CallOutBooking: React.FC = () => {
                       } rounded-lg text-master-text-primary-dark focus:outline-none focus:ring-2 focus:ring-amber-500`}
                     />
                     {validationErrors.preferred_date && (
-                      <p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                      <p className="form-error-text mt-1 flex items-center gap-1">
                         <AlertCircle className="w-4 h-4" />
                         {validationErrors.preferred_date}
                       </p>
@@ -388,7 +388,7 @@ const UV_CallOutBooking: React.FC = () => {
                       } rounded-lg text-master-text-primary-dark focus:outline-none focus:ring-2 focus:ring-amber-500`}
                     />
                     {validationErrors.preferred_time && (
-                      <p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                      <p className="form-error-text mt-1 flex items-center gap-1">
                         <AlertCircle className="w-4 h-4" />
                         {validationErrors.preferred_time}
                       </p>

@@ -315,7 +315,7 @@ const UV_AdminLogin: React.FC = () => {
                   />
                 </div>
                 {validation_errors.email && (
-                  <p className="mt-1 text-sm text-red-600">{validation_errors.email}</p>
+                  <p className="mt-1 form-error-text">{validation_errors.email}</p>
                 )}
               </div>
 
@@ -356,7 +356,7 @@ const UV_AdminLogin: React.FC = () => {
                   </button>
                 </div>
                 {validation_errors.password && (
-                  <p className="mt-1 text-sm text-red-600">{validation_errors.password}</p>
+                  <p className="mt-1 form-error-text">{validation_errors.password}</p>
                 )}
               </div>
 
@@ -388,7 +388,7 @@ const UV_AdminLogin: React.FC = () => {
                     />
                   </div>
                   {validation_errors.two_factor_code && (
-                    <p className="mt-1 text-sm text-red-600">{validation_errors.two_factor_code}</p>
+                    <p className="mt-1 form-error-text">{validation_errors.two_factor_code}</p>
                   )}
                   <p className="mt-1 text-xs text-master-text-muted-dark">
                     Enter the 6-digit code from your authenticator app

@@ -118,6 +118,10 @@
 		--status-error-bg: rgba(239, 68, 68, 0.15);
 		--status-info: #3B82F6;
 		--status-info-bg: rgba(59, 130, 246, 0.15);
+		
+		/* Form Error Text - High Contrast (WCAG AA Compliant) */
+		--error-text: #FFB4B4;          /* Light warm red for dark backgrounds */
+		--error-text-light: #DC2626;    /* Dark red for light backgrounds */
 	}
 }
 
@@ -205,6 +209,29 @@
 	.btn-master-gold:hover {
 		box-shadow: 0 6px 32px rgba(245, 158, 11, 0.4);
 		transform: translateY(-2px);
+	}
+	
+	/* ============================================================================
+	   FORM ERROR TEXT STYLE - High Contrast & WCAG AA Compliant
+	   ============================================================================ */
+	
+	/* Error text style for form validation messages */
+	.form-error-text,
+	.text-error {
+		color: #FFB4B4 !important;          /* Light warm red with excellent contrast */
+		font-weight: 500 !important;        /* Slightly bold for better readability */
+		font-size: 0.875rem !important;     /* 14px - not too small */
+		line-height: 1.4 !important;        /* Comfortable reading */
+		opacity: 1 !important;              /* No reduced opacity */
+	}
+	
+	/* Error text on light backgrounds (e.g., white cards) */
+	.form-error-text-light {
+		color: #DC2626 !important;          /* Dark red for light backgrounds */
+		font-weight: 500 !important;
+		font-size: 0.875rem !important;
+		line-height: 1.4 !important;
+		opacity: 1 !important;
 	}
 }
 

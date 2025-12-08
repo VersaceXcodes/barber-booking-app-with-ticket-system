@@ -892,7 +892,7 @@ const UV_AdminSettings: React.FC = () => {
                             placeholder="BarberSlot Premium Cuts"
                           />
                           {validationErrors.shop_name && (
-                            <p className="mt-1 text-sm text-red-600">{validationErrors.shop_name}</p>
+                            <p className="mt-1 form-error-text">{validationErrors.shop_name}</p>
                           )}
                         </div>
 
@@ -942,7 +942,7 @@ const UV_AdminSettings: React.FC = () => {
                               placeholder="info@barberslot.com"
                             />
                             {validationErrors.shop_email && (
-                              <p className="mt-1 text-sm text-red-600">{validationErrors.shop_email}</p>
+                              <p className="mt-1 form-error-text">{validationErrors.shop_email}</p>
                             )}
                           </div>
                         </div>
@@ -1021,7 +1021,7 @@ const UV_AdminSettings: React.FC = () => {
                                 }`}
                               />
                               {validationErrors.capacity_mon_wed && (
-                                <p className="mt-1 text-sm text-red-600">{validationErrors.capacity_mon_wed}</p>
+                                <p className="mt-1 form-error-text">{validationErrors.capacity_mon_wed}</p>
                               )}
                             </div>
 
@@ -1040,7 +1040,7 @@ const UV_AdminSettings: React.FC = () => {
                                 }`}
                               />
                               {validationErrors.capacity_thu_sun && (
-                                <p className="mt-1 text-sm text-red-600">{validationErrors.capacity_thu_sun}</p>
+                                <p className="mt-1 form-error-text">{validationErrors.capacity_thu_sun}</p>
                               )}
                             </div>
                           </div>
@@ -1063,7 +1063,7 @@ const UV_AdminSettings: React.FC = () => {
                             }`}
                           />
                           {validationErrors.booking_window_days && (
-                            <p className="mt-1 text-sm text-red-600">{validationErrors.booking_window_days}</p>
+                            <p className="mt-1 form-error-text">{validationErrors.booking_window_days}</p>
                           )}
                           <p className="mt-1 text-xs text-master-text-secondary-dark">Customers can book up to this many days in advance</p>
                         </div>
@@ -1084,7 +1084,7 @@ const UV_AdminSettings: React.FC = () => {
                             }`}
                           />
                           {validationErrors.same_day_cutoff_hours && (
-                            <p className="mt-1 text-sm text-red-600">{validationErrors.same_day_cutoff_hours}</p>
+                            <p className="mt-1 form-error-text">{validationErrors.same_day_cutoff_hours}</p>
                           )}
                           <p className="mt-1 text-xs text-master-text-secondary-dark">Bookings must be made at least this many hours before the appointment</p>
                         </div>
@@ -1343,7 +1343,7 @@ const UV_AdminSettings: React.FC = () => {
                             }`}
                           />
                           {validationErrors.reminder_hours_before && (
-                            <p className="mt-1 text-sm text-red-600">{validationErrors.reminder_hours_before}</p>
+                            <p className="mt-1 form-error-text">{validationErrors.reminder_hours_before}</p>
                           )}
                           <p className="mt-1 text-xs text-master-text-secondary-dark">Reminder will be sent this many hours before the appointment (1-24)</p>
                         </div>
@@ -1566,7 +1566,7 @@ const UV_AdminSettings: React.FC = () => {
                     placeholder="Haircut"
                   />
                   {validationErrors.name && (
-                    <p className="mt-1 text-sm text-red-600">{validationErrors.name}</p>
+                    <p className="mt-1 form-error-text">{validationErrors.name}</p>
                   )}
                 </div>
 
@@ -1589,7 +1589,7 @@ const UV_AdminSettings: React.FC = () => {
                     {serviceFormData.description.length}/500 characters
                   </p>
                   {validationErrors.description && (
-                    <p className="mt-1 text-sm text-red-600">{validationErrors.description}</p>
+                    <p className="mt-1 form-error-text">{validationErrors.description}</p>
                   )}
                 </div>
 

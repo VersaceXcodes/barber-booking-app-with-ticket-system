@@ -423,7 +423,7 @@ const UV_Registration: React.FC = () => {
                     `}
                   />
                   {validation_errors.name ? (
-                    <p id="name-error" className="mt-1 text-sm text-red-600 flex items-center">
+                    <p id="name-error" className="mt-1 form-error-text flex items-center">
                       <XCircle className="h-4 w-4 mr-1" />
                       {validation_errors.name}
                     </p>
@@ -468,7 +468,7 @@ const UV_Registration: React.FC = () => {
                     )}
                   </div>
                   {validation_errors.email ? (
-                    <p id="email-error" className="mt-1 text-sm text-red-600 flex items-center">
+                    <p id="email-error" className="mt-1 form-error-text flex items-center">
                       <XCircle className="h-4 w-4 mr-1" />
                       {validation_errors.email}
                     </p>
@@ -506,7 +506,7 @@ const UV_Registration: React.FC = () => {
                     `}
                   />
                   {validation_errors.phone ? (
-                    <p id="phone-error" className="mt-1 text-sm text-red-600 flex items-center">
+                    <p id="phone-error" className="mt-1 form-error-text flex items-center">
                       <XCircle className="h-4 w-4 mr-1" />
                       {validation_errors.phone}
                     </p>
@@ -581,7 +581,7 @@ const UV_Registration: React.FC = () => {
                   )}
 
                   {validation_errors.password ? (
-                    <p id="password-error" className="mt-1 text-sm text-red-600 flex items-center">
+                    <p id="password-error" className="mt-1 form-error-text flex items-center">
                       <XCircle className="h-4 w-4 mr-1" />
                       {validation_errors.password}
                     </p>
@@ -636,7 +636,7 @@ const UV_Registration: React.FC = () => {
                     )}
                   </div>
                   {validation_errors.password_confirm ? (
-                    <p id="password-confirm-error" className="mt-1 text-sm text-red-600 flex items-center">
+                    <p id="password-confirm-error" className="mt-1 form-error-text flex items-center">
                       <XCircle className="h-4 w-4 mr-1" />
                       {validation_errors.password_confirm}
                     </p>

@@ -413,7 +413,7 @@ const UV_AdminDashboardHome: React.FC = () => {
                         <XCircle className="w-6 h-6 text-master-text-primary-dark" />
                       </div>
                       {stats && stats.cancellation_rate > 0 && (
-                        <div className="flex items-center text-red-400 text-sm font-medium">
+                        <div className="flex items-center form-error-text font-medium">
                           <TrendingDown className="w-4 h-4 mr-1" />
                           <span>{stats.cancellation_rate.toFixed(1)}%</span>
                         </div>

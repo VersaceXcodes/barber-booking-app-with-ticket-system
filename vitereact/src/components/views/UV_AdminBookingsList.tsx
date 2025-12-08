@@ -653,7 +653,7 @@ const UV_AdminBookingsList: React.FC = () => {
               <p className="text-red-300">Failed to load bookings. Please try again.</p>
               <button
                 onClick={() => refetchBookings()}
-                className="mt-2 text-sm text-red-400 underline hover:no-underline"
+                className="mt-2 form-error-text underline hover:no-underline"
               >
                 Retry
               </button>

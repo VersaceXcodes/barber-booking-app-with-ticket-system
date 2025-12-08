@@ -29,6 +29,9 @@ export default {
 					'text-secondary-light': '#6A3A2E',   // Warm brown for light backgrounds
 					'text-muted-dark': '#B28C7A',        // Muted warm for dark backgrounds
 					'text-muted-light': '#8A5A4A',       // Muted warm brown for light backgrounds
+					// Form error text - High contrast & WCAG AA compliant
+					'error-text': '#FFB4B4',             // Light warm red for dark backgrounds (WCAG AA)
+					'error-text-light': '#DC2626',       // Dark red for light backgrounds
 				},
 			},
 			keyframes: {

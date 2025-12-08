@@ -453,7 +453,7 @@ const UV_AdminBlockingSettings: React.FC = () => {
                       className="w-full px-4 py-3 border-2 border-white/10 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all"
                     />
                     {validationErrors.date && (
-                      <p className="mt-2 text-sm text-red-600">{validationErrors.date}</p>
+                      <p className="mt-2 form-error-text">{validationErrors.date}</p>
                     )}
                   </div>
 
@@ -478,7 +478,7 @@ const UV_AdminBlockingSettings: React.FC = () => {
                         ))}
                       </select>
                       {validationErrors.time_slot && (
-                        <p className="mt-2 text-sm text-red-600">{validationErrors.time_slot}</p>
+                        <p className="mt-2 form-error-text">{validationErrors.time_slot}</p>
                       )}
                     </div>
                   )}

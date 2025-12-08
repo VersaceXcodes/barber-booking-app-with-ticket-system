@@ -368,7 +368,7 @@ const UV_Login: React.FC = () => {
                       aria-describedby={validation_errors.name ? 'name-error' : undefined}
                     />
                     {validation_errors.name && (
-                      <p id="name-error" className="mt-2 text-sm text-red-600" role="alert">
+                      <p id="name-error" className="mt-2 form-error-text" role="alert">
                         {validation_errors.name}
                       </p>
                     )}
@@ -403,7 +403,7 @@ const UV_Login: React.FC = () => {
                       aria-describedby={validation_errors.phone ? 'phone-error' : undefined}
                     />
                     {validation_errors.phone && (
-                      <p id="phone-error" className="mt-2 text-sm text-red-600" role="alert">
+                      <p id="phone-error" className="mt-2 form-error-text" role="alert">
                         {validation_errors.phone}
                       </p>
                     )}
@@ -445,7 +445,7 @@ const UV_Login: React.FC = () => {
                     />
                   </div>
                   {validation_errors.email && (
-                    <p id="email-error" className="mt-2 text-sm text-red-600" role="alert">
+                    <p id="email-error" className="mt-2 form-error-text" role="alert">
                       {validation_errors.email}
                     </p>
                   )}
@@ -508,7 +508,7 @@ const UV_Login: React.FC = () => {
                     </button>
                   </div>
                   {validation_errors.password && (
-                    <p id="password-error" className="mt-2 text-sm text-red-600" role="alert">
+                    <p id="password-error" className="mt-2 form-error-text" role="alert">
                       {validation_errors.password}
                     </p>
                   )}

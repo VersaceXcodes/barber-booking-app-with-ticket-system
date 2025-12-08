@@ -645,7 +645,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                     />
                   </div>
                    {validationErrors.customer_name && (
-                    <p id="customer-name-error" className="mt-1 text-sm text-red-400 flex items-center" role="alert">
+                    <p id="customer-name-error" className="mt-1 form-error-text flex items-center" role="alert">
                       <AlertCircle className="w-4 h-4 mr-1" />
                       {validationErrors.customer_name}
                     </p>
@@ -683,7 +683,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                     />
                   </div>
                    {validationErrors.customer_email && (
-                    <p id="customer-email-error" className="mt-1 text-sm text-red-400 flex items-center" role="alert">
+                    <p id="customer-email-error" className="mt-1 form-error-text flex items-center" role="alert">
                       <AlertCircle className="w-4 h-4 mr-1" />
                       {validationErrors.customer_email}
                     </p>
@@ -721,7 +721,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                     />
                   </div>
                    {validationErrors.customer_phone && (
-                    <p id="customer-phone-error" className="mt-1 text-sm text-red-400 flex items-center" role="alert">
+                    <p id="customer-phone-error" className="mt-1 form-error-text flex items-center" role="alert">
                       <AlertCircle className="w-4 h-4 mr-1" />
                       {validationErrors.customer_phone}
                     </p>
@@ -760,7 +760,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                       />
                     </div>
                     {validationErrors.customer_address && (
-                      <p id="customer-address-error" className="mt-1 text-sm text-red-600 flex items-center" role="alert">
+                      <p id="customer-address-error" className="mt-1 form-error-text flex items-center" role="alert">
                         <AlertCircle className="w-4 h-4 mr-1" />
                         {validationErrors.customer_address}
                       </p>
@@ -899,7 +899,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                         </span>
                       </div>
                       {validationErrors.special_request && (
-                        <p className="text-sm text-red-600 flex items-center">
+                        <p className="form-error-text flex items-center">
                           <AlertCircle className="w-4 h-4 mr-1" />
                           {validationErrors.special_request}
                         </p>
@@ -941,7 +941,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                       />
                       <p className="mt-1 text-sm text-master-text-secondary-dark">We'll still use your contact for confirmations</p>
                       {validationErrors.booking_for_name && (
-                        <p className="mt-1 text-sm text-red-600 flex items-center">
+                        <p className="mt-1 form-error-text flex items-center">
                           <AlertCircle className="w-4 h-4 mr-1" />
                           {validationErrors.booking_for_name}
                         </p>
@@ -1003,7 +1003,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                           </button>
                         </div>
                         {photoUrlError && (
-                          <p className="mt-1 text-sm text-red-600 flex items-center">
+                          <p className="mt-1 form-error-text flex items-center">
                             <AlertCircle className="w-4 h-4 mr-1" />
                             {photoUrlError}
                           </p>

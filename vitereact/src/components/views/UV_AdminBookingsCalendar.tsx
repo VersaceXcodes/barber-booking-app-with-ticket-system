@@ -754,7 +754,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                 </div>
                 <div className="flex items-center space-x-4">
                   {isBlocked ? (
-                    <span className="text-sm text-red-600 font-semibold">Blocked</span>
+                    <span className="form-error-text font-semibold">Blocked</span>
                   ) : (
                     <span className={`text-sm font-semibold ${
                       booked >= capacity ? 'text-red-600' : 'text-master-text-secondary-dark'

@@ -513,7 +513,7 @@ const UV_JoinQueue: React.FC = () => {
                 disabled={joinQueueMutation.isPending}
               />
               {validationErrors.customer_name && (
-                <p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                <p className="form-error-text mt-1 flex items-center gap-1">
                   <AlertCircle className="w-4 h-4" />
                   {validationErrors.customer_name}
                 </p>
@@ -537,7 +537,7 @@ const UV_JoinQueue: React.FC = () => {
                 disabled={joinQueueMutation.isPending}
               />
               {validationErrors.customer_phone && (
-                <p className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                <p className="form-error-text mt-1 flex items-center gap-1">
                   <AlertCircle className="w-4 h-4" />
                   {validationErrors.customer_phone}
                 </p>

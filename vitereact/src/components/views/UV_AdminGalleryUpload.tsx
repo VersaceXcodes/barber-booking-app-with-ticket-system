@@ -308,7 +308,7 @@ const UV_AdminGalleryUpload: React.FC = () => {
                   </ul>
                   <button
                     onClick={() => setValidationErrors([])}
-                    className="mt-3 text-sm text-red-600 hover:text-red-400 font-medium underline"
+                    className="mt-3 form-error-text hover:text-red-400 font-medium underline"
                   >
                     Clear Errors
                   </button>

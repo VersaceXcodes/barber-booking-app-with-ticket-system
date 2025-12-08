@@ -556,7 +556,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
                           }`}
                         />
                         {validationErrors.date && (
-                          <p className="mt-1 text-sm text-red-600">{validationErrors.date}</p>
+                          <p className="mt-1 form-error-text">{validationErrors.date}</p>
                         )}
                       </div>
 
@@ -584,7 +584,7 @@ const UV_AdminCapacitySettings: React.FC = () => {
                           }`}
                         />
                         {validationErrors.capacity && (
-                          <p className="mt-1 text-sm text-red-600">{validationErrors.capacity}</p>
+                          <p className="mt-1 form-error-text">{validationErrors.capacity}</p>
                         )}
                       </div>
 

@@ -275,10 +275,10 @@ const UV_Login: React.FC = () => {
         <div className="max-w-md w-full space-y-8">
           {/* Header */}
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-white leading-tight">
+            <h1 className="text-4xl font-bold text-master-text-primary-dark leading-tight">
               {isLoginMode ? 'Welcome Back' : 'Create Your Account'}
             </h1>
-            <p className="mt-2 text-base text-gray-300">
+            <p className="mt-2 text-base text-master-text-secondary-dark">
               {isLoginMode 
                 ? 'Sign in to access your dashboard and bookings'
                 : 'Register to book faster and view your history'}
@@ -343,7 +343,7 @@ const UV_Login: React.FC = () => {
                 {/* Name Field (Registration only) */}
                 {!isLoginMode && (
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-white mb-2">
+                    <label htmlFor="name" className="block text-sm font-medium text-master-text-primary-dark mb-2">
                       Full Name
                     </label>
                     <input
@@ -363,7 +363,7 @@ const UV_Login: React.FC = () => {
                         validation_errors.name
                           ? 'border-red-500 focus:border-red-500 focus:ring-4 focus:ring-red-100'
                           : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
-                      } text-white placeholder-gray-600 focus:outline-none`}
+                      } text-master-text-primary-dark placeholder-master-text-muted-dark focus:outline-none`}
                       aria-invalid={validation_errors.name ? 'true' : 'false'}
                       aria-describedby={validation_errors.name ? 'name-error' : undefined}
                     />
@@ -378,7 +378,7 @@ const UV_Login: React.FC = () => {
                 {/* Phone Field (Registration only) */}
                 {!isLoginMode && (
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-white mb-2">
+                    <label htmlFor="phone" className="block text-sm font-medium text-master-text-primary-dark mb-2">
                       Phone Number
                     </label>
                     <input
@@ -398,7 +398,7 @@ const UV_Login: React.FC = () => {
                         validation_errors.phone
                           ? 'border-red-500 focus:border-red-500 focus:ring-4 focus:ring-red-100'
                           : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
-                      } text-white placeholder-gray-600 focus:outline-none`}
+                      } text-master-text-primary-dark placeholder-master-text-muted-dark focus:outline-none`}
                       aria-invalid={validation_errors.phone ? 'true' : 'false'}
                       aria-describedby={validation_errors.phone ? 'phone-error' : undefined}
                     />
@@ -412,12 +412,12 @@ const UV_Login: React.FC = () => {
 
                 {/* Email Field */}
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-white mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-master-text-primary-dark mb-2">
                     Email Address
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Mail className="size-5 text-gray-400" />
+                      <Mail className="size-5 text-master-text-muted-dark" />
                     </div>
                     <input
                       id="email"
@@ -439,7 +439,7 @@ const UV_Login: React.FC = () => {
                         validation_errors.email
                           ? 'border-red-500 focus:border-red-500 focus:ring-4 focus:ring-red-100'
                           : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
-                      } text-white placeholder-gray-600 focus:outline-none`}
+                      } text-master-text-primary-dark placeholder-master-text-muted-dark focus:outline-none`}
                       aria-invalid={validation_errors.email ? 'true' : 'false'}
                       aria-describedby={validation_errors.email ? 'email-error' : undefined}
                     />
@@ -454,7 +454,7 @@ const UV_Login: React.FC = () => {
                 {/* Password Field */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <label htmlFor="password" className="block text-sm font-medium text-white">
+                    <label htmlFor="password" className="block text-sm font-medium text-master-text-primary-dark">
                       Password
                     </label>
                     {isLoginMode && (
@@ -468,7 +468,7 @@ const UV_Login: React.FC = () => {
                   </div>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Lock className="size-5 text-gray-400" />
+                      <Lock className="size-5 text-master-text-muted-dark" />
                     </div>
                     <input
                       id="password"
@@ -490,14 +490,14 @@ const UV_Login: React.FC = () => {
                         validation_errors.password
                           ? 'border-red-500 focus:border-red-500 focus:ring-4 focus:ring-red-100'
                           : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
-                      } text-white placeholder-gray-600 focus:outline-none`}
+                      } text-master-text-primary-dark placeholder-master-text-muted-dark focus:outline-none`}
                       aria-invalid={validation_errors.password ? 'true' : 'false'}
                       aria-describedby={validation_errors.password ? 'password-error' : undefined}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!show_password)}
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-300 transition-colors"
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-master-text-muted-dark hover:text-master-text-secondary-dark transition-colors"
                       aria-label={show_password ? 'Hide password' : 'Show password'}
                     >
                       {show_password ? (
@@ -525,7 +525,7 @@ const UV_Login: React.FC = () => {
                       onChange={(e) => setRememberMe(e.target.checked)}
                       className="h-4 w-4 rounded border-white/20 text-amber-400 focus:ring-red-500 transition-colors cursor-pointer"
                     />
-                    <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-300 cursor-pointer">
+                    <label htmlFor="remember-me" className="ml-2 block text-sm text-master-text-secondary-dark cursor-pointer">
                       Remember me for 30 days
                     </label>
                   </div>
@@ -535,12 +535,12 @@ const UV_Login: React.FC = () => {
                 <button
                   type="submit"
                   disabled={!canSubmit}
-                  className="w-full flex justify-center items-center px-6 py-3 rounded-lg font-medium text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gradient-to-r from-red-600 to-red-700 disabled:hover:shadow-lg"
+                  className="w-full flex justify-center items-center px-6 py-3 rounded-lg font-medium text-master-text-primary-dark bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gradient-to-r from-red-600 to-red-700 disabled:hover:shadow-lg"
                 >
                   {isLoading ? (
                     <>
                       <svg
-                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-master-text-primary-dark"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -574,7 +574,7 @@ const UV_Login: React.FC = () => {
                     <div className="w-full border-t border-white/10"></div>
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-[#2D0808] text-gray-400">Or log in with</span>
+                    <span className="px-2 bg-[#2D0808] text-master-text-muted-dark">Or log in with</span>
                   </div>
                 </div>
 
@@ -583,7 +583,7 @@ const UV_Login: React.FC = () => {
                     type="button"
                     onClick={() => handleSocialLogin('google')}
                     disabled
-                    className="w-full inline-flex justify-center items-center px-4 py-2 border border-white/20 rounded-lg shadow-sm bg-[#2D0808] text-sm font-medium text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full inline-flex justify-center items-center px-4 py-2 border border-white/20 rounded-lg shadow-sm bg-[#2D0808] text-sm font-medium text-master-text-secondary-dark hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     title="Coming soon"
                   >
                     <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
@@ -611,7 +611,7 @@ const UV_Login: React.FC = () => {
                     type="button"
                     onClick={() => handleSocialLogin('facebook')}
                     disabled
-                    className="w-full inline-flex justify-center items-center px-4 py-2 border border-white/20 rounded-lg shadow-sm bg-[#2D0808] text-sm font-medium text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full inline-flex justify-center items-center px-4 py-2 border border-white/20 rounded-lg shadow-sm bg-[#2D0808] text-sm font-medium text-master-text-secondary-dark hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     title="Coming soon"
                   >
                     <svg className="w-5 h-5 mr-2" fill="#1877F2" viewBox="0 0 24 24">
@@ -625,7 +625,7 @@ const UV_Login: React.FC = () => {
 
             {/* Toggle Mode Link */}
             <div className="px-8 py-4 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] border-t border-gray-100">
-              <div className="text-center text-sm text-gray-300">
+              <div className="text-center text-sm text-master-text-secondary-dark">
                 <button
                   type="button"
                   onClick={toggleMode}
@@ -639,7 +639,7 @@ const UV_Login: React.FC = () => {
           </div>
 
           {/* Additional Info */}
-          <p className="text-center text-xs text-gray-400">
+          <p className="text-center text-xs text-master-text-muted-dark">
             By signing in, you agree to our{' '}
             <a href="#" className="text-amber-400 hover:text-blue-700 underline">
               Terms of Service

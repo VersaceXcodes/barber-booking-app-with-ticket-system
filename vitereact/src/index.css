@@ -77,12 +77,25 @@
 		--accent-gold: #F59E0B;
 		--accent-soft-gold: #FCD34D;
 		
-		/* Text Colors - Enhanced contrast for WCAG AA */
-		--text-primary: #FFFFFF;
-		--text-secondary: #F3F4F6;
-		--text-tertiary: #D1D5DB;
-		--text-muted: #9CA3AF;
-		--text-on-dark-red: #FECACA;
+		/* Text Colors - WCAG AA Compliant High Contrast System */
+		/* Primary text - for headings and main body text */
+		--text-primary-dark: #F5E9E4;        /* Warm off-white for dark backgrounds */
+		--text-primary-light: #301010;       /* Dark maroon for light backgrounds */
+		
+		/* Secondary text - for helper text, labels, inline hints */
+		--text-secondary-dark: #D5BEB3;      /* Softer warm neutral for dark backgrounds */
+		--text-secondary-light: #6A3A2E;     /* Warm brown for light backgrounds */
+		
+		/* Muted text - for very small hint text, captions */
+		--text-muted-dark: #B28C7A;          /* Muted warm for dark backgrounds */
+		--text-muted-light: #8A5A4A;         /* Muted warm brown for light backgrounds */
+		
+		/* Legacy variables for backward compatibility */
+		--text-primary: #F5E9E4;
+		--text-secondary: #D5BEB3;
+		--text-tertiary: #D5BEB3;
+		--text-muted: #B28C7A;
+		--text-on-dark-red: #F5E9E4;
 		
 		/* Border & Shadow - Improved visibility */
 		--border-color: rgba(255, 255, 255, 0.15);

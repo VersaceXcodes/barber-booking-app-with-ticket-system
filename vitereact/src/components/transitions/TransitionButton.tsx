@@ -17,7 +17,7 @@ interface TransitionButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> 
  * @example
  * <TransitionButton 
  *   to="/book/service"
- *   className="px-4 py-2 bg-red-600 text-white"
+ *   className="px-4 py-2 bg-red-600 text-master-text-primary-dark"
  * >
  *   Book Now
  * </TransitionButton>

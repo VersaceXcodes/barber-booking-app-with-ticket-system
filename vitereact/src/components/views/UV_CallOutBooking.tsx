@@ -220,17 +220,17 @@ const UV_CallOutBooking: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full text-white font-bold text-sm mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full text-master-text-primary-dark font-bold text-sm mb-4">
               <Sparkles className="w-4 h-4" />
               PREMIUM SERVICE
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">
+            <h1 className="text-4xl md:text-5xl font-bold text-master-text-primary-dark mb-3">
               Book Call-Out Service
             </h1>
-            <p className="text-xl text-gray-300 mb-2">
+            <p className="text-xl text-master-text-secondary-dark mb-2">
               We Come To You - €150 All-Inclusive
             </p>
-            <p className="text-gray-400">
+            <p className="text-master-text-muted-dark">
               Professional barbering at your doorstep
             </p>
           </motion.div>
@@ -245,14 +245,14 @@ const UV_CallOutBooking: React.FC = () => {
             <div className="space-y-6">
               {/* Personal Details Section */}
               <div>
-                <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                <h2 className="text-2xl font-bold text-master-text-primary-dark mb-4 flex items-center gap-2">
                   <User className="w-6 h-6 text-amber-400" />
                   Your Details
                 </h2>
 
                 {/* Full Name */}
                 <div className="mb-4">
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-master-text-primary-dark font-medium mb-2">
                     Full Name *
                   </label>
                   <input
@@ -261,7 +261,7 @@ const UV_CallOutBooking: React.FC = () => {
                     onChange={(e) => handleInputChange('customer_name', e.target.value)}
                     className={`w-full px-4 py-3 bg-white/10 border ${
                       validationErrors.customer_name ? 'border-red-500' : 'border-white/30'
-                    } rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500`}
+                    } rounded-lg text-master-text-primary-dark placeholder-master-text-muted-dark focus:outline-none focus:ring-2 focus:ring-amber-500`}
                     placeholder="Enter your full name"
                   />
                   {validationErrors.customer_name && (
@@ -274,7 +274,7 @@ const UV_CallOutBooking: React.FC = () => {
 
                 {/* Email */}
                 <div className="mb-4">
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-master-text-primary-dark font-medium mb-2">
                     Email Address *
                   </label>
                   <input
@@ -283,7 +283,7 @@ const UV_CallOutBooking: React.FC = () => {
                     onChange={(e) => handleInputChange('customer_email', e.target.value)}
                     className={`w-full px-4 py-3 bg-white/10 border ${
                       validationErrors.customer_email ? 'border-red-500' : 'border-white/30'
-                    } rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500`}
+                    } rounded-lg text-master-text-primary-dark placeholder-master-text-muted-dark focus:outline-none focus:ring-2 focus:ring-amber-500`}
                     placeholder="your@email.com"
                   />
                   {validationErrors.customer_email && (
@@ -296,7 +296,7 @@ const UV_CallOutBooking: React.FC = () => {
 
                 {/* Phone */}
                 <div className="mb-4">
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-master-text-primary-dark font-medium mb-2">
                     Mobile Number *
                   </label>
                   <input
@@ -305,7 +305,7 @@ const UV_CallOutBooking: React.FC = () => {
                     onChange={(e) => handleInputChange('customer_phone', e.target.value)}
                     className={`w-full px-4 py-3 bg-white/10 border ${
                       validationErrors.customer_phone ? 'border-red-500' : 'border-white/30'
-                    } rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500`}
+                    } rounded-lg text-master-text-primary-dark placeholder-master-text-muted-dark focus:outline-none focus:ring-2 focus:ring-amber-500`}
                     placeholder="+353 83 327 6229"
                   />
                   {validationErrors.customer_phone && (
@@ -318,7 +318,7 @@ const UV_CallOutBooking: React.FC = () => {
 
                 {/* Address */}
                 <div>
-                  <label className="block text-white font-medium mb-2 flex items-center gap-2">
+                  <label className="block text-master-text-primary-dark font-medium mb-2 flex items-center gap-2">
                     <MapPin className="w-5 h-5 text-amber-400" />
                     Service Address *
                   </label>
@@ -328,7 +328,7 @@ const UV_CallOutBooking: React.FC = () => {
                     rows={3}
                     className={`w-full px-4 py-3 bg-white/10 border ${
                       validationErrors.customer_address ? 'border-red-500' : 'border-white/30'
-                    } rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500`}
+                    } rounded-lg text-master-text-primary-dark placeholder-master-text-muted-dark focus:outline-none focus:ring-2 focus:ring-amber-500`}
                     placeholder="Street address, apartment/suite number, city, postcode"
                   />
                   {validationErrors.customer_address && (
@@ -337,7 +337,7 @@ const UV_CallOutBooking: React.FC = () => {
                       {validationErrors.customer_address}
                     </p>
                   )}
-                  <p className="text-gray-400 text-sm mt-1">
+                  <p className="text-master-text-muted-dark text-sm mt-1">
                     Include apartment number, buzzer code, or parking instructions
                   </p>
                 </div>
@@ -345,7 +345,7 @@ const UV_CallOutBooking: React.FC = () => {
 
               {/* Date & Time Section */}
               <div className="border-t border-white/20 pt-6">
-                <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                <h2 className="text-2xl font-bold text-master-text-primary-dark mb-4 flex items-center gap-2">
                   <Calendar className="w-6 h-6 text-amber-400" />
                   Preferred Date & Time
                 </h2>
@@ -353,7 +353,7 @@ const UV_CallOutBooking: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Date */}
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-master-text-primary-dark font-medium mb-2">
                       Preferred Date *
                     </label>
                     <input
@@ -364,7 +364,7 @@ const UV_CallOutBooking: React.FC = () => {
                       max={getMaxDate()}
                       className={`w-full px-4 py-3 bg-white/10 border ${
                         validationErrors.preferred_date ? 'border-red-500' : 'border-white/30'
-                      } rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500`}
+                      } rounded-lg text-master-text-primary-dark focus:outline-none focus:ring-2 focus:ring-amber-500`}
                     />
                     {validationErrors.preferred_date && (
                       <p className="text-red-400 text-sm mt-1 flex items-center gap-1">
@@ -376,7 +376,7 @@ const UV_CallOutBooking: React.FC = () => {
 
                   {/* Time */}
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-master-text-primary-dark font-medium mb-2">
                       Preferred Time *
                     </label>
                     <input
@@ -385,7 +385,7 @@ const UV_CallOutBooking: React.FC = () => {
                       onChange={(e) => handleInputChange('preferred_time', e.target.value)}
                       className={`w-full px-4 py-3 bg-white/10 border ${
                         validationErrors.preferred_time ? 'border-red-500' : 'border-white/30'
-                      } rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500`}
+                      } rounded-lg text-master-text-primary-dark focus:outline-none focus:ring-2 focus:ring-amber-500`}
                     />
                     {validationErrors.preferred_time && (
                       <p className="text-red-400 text-sm mt-1 flex items-center gap-1">
@@ -399,14 +399,14 @@ const UV_CallOutBooking: React.FC = () => {
 
               {/* Barber Selection */}
               <div className="border-t border-white/20 pt-6">
-                <label className="block text-white font-medium mb-3 flex items-center gap-2">
+                <label className="block text-master-text-primary-dark font-medium mb-3 flex items-center gap-2">
                   <Scissors className="w-5 h-5 text-amber-400" />
                   Choose Your Barber
                 </label>
                 {barbersLoading ? (
                   <div className="text-center py-4">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
-                    <p className="mt-2 text-gray-300 text-sm">Loading barbers...</p>
+                    <p className="mt-2 text-master-text-secondary-dark text-sm">Loading barbers...</p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -422,11 +422,11 @@ const UV_CallOutBooking: React.FC = () => {
                     >
                       <div className="flex items-center gap-3">
                         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0">
-                          <UsersIcon className="w-6 h-6 text-white" />
+                          <UsersIcon className="w-6 h-6 text-master-text-primary-dark" />
                         </div>
                         <div className="text-left">
-                          <p className="font-semibold text-white">First Available</p>
-                          <p className="text-xs text-gray-300">Any barber</p>
+                          <p className="font-semibold text-master-text-primary-dark">First Available</p>
+                          <p className="text-xs text-master-text-secondary-dark">Any barber</p>
                         </div>
                       </div>
                     </button>
@@ -452,13 +452,13 @@ const UV_CallOutBooking: React.FC = () => {
                             />
                           ) : (
                             <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
-                              <User className="w-6 h-6 text-white" />
+                              <User className="w-6 h-6 text-master-text-primary-dark" />
                             </div>
                           )}
                           <div className="text-left flex-1 min-w-0">
-                            <p className="font-semibold text-white truncate">{barber.name}</p>
+                            <p className="font-semibold text-master-text-primary-dark truncate">{barber.name}</p>
                             {barber.specialties && barber.specialties.length > 0 && (
-                              <p className="text-xs text-gray-300 truncate">{barber.specialties.join(', ')}</p>
+                              <p className="text-xs text-master-text-secondary-dark truncate">{barber.specialties.join(', ')}</p>
                             )}
                           </div>
                         </div>
@@ -466,12 +466,12 @@ const UV_CallOutBooking: React.FC = () => {
                     ))}
                   </div>
                 )}
-                <p className="mt-2 text-sm text-gray-300">Select "First Available" for the next free barber</p>
+                <p className="mt-2 text-sm text-master-text-secondary-dark">Select "First Available" for the next free barber</p>
               </div>
 
               {/* Special Request */}
               <div className="border-t border-white/20 pt-6">
-                <label className="block text-white font-medium mb-2 flex items-center gap-2">
+                <label className="block text-master-text-primary-dark font-medium mb-2 flex items-center gap-2">
                   <FileText className="w-5 h-5 text-amber-400" />
                   Special Request (Optional)
                 </label>
@@ -479,11 +479,11 @@ const UV_CallOutBooking: React.FC = () => {
                   value={formData.special_request}
                   onChange={(e) => handleInputChange('special_request', e.target.value)}
                   rows={3}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-master-text-primary-dark placeholder-master-text-muted-dark focus:outline-none focus:ring-2 focus:ring-amber-500"
                   placeholder="Any special requests, parking instructions, or notes for the barber?"
                   maxLength={500}
                 />
-                <p className="text-gray-400 text-sm mt-1">
+                <p className="text-master-text-muted-dark text-sm mt-1">
                   {formData.special_request.length}/500 characters
                 </p>
               </div>
@@ -492,13 +492,13 @@ const UV_CallOutBooking: React.FC = () => {
               <div className="flex gap-4 pt-4">
                 <button
                   onClick={() => navigate('/')}
-                  className="flex-1 px-6 py-3 bg-white/10 text-white border border-white/30 rounded-lg font-semibold hover:bg-white/20 transition-colors"
+                  className="flex-1 px-6 py-3 bg-white/10 text-master-text-primary-dark border border-white/30 rounded-lg font-semibold hover:bg-white/20 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleContinueToConfirmation}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg font-bold hover:shadow-lg hover:shadow-amber-500/50 transition-all"
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-master-text-primary-dark rounded-lg font-bold hover:shadow-lg hover:shadow-amber-500/50 transition-all"
                 >
                   Continue to Confirmation
                 </button>
@@ -524,14 +524,14 @@ const UV_CallOutBooking: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full text-white font-bold text-sm mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full text-master-text-primary-dark font-bold text-sm mb-4">
             <Sparkles className="w-4 h-4" />
             CONFIRM YOUR BOOKING
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">
+          <h1 className="text-4xl md:text-5xl font-bold text-master-text-primary-dark mb-3">
             Review Details
           </h1>
-          <p className="text-gray-300">
+          <p className="text-master-text-secondary-dark">
             Please confirm your call-out service details
           </p>
         </motion.div>
@@ -546,37 +546,37 @@ const UV_CallOutBooking: React.FC = () => {
           <div className="space-y-6">
             {/* Service Summary */}
             <div className="bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/30 rounded-xl p-6">
-              <h2 className="text-2xl font-bold text-white mb-2">Call-Out Barber Service</h2>
-              <p className="text-gray-300 mb-4">Professional barbering at your location</p>
+              <h2 className="text-2xl font-bold text-master-text-primary-dark mb-2">Call-Out Barber Service</h2>
+              <p className="text-master-text-secondary-dark mb-4">Professional barbering at your location</p>
               <div className="flex items-center justify-between">
-                <span className="text-gray-300">Total Price</span>
+                <span className="text-master-text-secondary-dark">Total Price</span>
                 <span className="text-3xl font-bold text-amber-400">€150</span>
               </div>
             </div>
 
             {/* Contact Details */}
             <div>
-              <h3 className="text-xl font-bold text-white mb-3">Contact Information</h3>
+              <h3 className="text-xl font-bold text-master-text-primary-dark mb-3">Contact Information</h3>
               <div className="space-y-2">
-                <div className="flex items-start gap-3 text-gray-300">
+                <div className="flex items-start gap-3 text-master-text-secondary-dark">
                   <User className="w-5 h-5 text-amber-400 mt-0.5" />
                   <div>
-                    <span className="text-gray-400 text-sm">Name</span>
-                    <p className="text-white">{formData.customer_name}</p>
+                    <span className="text-master-text-muted-dark text-sm">Name</span>
+                    <p className="text-master-text-primary-dark">{formData.customer_name}</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 text-gray-300">
+                <div className="flex items-start gap-3 text-master-text-secondary-dark">
                   <Mail className="w-5 h-5 text-amber-400 mt-0.5" />
                   <div>
-                    <span className="text-gray-400 text-sm">Email</span>
-                    <p className="text-white">{formData.customer_email}</p>
+                    <span className="text-master-text-muted-dark text-sm">Email</span>
+                    <p className="text-master-text-primary-dark">{formData.customer_email}</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 text-gray-300">
+                <div className="flex items-start gap-3 text-master-text-secondary-dark">
                   <Phone className="w-5 h-5 text-amber-400 mt-0.5" />
                   <div>
-                    <span className="text-gray-400 text-sm">Phone</span>
-                    <p className="text-white">{formData.customer_phone}</p>
+                    <span className="text-master-text-muted-dark text-sm">Phone</span>
+                    <p className="text-master-text-primary-dark">{formData.customer_phone}</p>
                   </div>
                 </div>
               </div>
@@ -584,22 +584,22 @@ const UV_CallOutBooking: React.FC = () => {
 
             {/* Service Location */}
             <div className="border-t border-white/20 pt-6">
-              <h3 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-master-text-primary-dark mb-3 flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-amber-400" />
                 Service Location
               </h3>
-              <p className="text-white bg-white/10 p-4 rounded-lg">{formData.customer_address}</p>
+              <p className="text-master-text-primary-dark bg-white/10 p-4 rounded-lg">{formData.customer_address}</p>
             </div>
 
             {/* Date & Time */}
             <div className="border-t border-white/20 pt-6">
-              <h3 className="text-xl font-bold text-white mb-3">Scheduled For</h3>
+              <h3 className="text-xl font-bold text-master-text-primary-dark mb-3">Scheduled For</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex items-center gap-3 bg-white/10 p-4 rounded-lg">
                   <Calendar className="w-6 h-6 text-amber-400" />
                   <div>
-                    <span className="text-gray-400 text-sm">Date</span>
-                    <p className="text-white font-medium">
+                    <span className="text-master-text-muted-dark text-sm">Date</span>
+                    <p className="text-master-text-primary-dark font-medium">
                       {new Date(formData.preferred_date).toLocaleDateString('en-GB', {
                         weekday: 'long',
                         year: 'numeric',
@@ -612,8 +612,8 @@ const UV_CallOutBooking: React.FC = () => {
                 <div className="flex items-center gap-3 bg-white/10 p-4 rounded-lg">
                   <Clock className="w-6 h-6 text-amber-400" />
                   <div>
-                    <span className="text-gray-400 text-sm">Time</span>
-                    <p className="text-white font-medium">{formData.preferred_time}</p>
+                    <span className="text-master-text-muted-dark text-sm">Time</span>
+                    <p className="text-master-text-primary-dark font-medium">{formData.preferred_time}</p>
                   </div>
                 </div>
               </div>
@@ -622,11 +622,11 @@ const UV_CallOutBooking: React.FC = () => {
             {/* Special Request */}
             {formData.special_request && (
               <div className="border-t border-white/20 pt-6">
-                <h3 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
+                <h3 className="text-xl font-bold text-master-text-primary-dark mb-3 flex items-center gap-2">
                   <FileText className="w-5 h-5 text-amber-400" />
                   Special Request
                 </h3>
-                <p className="text-white bg-white/10 p-4 rounded-lg">{formData.special_request}</p>
+                <p className="text-master-text-primary-dark bg-white/10 p-4 rounded-lg">{formData.special_request}</p>
               </div>
             )}
 
@@ -635,14 +635,14 @@ const UV_CallOutBooking: React.FC = () => {
               <button
                 onClick={handleBackToDetails}
                 disabled={createCallOutBooking.isPending}
-                className="flex-1 px-6 py-3 bg-white/10 text-white border border-white/30 rounded-lg font-semibold hover:bg-white/20 transition-colors disabled:opacity-50"
+                className="flex-1 px-6 py-3 bg-white/10 text-master-text-primary-dark border border-white/30 rounded-lg font-semibold hover:bg-white/20 transition-colors disabled:opacity-50"
               >
                 Back to Edit
               </button>
               <button
                 onClick={handleSubmit}
                 disabled={createCallOutBooking.isPending}
-                className="flex-1 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg font-bold hover:shadow-lg hover:shadow-amber-500/50 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-master-text-primary-dark rounded-lg font-bold hover:shadow-lg hover:shadow-amber-500/50 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {createCallOutBooking.isPending ? (
                   <>

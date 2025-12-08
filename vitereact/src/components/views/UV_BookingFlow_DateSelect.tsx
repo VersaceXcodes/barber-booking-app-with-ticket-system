@@ -389,8 +389,8 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
           {/* Progress Indicator */}
           <div className="mb-6">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-gray-300">Step 2 of 4</span>
-              <span className="text-sm text-gray-300">Date Selection</span>
+              <span className="text-sm font-medium text-master-text-secondary-dark">Step 2 of 4</span>
+              <span className="text-sm text-master-text-secondary-dark">Date Selection</span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div className="bg-gradient-to-r from-red-600 to-red-700 h-2 rounded-full transition-all duration-300" style={{ width: '50%' }}></div>
@@ -400,7 +400,7 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
           {/* Back Button */}
           <button
             onClick={handleBack}
-            className="mb-6 flex items-center text-gray-300 hover:text-white transition-colors text-sm font-medium"
+            className="mb-6 flex items-center text-master-text-secondary-dark hover:text-master-text-primary-dark transition-colors text-sm font-medium"
           >
             <ChevronLeft className="w-4 h-4 mr-1" />
             Back
@@ -411,7 +411,7 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
             
             {/* Header */}
             <div className="px-6 py-8 border-b border-gray-200">
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+              <h1 className="text-3xl md:text-4xl font-bold text-master-text-primary-dark mb-2">
                 When would you like to come?
               </h1>
               
@@ -441,10 +441,10 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
                   className="p-2 rounded-lg hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                   aria-label="Previous month"
                 >
-                  <ChevronLeft className="w-6 h-6 text-gray-700" />
+                  <ChevronLeft className="w-6 h-6 text-master-text-secondary-dark" />
                 </button>
                 
-                <h2 className="text-2xl font-semibold text-white">
+                <h2 className="text-2xl font-semibold text-master-text-primary-dark">
                   {formatMonthDisplay(calendar_month)}
                 </h2>
                 
@@ -454,7 +454,7 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
                   className="p-2 rounded-lg hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                   aria-label="Next month"
                 >
-                  <ChevronRight className="w-6 h-6 text-gray-700" />
+                  <ChevronRight className="w-6 h-6 text-master-text-secondary-dark" />
                 </button>
               </div>
 
@@ -474,7 +474,7 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
                 {/* Day Headers */}
                 <div className="grid grid-cols-7 gap-2 mb-2">
                   {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                    <div key={day} className="text-center text-xs font-semibold text-gray-300 uppercase">
+                    <div key={day} className="text-center text-xs font-semibold text-master-text-secondary-dark uppercase">
                       {day}
                     </div>
                   ))}
@@ -515,7 +515,7 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
                           let isClickable = false;
 
                           if (isSelected) {
-                            cellClasses += 'bg-gradient-to-r from-red-600 to-red-700 border-red-600 text-white shadow-lg scale-105 ';
+                            cellClasses += 'bg-gradient-to-r from-red-600 to-red-700 border-red-600 text-master-text-primary-dark shadow-lg scale-105 ';
                             isClickable = true;
                           } else if (status === 'available') {
                             cellClasses += 'bg-[#2D0808] border-gray-200 hover:border-blue-400 hover:shadow-md cursor-pointer ';
@@ -524,11 +524,11 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
                             cellClasses += 'bg-amber-50 border-amber-300 hover:border-amber-500 hover:shadow-md cursor-pointer ';
                             isClickable = true;
                           } else if (status === 'full') {
-                            cellClasses += 'bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed ';
+                            cellClasses += 'bg-gray-100 border-gray-200 text-master-text-muted-dark cursor-not-allowed ';
                           } else if (status === 'blocked') {
-                            cellClasses += 'bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(0,0,0,0.05)_10px,rgba(0,0,0,0.05)_20px)] ';
+                            cellClasses += 'bg-gray-100 border-gray-200 text-master-text-muted-dark cursor-not-allowed bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(0,0,0,0.05)_10px,rgba(0,0,0,0.05)_20px)] ';
                           } else if (status === 'past') {
-                            cellClasses += 'bg-gray-50 border-gray-100 text-gray-300 cursor-not-allowed ';
+                            cellClasses += 'bg-gray-50 border-gray-100 text-master-text-secondary-dark cursor-not-allowed ';
                           }
 
                           if (isToday && !isSelected) {
@@ -543,7 +543,7 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
                               className={cellClasses}
                               aria-label={`${day.dateString} - ${status}`}
                             >
-                              <span className={`text-base font-semibold ${isSelected ? 'text-white' : status === 'past' || status === 'blocked' || status === 'full' ? 'text-gray-400' : 'text-white'}`}>
+                              <span className={`text-base font-semibold ${isSelected ? 'text-master-text-primary-dark' : status === 'past' || status === 'blocked' || status === 'full' ? 'text-master-text-muted-dark' : 'text-master-text-primary-dark'}`}>
                                 {day.date}
                               </span>
                               
@@ -558,11 +558,11 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
                               )}
                               
                               {status === 'full' && (
-                                <span className="text-[9px] font-medium text-gray-400 mt-0.5">Full</span>
+                                <span className="text-[9px] font-medium text-master-text-muted-dark mt-0.5">Full</span>
                               )}
                               
                               {status === 'blocked' && (
-                                <span className="text-[9px] font-medium text-gray-400 mt-0.5">Closed</span>
+                                <span className="text-[9px] font-medium text-master-text-muted-dark mt-0.5">Closed</span>
                               )}
                             </button>
                           );
@@ -575,31 +575,31 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
 
               {/* Legend */}
               <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-semibold text-gray-700 mb-3">Legend</h3>
+                <h3 className="text-sm font-semibold text-master-text-secondary-dark mb-3">Legend</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs">
                   <div className="flex items-center">
                     <div className="w-6 h-6 rounded border-2 border-gray-200 bg-white mr-2"></div>
-                    <span className="text-gray-700">Available</span>
+                    <span className="text-master-text-secondary-dark">Available</span>
                   </div>
                   <div className="flex items-center">
                     <div className="w-6 h-6 rounded border-2 border-amber-300 bg-amber-50 mr-2"></div>
-                    <span className="text-gray-700">Limited</span>
+                    <span className="text-master-text-secondary-dark">Limited</span>
                   </div>
                   <div className="flex items-center">
                     <div className="w-6 h-6 rounded border-2 border-gray-200 bg-gray-100 mr-2"></div>
-                    <span className="text-gray-700">Fully Booked</span>
+                    <span className="text-master-text-secondary-dark">Fully Booked</span>
                   </div>
                   <div className="flex items-center">
                     <div className="w-6 h-6 rounded border-2 border-gray-200 bg-gray-100 bg-[repeating-linear-gradient(45deg,transparent,transparent_5px,rgba(0,0,0,0.05)_5px,rgba(0,0,0,0.05)_10px)] mr-2"></div>
-                    <span className="text-gray-700">Blocked/Closed</span>
+                    <span className="text-master-text-secondary-dark">Blocked/Closed</span>
                   </div>
                   <div className="flex items-center">
                     <div className="w-6 h-6 rounded border-2 border-blue-400 bg-white mr-2"></div>
-                    <span className="text-gray-700">Today</span>
+                    <span className="text-master-text-secondary-dark">Today</span>
                   </div>
                   <div className="flex items-center">
                     <div className="w-6 h-6 rounded border-2 border-red-600 bg-gradient-to-r from-red-600 to-red-700 mr-2"></div>
-                    <span className="text-gray-700">Selected</span>
+                    <span className="text-master-text-secondary-dark">Selected</span>
                   </div>
                 </div>
               </div>
@@ -610,11 +610,11 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
               <button
                 onClick={handleContinue}
                 disabled={!selected_date || loading_availability || isNavigating}
-                className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:from-red-700 hover:to-red-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl disabled:shadow-none flex items-center justify-center"
+                className="w-full bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark py-4 px-6 rounded-lg font-semibold text-lg hover:from-red-700 hover:to-red-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl disabled:shadow-none flex items-center justify-center"
               >
                 {isNavigating ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-master-text-primary-dark" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
@@ -626,8 +626,8 @@ const UV_BookingFlow_DateSelect: React.FC = () => {
               </button>
               
               {selected_date && !isNavigating && (
-                <p className="text-center text-sm text-gray-300 mt-3">
-                  Selected: <span className="font-semibold text-white">{formatLongDate(selected_date)}</span>
+                <p className="text-center text-sm text-master-text-secondary-dark mt-3">
+                  Selected: <span className="font-semibold text-master-text-primary-dark">{formatLongDate(selected_date)}</span>
                 </p>
               )}
             </div>

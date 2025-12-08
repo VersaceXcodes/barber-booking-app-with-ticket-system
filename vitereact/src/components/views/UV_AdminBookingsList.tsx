@@ -101,7 +101,7 @@ const getStatusBadgeClass = (status: string): string => {
     case 'confirmed':
       return 'bg-blue-900/30 text-blue-400';
     case 'completed':
-      return 'bg-[#2D0808] text-gray-200';
+      return 'bg-[#2D0808] text-master-text-secondary-dark';
     case 'cancelled':
       return 'bg-red-900/30 text-red-400';
     default:
@@ -456,15 +456,15 @@ const UV_AdminBookingsList: React.FC = () => {
   const renderEmptyState = () => (
     <div className="text-center py-16 px-4">
       <div className="mb-4">
-        <svg className="mx-auto h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="mx-auto h-16 w-16 text-master-text-muted-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
       </div>
-      <h3 className="text-lg font-semibold text-white mb-2">No bookings found</h3>
-      <p className="text-gray-300 mb-4">Try adjusting your filters or date range</p>
+      <h3 className="text-lg font-semibold text-master-text-primary-dark mb-2">No bookings found</h3>
+      <p className="text-master-text-secondary-dark mb-4">Try adjusting your filters or date range</p>
       <Link
         to="/admin/bookings/new"
-        className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-colors"
+        className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark rounded-lg hover:from-red-700 hover:to-red-800 transition-colors"
       >
         Add New Booking
       </Link>
@@ -499,16 +499,16 @@ const UV_AdminBookingsList: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               {/* Title and View Toggle */}
               <div className="flex items-center gap-4">
-                <h1 className="text-3xl font-bold text-white">All Bookings</h1>
+                <h1 className="text-3xl font-bold text-master-text-primary-dark">All Bookings</h1>
                 <div className="flex bg-[#2D0808] rounded-lg p-1">
                   <button
                     onClick={() => navigate('/admin/bookings/calendar')}
-                    className="px-4 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-[#2D0808] hover:shadow-sm transition-all"
+                    className="px-4 py-2 text-sm font-medium text-master-text-secondary-dark rounded-md hover:bg-[#2D0808] hover:shadow-sm transition-all"
                   >
                     Calendar View
                   </button>
                   <button
-                    className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-red-600 to-red-700 rounded-md shadow-sm"
+                    className="px-4 py-2 text-sm font-medium text-master-text-primary-dark bg-gradient-to-r from-red-600 to-red-700 rounded-md shadow-sm"
                   >
                     List View
                   </button>
@@ -519,19 +519,19 @@ const UV_AdminBookingsList: React.FC = () => {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => navigate('/admin/bookings/new')}
-                  className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-medium rounded-lg hover:from-red-700 hover:to-red-800 shadow-lg hover:shadow-xl transition-all duration-200"
+                  className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark font-medium rounded-lg hover:from-red-700 hover:to-red-800 shadow-lg hover:shadow-xl transition-all duration-200"
                 >
                   Add Booking
                 </button>
                 <button
                   onClick={handleExportAll}
-                  className="px-4 py-3 bg-[#2D0808] text-white font-medium rounded-lg border border-white/20 hover:bg-gray-200 transition-all duration-200"
+                  className="px-4 py-3 bg-[#2D0808] text-master-text-primary-dark font-medium rounded-lg border border-white/20 hover:bg-gray-200 transition-all duration-200"
                 >
                   Export to CSV
                 </button>
                 <button
                   onClick={() => refetchBookings()}
-                  className="p-3 text-gray-300 hover:bg-[#5C1B1B] rounded-lg transition-colors"
+                  className="p-3 text-master-text-secondary-dark hover:bg-[#5C1B1B] rounded-lg transition-colors"
                   title="Refresh"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -545,7 +545,7 @@ const UV_AdminBookingsList: React.FC = () => {
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
               {/* Date Range */}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">From Date</label>
+                <label className="block text-sm font-medium text-master-text-secondary-dark mb-1">From Date</label>
                 <input
                   type="date"
                   value={filters.start_date}
@@ -555,7 +555,7 @@ const UV_AdminBookingsList: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">To Date</label>
+                <label className="block text-sm font-medium text-master-text-secondary-dark mb-1">To Date</label>
                 <input
                   type="date"
                   value={filters.end_date}
@@ -566,7 +566,7 @@ const UV_AdminBookingsList: React.FC = () => {
 
               {/* Status Filter */}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Status</label>
+                <label className="block text-sm font-medium text-master-text-secondary-dark mb-1">Status</label>
                 <select
                   value={filters.status}
                   onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value, page: 1 }))}
@@ -582,7 +582,7 @@ const UV_AdminBookingsList: React.FC = () => {
 
               {/* Service Filter */}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Service</label>
+                <label className="block text-sm font-medium text-master-text-secondary-dark mb-1">Service</label>
                 <select
                   value={filters.service_id}
                   onChange={(e) => setFilters(prev => ({ ...prev, service_id: e.target.value, page: 1 }))}
@@ -599,7 +599,7 @@ const UV_AdminBookingsList: React.FC = () => {
 
               {/* Search */}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Search</label>
+                <label className="block text-sm font-medium text-master-text-secondary-dark mb-1">Search</label>
                 <input
                   type="text"
                   placeholder="Name, phone, or ticket"
@@ -682,35 +682,35 @@ const UV_AdminBookingsList: React.FC = () => {
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-[#5C1B1B]"
+                          className="px-6 py-3 text-left text-xs font-medium text-master-text-muted-dark uppercase tracking-wider cursor-pointer hover:bg-[#5C1B1B]"
                           onClick={() => handleSort('ticket_number')}
                         >
                           Ticket Number {renderSortIndicator('ticket_number')}
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-[#5C1B1B]"
+                          className="px-6 py-3 text-left text-xs font-medium text-master-text-muted-dark uppercase tracking-wider cursor-pointer hover:bg-[#5C1B1B]"
                           onClick={() => handleSort('appointment_date')}
                         >
                           Date & Time {renderSortIndicator('appointment_date')}
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-[#5C1B1B]"
+                          className="px-6 py-3 text-left text-xs font-medium text-master-text-muted-dark uppercase tracking-wider cursor-pointer hover:bg-[#5C1B1B]"
                           onClick={() => handleSort('customer_name')}
                         >
                           Customer {renderSortIndicator('customer_name')}
                         </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-master-text-muted-dark uppercase tracking-wider">
                           Phone
                         </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-master-text-muted-dark uppercase tracking-wider">
                           Service
                         </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-master-text-muted-dark uppercase tracking-wider">
                           Status
                         </th>
-                        <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-master-text-muted-dark uppercase tracking-wider">
                           Actions
                         </th>
                       </tr>
@@ -739,19 +739,19 @@ const UV_AdminBookingsList: React.FC = () => {
                                 {booking.ticket_number}
                               </Link>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-white">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-master-text-primary-dark">
                               {formatDateTime(booking.appointment_date, booking.appointment_time)}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="text-sm font-medium text-white">{booking.customer_name}</div>
-                              <div className="text-sm text-gray-400">{booking.customer_email}</div>
+                              <div className="text-sm font-medium text-master-text-primary-dark">{booking.customer_name}</div>
+                              <div className="text-sm text-master-text-muted-dark">{booking.customer_email}</div>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-master-text-muted-dark">
                               <a href={`tel:${booking.customer_phone}`} className="text-amber-400 hover:text-blue-800">
                                 {booking.customer_phone}
                               </a>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-white">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-master-text-primary-dark">
                               {service?.name || 'N/A'}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
@@ -763,7 +763,7 @@ const UV_AdminBookingsList: React.FC = () => {
                               <div className="flex items-center justify-end gap-2">
                                 <Link
                                   to={`/admin/bookings/${booking.ticket_number}`}
-                                  className="text-gray-300 hover:text-white"
+                                  className="text-master-text-secondary-dark hover:text-master-text-primary-dark"
                                   title="View"
                                 >
                                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -785,7 +785,7 @@ const UV_AdminBookingsList: React.FC = () => {
                                 <div className="relative">
                                   <button
                                     onClick={() => setShowMoreMenu(showMoreMenu === booking.booking_id ? null : booking.booking_id)}
-                                    className="text-gray-300 hover:text-white"
+                                    className="text-master-text-secondary-dark hover:text-master-text-primary-dark"
                                     title="More"
                                   >
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -796,19 +796,19 @@ const UV_AdminBookingsList: React.FC = () => {
                                     <div className="absolute right-0 mt-2 w-48 bg-[#2D0808] rounded-lg shadow-lg border border-white/10 z-20">
                                       <button
                                         onClick={() => handleUpdateStatus(booking.booking_id, 'completed')}
-                                        className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-[#5C1B1B]"
+                                        className="w-full text-left px-4 py-2 text-sm text-master-text-secondary-dark hover:bg-[#5C1B1B]"
                                       >
                                         Mark Completed
                                       </button>
                                       <button
                                         onClick={() => handleUpdateStatus(booking.booking_id, 'cancelled')}
-                                        className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-[#5C1B1B]"
+                                        className="w-full text-left px-4 py-2 text-sm text-master-text-secondary-dark hover:bg-[#5C1B1B]"
                                       >
                                         Mark No-show
                                       </button>
                                       <Link
                                         to={`/admin/bookings/${booking.ticket_number}`}
-                                        className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-[#5C1B1B]"
+                                        className="block w-full text-left px-4 py-2 text-sm text-master-text-secondary-dark hover:bg-[#5C1B1B]"
                                       >
                                         Add Note
                                       </Link>
@@ -827,7 +827,7 @@ const UV_AdminBookingsList: React.FC = () => {
                 {/* Pagination */}
                 <div className="bg-[#2D0808] px-4 py-3 border-t border-white/10 sm:px-6">
                   <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="text-sm text-gray-300">
+                    <div className="text-sm text-master-text-secondary-dark">
                       Showing <span className="font-medium">{((filters.page - 1) * filters.limit) + 1}</span> to{' '}
                       <span className="font-medium">{Math.min(filters.page * filters.limit, total)}</span> of{' '}
                       <span className="font-medium">{total}</span> bookings
@@ -850,7 +850,7 @@ const UV_AdminBookingsList: React.FC = () => {
                         <button
                           onClick={() => handlePageChange(filters.page - 1)}
                           disabled={filters.page === 1}
-                          className="px-3 py-1 text-sm font-medium text-gray-300 bg-[#2D0808] border border-white/20 rounded-md hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="px-3 py-1 text-sm font-medium text-master-text-secondary-dark bg-[#2D0808] border border-white/20 rounded-md hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           Previous
                         </button>
@@ -862,14 +862,14 @@ const UV_AdminBookingsList: React.FC = () => {
                               onClick={() => handlePageChange(page)}
                               className={`px-3 py-1 text-sm font-medium rounded-md ${
                                 filters.page === page
-                                  ? 'bg-gradient-to-r from-red-600 to-red-700 text-white'
-                                  : 'text-gray-300 bg-[#2D0808] border border-white/20 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
+                                  ? 'bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark'
+                                  : 'text-master-text-secondary-dark bg-[#2D0808] border border-white/20 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
                               }`}
                             >
                               {page}
                             </button>
                           ) : (
-                            <span key={index} className="px-2 text-gray-400">
+                            <span key={index} className="px-2 text-master-text-muted-dark">
                               {page}
                             </span>
                           )
@@ -878,7 +878,7 @@ const UV_AdminBookingsList: React.FC = () => {
                         <button
                           onClick={() => handlePageChange(filters.page + 1)}
                           disabled={!bookingsData?.has_more}
-                          className="px-3 py-1 text-sm font-medium text-gray-300 bg-[#2D0808] border border-white/20 rounded-md hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="px-3 py-1 text-sm font-medium text-master-text-secondary-dark bg-[#2D0808] border border-white/20 rounded-md hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           Next
                         </button>

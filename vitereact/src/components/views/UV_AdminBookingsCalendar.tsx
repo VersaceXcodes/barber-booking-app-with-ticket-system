@@ -79,7 +79,7 @@ const DAYS_OF_WEEK = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const STATUS_COLORS = {
   pending: 'bg-yellow-100 border-yellow-500 text-yellow-900',
   confirmed: 'bg-blue-100 border-blue-500 text-blue-900',
-  completed: 'bg-gray-100 border-gray-500 text-white',
+  completed: 'bg-gray-100 border-gray-500 text-master-text-primary-dark',
   cancelled: 'bg-red-100 border-red-500 text-red-900',
 };
 
@@ -517,22 +517,22 @@ const UV_AdminBookingsCalendar: React.FC = () => {
             className="p-2 hover:bg-white/10 rounded-lg transition-colors border border-white/20"
             aria-label="Previous"
           >
-            <ChevronLeft className="w-5 h-5 text-gray-100" />
+            <ChevronLeft className="w-5 h-5 text-master-text-primary-dark" />
           </button>
           
-          <h2 className="text-2xl font-bold text-white">{dateStr}</h2>
+          <h2 className="text-2xl font-bold text-master-text-primary-dark">{dateStr}</h2>
           
           <button
             onClick={handleNext}
             className="p-2 hover:bg-white/10 rounded-lg transition-colors border border-white/20"
             aria-label="Next"
           >
-            <ChevronRight className="w-5 h-5 text-gray-100" />
+            <ChevronRight className="w-5 h-5 text-master-text-primary-dark" />
           </button>
           
           <button
             onClick={handleToday}
-            className="px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-colors text-sm font-semibold shadow-lg"
+            className="px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark rounded-lg hover:from-red-700 hover:to-red-800 transition-colors text-sm font-semibold shadow-lg"
           >
             Today
           </button>
@@ -551,7 +551,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
         {/* Day headers */}
         <div className="grid grid-cols-7 border-b border-white/20">
           {DAYS_OF_WEEK.map(day => (
-            <div key={day} className="px-4 py-3 text-center text-sm font-bold text-white bg-[#6B2020] border-r border-white/15 last:border-r-0">
+            <div key={day} className="px-4 py-3 text-center text-sm font-bold text-master-text-primary-dark bg-[#6B2020] border-r border-white/15 last:border-r-0">
               {day}
             </div>
           ))}
@@ -584,7 +584,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
               <div
                 key={index}
                 className={`min-h-[120px] border-b border-r border-white/15 p-2 hover:bg-white/10 transition-colors cursor-pointer ${
-                  !isCurrentMonth ? 'bg-[#5C1B1B]/30 text-gray-300' : 'bg-white/5'
+                  !isCurrentMonth ? 'bg-[#5C1B1B]/30 text-master-text-secondary-dark' : 'bg-white/5'
                 } ${isToday ? 'bg-amber-600/20 border-2 border-amber-500/50' : ''}`}
                 onClick={() => {
                   setFocusedDate(date);
@@ -592,7 +592,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                 }}
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className={`text-sm font-bold ${isToday ? 'text-amber-300' : 'text-white'}`}>
+                  <span className={`text-sm font-bold ${isToday ? 'text-amber-300' : 'text-master-text-primary-dark'}`}>
                     {date.getDate()}
                   </span>
                   {totalBookings > 0 && (
@@ -604,7 +604,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                 
                 {/* Capacity indicator */}
                 {isCurrentMonth && (
-                  <div className="text-xs text-gray-300 mb-2">
+                  <div className="text-xs text-master-text-secondary-dark mb-2">
                     <span className={totalBooked >= totalCapacity ? 'text-red-600 font-semibold' : ''}>
                       {totalBooked}/{totalCapacity} booked
                     </span>
@@ -625,7 +625,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                       />
                     ))}
                     {totalBookings > 3 && (
-                      <span className="text-xs text-gray-400">+{totalBookings - 3}</span>
+                      <span className="text-xs text-master-text-muted-dark">+{totalBookings - 3}</span>
                     )}
                   </div>
                 )}
@@ -656,7 +656,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
       <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg overflow-hidden">
         {/* Day headers */}
         <div className="grid grid-cols-8 border-b border-white/10">
-          <div className="px-4 py-3 text-center text-sm font-semibold text-gray-300 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
+          <div className="px-4 py-3 text-center text-sm font-semibold text-master-text-secondary-dark bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
             Time
           </div>
           {dates.map((date, index) => {
@@ -665,7 +665,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
               <div
                 key={index}
                 className={`px-2 py-3 text-center text-sm font-semibold border-l border-white/10 ${
-                  isToday ? 'bg-[#2D0808] text-blue-700' : 'bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] text-gray-300'
+                  isToday ? 'bg-[#2D0808] text-blue-700' : 'bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] text-master-text-secondary-dark'
                 }`}
               >
                 <div>{DAYS_OF_WEEK[date.getDay()]}</div>
@@ -680,7 +680,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
           {allTimeSlotsForWeek.map((time) => (
             <React.Fragment key={time}>
               {/* Time label */}
-              <div className="px-4 py-4 text-sm font-medium text-gray-300 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] border-b border-white/10">
+              <div className="px-4 py-4 text-sm font-medium text-master-text-secondary-dark bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] border-b border-white/10">
                 {time}
               </div>
               
@@ -696,7 +696,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                     className="p-2 min-h-[100px] border-b border-l border-white/10 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] transition-colors"
                   >
                     {isBlocked ? (
-                      <div className="text-xs text-gray-400 italic bg-gray-100 p-2 rounded">
+                      <div className="text-xs text-master-text-muted-dark italic bg-gray-100 p-2 rounded">
                         Blocked
                       </div>
                     ) : slotBookings.length > 0 ? (
@@ -713,7 +713,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                         ))}
                       </div>
                     ) : (
-                      <div className="text-xs text-gray-400 italic">
+                      <div className="text-xs text-master-text-muted-dark italic">
                         {booked}/{capacity} booked
                       </div>
                     )}
@@ -749,15 +749,15 @@ const UV_AdminBookingsCalendar: React.FC = () => {
             <div key={time} className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg overflow-hidden">
               <div className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] px-6 py-4 border-b border-white/10 flex items-center justify-between">
                 <div className="flex items-center space-x-4">
-                  <Clock className="w-5 h-5 text-gray-300" />
-                  <span className="text-xl font-bold text-white">{time}</span>
+                  <Clock className="w-5 h-5 text-master-text-secondary-dark" />
+                  <span className="text-xl font-bold text-master-text-primary-dark">{time}</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   {isBlocked ? (
                     <span className="text-sm text-red-600 font-semibold">Blocked</span>
                   ) : (
                     <span className={`text-sm font-semibold ${
-                      booked >= capacity ? 'text-red-600' : 'text-gray-300'
+                      booked >= capacity ? 'text-red-600' : 'text-master-text-secondary-dark'
                     }`}>
                       {booked}/{capacity} booked
                     </span>
@@ -767,7 +767,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
               
               <div className="p-6">
                 {isBlocked ? (
-                  <p className="text-gray-400 italic">This time slot is blocked</p>
+                  <p className="text-master-text-muted-dark italic">This time slot is blocked</p>
                 ) : slotBookings.length > 0 ? (
                   <div className="space-y-4">
                     {slotBookings.map(booking => (
@@ -796,7 +796,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                               </div>
                               
                               {booking.special_request && (
-                                <div className="mt-2 text-xs text-gray-300 bg-[#2D0808] bg-opacity-50 p-2 rounded">
+                                <div className="mt-2 text-xs text-master-text-secondary-dark bg-[#2D0808] bg-opacity-50 p-2 rounded">
                                   <strong>Note:</strong> {booking.special_request.substring(0, 100)}
                                   {booking.special_request.length > 100 && '...'}
                                 </div>
@@ -807,7 +807,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                           <div className="flex flex-col space-y-2">
                             <Link
                               to={`/admin/bookings/${booking.ticket_number}`}
-                              className="px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-colors text-sm font-medium text-center"
+                              className="px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark rounded-lg hover:from-red-700 hover:to-red-800 transition-colors text-sm font-medium text-center"
                             >
                               View
                             </Link>
@@ -822,7 +822,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                       <Calendar className="w-8 h-8 text-green-600" />
                     </div>
                     <p className="text-green-600 font-semibold">Available</p>
-                    <p className="text-sm text-gray-400 mt-1">{capacity - booked} spots remaining</p>
+                    <p className="text-sm text-master-text-muted-dark mt-1">{capacity - booked} spots remaining</p>
                   </div>
                 )}
               </div>
@@ -843,8 +843,8 @@ const UV_AdminBookingsCalendar: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-white mb-2">Bookings Calendar</h1>
-            <p className="text-gray-200">Manage and view all appointments</p>
+            <h1 className="text-4xl font-bold text-master-text-primary-dark mb-2">Bookings Calendar</h1>
+            <p className="text-master-text-secondary-dark">Manage and view all appointments</p>
           </div>
           
           {/* View Toggles */}
@@ -856,8 +856,8 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                   onClick={() => handleViewChange('month')}
                   className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 ${
                     viewType === 'month'
-                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg'
-                      : 'bg-white/10 text-gray-100 hover:bg-white/20 border border-white/20'
+                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark shadow-lg'
+                      : 'bg-white/10 text-master-text-primary-dark hover:bg-white/20 border border-white/20'
                   }`}
                 >
                   <Grid3x3 className="w-4 h-4" />
@@ -868,8 +868,8 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                   onClick={() => handleViewChange('week')}
                   className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 ${
                     viewType === 'week'
-                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg'
-                      : 'bg-white/10 text-gray-100 hover:bg-white/20 border border-white/20'
+                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark shadow-lg'
+                      : 'bg-white/10 text-master-text-primary-dark hover:bg-white/20 border border-white/20'
                   }`}
                 >
                   <Calendar className="w-4 h-4" />
@@ -880,8 +880,8 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                   onClick={() => handleViewChange('day')}
                   className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 ${
                     viewType === 'day'
-                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg'
-                      : 'bg-white/10 text-gray-100 hover:bg-white/20 border border-white/20'
+                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark shadow-lg'
+                      : 'bg-white/10 text-master-text-primary-dark hover:bg-white/20 border border-white/20'
                   }`}
                 >
                   <Clock className="w-4 h-4" />
@@ -890,7 +890,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                 
                 <Link
                   to="/admin/bookings"
-                  className="px-4 py-2 rounded-lg font-medium bg-white/10 text-gray-100 hover:bg-white/20 border border-white/20 transition-colors flex items-center space-x-2"
+                  className="px-4 py-2 rounded-lg font-medium bg-white/10 text-master-text-primary-dark hover:bg-white/20 border border-white/20 transition-colors flex items-center space-x-2"
                 >
                   <List className="w-4 h-4" />
                   <span>List</span>
@@ -901,7 +901,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <Link
                   to="/admin/bookings/new"
-                  className="px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg hover:from-green-700 hover:to-green-800 transition-colors flex items-center space-x-2 font-medium shadow-lg"
+                  className="px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 text-master-text-primary-dark rounded-lg hover:from-green-700 hover:to-green-800 transition-colors flex items-center space-x-2 font-medium shadow-lg"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Add Booking</span>
@@ -909,7 +909,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                 
                 <button
                   onClick={() => refetchBookings()}
-                  className="p-2 bg-white/10 text-gray-100 rounded-lg hover:bg-white/20 border border-white/20 transition-colors"
+                  className="p-2 bg-white/10 text-master-text-primary-dark rounded-lg hover:bg-white/20 border border-white/20 transition-colors"
                   aria-label="Refresh"
                 >
                   <RefreshCw className="w-5 h-5" />
@@ -917,7 +917,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                 
                 <button
                   onClick={handlePrint}
-                  className="p-2 bg-white/10 text-gray-100 rounded-lg hover:bg-white/20 border border-white/20 transition-colors"
+                  className="p-2 bg-white/10 text-master-text-primary-dark rounded-lg hover:bg-white/20 border border-white/20 transition-colors"
                   aria-label="Print"
                 >
                   <Printer className="w-5 h-5" />
@@ -925,7 +925,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                 
                 <button
                   onClick={handleExport}
-                  className="p-2 bg-white/10 text-gray-100 rounded-lg hover:bg-white/20 border border-white/20 transition-colors"
+                  className="p-2 bg-white/10 text-master-text-primary-dark rounded-lg hover:bg-white/20 border border-white/20 transition-colors"
                   aria-label="Export"
                 >
                   <Download className="w-5 h-5" />
@@ -939,28 +939,28 @@ const UV_AdminBookingsCalendar: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Search */}
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-300" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-master-text-secondary-dark" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search by name, phone, or ticket..."
-                  className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-white placeholder-gray-300"
+                  className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-master-text-primary-dark placeholder-master-text-muted-dark"
                 />
               </div>
               
               {/* Status Filter */}
               <div className="relative">
-                <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-300" />
+                <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-master-text-secondary-dark" />
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
-                  className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 appearance-none text-white"
+                  className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 appearance-none text-master-text-primary-dark"
                 >
-                  <option value="all" className="bg-[#4A1515] text-white">All Statuses</option>
-                  <option value="upcoming" className="bg-[#4A1515] text-white">Upcoming</option>
-                  <option value="completed" className="bg-[#4A1515] text-white">Completed</option>
-                  <option value="cancelled" className="bg-[#4A1515] text-white">Cancelled</option>
+                  <option value="all" className="bg-[#4A1515] text-master-text-primary-dark">All Statuses</option>
+                  <option value="upcoming" className="bg-[#4A1515] text-master-text-primary-dark">Upcoming</option>
+                  <option value="completed" className="bg-[#4A1515] text-master-text-primary-dark">Completed</option>
+                  <option value="cancelled" className="bg-[#4A1515] text-master-text-primary-dark">Cancelled</option>
                 </select>
               </div>
               
@@ -969,11 +969,11 @@ const UV_AdminBookingsCalendar: React.FC = () => {
                 <select
                   value={serviceFilter || ''}
                   onChange={(e) => setServiceFilter(e.target.value || null)}
-                  className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 appearance-none text-white"
+                  className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 appearance-none text-master-text-primary-dark"
                 >
-                  <option value="" className="bg-[#4A1515] text-white">All Services</option>
+                  <option value="" className="bg-[#4A1515] text-master-text-primary-dark">All Services</option>
                   {services.map(service => (
-                    <option key={service.service_id} value={service.service_id} className="bg-[#4A1515] text-white">
+                    <option key={service.service_id} value={service.service_id} className="bg-[#4A1515] text-master-text-primary-dark">
                       {service.name}
                     </option>
                   ))}
@@ -989,7 +989,7 @@ const UV_AdminBookingsCalendar: React.FC = () => {
           {loadingBookings ? (
             <div className="glass-card-light rounded-xl shadow-master-elevated p-12 text-center border-white/25">
               <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-red-500 mx-auto mb-4"></div>
-              <p className="text-gray-200 font-medium">Loading bookings...</p>
+              <p className="text-master-text-secondary-dark font-medium">Loading bookings...</p>
             </div>
           ) : (
             <>
@@ -1001,23 +1001,23 @@ const UV_AdminBookingsCalendar: React.FC = () => {
           
           {/* Legend */}
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6 mt-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Legend</h3>
+            <h3 className="text-lg font-semibold text-master-text-primary-dark mb-4">Legend</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="flex items-center space-x-2">
                 <div className="w-4 h-4 rounded bg-[#2D0808]0"></div>
-                <span className="text-sm text-gray-300">Upcoming</span>
+                <span className="text-sm text-master-text-secondary-dark">Upcoming</span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-4 h-4 rounded bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]0"></div>
-                <span className="text-sm text-gray-300">Completed</span>
+                <span className="text-sm text-master-text-secondary-dark">Completed</span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-4 h-4 rounded bg-red-500"></div>
-                <span className="text-sm text-gray-300">Cancelled</span>
+                <span className="text-sm text-master-text-secondary-dark">Cancelled</span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-4 h-4 rounded bg-yellow-500"></div>
-                <span className="text-sm text-gray-300">Pending</span>
+                <span className="text-sm text-master-text-secondary-dark">Pending</span>
               </div>
             </div>
           </div>

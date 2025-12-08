@@ -335,7 +335,7 @@ export const hideErrorModal = () => {
             {/* Heading */}
             <h2
               id="error-modal-title"
-              className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 leading-tight"
+              className="text-2xl sm:text-3xl font-bold text-master-text-primary-light mb-3 leading-tight"
             >
               {modalTitle}
             </h2>
@@ -343,7 +343,7 @@ export const hideErrorModal = () => {
             {/* Error Message */}
             <p
               id="error-modal-description"
-              className="text-base sm:text-lg text-gray-700 leading-relaxed"
+              className="text-base sm:text-lg text-master-text-secondary-dark leading-relaxed"
             >
               {message}
             </p>
@@ -351,7 +351,7 @@ export const hideErrorModal = () => {
             {/* Optional Details */}
             {details && (
               <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 text-left">
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className="text-sm text-master-text-muted-dark leading-relaxed">
                   {details}
                 </p>
               </div>
@@ -364,7 +364,7 @@ export const hideErrorModal = () => {
             <button
               ref={primaryActionRef}
               onClick={handlePrimaryAction}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 shadow-lg hover:shadow-xl text-base order-1"
+              className="px-6 py-3 bg-blue-600 text-master-text-primary-dark rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 shadow-lg hover:shadow-xl text-base order-1"
             >
               {getPrimaryActionText()}
             </button>
@@ -374,7 +374,7 @@ export const hideErrorModal = () => {
               <button
                 ref={dismissButtonRef}
                 onClick={handleDismiss}
-                className="px-6 py-3 bg-gray-100 text-gray-900 rounded-lg font-medium hover:bg-gray-200 border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 transition-all duration-200 text-base order-2"
+                className="px-6 py-3 bg-gray-100 text-master-text-primary-light rounded-lg font-medium hover:bg-gray-200 border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 transition-all duration-200 text-base order-2"
               >
                 Dismiss
               </button>
@@ -384,7 +384,7 @@ export const hideErrorModal = () => {
           {/* Optional Contact Support Link */}
           {showContactSupport && (
             <div className="px-6 sm:px-8 pb-6 sm:pb-8 pt-0 text-center border-t border-gray-200 mt-0">
-              <p className="text-sm text-gray-600 mb-2 mt-4">
+              <p className="text-sm text-master-text-muted-dark mb-2 mt-4">
                 If this problem persists, please contact support:
               </p>
               <a

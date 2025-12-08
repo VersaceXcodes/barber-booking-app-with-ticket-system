@@ -82,22 +82,22 @@ const TOAST_STYLES: Record<
 > = {
   success: {
     bg: 'bg-green-600',
-    text: 'text-white',
+    text: 'text-master-text-primary-dark',
     icon: CheckCircle,
   },
   error: {
     bg: 'bg-red-600',
-    text: 'text-white',
+    text: 'text-master-text-primary-dark',
     icon: XCircle,
   },
   warning: {
     bg: 'bg-amber-600',
-    text: 'text-white',
+    text: 'text-master-text-primary-dark',
     icon: AlertTriangle,
   },
   info: {
     bg: 'bg-blue-600',
-    text: 'text-white',
+    text: 'text-master-text-primary-dark',
     icon: Info,
   },
 };

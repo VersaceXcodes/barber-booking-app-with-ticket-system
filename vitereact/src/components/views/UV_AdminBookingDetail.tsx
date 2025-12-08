@@ -137,7 +137,7 @@ const UV_AdminBookingDetail: React.FC = () => {
       case 'pending':
         return 'bg-yellow-900/30 text-yellow-400 border-yellow-200';
       default:
-        return 'bg-gray-100 text-gray-200 border-white/10';
+        return 'bg-gray-100 text-master-text-secondary-dark border-white/10';
     }
   };
 
@@ -274,7 +274,7 @@ const UV_AdminBookingDetail: React.FC = () => {
       <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] flex items-center justify-center py-12 px-4">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600 mx-auto"></div>
-          <p className="mt-4 text-gray-300 text-lg">Loading booking details...</p>
+          <p className="mt-4 text-master-text-secondary-dark text-lg">Loading booking details...</p>
         </div>
       </div>
     );
@@ -285,14 +285,14 @@ const UV_AdminBookingDetail: React.FC = () => {
       <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] flex items-center justify-center py-12 px-4">
         <div className="max-w-md w-full text-center">
           <AlertCircle className="w-16 h-16 text-red-600 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-white mb-2">Booking Not Found</h2>
-          <p className="text-gray-300 mb-6">
+          <h2 className="text-2xl font-bold text-master-text-primary-dark mb-2">Booking Not Found</h2>
+          <p className="text-master-text-secondary-dark mb-6">
             We couldn't find a booking with ticket number: <strong>{ticket_number}</strong>
           </p>
           <div className="space-y-3">
             <Link
               to="/admin/bookings"
-              className="block w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"
+              className="block w-full bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark px-6 py-3 rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"
             >
               Back to Bookings
             </Link>
@@ -319,12 +319,12 @@ const UV_AdminBookingDetail: React.FC = () => {
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6 mb-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="flex-1">
-                <h1 className="text-3xl font-bold text-white mb-2">Booking Details</h1>
+                <h1 className="text-3xl font-bold text-master-text-primary-dark mb-2">Booking Details</h1>
                 <div className="flex items-center gap-3">
                   <span className="text-2xl font-mono text-amber-400">{ticket_number}</span>
                   <button
                     onClick={copyTicketNumber}
-                    className="p-2 text-gray-400 hover:text-amber-400 transition-colors rounded-lg hover:bg-[#2D0808]"
+                    className="p-2 text-master-text-muted-dark hover:text-amber-400 transition-colors rounded-lg hover:bg-[#2D0808]"
                     title="Copy ticket number"
                   >
                     {copySuccess ? (
@@ -346,66 +346,66 @@ const UV_AdminBookingDetail: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-6">
               <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6">
-                <h2 className="text-xl font-semibold text-white mb-4">Appointment Details</h2>
+                <h2 className="text-xl font-semibold text-master-text-primary-dark mb-4">Appointment Details</h2>
                 <div className="space-y-3">
                   {serviceDetails && (
                     <div className="flex items-start gap-3">
-                      <Calendar className="w-5 h-5 text-gray-400 mt-0.5" />
+                      <Calendar className="w-5 h-5 text-master-text-muted-dark mt-0.5" />
                       <div>
-                        <p className="text-sm text-gray-400">Service</p>
-                        <p className="text-base font-medium text-white">{serviceDetails.name}</p>
+                        <p className="text-sm text-master-text-muted-dark">Service</p>
+                        <p className="text-base font-medium text-master-text-primary-dark">{serviceDetails.name}</p>
                         {serviceDetails.price && (
-                          <p className="text-sm text-gray-300">${serviceDetails.price}</p>
+                          <p className="text-sm text-master-text-secondary-dark">${serviceDetails.price}</p>
                         )}
                       </div>
                     </div>
                   )}
                   <div className="flex items-start gap-3">
-                    <Calendar className="w-5 h-5 text-gray-400 mt-0.5" />
+                    <Calendar className="w-5 h-5 text-master-text-muted-dark mt-0.5" />
                     <div>
-                      <p className="text-sm text-gray-400">Date</p>
-                      <p className="text-base font-medium text-white">{formatDate(booking.appointment_date)}</p>
+                      <p className="text-sm text-master-text-muted-dark">Date</p>
+                      <p className="text-base font-medium text-master-text-primary-dark">{formatDate(booking.appointment_date)}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <Clock className="w-5 h-5 text-gray-400 mt-0.5" />
+                    <Clock className="w-5 h-5 text-master-text-muted-dark mt-0.5" />
                     <div>
-                      <p className="text-sm text-gray-400">Time</p>
-                      <p className="text-base font-medium text-white">
+                      <p className="text-sm text-master-text-muted-dark">Time</p>
+                      <p className="text-base font-medium text-master-text-primary-dark">
                         {formatTime(booking.appointment_time)} - {calculateEndTime(booking.appointment_time, booking.slot_duration)}
                       </p>
-                      <p className="text-sm text-gray-300">{booking.slot_duration} minutes</p>
+                      <p className="text-sm text-master-text-secondary-dark">{booking.slot_duration} minutes</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6">
-                <h2 className="text-xl font-semibold text-white mb-4">Customer Information</h2>
+                <h2 className="text-xl font-semibold text-master-text-primary-dark mb-4">Customer Information</h2>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <User className="w-5 h-5 text-gray-400 mt-0.5" />
+                    <User className="w-5 h-5 text-master-text-muted-dark mt-0.5" />
                     <div>
-                      <p className="text-sm text-gray-400">Name</p>
-                      <p className="text-base font-medium text-white">{booking.customer_name}</p>
+                      <p className="text-sm text-master-text-muted-dark">Name</p>
+                      <p className="text-base font-medium text-master-text-primary-dark">{booking.customer_name}</p>
                       {booking.booking_for_name && (
-                        <p className="text-sm text-gray-300">Booking for: {booking.booking_for_name}</p>
+                        <p className="text-sm text-master-text-secondary-dark">Booking for: {booking.booking_for_name}</p>
                       )}
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <Mail className="w-5 h-5 text-gray-400 mt-0.5" />
+                    <Mail className="w-5 h-5 text-master-text-muted-dark mt-0.5" />
                     <div>
-                      <p className="text-sm text-gray-400">Email</p>
+                      <p className="text-sm text-master-text-muted-dark">Email</p>
                       <a href={`mailto:${booking.customer_email}`} className="text-base font-medium text-amber-400 hover:text-blue-700">
                         {booking.customer_email}
                       </a>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <Phone className="w-5 h-5 text-gray-400 mt-0.5" />
+                    <Phone className="w-5 h-5 text-master-text-muted-dark mt-0.5" />
                     <div>
-                      <p className="text-sm text-gray-400">Phone</p>
+                      <p className="text-sm text-master-text-muted-dark">Phone</p>
                       <a href={`tel:${booking.customer_phone}`} className="text-base font-medium text-amber-400 hover:text-blue-700">
                         {booking.customer_phone}
                       </a>
@@ -416,17 +416,17 @@ const UV_AdminBookingDetail: React.FC = () => {
 
               {(booking.special_request || (booking.inspiration_photos && booking.inspiration_photos.length > 0)) && (
                 <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6">
-                  <h2 className="text-xl font-semibold text-white mb-4">Special Requests</h2>
+                  <h2 className="text-xl font-semibold text-master-text-primary-dark mb-4">Special Requests</h2>
                   <div className="space-y-4">
                     {booking.special_request && (
                       <div>
-                        <p className="text-sm text-gray-400 mb-1">Customer Notes</p>
-                        <p className="text-base text-white bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] p-3 rounded-lg">{booking.special_request}</p>
+                        <p className="text-sm text-master-text-muted-dark mb-1">Customer Notes</p>
+                        <p className="text-base text-master-text-primary-dark bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] p-3 rounded-lg">{booking.special_request}</p>
                       </div>
                     )}
                     {booking.inspiration_photos && booking.inspiration_photos.length > 0 && (
                       <div>
-                        <p className="text-sm text-gray-400 mb-2">Inspiration Photos</p>
+                        <p className="text-sm text-master-text-muted-dark mb-2">Inspiration Photos</p>
                         <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                           {booking.inspiration_photos.map((photo, index) => (
                             <button
@@ -452,7 +452,7 @@ const UV_AdminBookingDetail: React.FC = () => {
             <div className="space-y-6">
               <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-semibold text-white">Admin Notes</h2>
+                  <h2 className="text-xl font-semibold text-master-text-primary-dark">Admin Notes</h2>
                   {!isEditingNotes ? (
                     <button
                       onClick={() => setIsEditingNotes(true)}
@@ -479,20 +479,20 @@ const UV_AdminBookingDetail: React.FC = () => {
                     placeholder="Add internal notes about this booking..."
                   />
                 ) : (
-                  <div className="text-base text-gray-300 whitespace-pre-wrap bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] p-3 rounded-lg min-h-[100px]">
+                  <div className="text-base text-master-text-secondary-dark whitespace-pre-wrap bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] p-3 rounded-lg min-h-[100px]">
                     {booking.admin_notes || 'No notes added yet'}
                   </div>
                 )}
               </div>
 
               <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6">
-                <h2 className="text-xl font-semibold text-white mb-4">Admin Actions</h2>
+                <h2 className="text-xl font-semibold text-master-text-primary-dark mb-4">Admin Actions</h2>
                 <div className="space-y-3">
                   {booking.status === 'confirmed' && (
                     <button
                       onClick={() => markAsCompletedMutation.mutate()}
                       disabled={markAsCompletedMutation.isPending}
-                      className="w-full bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors disabled:opacity-50"
+                      className="w-full bg-green-600 text-master-text-primary-dark px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors disabled:opacity-50"
                     >
                       {markAsCompletedMutation.isPending ? 'Marking...' : 'Mark as Completed'}
                     </button>
@@ -500,7 +500,7 @@ const UV_AdminBookingDetail: React.FC = () => {
                   {(booking.status === 'confirmed' || booking.status === 'pending') && (
                     <button
                       onClick={() => setShowCancelModal(true)}
-                      className="w-full bg-red-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition-colors"
+                      className="w-full bg-red-600 text-master-text-primary-dark px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition-colors"
                     >
                       Cancel Booking
                     </button>
@@ -509,32 +509,32 @@ const UV_AdminBookingDetail: React.FC = () => {
               </div>
 
               <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6">
-                <h2 className="text-xl font-semibold text-white mb-4">Timeline</h2>
+                <h2 className="text-xl font-semibold text-master-text-primary-dark mb-4">Timeline</h2>
                 <div className="space-y-3 text-sm">
                   {booking.created_at && (
                     <div>
-                      <p className="text-gray-400">Created</p>
-                      <p className="text-white">{formatTimestamp(booking.created_at)}</p>
+                      <p className="text-master-text-muted-dark">Created</p>
+                      <p className="text-master-text-primary-dark">{formatTimestamp(booking.created_at)}</p>
                     </div>
                   )}
                   {booking.confirmed_at && (
                     <div>
-                      <p className="text-gray-400">Confirmed</p>
-                      <p className="text-white">{formatTimestamp(booking.confirmed_at)}</p>
+                      <p className="text-master-text-muted-dark">Confirmed</p>
+                      <p className="text-master-text-primary-dark">{formatTimestamp(booking.confirmed_at)}</p>
                     </div>
                   )}
                   {booking.completed_at && (
                     <div>
-                      <p className="text-gray-400">Completed</p>
-                      <p className="text-white">{formatTimestamp(booking.completed_at)}</p>
+                      <p className="text-master-text-muted-dark">Completed</p>
+                      <p className="text-master-text-primary-dark">{formatTimestamp(booking.completed_at)}</p>
                     </div>
                   )}
                   {booking.cancelled_at && (
                     <div>
-                      <p className="text-gray-400">Cancelled</p>
-                      <p className="text-white">{formatTimestamp(booking.cancelled_at)}</p>
+                      <p className="text-master-text-muted-dark">Cancelled</p>
+                      <p className="text-master-text-primary-dark">{formatTimestamp(booking.cancelled_at)}</p>
                       {booking.cancellation_reason && (
-                        <p className="text-gray-300 mt-1">Reason: {booking.cancellation_reason}</p>
+                        <p className="text-master-text-secondary-dark mt-1">Reason: {booking.cancellation_reason}</p>
                       )}
                     </div>
                   )}
@@ -548,9 +548,9 @@ const UV_AdminBookingDetail: React.FC = () => {
       {showCancelModal && (
         <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl max-w-md w-full p-6">
-            <h3 className="text-xl font-semibold text-white mb-4">Cancel Booking</h3>
+            <h3 className="text-xl font-semibold text-master-text-primary-dark mb-4">Cancel Booking</h3>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-master-text-secondary-dark mb-2">
                 Cancellation Reason
               </label>
               <textarea
@@ -564,14 +564,14 @@ const UV_AdminBookingDetail: React.FC = () => {
             <div className="flex gap-3">
               <button
                 onClick={() => setShowCancelModal(false)}
-                className="flex-1 bg-gray-100 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                className="flex-1 bg-gray-100 text-master-text-secondary-dark px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleCancelBooking}
                 disabled={cancelBookingMutation.isPending || !cancellationReason.trim()}
-                className="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition-colors disabled:opacity-50"
+                className="flex-1 bg-red-600 text-master-text-primary-dark px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition-colors disabled:opacity-50"
               >
                 {cancelBookingMutation.isPending ? 'Cancelling...' : 'Confirm'}
               </button>

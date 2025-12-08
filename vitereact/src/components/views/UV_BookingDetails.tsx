@@ -233,13 +233,13 @@ const UV_BookingDetails: React.FC = () => {
       case 'confirmed':
         return 'bg-blue-900/30 text-blue-400 border-blue-200';
       case 'completed':
-        return 'bg-gray-100 text-gray-200 border-white/10';
+        return 'bg-gray-100 text-master-text-secondary-dark border-white/10';
       case 'cancelled':
         return 'bg-red-900/30 text-red-400 border-red-200';
       case 'pending':
         return 'bg-yellow-900/30 text-yellow-400 border-yellow-200';
       default:
-        return 'bg-gray-100 text-gray-200 border-white/10';
+        return 'bg-gray-100 text-master-text-secondary-dark border-white/10';
     }
   };
 
@@ -271,7 +271,7 @@ const UV_BookingDetails: React.FC = () => {
       case 'cancelled':
         return <XCircle className="w-5 h-5 text-red-600" />;
       default:
-        return <Clock className="w-5 h-5 text-gray-300" />;
+        return <Clock className="w-5 h-5 text-master-text-secondary-dark" />;
     }
   };
 
@@ -438,7 +438,7 @@ const UV_BookingDetails: React.FC = () => {
         <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] flex items-center justify-center py-12 px-4">
           <div className="text-center">
             <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600 mx-auto"></div>
-            <p className="mt-4 text-gray-300 text-lg">Loading booking details...</p>
+            <p className="mt-4 text-master-text-secondary-dark text-lg">Loading booking details...</p>
           </div>
         </div>
       </>
@@ -455,20 +455,20 @@ const UV_BookingDetails: React.FC = () => {
         <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] flex items-center justify-center py-12 px-4">
           <div className="max-w-md w-full text-center">
             <AlertCircle className="w-16 h-16 text-red-600 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-white mb-2">Booking Not Found</h2>
-            <p className="text-gray-300 mb-6">
+            <h2 className="text-2xl font-bold text-master-text-primary-dark mb-2">Booking Not Found</h2>
+            <p className="text-master-text-secondary-dark mb-6">
               We couldn't find a booking with ticket number: <strong>{ticket_number}</strong>
             </p>
             <div className="space-y-3">
               <Link
                 to="/search"
-                className="block w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"
+                className="block w-full bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark px-6 py-3 rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"
               >
                 Search for Your Booking
               </Link>
               <Link
                 to="/"
-                className="block w-full bg-gray-100 text-gray-300 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                className="block w-full bg-gray-100 text-master-text-secondary-dark px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors"
               >
                 Return to Home
               </Link>
@@ -491,12 +491,12 @@ const UV_BookingDetails: React.FC = () => {
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6 mb-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="flex-1">
-                <h1 className="text-3xl font-bold text-white mb-2">Booking Details</h1>
+                <h1 className="text-3xl font-bold text-master-text-primary-dark mb-2">Booking Details</h1>
                 <div className="flex items-center gap-3">
                   <span className="text-2xl font-mono text-amber-400">{ticket_number}</span>
                   <button
                     onClick={copyTicketNumber}
-                    className="p-2 text-gray-400 hover:text-amber-400 transition-colors rounded-lg hover:bg-[#2D0808]"
+                    className="p-2 text-master-text-muted-dark hover:text-amber-400 transition-colors rounded-lg hover:bg-[#2D0808]"
                     title="Copy ticket number"
                   >
                     {copySuccess ? (
@@ -519,38 +519,38 @@ const UV_BookingDetails: React.FC = () => {
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6 mb-6">
             {/* Appointment Details */}
             <div className="mb-6 pb-6 border-b border-white/10">
-              <h2 className="text-xl font-semibold text-white mb-4">Appointment Details</h2>
+              <h2 className="text-xl font-semibold text-master-text-primary-dark mb-4">Appointment Details</h2>
               <div className="space-y-3">
                 {serviceDetails && (
                   <div className="flex items-start gap-3">
-                    <Calendar className="w-5 h-5 text-gray-400 mt-0.5" />
+                    <Calendar className="w-5 h-5 text-master-text-muted-dark mt-0.5" />
                     <div>
-                      <p className="text-sm text-gray-400">Service</p>
-                      <p className="text-base font-medium text-white">{serviceDetails.name}</p>
+                      <p className="text-sm text-master-text-muted-dark">Service</p>
+                      <p className="text-base font-medium text-master-text-primary-dark">{serviceDetails.name}</p>
                     </div>
                   </div>
                 )}
                 <div className="flex items-start gap-3">
-                  <Calendar className="w-5 h-5 text-gray-400 mt-0.5" />
+                  <Calendar className="w-5 h-5 text-master-text-muted-dark mt-0.5" />
                   <div>
-                    <p className="text-sm text-gray-400">Date</p>
-                    <p className="text-base font-medium text-white">{formatDate(booking.appointment_date)}</p>
+                    <p className="text-sm text-master-text-muted-dark">Date</p>
+                    <p className="text-base font-medium text-master-text-primary-dark">{formatDate(booking.appointment_date)}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-gray-400 mt-0.5" />
+                  <Clock className="w-5 h-5 text-master-text-muted-dark mt-0.5" />
                   <div>
-                    <p className="text-sm text-gray-400">Time</p>
-                    <p className="text-base font-medium text-white">
+                    <p className="text-sm text-master-text-muted-dark">Time</p>
+                    <p className="text-base font-medium text-master-text-primary-dark">
                       {formatTime(booking.appointment_time)} - {calculateEndTime(booking.appointment_time, booking.slot_duration)}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-gray-400 mt-0.5" />
+                  <Clock className="w-5 h-5 text-master-text-muted-dark mt-0.5" />
                   <div>
-                    <p className="text-sm text-gray-400">Duration</p>
-                    <p className="text-base font-medium text-white">{booking.slot_duration} minutes</p>
+                    <p className="text-sm text-master-text-muted-dark">Duration</p>
+                    <p className="text-base font-medium text-master-text-primary-dark">{booking.slot_duration} minutes</p>
                   </div>
                 </div>
               </div>
@@ -558,30 +558,30 @@ const UV_BookingDetails: React.FC = () => {
 
             {/* Contact Information */}
             <div className="mb-6 pb-6 border-b border-white/10">
-              <h2 className="text-xl font-semibold text-white mb-4">Contact Information</h2>
+              <h2 className="text-xl font-semibold text-master-text-primary-dark mb-4">Contact Information</h2>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
                   <div className="w-5 h-5 flex items-center justify-center mt-0.5">
                     <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-400">Name</p>
-                    <p className="text-base font-medium text-white">{booking.customer_name}</p>
+                    <p className="text-sm text-master-text-muted-dark">Name</p>
+                    <p className="text-base font-medium text-master-text-primary-dark">{booking.customer_name}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Mail className="w-5 h-5 text-gray-400 mt-0.5" />
+                  <Mail className="w-5 h-5 text-master-text-muted-dark mt-0.5" />
                   <div>
-                    <p className="text-sm text-gray-400">Email</p>
+                    <p className="text-sm text-master-text-muted-dark">Email</p>
                     <a href={`mailto:${booking.customer_email}`} className="text-base font-medium text-amber-400 hover:text-blue-700">
                       {booking.customer_email}
                     </a>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Phone className="w-5 h-5 text-gray-400 mt-0.5" />
+                  <Phone className="w-5 h-5 text-master-text-muted-dark mt-0.5" />
                   <div>
-                    <p className="text-sm text-gray-400">Phone</p>
+                    <p className="text-sm text-master-text-muted-dark">Phone</p>
                     <a href={`tel:${booking.customer_phone}`} className="text-base font-medium text-amber-400 hover:text-blue-700">
                       {booking.customer_phone}
                     </a>
@@ -593,23 +593,23 @@ const UV_BookingDetails: React.FC = () => {
             {/* Special Requests */}
             {(booking.special_request || booking.booking_for_name || (booking.inspiration_photos && booking.inspiration_photos.length > 0)) && (
               <div>
-                <h2 className="text-xl font-semibold text-white mb-4">Special Requests</h2>
+                <h2 className="text-xl font-semibold text-master-text-primary-dark mb-4">Special Requests</h2>
                 <div className="space-y-4">
                   {booking.special_request && (
                     <div>
-                      <p className="text-sm text-gray-400 mb-1">Notes</p>
-                      <p className="text-base text-white">{booking.special_request}</p>
+                      <p className="text-sm text-master-text-muted-dark mb-1">Notes</p>
+                      <p className="text-base text-master-text-primary-dark">{booking.special_request}</p>
                     </div>
                   )}
                   {booking.booking_for_name && (
                     <div>
-                      <p className="text-sm text-gray-400 mb-1">Booking for</p>
-                      <p className="text-base font-medium text-white">{booking.booking_for_name}</p>
+                      <p className="text-sm text-master-text-muted-dark mb-1">Booking for</p>
+                      <p className="text-base font-medium text-master-text-primary-dark">{booking.booking_for_name}</p>
                     </div>
                   )}
                   {booking.inspiration_photos && booking.inspiration_photos.length > 0 && (
                     <div>
-                      <p className="text-sm text-gray-400 mb-2">Inspiration Photos</p>
+                      <p className="text-sm text-master-text-muted-dark mb-2">Inspiration Photos</p>
                       <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                         {booking.inspiration_photos.map((photo, index) => (
                           <button
@@ -638,11 +638,11 @@ const UV_BookingDetails: React.FC = () => {
               onClick={() => setTimelineExpanded(!timelineExpanded)}
               className="w-full flex items-center justify-between text-left"
             >
-              <h2 className="text-xl font-semibold text-white">Booking Timeline</h2>
+              <h2 className="text-xl font-semibold text-master-text-primary-dark">Booking Timeline</h2>
               {timelineExpanded ? (
-                <ChevronUp className="w-5 h-5 text-gray-400" />
+                <ChevronUp className="w-5 h-5 text-master-text-muted-dark" />
               ) : (
-                <ChevronDown className="w-5 h-5 text-gray-400" />
+                <ChevronDown className="w-5 h-5 text-master-text-muted-dark" />
               )}
             </button>
             
@@ -654,9 +654,9 @@ const UV_BookingDetails: React.FC = () => {
                       {getEventIcon(event.type)}
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium text-white">{event.label}</p>
+                      <p className="font-medium text-master-text-primary-dark">{event.label}</p>
                       {event.description && (
-                        <p className="text-sm text-gray-300 mt-1">{event.description}</p>
+                        <p className="text-sm text-master-text-secondary-dark mt-1">{event.description}</p>
                       )}
                     </div>
                   </div>
@@ -667,13 +667,13 @@ const UV_BookingDetails: React.FC = () => {
 
           {/* Shop Information Card */}
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg p-6 mb-6">
-            <h2 className="text-xl font-semibold text-white mb-4">Shop Information</h2>
+            <h2 className="text-xl font-semibold text-master-text-primary-dark mb-4">Shop Information</h2>
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-gray-400 mt-0.5" />
+                <MapPin className="w-5 h-5 text-master-text-muted-dark mt-0.5" />
                 <div className="flex-1">
-                  <p className="text-sm text-gray-400">Address</p>
-                  <p className="text-base text-white">{shopAddress}</p>
+                  <p className="text-sm text-master-text-muted-dark">Address</p>
+                  <p className="text-base text-master-text-primary-dark">{shopAddress}</p>
                   <a
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(shopAddress)}`}
                     target="_blank"
@@ -686,19 +686,19 @@ const UV_BookingDetails: React.FC = () => {
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-gray-400 mt-0.5" />
+                <Phone className="w-5 h-5 text-master-text-muted-dark mt-0.5" />
                 <div>
-                  <p className="text-sm text-gray-400">Phone</p>
+                  <p className="text-sm text-master-text-muted-dark">Phone</p>
                   <a href={`tel:${shopPhone}`} className="text-base font-medium text-amber-400 hover:text-blue-700">
                     {shopPhone}
                   </a>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <Clock className="w-5 h-5 text-gray-400 mt-0.5" />
+                <Clock className="w-5 h-5 text-master-text-muted-dark mt-0.5" />
                 <div>
-                  <p className="text-sm text-gray-400">Operating Hours</p>
-                  <p className="text-base text-white">{operatingHours}</p>
+                  <p className="text-sm text-master-text-muted-dark">Operating Hours</p>
+                  <p className="text-base text-master-text-primary-dark">{operatingHours}</p>
                 </div>
               </div>
             </div>
@@ -711,7 +711,7 @@ const UV_BookingDetails: React.FC = () => {
               <div className="space-y-3">
                 <button
                   onClick={() => setShowCancellationModal(true)}
-                  className="w-full bg-red-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition-colors"
+                  className="w-full bg-red-600 text-master-text-primary-dark px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition-colors"
                 >
                   Cancel Booking
                 </button>
@@ -719,7 +719,7 @@ const UV_BookingDetails: React.FC = () => {
                   <button
                     onClick={() => resendMutation.mutate()}
                     disabled={resendMutation.isPending}
-                    className="flex items-center justify-center gap-2 bg-gray-100 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors disabled:opacity-50"
+                    className="flex items-center justify-center gap-2 bg-gray-100 text-master-text-secondary-dark px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors disabled:opacity-50"
                   >
                     {resendMutation.isPending ? (
                       <>
@@ -735,14 +735,14 @@ const UV_BookingDetails: React.FC = () => {
                   </button>
                   <button
                     onClick={downloadCalendar}
-                    className="flex items-center justify-center gap-2 bg-gray-100 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                    className="flex items-center justify-center gap-2 bg-gray-100 text-master-text-secondary-dark px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
                   >
                     <Download className="w-4 h-4" />
                     Calendar
                   </button>
                   <button
                     onClick={printTicket}
-                    className="flex items-center justify-center gap-2 bg-gray-100 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                    className="flex items-center justify-center gap-2 bg-gray-100 text-master-text-secondary-dark px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
                   >
                     <Printer className="w-4 h-4" />
                     Print
@@ -766,7 +766,7 @@ const UV_BookingDetails: React.FC = () => {
                   <button
                     onClick={() => resendMutation.mutate()}
                     disabled={resendMutation.isPending}
-                    className="flex items-center justify-center gap-2 bg-gray-100 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors disabled:opacity-50"
+                    className="flex items-center justify-center gap-2 bg-gray-100 text-master-text-secondary-dark px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors disabled:opacity-50"
                   >
                     {resendMutation.isPending ? (
                       <>
@@ -782,14 +782,14 @@ const UV_BookingDetails: React.FC = () => {
                   </button>
                   <button
                     onClick={downloadCalendar}
-                    className="flex items-center justify-center gap-2 bg-gray-100 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                    className="flex items-center justify-center gap-2 bg-gray-100 text-master-text-secondary-dark px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
                   >
                     <Download className="w-4 h-4" />
                     Calendar
                   </button>
                   <button
                     onClick={printTicket}
-                    className="flex items-center justify-center gap-2 bg-gray-100 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                    className="flex items-center justify-center gap-2 bg-gray-100 text-master-text-secondary-dark px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
                   >
                     <Printer className="w-4 h-4" />
                     Print
@@ -803,14 +803,14 @@ const UV_BookingDetails: React.FC = () => {
               <div className="space-y-3">
                 <button
                   onClick={handleBookAgain}
-                  className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"
+                  className="w-full bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark px-6 py-3 rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"
                 >
                   Book Again
                 </button>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <button
                     onClick={printTicket}
-                    className="flex items-center justify-center gap-2 bg-gray-100 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                    className="flex items-center justify-center gap-2 bg-gray-100 text-master-text-secondary-dark px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
                   >
                     <Printer className="w-4 h-4" />
                     Print Receipt
@@ -818,7 +818,7 @@ const UV_BookingDetails: React.FC = () => {
                   <button
                     onClick={() => resendMutation.mutate()}
                     disabled={resendMutation.isPending}
-                    className="flex items-center justify-center gap-2 bg-gray-100 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors disabled:opacity-50"
+                    className="flex items-center justify-center gap-2 bg-gray-100 text-master-text-secondary-dark px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors disabled:opacity-50"
                   >
                     {resendMutation.isPending ? (
                       <>
@@ -851,7 +851,7 @@ const UV_BookingDetails: React.FC = () => {
                 )}
                 <button
                   onClick={handleBookAgain}
-                  className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"
+                  className="w-full bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark px-6 py-3 rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"
                 >
                   Book Again
                 </button>
@@ -861,13 +861,13 @@ const UV_BookingDetails: React.FC = () => {
 
           {/* Success Messages */}
           {resendMutation.isSuccess && (
-            <div className="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg animate-in slide-in-from-bottom">
+            <div className="fixed bottom-4 right-4 bg-green-600 text-master-text-primary-dark px-6 py-3 rounded-lg shadow-lg animate-in slide-in-from-bottom">
               <p className="font-medium">Confirmation resent successfully!</p>
             </div>
           )}
 
           {cancelMutation.isSuccess && (
-            <div className="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg animate-in slide-in-from-bottom">
+            <div className="fixed bottom-4 right-4 bg-green-600 text-master-text-primary-dark px-6 py-3 rounded-lg shadow-lg animate-in slide-in-from-bottom">
               <p className="font-medium">Booking cancelled successfully</p>
             </div>
           )}
@@ -879,10 +879,10 @@ const UV_BookingDetails: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-semibold text-white">Cancel Booking?</h3>
+              <h3 className="text-xl font-semibold text-master-text-primary-dark">Cancel Booking?</h3>
               <button
                 onClick={() => setShowCancellationModal(false)}
-                className="text-gray-400 hover:text-gray-300"
+                className="text-master-text-muted-dark hover:text-master-text-secondary-dark"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -899,7 +899,7 @@ const UV_BookingDetails: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="cancellation-reason" className="block text-sm font-medium text-gray-300 mb-2">
+                <label htmlFor="cancellation-reason" className="block text-sm font-medium text-master-text-secondary-dark mb-2">
                   Reason for cancellation (optional)
                 </label>
                 <textarea
@@ -911,21 +911,21 @@ const UV_BookingDetails: React.FC = () => {
                   maxLength={200}
                   className="w-full px-4 py-2 border border-white/20 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-blue-500"
                 />
-                <p className="text-xs text-gray-400 mt-1">{cancellationReason.length}/200</p>
+                <p className="text-xs text-master-text-muted-dark mt-1">{cancellationReason.length}/200</p>
               </div>
             </div>
 
             <div className="flex gap-3">
               <button
                 onClick={() => setShowCancellationModal(false)}
-                className="flex-1 bg-gray-100 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                className="flex-1 bg-gray-100 text-master-text-secondary-dark px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-colors"
               >
                 No, Keep Booking
               </button>
               <button
                 onClick={handleCancelBooking}
                 disabled={cancelMutation.isPending}
-                className="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition-colors disabled:opacity-50"
+                className="flex-1 bg-red-600 text-master-text-primary-dark px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition-colors disabled:opacity-50"
               >
                 {cancelMutation.isPending ? (
                   <span className="flex items-center justify-center">
@@ -949,7 +949,7 @@ const UV_BookingDetails: React.FC = () => {
         >
           <button
             onClick={() => setSelectedPhotoIndex(null)}
-            className="absolute top-4 right-4 text-white hover:text-gray-300"
+            className="absolute top-4 right-4 text-master-text-primary-dark hover:text-master-text-secondary-dark"
           >
             <X className="w-8 h-8" />
           </button>
@@ -960,7 +960,7 @@ const UV_BookingDetails: React.FC = () => {
               className="max-w-full max-h-[90vh] object-contain rounded-lg"
               onClick={(e) => e.stopPropagation()}
             />
-            <div className="text-white text-center mt-4">
+            <div className="text-master-text-primary-dark text-center mt-4">
               Photo {selectedPhotoIndex + 1} of {booking.inspiration_photos.length}
             </div>
           </div>

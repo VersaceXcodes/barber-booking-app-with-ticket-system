@@ -249,16 +249,16 @@ const UV_AdminLogin: React.FC = () => {
           <div className="text-center mb-8">
             <div className="flex justify-center mb-4">
               <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-full p-4">
-                <Shield className="h-12 w-12 text-white" />
+                <Shield className="h-12 w-12 text-master-text-primary-dark" />
               </div>
             </div>
-            <h1 className="text-3xl font-bold text-white mb-2">BarberSlot Admin</h1>
-            <p className="text-gray-400 text-sm">Administrative Portal</p>
+            <h1 className="text-3xl font-bold text-master-text-primary-dark mb-2">BarberSlot Admin</h1>
+            <p className="text-master-text-secondary-dark text-sm">Administrative Portal</p>
           </div>
 
           {/* Login Card */}
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-2xl p-8">
-            <h2 className="text-2xl font-bold text-white mb-6 text-center">
+            <h2 className="text-2xl font-bold text-master-text-primary-dark mb-6 text-center">
               Admin Login
             </h2>
 
@@ -292,12 +292,12 @@ const UV_AdminLogin: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-master-text-primary-dark mb-2">
                   Admin Email <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Mail className="h-5 w-5 text-gray-400" />
+                    <Mail className="h-5 w-5 text-master-text-muted-dark" />
                   </div>
                   <input
                     id="email"
@@ -311,7 +311,7 @@ const UV_AdminLogin: React.FC = () => {
                     placeholder="admin@example.com"
                     className={`block w-full pl-10 pr-3 py-3 border ${
                       validation_errors.email ? 'border-red-500' : 'border-white/20'
-                    } rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
+                    } rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-master-text-primary-dark placeholder-master-text-muted-dark`}
                   />
                 </div>
                 {validation_errors.email && (
@@ -321,12 +321,12 @@ const UV_AdminLogin: React.FC = () => {
 
               {/* Password Field */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+                <label htmlFor="password" className="block text-sm font-medium text-master-text-primary-dark mb-2">
                   Password <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Lock className="h-5 w-5 text-gray-400" />
+                    <Lock className="h-5 w-5 text-master-text-muted-dark" />
                   </div>
                   <input
                     id="password"
@@ -340,18 +340,18 @@ const UV_AdminLogin: React.FC = () => {
                     placeholder="••••••••"
                     className={`block w-full pl-10 pr-10 py-3 border ${
                       validation_errors.password ? 'border-red-500' : 'border-white/20'
-                    } rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
+                    } rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-master-text-primary-dark placeholder-master-text-muted-dark`}
                   />
                   <button
                     type="button"
                     onClick={togglePasswordVisibility}
                     disabled={isFormDisabled}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-gray-300 disabled:opacity-50"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-master-text-secondary-dark disabled:opacity-50"
                   >
                     {show_password ? (
-                      <EyeOff className="h-5 w-5 text-gray-400" />
+                      <EyeOff className="h-5 w-5 text-master-text-muted-dark" />
                     ) : (
-                      <Eye className="h-5 w-5 text-gray-400" />
+                      <Eye className="h-5 w-5 text-master-text-muted-dark" />
                     )}
                   </button>
                 </div>
@@ -363,12 +363,12 @@ const UV_AdminLogin: React.FC = () => {
               {/* Two-Factor Code Field (conditional) */}
               {show_2fa_field && (
                 <div>
-                  <label htmlFor="two_factor_code" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label htmlFor="two_factor_code" className="block text-sm font-medium text-master-text-primary-dark mb-2">
                     Two-Factor Code <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Shield className="h-5 w-5 text-gray-400" />
+                      <Shield className="h-5 w-5 text-master-text-muted-dark" />
                     </div>
                     <input
                       id="two_factor_code"
@@ -384,13 +384,13 @@ const UV_AdminLogin: React.FC = () => {
                       placeholder="000000"
                       className={`block w-full pl-10 pr-3 py-3 border ${
                         validation_errors.two_factor_code ? 'border-red-500' : 'border-white/20'
-                      } rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-mono text-center text-lg tracking-widest`}
+                      } rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-mono text-center text-lg tracking-widest text-master-text-primary-dark placeholder-master-text-muted-dark`}
                     />
                   </div>
                   {validation_errors.two_factor_code && (
                     <p className="mt-1 text-sm text-red-600">{validation_errors.two_factor_code}</p>
                   )}
-                  <p className="mt-1 text-xs text-gray-400">
+                  <p className="mt-1 text-xs text-master-text-muted-dark">
                     Enter the 6-digit code from your authenticator app
                   </p>
                 </div>
@@ -407,7 +407,7 @@ const UV_AdminLogin: React.FC = () => {
                   onChange={handleRememberMeChange}
                   className="h-4 w-4 text-amber-400 focus:ring-red-500 border-white/20 rounded disabled:opacity-50"
                 />
-                <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-300">
+                <label htmlFor="remember_me" className="ml-2 block text-sm text-master-text-secondary-dark">
                   Remember me for 30 days
                 </label>
               </div>
@@ -416,12 +416,12 @@ const UV_AdminLogin: React.FC = () => {
               <button
                 type="submit"
                 disabled={isFormDisabled}
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-master-text-primary-dark bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
               >
                 {is_submitting || isLoading ? (
                   <>
                     <svg
-                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-master-text-primary-dark"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -462,7 +462,7 @@ const UV_AdminLogin: React.FC = () => {
                 <div className="text-center">
                   <Link
                     to="/login"
-                    className="text-sm text-gray-300 hover:text-white font-medium transition-colors"
+                    className="text-sm text-master-text-secondary-dark hover:text-master-text-primary-dark font-medium transition-colors"
                   >
                     Customer Login →
                   </Link>
@@ -473,8 +473,8 @@ const UV_AdminLogin: React.FC = () => {
 
           {/* Footer */}
           <div className="mt-8 text-center">
-            <p className="text-sm text-gray-400">Powered by BarberSlot</p>
-            <p className="text-xs text-gray-400 mt-1">v1.0.0</p>
+            <p className="text-sm text-master-text-secondary-dark">Powered by BarberSlot</p>
+            <p className="text-xs text-master-text-muted-dark mt-1">v1.0.0</p>
           </div>
         </div>
       </div>

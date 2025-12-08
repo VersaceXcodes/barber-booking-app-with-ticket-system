@@ -301,8 +301,8 @@ const UV_AdminDashboardHome: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-white">Dashboard</h1>
-                <p className="mt-1 text-sm text-gray-300">
+                <h1 className="text-3xl font-bold text-master-text-primary-dark">Dashboard</h1>
+                <p className="mt-1 text-sm text-master-text-secondary-dark">
                   Welcome back, {currentUser?.name || 'Admin'}
                 </p>
               </div>
@@ -312,7 +312,7 @@ const UV_AdminDashboardHome: React.FC = () => {
                 <select
                   value={selectedDateRange}
                   onChange={(e) => setSelectedDateRange(e.target.value as DateRangeOption)}
-                  className="block w-full sm:w-auto px-4 py-2 bg-[#2D0808] border border-white/20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
+                  className="block w-full sm:w-auto px-4 py-2 bg-[#2D0808] border border-white/20 text-master-text-primary-dark rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
                   aria-label="Select date range"
                 >
                   <option value="today">Today</option>
@@ -344,7 +344,7 @@ const UV_AdminDashboardHome: React.FC = () => {
                   <>
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-3 bg-gradient-to-br from-amber-500 to-orange-500 rounded-lg shadow-lg">
-                        <Calendar className="w-6 h-6 text-white" />
+                        <Calendar className="w-6 h-6 text-master-text-primary-dark" />
                       </div>
                       {stats && stats.today_bookings > 0 && (
                         <div className="flex items-center text-green-400 text-sm font-medium">
@@ -353,11 +353,11 @@ const UV_AdminDashboardHome: React.FC = () => {
                         </div>
                       )}
                     </div>
-                    <h3 className="text-3xl font-bold text-white mb-1">
+                    <h3 className="text-3xl font-bold text-master-text-primary-dark mb-1">
                       {stats?.today_bookings || 0}
                     </h3>
-                    <p className="text-sm text-gray-300 mb-2">Today's Bookings</p>
-                    <div className="flex items-center space-x-4 text-xs text-gray-400">
+                    <p className="text-sm text-master-text-secondary-dark mb-2">Today's Bookings</p>
+                    <div className="flex items-center space-x-4 text-xs text-master-text-muted-dark">
                       <span>{stats?.today_completed || 0} completed</span>
                       <span>•</span>
                       <span>{stats?.today_upcoming || 0} upcoming</span>
@@ -380,13 +380,13 @@ const UV_AdminDashboardHome: React.FC = () => {
                   <>
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-3 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg shadow-lg">
-                        <DollarSign className="w-6 h-6 text-white" />
+                        <DollarSign className="w-6 h-6 text-master-text-primary-dark" />
                       </div>
                     </div>
-                    <h3 className="text-3xl font-bold text-white mb-1">
+                    <h3 className="text-3xl font-bold text-master-text-primary-dark mb-1">
                       ${stats?.week_revenue?.toFixed(2) || '0.00'}
                     </h3>
-                    <p className="text-sm text-gray-300">
+                    <p className="text-sm text-master-text-secondary-dark">
                       {selectedDateRange === 'this_week' ? 'This Week' : 'This Month'}
                     </p>
                   </>
@@ -410,7 +410,7 @@ const UV_AdminDashboardHome: React.FC = () => {
                   <>
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-3 bg-gradient-to-br from-red-500 to-red-700 rounded-lg shadow-lg">
-                        <XCircle className="w-6 h-6 text-white" />
+                        <XCircle className="w-6 h-6 text-master-text-primary-dark" />
                       </div>
                       {stats && stats.cancellation_rate > 0 && (
                         <div className="flex items-center text-red-400 text-sm font-medium">
@@ -419,11 +419,11 @@ const UV_AdminDashboardHome: React.FC = () => {
                         </div>
                       )}
                     </div>
-                    <h3 className="text-3xl font-bold text-white mb-1">
+                    <h3 className="text-3xl font-bold text-master-text-primary-dark mb-1">
                       {stats?.week_cancelled || 0}
                     </h3>
-                    <p className="text-sm text-gray-300 mb-2">Cancellations</p>
-                    <p className="text-xs text-gray-400">This week</p>
+                    <p className="text-sm text-master-text-secondary-dark mb-2">Cancellations</p>
+                    <p className="text-xs text-master-text-muted-dark">This week</p>
                   </>
                 )}
               </div>
@@ -441,14 +441,14 @@ const UV_AdminDashboardHome: React.FC = () => {
                 <>
                   <div className="flex items-center justify-between mb-4">
                     <div className="p-3 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-lg shadow-lg">
-                      <AlertTriangle className="w-6 h-6 text-white" />
+                      <AlertTriangle className="w-6 h-6 text-master-text-primary-dark" />
                     </div>
                   </div>
-                  <h3 className="text-3xl font-bold text-white mb-1">
+                  <h3 className="text-3xl font-bold text-master-text-primary-dark mb-1">
                     {stats?.month_no_shows || 0}
                   </h3>
-                  <p className="text-sm text-gray-300 mb-2">No-Shows</p>
-                  <p className="text-xs text-gray-400">This month</p>
+                  <p className="text-sm text-master-text-secondary-dark mb-2">No-Shows</p>
+                  <p className="text-xs text-master-text-muted-dark">This month</p>
                 </>
               )}
             </div>
@@ -456,14 +456,14 @@ const UV_AdminDashboardHome: React.FC = () => {
 
           {/* Quick Actions */}
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-master-glow p-6 mb-8">
-            <h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2>
+            <h2 className="text-xl font-semibold text-master-text-primary-dark mb-4">Quick Actions</h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <Link 
                 to="/admin/bookings/new"
                 className="flex flex-col items-center justify-center p-4 bg-[#2D0808] hover:bg-[#3D0F0F] rounded-lg border-2 border-amber-500/30 hover:border-amber-500 transition-all duration-200 group shadow-lg"
               >
                 <Plus className="w-8 h-8 text-amber-400 mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-medium text-gray-200 text-center">Add Manual Booking</span>
+                <span className="text-sm font-medium text-master-text-secondary-dark text-center">Add Manual Booking</span>
               </Link>
 
               <Link 
@@ -471,7 +471,7 @@ const UV_AdminDashboardHome: React.FC = () => {
                 className="flex flex-col items-center justify-center p-4 bg-[#2D0808] hover:bg-[#3D0F0F] rounded-lg border-2 border-red-500/30 hover:border-red-500 transition-all duration-200 group shadow-lg"
               >
                 <Lock className="w-8 h-8 text-red-400 mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-medium text-gray-200 text-center">Block Time Slot</span>
+                <span className="text-sm font-medium text-master-text-secondary-dark text-center">Block Time Slot</span>
               </Link>
 
               <Link 
@@ -479,7 +479,7 @@ const UV_AdminDashboardHome: React.FC = () => {
                 className="flex flex-col items-center justify-center p-4 bg-[#2D0808] hover:bg-[#3D0F0F] rounded-lg border-2 border-orange-500/30 hover:border-orange-500 transition-all duration-200 group shadow-lg"
               >
                 <Upload className="w-8 h-8 text-orange-400 mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-medium text-gray-200 text-center">Upload to Gallery</span>
+                <span className="text-sm font-medium text-master-text-secondary-dark text-center">Upload to Gallery</span>
               </Link>
 
               <button 
@@ -488,7 +488,7 @@ const UV_AdminDashboardHome: React.FC = () => {
                 className="flex flex-col items-center justify-center p-4 bg-[#2D0808] hover:bg-[#3D0F0F] rounded-lg border-2 border-green-500/30 hover:border-green-500 transition-all duration-200 group disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
                 <Download className={`w-8 h-8 text-green-400 mb-2 group-hover:scale-110 transition-transform ${exportingCsv ? 'animate-bounce' : ''}`} />
-                <span className="text-sm font-medium text-gray-200 text-center">
+                <span className="text-sm font-medium text-master-text-secondary-dark text-center">
                   {exportingCsv ? 'Exporting...' : "Export Today's Bookings"}
                 </span>
               </button>
@@ -499,7 +499,7 @@ const UV_AdminDashboardHome: React.FC = () => {
             {/* Upcoming Appointments */}
             <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-master-glow p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold text-white">Next Appointments</h2>
+                <h2 className="text-xl font-semibold text-master-text-primary-dark">Next Appointments</h2>
                 <Link 
                   to="/admin/bookings/calendar"
                   className="text-sm text-amber-400 hover:text-amber-300 font-medium transition-colors"
@@ -530,22 +530,22 @@ const UV_AdminDashboardHome: React.FC = () => {
                       <div className="flex items-center space-x-3 flex-1">
                         <div className="flex-shrink-0">
                           <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
-                            <Clock className="w-5 h-5 text-white" />
+                            <Clock className="w-5 h-5 text-master-text-primary-dark" />
                           </div>
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-bold text-white">
+                          <p className="text-sm font-bold text-master-text-primary-dark">
                             {formatTime(appointment.appointment_time)}
                           </p>
-                          <p className="text-sm text-gray-300 truncate">
+                          <p className="text-sm text-master-text-secondary-dark truncate">
                             {appointment.customer_name}
                           </p>
                           <div className="flex items-center space-x-2 mt-1">
-                            <span className="text-xs text-gray-400">
+                            <span className="text-xs text-master-text-muted-dark">
                               {appointment.service_name}
                             </span>
-                            <span className="text-xs text-gray-400">•</span>
-                            <span className="text-xs text-gray-400 font-mono">
+                            <span className="text-xs text-master-text-muted-dark">•</span>
+                            <span className="text-xs text-master-text-muted-dark font-mono">
                               {appointment.ticket_number}
                             </span>
                           </div>
@@ -554,14 +554,14 @@ const UV_AdminDashboardHome: React.FC = () => {
                       <div className="flex items-center space-x-2 ml-4">
                         <a 
                           href={`tel:${appointment.customer_phone}`}
-                          className="p-2 text-gray-300 hover:text-amber-400 hover:bg-[#3D0F0F] rounded-lg transition-colors"
+                          className="p-2 text-master-text-secondary-dark hover:text-amber-400 hover:bg-[#3D0F0F] rounded-lg transition-colors"
                           aria-label="Call customer"
                         >
                           <Phone className="w-4 h-4" />
                         </a>
                         <Link 
                           to={`/admin/bookings/${appointment.ticket_number}`}
-                          className="p-2 text-gray-300 hover:text-amber-400 hover:bg-[#3D0F0F] rounded-lg transition-colors"
+                          className="p-2 text-master-text-secondary-dark hover:text-amber-400 hover:bg-[#3D0F0F] rounded-lg transition-colors"
                           aria-label="View booking details"
                         >
                           <Eye className="w-4 h-4" />
@@ -572,8 +572,8 @@ const UV_AdminDashboardHome: React.FC = () => {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-300 text-sm">No upcoming appointments</p>
+                  <Calendar className="w-12 h-12 text-master-text-muted-dark mx-auto mb-3" />
+                  <p className="text-master-text-secondary-dark text-sm">No upcoming appointments</p>
                   <Link 
                     to="/admin/bookings/new"
                     className="inline-block mt-3 text-amber-400 hover:text-amber-300 text-sm font-medium"
@@ -586,7 +586,7 @@ const UV_AdminDashboardHome: React.FC = () => {
 
             {/* Recent Activity */}
             <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-master-glow p-6">
-              <h2 className="text-xl font-semibold text-white mb-4">Recent Activity</h2>
+              <h2 className="text-xl font-semibold text-master-text-primary-dark mb-4">Recent Activity</h2>
 
               {recentActivity.length > 0 ? (
                 <div className="space-y-3 max-h-96 overflow-y-auto">
@@ -599,10 +599,10 @@ const UV_AdminDashboardHome: React.FC = () => {
                         {activity.icon}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm text-gray-200">
+                        <p className="text-sm text-master-text-secondary-dark">
                           {activity.description}
                         </p>
-                        <p className="text-xs text-gray-400 mt-1">
+                        <p className="text-xs text-master-text-muted-dark mt-1">
                           {getRelativeTime(activity.timestamp)}
                         </p>
                       </div>
@@ -611,8 +611,8 @@ const UV_AdminDashboardHome: React.FC = () => {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <Clock className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-300 text-sm">No recent activity</p>
+                  <Clock className="w-12 h-12 text-master-text-muted-dark mx-auto mb-3" />
+                  <p className="text-master-text-secondary-dark text-sm">No recent activity</p>
                 </div>
               )}
             </div>

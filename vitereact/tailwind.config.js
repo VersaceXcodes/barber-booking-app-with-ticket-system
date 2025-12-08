@@ -22,6 +22,13 @@ export default {
 					'orange': '#EA580C',
 					'gold': '#F59E0B',
 					'gold-light': '#FCD34D',
+					// Text color tokens - High contrast, accessible
+					'text-primary-dark': '#F5E9E4',      // Warm off-white for dark backgrounds
+					'text-primary-light': '#301010',     // Dark maroon for light backgrounds
+					'text-secondary-dark': '#D5BEB3',    // Softer warm neutral for dark backgrounds
+					'text-secondary-light': '#6A3A2E',   // Warm brown for light backgrounds
+					'text-muted-dark': '#B28C7A',        // Muted warm for dark backgrounds
+					'text-muted-light': '#8A5A4A',       // Muted warm brown for light backgrounds
 				},
 			},
 			keyframes: {

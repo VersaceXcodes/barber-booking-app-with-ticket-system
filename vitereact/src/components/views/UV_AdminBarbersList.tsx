@@ -362,14 +362,14 @@ const UV_AdminBarbersList: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#600000] via-[#730000] to-[#8b0000]">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#730000] to-[#8b0000] text-white shadow-master-elevated border-b border-white/15">
+      <div className="bg-gradient-to-r from-[#730000] to-[#8b0000] text-master-text-primary-dark shadow-master-elevated border-b border-white/15">
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-bold mb-2 text-white">Barber Management</h1>
-              <p className="text-gray-200">Manage your barbers and their availability</p>
+              <h1 className="text-3xl font-bold mb-2 text-master-text-primary-dark">Barber Management</h1>
+              <p className="text-master-text-secondary-dark">Manage your barbers and their availability</p>
             </div>
-            <Button onClick={handleAddBarber} className="flex items-center gap-2 bg-white text-gray-900 hover:bg-gray-100 font-semibold shadow-lg">
+            <Button onClick={handleAddBarber} className="flex items-center gap-2 bg-white text-master-text-primary-light hover:bg-gray-100 font-semibold shadow-lg">
               <Plus className="h-5 w-5" />
               Add Barber
             </Button>
@@ -382,7 +382,7 @@ const UV_AdminBarbersList: React.FC = () => {
         {loadingBarbers ? (
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500 mx-auto"></div>
-            <p className="mt-4 text-gray-200">Loading barbers...</p>
+            <p className="mt-4 text-master-text-secondary-dark">Loading barbers...</p>
           </div>
         ) : barbersError ? (
           <Card className="glass-card-light border-white/25">
@@ -392,13 +392,13 @@ const UV_AdminBarbersList: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-white mb-2">Error loading barbers</h3>
-              <p className="text-gray-200 mb-4">
+              <h3 className="text-lg font-semibold text-master-text-primary-dark mb-2">Error loading barbers</h3>
+              <p className="text-master-text-secondary-dark mb-4">
                 {(barbersError as any)?.response?.data?.message || (barbersError as any)?.message || 'Please try again.'}
               </p>
               <Button 
                 onClick={() => window.location.reload()}
-                className="bg-white text-gray-900 hover:bg-gray-100 font-semibold"
+                className="bg-white text-master-text-primary-light hover:bg-gray-100 font-semibold"
               >
                 Retry
               </Button>
@@ -406,10 +406,10 @@ const UV_AdminBarbersList: React.FC = () => {
           </Card>
         ) : barbersData?.barbers && barbersData.barbers.length === 0 ? (
           <div className="text-center py-12">
-            <User className="h-16 w-16 text-gray-200 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-white mb-2">No barbers added yet</h3>
-            <p className="text-gray-200 mb-4">Click 'Add Barber' to create your first barber.</p>
-            <Button onClick={handleAddBarber} className="bg-white text-gray-900 hover:bg-gray-100 font-semibold">
+            <User className="h-16 w-16 text-master-text-secondary-dark mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-master-text-primary-dark mb-2">No barbers added yet</h3>
+            <p className="text-master-text-secondary-dark mb-4">Click 'Add Barber' to create your first barber.</p>
+            <Button onClick={handleAddBarber} className="bg-white text-master-text-primary-light hover:bg-gray-100 font-semibold">
               <Plus className="h-5 w-5 mr-2" />
               Add Barber
             </Button>
@@ -429,13 +429,13 @@ const UV_AdminBarbersList: React.FC = () => {
                         />
                       ) : (
                         <div className="w-16 h-16 rounded-full bg-[#6B2020] border-2 border-white/20 flex items-center justify-center">
-                          <User className="h-8 w-8 text-gray-100" />
+                          <User className="h-8 w-8 text-master-text-primary-dark" />
                         </div>
                       )}
                       <div>
-                        <CardTitle className="text-xl text-white">{barber.name}</CardTitle>
+                        <CardTitle className="text-xl text-master-text-primary-dark">{barber.name}</CardTitle>
                         <div className="flex gap-2 mt-2">
-                          <Badge variant={barber.is_active ? 'default' : 'secondary'} className={barber.is_active ? 'bg-blue-600 text-white border-blue-500' : 'bg-gray-700 text-gray-200 border-gray-600'}>
+                          <Badge variant={barber.is_active ? 'default' : 'secondary'} className={barber.is_active ? 'bg-blue-600 text-master-text-primary-dark border-blue-500' : 'bg-gray-700 text-master-text-secondary-dark border-gray-600'}>
                             {barber.is_active ? 'Active' : 'Inactive'}
                           </Badge>
                           {barber.is_working_today && barber.is_active && (
@@ -451,12 +451,12 @@ const UV_AdminBarbersList: React.FC = () => {
                 <CardContent className="pt-4">
                   {barber.specialties && barber.specialties.length > 0 && (
                     <div className="mb-4">
-                      <p className="text-sm text-gray-200 font-semibold mb-2">Specialties:</p>
+                      <p className="text-sm text-master-text-secondary-dark font-semibold mb-2">Specialties:</p>
                       <div className="flex flex-wrap gap-1">
                         {barber.specialties.map((specialty, index) => (
                           <span
                             key={index}
-                            className="text-xs bg-[#6B2020] text-gray-100 px-2 py-1 rounded border border-white/10"
+                            className="text-xs bg-[#6B2020] text-master-text-primary-dark px-2 py-1 rounded border border-white/10"
                           >
                             {specialty}
                           </span>
@@ -467,7 +467,7 @@ const UV_AdminBarbersList: React.FC = () => {
 
                   <div className="space-y-3 mb-4">
                     <div className="flex items-center justify-between py-2 border-t border-white/15">
-                      <span className="text-sm text-gray-100 font-medium">Working Today</span>
+                      <span className="text-sm text-master-text-primary-dark font-medium">Working Today</span>
                       <Switch
                         checked={barber.is_working_today}
                         onCheckedChange={() => handleToggleWorkingToday(barber)}
@@ -475,7 +475,7 @@ const UV_AdminBarbersList: React.FC = () => {
                       />
                     </div>
                     <div className="flex items-center justify-between py-2 border-t border-white/15">
-                      <span className="text-sm text-gray-100 font-medium">Active Status</span>
+                      <span className="text-sm text-master-text-primary-dark font-medium">Active Status</span>
                       <Switch
                         checked={barber.is_active}
                         onCheckedChange={() => handleToggleActive(barber)}
@@ -488,7 +488,7 @@ const UV_AdminBarbersList: React.FC = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => handleEditBarber(barber)}
-                      className="flex-1 bg-white/10 text-white border-white/25 hover:bg-white/20 hover:text-white font-medium"
+                      className="flex-1 bg-white/10 text-master-text-primary-dark border-white/25 hover:bg-white/20 hover:text-master-text-primary-dark font-medium"
                     >
                       <Edit2 className="h-4 w-4 mr-2" />
                       Edit
@@ -563,14 +563,14 @@ const UV_AdminBarbersList: React.FC = () => {
                     />
                   </div>
                   {uploadingPhoto && (
-                    <div className="flex items-center text-sm text-gray-500">
+                    <div className="flex items-center text-sm text-master-text-muted-dark">
                       <Loader2 className="h-4 w-4 animate-spin mr-2" />
                       Uploading...
                     </div>
                   )}
                 </div>
                 
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-master-text-muted-dark">
                   Or paste a photo URL below
                 </div>
                 <Input
@@ -683,14 +683,14 @@ const UV_AdminBarbersList: React.FC = () => {
                     />
                   </div>
                   {uploadingPhoto && (
-                    <div className="flex items-center text-sm text-gray-500">
+                    <div className="flex items-center text-sm text-master-text-muted-dark">
                       <Loader2 className="h-4 w-4 animate-spin mr-2" />
                       Uploading...
                     </div>
                   )}
                 </div>
                 
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-master-text-muted-dark">
                   Or paste a photo URL below
                 </div>
                 <Input

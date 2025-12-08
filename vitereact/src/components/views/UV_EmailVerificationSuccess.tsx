@@ -237,10 +237,10 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                 <Loader2 className="w-12 h-12 animate-spin text-amber-400" strokeWidth={2.5} />
               </div>
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+            <h2 className="text-2xl md:text-3xl font-bold text-master-text-primary-dark mb-3">
               Verifying Your Email...
             </h2>
-            <p className="text-gray-300 text-lg">
+            <p className="text-master-text-secondary-dark text-lg">
               Please wait while we confirm your account
             </p>
             <div className="mt-6 flex justify-center space-x-1">
@@ -267,9 +267,9 @@ const UV_EmailVerificationSuccess: React.FC = () => {
               {/* Error Header */}
               <div className="bg-gradient-to-br from-red-500 to-red-600 px-8 py-10 text-center">
                 <div className="mb-4">
-                  <AlertCircle className="w-16 h-16 text-white mx-auto" strokeWidth={2} />
+                  <AlertCircle className="w-16 h-16 text-master-text-primary-dark mx-auto" strokeWidth={2} />
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                <h2 className="text-2xl md:text-3xl font-bold text-master-text-primary-dark mb-2">
                   Verification Failed
                 </h2>
               </div>
@@ -295,17 +295,17 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                 <div className="space-y-3">
                   <Link
                     to="/login"
-                    className="block w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-lg font-semibold text-center hover:from-red-700 hover:to-red-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                    className="block w-full bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark px-6 py-3 rounded-lg font-semibold text-center hover:from-red-700 hover:to-red-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
                   >
                     Go to Login
                   </Link>
-                  <p className="text-sm text-gray-300 text-center px-4">
+                  <p className="text-sm text-master-text-secondary-dark text-center px-4">
                     You can request a new verification email from the login page
                   </p>
                   <div className="pt-3 border-t border-white/10">
                     <Link
                       to="/"
-                      className="block text-center text-gray-300 hover:text-white text-sm font-medium transition-colors"
+                      className="block text-center text-master-text-secondary-dark hover:text-master-text-primary-dark text-sm font-medium transition-colors"
                     >
                       ← Return to Home
                     </Link>
@@ -339,20 +339,20 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                   <div className="relative">
                     <div className="absolute inset-0 bg-[#2D0808] opacity-20 rounded-full animate-ping"></div>
                     <CheckCircle 
-                      className="w-20 h-20 text-white relative z-10 animate-bounce" 
+                      className="w-20 h-20 text-master-text-primary-dark relative z-10 animate-bounce" 
                       strokeWidth={2.5} 
                       fill="rgba(255,255,255,0.2)"
                     />
                   </div>
                 </div>
                 
-                <h1 className="text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
+                <h1 className="text-3xl md:text-4xl font-bold text-master-text-primary-dark mb-3 leading-tight">
                   Email Verified!
                 </h1>
                 <p className="text-lg md:text-xl text-green-50 mb-3 leading-relaxed">
                   Your account is now active and ready to use
                 </p>
-                <p className="text-xl md:text-2xl font-semibold text-white">
+                <p className="text-xl md:text-2xl font-semibold text-master-text-primary-dark">
                   Welcome to BarberSlot, {firstName}!
                 </p>
               </div>
@@ -362,7 +362,7 @@ const UV_EmailVerificationSuccess: React.FC = () => {
             <div className="px-6 sm:px-8 py-10">
               {/* Feature Highlights */}
               <div className="mb-8">
-                <h3 className="text-lg font-semibold text-white mb-5 text-center">
+                <h3 className="text-lg font-semibold text-master-text-primary-dark mb-5 text-center">
                   What you can do now:
                 </h3>
                 <div className="grid md:grid-cols-3 gap-4">
@@ -371,16 +371,16 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                     <div className="flex items-start">
                       <div className="flex-shrink-0">
                         <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-lg">
-                          <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="w-5 h-5 text-master-text-primary-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
                           </svg>
                         </div>
                       </div>
                       <div className="ml-3">
-                        <h4 className="text-sm font-semibold text-white mb-1">
+                        <h4 className="text-sm font-semibold text-master-text-primary-dark mb-1">
                           Faster Booking
                         </h4>
-                        <p className="text-xs text-gray-300 leading-relaxed">
+                        <p className="text-xs text-master-text-secondary-dark leading-relaxed">
                           Your details are saved for quick appointments
                         </p>
                       </div>
@@ -392,16 +392,16 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                     <div className="flex items-start">
                       <div className="flex-shrink-0">
                         <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-700 rounded-lg flex items-center justify-center shadow-lg">
-                          <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="w-5 h-5 text-master-text-primary-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                           </svg>
                         </div>
                       </div>
                       <div className="ml-3">
-                        <h4 className="text-sm font-semibold text-white mb-1">
+                        <h4 className="text-sm font-semibold text-master-text-primary-dark mb-1">
                           Booking History
                         </h4>
-                        <p className="text-xs text-gray-300 leading-relaxed">
+                        <p className="text-xs text-master-text-secondary-dark leading-relaxed">
                           Track all your past and upcoming visits
                         </p>
                       </div>
@@ -413,16 +413,16 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                     <div className="flex items-start">
                       <div className="flex-shrink-0">
                         <div className="w-10 h-10 bg-gradient-to-br from-amber-600 to-amber-700 rounded-lg flex items-center justify-center shadow-lg">
-                          <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="w-5 h-5 text-master-text-primary-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                         </div>
                       </div>
                       <div className="ml-3">
-                        <h4 className="text-sm font-semibold text-white mb-1">
+                        <h4 className="text-sm font-semibold text-master-text-primary-dark mb-1">
                           Easy Management
                         </h4>
-                        <p className="text-xs text-gray-300 leading-relaxed">
+                        <p className="text-xs text-master-text-secondary-dark leading-relaxed">
                           Cancel or reschedule appointments anytime
                         </p>
                       </div>
@@ -438,7 +438,7 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                   <button
                     onClick={handleContinueBooking}
                     disabled={isRedirecting}
-                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center"
+                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-master-text-primary-dark px-8 py-4 rounded-lg font-semibold text-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center"
                   >
                     {isRedirecting ? (
                       <>
@@ -458,7 +458,7 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                   <button
                     onClick={handleContinueToDashboard}
                     disabled={isRedirecting}
-                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center"
+                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-master-text-primary-dark px-8 py-4 rounded-lg font-semibold text-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center"
                   >
                     {isRedirecting ? (
                       <>
@@ -494,7 +494,7 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                 <div className="text-center pt-2">
                   <Link
                     to="/"
-                    className="text-gray-300 hover:text-white text-sm font-medium transition-colors inline-flex items-center group"
+                    className="text-master-text-secondary-dark hover:text-master-text-primary-dark text-sm font-medium transition-colors inline-flex items-center group"
                   >
                     <svg className="w-4 h-4 mr-1 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -510,7 +510,7 @@ const UV_EmailVerificationSuccess: React.FC = () => {
           {verifiedEmail && (
             <div className="mt-6 text-center">
               <div className="bg-[#2D0808] bg-opacity-80 backdrop-blur-sm rounded-lg px-6 py-4 border border-white/10 shadow-sm">
-                <p className="text-sm text-gray-300 leading-relaxed">
+                <p className="text-sm text-master-text-secondary-dark leading-relaxed">
                   <span className="inline-flex items-center">
                     <svg className="w-4 h-4 mr-1.5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -518,7 +518,7 @@ const UV_EmailVerificationSuccess: React.FC = () => {
                     A confirmation email has been sent to
                   </span>
                   <br />
-                  <span className="font-semibold text-white">{verifiedEmail}</span>
+                  <span className="font-semibold text-master-text-primary-dark">{verifiedEmail}</span>
                 </p>
               </div>
             </div>
@@ -529,7 +529,7 @@ const UV_EmailVerificationSuccess: React.FC = () => {
       {/* Success Toast Notification */}
       {showToast && (
         <div className="fixed bottom-6 right-6 z-50 animate-slide-in-right">
-          <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-4 rounded-lg shadow-2xl border border-green-500 flex items-center space-x-3 max-w-sm">
+          <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-master-text-primary-dark px-6 py-4 rounded-lg shadow-2xl border border-green-500 flex items-center space-x-3 max-w-sm">
             <div className="flex-shrink-0">
               <CheckCircle className="w-6 h-6" strokeWidth={2.5} />
             </div>

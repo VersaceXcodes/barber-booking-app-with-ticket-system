@@ -263,8 +263,8 @@ const UV_AdminCustomerList: React.FC = () => {
         {/* Page Header */}
         <div className="bg-[#2D0808] shadow-sm border-b border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h1 className="text-3xl font-bold text-white">Customers</h1>
-            <p className="mt-2 text-gray-300">Manage and view all customer records</p>
+            <h1 className="text-3xl font-bold text-master-text-primary-dark">Customers</h1>
+            <p className="mt-2 text-master-text-secondary-dark">Manage and view all customer records</p>
           </div>
         </div>
 
@@ -277,14 +277,14 @@ const UV_AdminCustomerList: React.FC = () => {
               <div className="flex-1">
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Search className="h-5 w-5 text-gray-400" />
+                    <Search className="h-5 w-5 text-master-text-muted-dark" />
                   </div>
                   <input
                     type="text"
                     placeholder="Search by name, email, or phone"
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-3 border-2 border-white/10 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all text-white placeholder-gray-500"
+                    className="block w-full pl-10 pr-3 py-3 border-2 border-white/10 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all text-master-text-primary-dark placeholder-master-text-muted-dark"
                   />
                 </div>
               </div>
@@ -294,7 +294,7 @@ const UV_AdminCustomerList: React.FC = () => {
                 <select
                   value={typeFilter}
                   onChange={(e) => handleTypeFilterChange(e.target.value)}
-                  className="block w-full px-4 py-3 border-2 border-white/10 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all text-white"
+                  className="block w-full px-4 py-3 border-2 border-white/10 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all text-master-text-primary-dark"
                 >
                   <option value="all">All Customers</option>
                   <option value="registered">Registered</option>
@@ -307,7 +307,7 @@ const UV_AdminCustomerList: React.FC = () => {
                 <select
                   value={sortBy}
                   onChange={(e) => handleSortChange(e.target.value)}
-                  className="block w-full px-4 py-3 border-2 border-white/10 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all text-white"
+                  className="block w-full px-4 py-3 border-2 border-white/10 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all text-master-text-primary-dark"
                 >
                   <option value="total_bookings_desc">Total Bookings (High to Low)</option>
                   <option value="last_booking_newest">Last Booking (Newest)</option>
@@ -319,7 +319,7 @@ const UV_AdminCustomerList: React.FC = () => {
               <button
                 onClick={handleExportCsv}
                 disabled={exportingCsv || loadingCustomers}
-                className="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="px-6 py-3 bg-green-600 text-master-text-primary-dark rounded-lg font-medium hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {exportingCsv ? (
                   <>
@@ -342,7 +342,7 @@ const UV_AdminCustomerList: React.FC = () => {
             {loadingCustomers && (
               <div className="p-12 text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-red-600 mx-auto"></div>
-                <p className="mt-4 text-gray-300">Loading customers...</p>
+                <p className="mt-4 text-master-text-secondary-dark">Loading customers...</p>
               </div>
             )}
 
@@ -354,13 +354,13 @@ const UV_AdminCustomerList: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">Error loading customers</h3>
-                <p className="text-gray-300 mb-4">
+                <h3 className="text-lg font-semibold text-master-text-primary-dark mb-2">Error loading customers</h3>
+                <p className="text-master-text-secondary-dark mb-4">
                   {(customersError as any)?.response?.data?.message || (customersError as any)?.message || 'Unable to fetch customer data. Please try again.'}
                 </p>
                 <button
                   onClick={() => refetchCustomers()}
-                  className="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"
+                  className="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"
                 >
                   Retry
                 </button>
@@ -370,13 +370,13 @@ const UV_AdminCustomerList: React.FC = () => {
             {/* Empty State */}
             {!loadingCustomers && !customersError && customers.length === 0 && (
               <div className="p-12 text-center">
-                <div className="text-gray-400 mb-4">
+                <div className="text-master-text-muted-dark mb-4">
                   <svg className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">No customers yet</h3>
-                <p className="text-gray-300">Customers will appear after the first booking</p>
+                <h3 className="text-lg font-semibold text-master-text-primary-dark mb-2">No customers yet</h3>
+                <p className="text-master-text-secondary-dark">Customers will appear after the first booking</p>
               </div>
             )}
 
@@ -387,25 +387,25 @@ const UV_AdminCustomerList: React.FC = () => {
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
                       <tr>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-master-text-secondary-dark uppercase tracking-wider">
                           Name
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-master-text-secondary-dark uppercase tracking-wider">
                           Email
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-master-text-secondary-dark uppercase tracking-wider">
                           Phone
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-master-text-secondary-dark uppercase tracking-wider">
                           Type
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-master-text-secondary-dark uppercase tracking-wider">
                           Total Bookings
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-master-text-secondary-dark uppercase tracking-wider">
                           Last Booking
                         </th>
-                        <th scope="col" className="px-6 py-4 text-right text-xs font-semibold text-gray-300 uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-4 text-right text-xs font-semibold text-master-text-secondary-dark uppercase tracking-wider">
                           Actions
                         </th>
                       </tr>
@@ -420,23 +420,23 @@ const UV_AdminCustomerList: React.FC = () => {
                           {/* Name with Avatar */}
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
-                              <div className="flex-shrink-0 h-10 w-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+                              <div className="flex-shrink-0 h-10 w-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-master-text-primary-dark font-semibold">
                                 {getInitials(customer.name)}
                               </div>
                               <div className="ml-4">
-                                <div className="text-sm font-medium text-white">{customer.name}</div>
+                                <div className="text-sm font-medium text-master-text-primary-dark">{customer.name}</div>
                               </div>
                             </div>
                           </td>
 
                           {/* Email */}
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-white">{customer.email || 'N/A'}</div>
+                            <div className="text-sm text-master-text-primary-dark">{customer.email || 'N/A'}</div>
                           </td>
 
                           {/* Phone */}
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-white">{customer.phone || 'N/A'}</div>
+                            <div className="text-sm text-master-text-primary-dark">{customer.phone || 'N/A'}</div>
                           </td>
 
                           {/* Type Badge */}
@@ -446,7 +446,7 @@ const UV_AdminCustomerList: React.FC = () => {
                                 Registered
                               </span>
                             ) : (
-                              <span className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#2D0808] text-gray-200">
+                              <span className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#2D0808] text-master-text-secondary-dark">
                                 Guest
                               </span>
                             )}
@@ -454,12 +454,12 @@ const UV_AdminCustomerList: React.FC = () => {
 
                           {/* Total Bookings */}
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-semibold text-white">{customer.total_bookings}</div>
+                            <div className="text-sm font-semibold text-master-text-primary-dark">{customer.total_bookings}</div>
                           </td>
 
                           {/* Last Booking */}
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-300">{formatDate(customer.last_booking_date)}</div>
+                            <div className="text-sm text-master-text-secondary-dark">{formatDate(customer.last_booking_date)}</div>
                           </td>
 
                           {/* Actions */}
@@ -487,7 +487,7 @@ const UV_AdminCustomerList: React.FC = () => {
                               <div className="relative">
                                 <button
                                   onClick={(e) => toggleContactDropdown(customer.customer_id, e)}
-                                  className="text-gray-300 hover:text-gray-200 transition-colors p-2 rounded-lg hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]"
+                                  className="text-master-text-secondary-dark hover:text-master-text-secondary-dark transition-colors p-2 rounded-lg hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]"
                                   title="Contact"
                                 >
                                   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -501,7 +501,7 @@ const UV_AdminCustomerList: React.FC = () => {
                                       {customer.email && (
                                         <a
                                           href={`mailto:${customer.email}`}
-                                          className="flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:bg-[#5C1B1B] transition-colors"
+                                          className="flex items-center gap-2 px-4 py-2 text-sm text-master-text-secondary-dark hover:bg-[#5C1B1B] transition-colors"
                                           onClick={(e) => e.stopPropagation()}
                                         >
                                           <Mail className="h-4 w-4" />
@@ -511,7 +511,7 @@ const UV_AdminCustomerList: React.FC = () => {
                                       {customer.phone && (
                                         <a
                                           href={`tel:${customer.phone}`}
-                                          className="flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:bg-[#5C1B1B] transition-colors"
+                                          className="flex items-center gap-2 px-4 py-2 text-sm text-master-text-secondary-dark hover:bg-[#5C1B1B] transition-colors"
                                           onClick={(e) => e.stopPropagation()}
                                         >
                                           <Phone className="h-4 w-4" />
@@ -533,7 +533,7 @@ const UV_AdminCustomerList: React.FC = () => {
                 {/* Pagination */}
                 <div className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] px-6 py-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
                   {/* Showing Text */}
-                  <div className="text-sm text-gray-300">
+                  <div className="text-sm text-master-text-secondary-dark">
                     Showing {offset + 1}-{Math.min(offset + rowsPerPage, totalCustomers)} of {totalCustomers} customers
                   </div>
 
@@ -541,7 +541,7 @@ const UV_AdminCustomerList: React.FC = () => {
                   <div className="flex items-center gap-4">
                     {/* Rows Per Page */}
                     <div className="flex items-center gap-2">
-                      <label className="text-sm text-gray-300">Rows:</label>
+                      <label className="text-sm text-master-text-secondary-dark">Rows:</label>
                       <select
                         value={rowsPerPage}
                         onChange={(e) => handleRowsPerPageChange(Number(e.target.value))}
@@ -560,7 +560,7 @@ const UV_AdminCustomerList: React.FC = () => {
                         disabled={currentPage === 1}
                         className="p-2 rounded-lg border border-white/20 hover:bg-[#5C1B1B] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
-                        <ChevronLeft className="h-5 w-5 text-gray-300" />
+                        <ChevronLeft className="h-5 w-5 text-master-text-secondary-dark" />
                       </button>
 
                       <div className="flex items-center gap-1">
@@ -582,8 +582,8 @@ const UV_AdminCustomerList: React.FC = () => {
                               onClick={() => handlePageChange(pageNum)}
                               className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
                                 currentPage === pageNum
-                                  ? 'bg-gradient-to-r from-red-600 to-red-700 text-white'
-                                  : 'text-gray-300 hover:bg-[#5C1B1B]'
+                                  ? 'bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark'
+                                  : 'text-master-text-secondary-dark hover:bg-[#5C1B1B]'
                               }`}
                             >
                               {pageNum}
@@ -597,7 +597,7 @@ const UV_AdminCustomerList: React.FC = () => {
                         disabled={currentPage === totalPages}
                         className="p-2 rounded-lg border border-white/20 hover:bg-[#5C1B1B] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
-                        <ChevronRight className="h-5 w-5 text-gray-300" />
+                        <ChevronRight className="h-5 w-5 text-master-text-secondary-dark" />
                       </button>
                     </div>
                   </div>

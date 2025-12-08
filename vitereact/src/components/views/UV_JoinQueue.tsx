@@ -269,12 +269,12 @@ const UV_JoinQueue: React.FC = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="inline-flex items-center justify-center w-20 h-20 bg-green-500 rounded-full mb-4 animate-pulse">
-              <CheckCircle className="w-10 h-10 text-white" />
+              <CheckCircle className="w-10 h-10 text-master-text-primary-dark" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">
+            <h1 className="text-4xl md:text-5xl font-bold text-master-text-primary-dark mb-3">
               You're in the queue!
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-master-text-secondary-dark">
               We'll text you when you're next
             </p>
           </motion.div>
@@ -291,43 +291,43 @@ const UV_JoinQueue: React.FC = () => {
               <div className="bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-blue-500/30 rounded-xl p-6 text-center">
                 <div className="flex items-center justify-center gap-2 mb-3">
                   <Ticket className="w-6 h-6 text-blue-400" />
-                  <p className="text-gray-300 text-sm font-medium">Your Ticket</p>
+                  <p className="text-master-text-secondary-dark text-sm font-medium">Your Ticket</p>
                 </div>
-                <p className="text-5xl font-bold text-white mb-2">
+                <p className="text-5xl font-bold text-master-text-primary-dark mb-2">
                   #{queueResponse.position}
                 </p>
-                <p className="text-gray-400 text-sm">Queue Position</p>
+                <p className="text-master-text-muted-dark text-sm">Queue Position</p>
               </div>
 
               {/* Position and Wait Time */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white/10 rounded-lg p-4 text-center">
                   <Users className="w-6 h-6 text-blue-400 mx-auto mb-2" />
-                  <p className="text-gray-400 text-sm mb-1">Position</p>
-                  <p className="text-2xl font-bold text-white">#{queueResponse.position} in line</p>
+                  <p className="text-master-text-muted-dark text-sm mb-1">Position</p>
+                  <p className="text-2xl font-bold text-master-text-primary-dark">#{queueResponse.position} in line</p>
                 </div>
                 <div className="bg-white/10 rounded-lg p-4 text-center">
                   <Clock className="w-6 h-6 text-green-400 mx-auto mb-2" />
-                  <p className="text-gray-400 text-sm mb-1">Estimated Wait</p>
-                  <p className="text-2xl font-bold text-white">{queueResponse.estimated_wait_minutes} mins</p>
+                  <p className="text-master-text-muted-dark text-sm mb-1">Estimated Wait</p>
+                  <p className="text-2xl font-bold text-master-text-primary-dark">{queueResponse.estimated_wait_minutes} mins</p>
                 </div>
               </div>
 
               {/* Contact Info */}
               <div className="border-t border-white/20 pt-6">
-                <div className="flex items-center gap-3 text-gray-300">
+                <div className="flex items-center gap-3 text-master-text-secondary-dark">
                   <Phone className="w-5 h-5 text-blue-400" />
                   <div>
-                    <span className="text-gray-400 text-sm">We'll text you at</span>
-                    <p className="text-white font-medium">{queueResponse.customer_phone}</p>
+                    <span className="text-master-text-muted-dark text-sm">We'll text you at</span>
+                    <p className="text-master-text-primary-dark font-medium">{queueResponse.customer_phone}</p>
                   </div>
                 </div>
               </div>
 
               {/* Info Box */}
               <div className="bg-[#2D0808]0/20 border border-blue-500/30 rounded-lg p-4">
-                <h3 className="text-white font-semibold mb-2">What Happens Next:</h3>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <h3 className="text-master-text-primary-dark font-semibold mb-2">What Happens Next:</h3>
+                <ul className="space-y-1 text-sm text-master-text-secondary-dark">
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 mt-0.5">•</span>
                     <span>We'll text you when you're next (usually ~5 minutes before)</span>
@@ -355,14 +355,14 @@ const UV_JoinQueue: React.FC = () => {
             <button
               onClick={handleLeaveQueue}
               disabled={leaveQueueMutation.isPending}
-              className="flex-1 px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+              className="flex-1 px-6 py-3 bg-red-600 text-master-text-primary-dark rounded-lg font-semibold hover:bg-red-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
             >
               <X className="w-5 h-5" />
               Leave Queue
             </button>
             <button
               onClick={handleDone}
-              className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-bold hover:shadow-lg hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-2"
+              className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-master-text-primary-dark rounded-lg font-bold hover:shadow-lg hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-2"
             >
               <Home className="w-5 h-5" />
               Done
@@ -371,7 +371,7 @@ const UV_JoinQueue: React.FC = () => {
 
           {/* Additional Info */}
           <motion.p
-            className="text-center text-gray-400 text-sm mt-6"
+            className="text-center text-master-text-muted-dark text-sm mt-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.5 }}
@@ -390,24 +390,24 @@ const UV_JoinQueue: React.FC = () => {
               transition={{ duration: 0.3 }}
             >
               <AlertCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white text-center mb-3">
+              <h2 className="text-2xl font-bold text-master-text-primary-dark text-center mb-3">
                 Leave Queue?
               </h2>
-              <p className="text-gray-300 text-center mb-6">
+              <p className="text-master-text-secondary-dark text-center mb-6">
                 Are you sure you want to leave the queue? You'll lose your current position (#{queueResponse.position}).
               </p>
               <div className="flex gap-4">
                 <button
                   onClick={cancelLeaveQueue}
                   disabled={leaveQueueMutation.isPending}
-                  className="flex-1 px-6 py-3 bg-white/10 text-white border border-white/30 rounded-lg font-semibold hover:bg-white/20 transition-colors disabled:opacity-50"
+                  className="flex-1 px-6 py-3 bg-white/10 text-master-text-primary-dark border border-white/30 rounded-lg font-semibold hover:bg-white/20 transition-colors disabled:opacity-50"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmLeaveQueue}
                   disabled={leaveQueueMutation.isPending}
-                  className="flex-1 px-6 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-colors disabled:opacity-50"
+                  className="flex-1 px-6 py-3 bg-red-600 text-master-text-primary-dark rounded-lg font-bold hover:bg-red-700 transition-colors disabled:opacity-50"
                 >
                   {leaveQueueMutation.isPending ? 'Leaving...' : 'Yes, Leave'}
                 </button>
@@ -430,12 +430,12 @@ const UV_JoinQueue: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <div className="inline-flex items-center justify-center w-20 h-20 bg-white/10 rounded-full mb-4 border border-white/20">
-            <Users className="w-10 h-10 text-white" />
+            <Users className="w-10 h-10 text-master-text-primary-dark" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">
+          <h1 className="text-4xl md:text-5xl font-bold text-master-text-primary-dark mb-3">
             Join Walk-In Queue
           </h1>
-          <p className="text-xl text-gray-300">
+          <p className="text-xl text-master-text-secondary-dark">
             Skip the physical wait - we'll text you when it's your turn
           </p>
         </motion.div>
@@ -455,21 +455,21 @@ const UV_JoinQueue: React.FC = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Users className="w-6 h-6 text-blue-400 mx-auto mb-2" />
-                <p className="text-3xl font-bold text-white mb-1">
+                <p className="text-3xl font-bold text-master-text-primary-dark mb-1">
                   {waitTimeData?.queueLength ?? 0}
                 </p>
-                <p className="text-gray-300 text-sm">In Queue</p>
+                <p className="text-master-text-secondary-dark text-sm">In Queue</p>
               </div>
               <div>
                 <Clock className="w-6 h-6 text-green-400 mx-auto mb-2" />
-                <p className="text-3xl font-bold text-white mb-1">
+                <p className="text-3xl font-bold text-master-text-primary-dark mb-1">
                   {waitTimeData?.currentWaitMinutes === 0 ? (
                     'No Wait'
                   ) : (
                     `~${waitTimeData?.currentWaitMinutes ?? 15} min`
                   )}
                 </p>
-                <p className="text-gray-300 text-sm">Est. Wait</p>
+                <p className="text-master-text-secondary-dark text-sm">Est. Wait</p>
               </div>
             </div>
           )}
@@ -488,8 +488,8 @@ const UV_JoinQueue: React.FC = () => {
               <div className="flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h3 className="text-white font-semibold mb-1">Error</h3>
-                  <p className="text-gray-300 text-sm">{errorMessage}</p>
+                  <h3 className="text-master-text-primary-dark font-semibold mb-1">Error</h3>
+                  <p className="text-master-text-secondary-dark text-sm">{errorMessage}</p>
                 </div>
               </div>
             </div>
@@ -498,7 +498,7 @@ const UV_JoinQueue: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name Field */}
             <div>
-              <label className="block text-white font-medium mb-2 flex items-center gap-2">
+              <label className="block text-master-text-primary-dark font-medium mb-2 flex items-center gap-2">
                 <User className="w-5 h-5 text-blue-400" />
                 Your Name *
               </label>
@@ -508,7 +508,7 @@ const UV_JoinQueue: React.FC = () => {
                 onChange={(e) => handleInputChange('customer_name', e.target.value)}
                 className={`w-full px-4 py-3 bg-white/10 border ${
                   validationErrors.customer_name ? 'border-red-500' : 'border-white/30'
-                } rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                } rounded-lg text-master-text-primary-dark placeholder-master-text-muted-dark focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 placeholder="Enter your name"
                 disabled={joinQueueMutation.isPending}
               />
@@ -522,7 +522,7 @@ const UV_JoinQueue: React.FC = () => {
 
             {/* Phone Field */}
             <div>
-              <label className="block text-white font-medium mb-2 flex items-center gap-2">
+              <label className="block text-master-text-primary-dark font-medium mb-2 flex items-center gap-2">
                 <Phone className="w-5 h-5 text-blue-400" />
                 Mobile Number *
               </label>
@@ -532,7 +532,7 @@ const UV_JoinQueue: React.FC = () => {
                 onChange={(e) => handleInputChange('customer_phone', e.target.value)}
                 className={`w-full px-4 py-3 bg-white/10 border ${
                   validationErrors.customer_phone ? 'border-red-500' : 'border-white/30'
-                } rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                } rounded-lg text-master-text-primary-dark placeholder-master-text-muted-dark focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 placeholder="+353 83 327 6229"
                 disabled={joinQueueMutation.isPending}
               />
@@ -542,21 +542,21 @@ const UV_JoinQueue: React.FC = () => {
                   {validationErrors.customer_phone}
                 </p>
               )}
-              <p className="text-gray-400 text-sm mt-2">
+              <p className="text-master-text-muted-dark text-sm mt-2">
                 We'll text you when you're next in line
               </p>
             </div>
 
             {/* Barber Selection */}
             <div>
-              <label className="block text-white font-medium mb-3 flex items-center gap-2">
+              <label className="block text-master-text-primary-dark font-medium mb-3 flex items-center gap-2">
                 <Scissors className="w-5 h-5 text-blue-400" />
                 Preferred Barber (Optional)
               </label>
               {barbersLoading ? (
                 <div className="text-center py-4">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
-                  <p className="mt-2 text-gray-300 text-sm">Loading barbers...</p>
+                  <p className="mt-2 text-master-text-secondary-dark text-sm">Loading barbers...</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -573,11 +573,11 @@ const UV_JoinQueue: React.FC = () => {
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center flex-shrink-0">
-                        <UsersIcon className="w-6 h-6 text-white" />
+                        <UsersIcon className="w-6 h-6 text-master-text-primary-dark" />
                       </div>
                       <div className="text-left">
-                        <p className="font-semibold text-white">First Available</p>
-                        <p className="text-xs text-gray-300">Fastest service</p>
+                        <p className="font-semibold text-master-text-primary-dark">First Available</p>
+                        <p className="text-xs text-master-text-secondary-dark">Fastest service</p>
                       </div>
                     </div>
                   </button>
@@ -604,13 +604,13 @@ const UV_JoinQueue: React.FC = () => {
                           />
                         ) : (
                           <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
-                            <User className="w-6 h-6 text-white" />
+                            <User className="w-6 h-6 text-master-text-primary-dark" />
                           </div>
                         )}
                         <div className="text-left flex-1 min-w-0">
-                          <p className="font-semibold text-white truncate">{barber.name}</p>
+                          <p className="font-semibold text-master-text-primary-dark truncate">{barber.name}</p>
                           {barber.specialties && barber.specialties.length > 0 && (
-                            <p className="text-xs text-gray-300 truncate">{barber.specialties.join(', ')}</p>
+                            <p className="text-xs text-master-text-secondary-dark truncate">{barber.specialties.join(', ')}</p>
                           )}
                         </div>
                       </div>
@@ -618,13 +618,13 @@ const UV_JoinQueue: React.FC = () => {
                   ))}
                 </div>
               )}
-              <p className="mt-2 text-sm text-gray-300">Select a barber or choose "First Available" for faster service</p>
+              <p className="mt-2 text-sm text-master-text-secondary-dark">Select a barber or choose "First Available" for faster service</p>
             </div>
 
             {/* Info Box */}
             <div className="bg-[#2D0808]0/20 border border-blue-500/30 rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-2">What to Expect:</h3>
-              <ul className="space-y-1 text-sm text-gray-300">
+              <h3 className="text-master-text-primary-dark font-semibold mb-2">What to Expect:</h3>
+              <ul className="space-y-1 text-sm text-master-text-secondary-dark">
                 <li className="flex items-start gap-2">
                   <span className="text-blue-400 mt-0.5">•</span>
                   <span>You'll receive your queue position immediately</span>
@@ -646,14 +646,14 @@ const UV_JoinQueue: React.FC = () => {
                 type="button"
                 onClick={() => navigate('/')}
                 disabled={joinQueueMutation.isPending}
-                className="flex-1 px-6 py-3 bg-white/10 text-white border border-white/30 rounded-lg font-semibold hover:bg-white/20 transition-colors disabled:opacity-50"
+                className="flex-1 px-6 py-3 bg-white/10 text-master-text-primary-dark border border-white/30 rounded-lg font-semibold hover:bg-white/20 transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={joinQueueMutation.isPending}
-                className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-bold hover:shadow-lg hover:shadow-blue-500/50 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-master-text-primary-dark rounded-lg font-bold hover:shadow-lg hover:shadow-blue-500/50 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {joinQueueMutation.isPending ? (
                   <>
@@ -673,7 +673,7 @@ const UV_JoinQueue: React.FC = () => {
 
         {/* Additional Info */}
         <motion.p
-          className="text-center text-gray-400 text-sm mt-6"
+          className="text-center text-master-text-muted-dark text-sm mt-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}

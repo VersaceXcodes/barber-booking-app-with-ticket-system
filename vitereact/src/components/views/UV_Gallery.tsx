@@ -228,15 +228,15 @@ const UV_Gallery: React.FC = () => {
       <>
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] py-12 px-4">
           <div className="text-center">
-            <svg className="mx-auto h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="mx-auto h-16 w-16 text-master-text-muted-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <h2 className="mt-4 text-2xl font-bold text-white">Gallery Not Available</h2>
-            <p className="mt-2 text-gray-300">The gallery is currently disabled.</p>
+            <h2 className="mt-4 text-2xl font-bold text-master-text-primary-dark">Gallery Not Available</h2>
+            <p className="mt-2 text-master-text-secondary-dark">The gallery is currently disabled.</p>
             <Link 
               to="/"
-              className="mt-6 inline-block px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-all duration-200"
+              className="mt-6 inline-block px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-all duration-200"
             >
               Return Home
             </Link>
@@ -257,10 +257,10 @@ const UV_Gallery: React.FC = () => {
           {/* HEADER */}
           {/* ================================================================ */}
           <div className="text-center mb-12">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-master-text-primary-dark leading-tight">
               Our Work
             </h1>
-            <p className="mt-4 text-lg md:text-xl text-gray-300 leading-relaxed">
+            <p className="mt-4 text-lg md:text-xl text-master-text-secondary-dark leading-relaxed">
               Check out our latest styles
             </p>
           </div>
@@ -272,7 +272,7 @@ const UV_Gallery: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               {/* Service Filter */}
               <div className="flex-1">
-                <label htmlFor="service-filter" className="block text-sm font-medium text-gray-300 mb-2">
+                <label htmlFor="service-filter" className="block text-sm font-medium text-master-text-secondary-dark mb-2">
                   Filter by Service
                 </label>
                 <select
@@ -292,7 +292,7 @@ const UV_Gallery: React.FC = () => {
               
               {/* Sort Order */}
               <div className="flex-1">
-                <label htmlFor="sort-order" className="block text-sm font-medium text-gray-300 mb-2">
+                <label htmlFor="sort-order" className="block text-sm font-medium text-master-text-secondary-dark mb-2">
                   Sort Order
                 </label>
                 <select
@@ -324,12 +324,12 @@ const UV_Gallery: React.FC = () => {
           {/* ================================================================ */}
           {!loadingImages && galleryImages.length === 0 && (
             <div className="text-center py-12">
-              <svg className="mx-auto h-24 w-24 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="mx-auto h-24 w-24 text-master-text-muted-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-              <h3 className="mt-6 text-2xl font-semibold text-white">Gallery coming soon!</h3>
-              <p className="mt-2 text-gray-300">We're adding new photos regularly. Check back soon.</p>
+              <h3 className="mt-6 text-2xl font-semibold text-master-text-primary-dark">Gallery coming soon!</h3>
+              <p className="mt-2 text-master-text-secondary-dark">We're adding new photos regularly. Check back soon.</p>
             </div>
           )}
           
@@ -361,12 +361,12 @@ const UV_Gallery: React.FC = () => {
                       {/* Caption and Service Badge */}
                       <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
                         {image.caption && (
-                          <p className="text-white font-medium text-sm md:text-base mb-1">
+                          <p className="text-master-text-primary-dark font-medium text-sm md:text-base mb-1">
                             {image.caption}
                           </p>
                         )}
                         {service && (
-                          <span className="inline-block px-2 py-1 bg-gradient-to-r from-red-600 to-red-700 text-white text-xs rounded-md">
+                          <span className="inline-block px-2 py-1 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark text-xs rounded-md">
                             {service.name}
                           </span>
                         )}
@@ -379,7 +379,7 @@ const UV_Gallery: React.FC = () => {
               {/* ============================================================ */}
               {/* PAGINATION INFO */}
               {/* ============================================================ */}
-              <div className="text-center text-gray-300 mb-6">
+              <div className="text-center text-master-text-secondary-dark mb-6">
                 Showing {((currentPage - 1) * imagesPerPage) + 1}-{Math.min(currentPage * imagesPerPage, totalImages)} of {totalImages}
               </div>
               
@@ -391,7 +391,7 @@ const UV_Gallery: React.FC = () => {
                   <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className="px-4 py-2 bg-[#2D0808] rounded-lg border border-white/20 text-gray-300 font-medium hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                    className="px-4 py-2 bg-[#2D0808] rounded-lg border border-white/20 text-master-text-secondary-dark font-medium hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                   >
                     Previous
                   </button>
@@ -414,8 +414,8 @@ const UV_Gallery: React.FC = () => {
                         onClick={() => handlePageChange(pageNum)}
                         className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                           currentPage === pageNum
-                            ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg'
-                            : 'bg-[#2D0808] border border-white/20 text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
+                            ? 'bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark shadow-lg'
+                            : 'bg-[#2D0808] border border-white/20 text-master-text-secondary-dark hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]'
                         }`}
                       >
                         {pageNum}
@@ -426,7 +426,7 @@ const UV_Gallery: React.FC = () => {
                   <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    className="px-4 py-2 bg-[#2D0808] rounded-lg border border-white/20 text-gray-300 font-medium hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                    className="px-4 py-2 bg-[#2D0808] rounded-lg border border-white/20 text-master-text-secondary-dark font-medium hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                   >
                     Next
                   </button>
@@ -450,7 +450,7 @@ const UV_Gallery: React.FC = () => {
           {/* Close Button */}
           <button
             onClick={closeLightbox}
-            className="absolute top-4 right-4 z-10 p-2 text-white hover:text-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-white rounded-lg"
+            className="absolute top-4 right-4 z-10 p-2 text-master-text-primary-dark hover:text-master-text-secondary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-white rounded-lg"
             aria-label="Close lightbox"
           >
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -459,7 +459,7 @@ const UV_Gallery: React.FC = () => {
           </button>
           
           {/* Image Counter */}
-          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-white text-lg font-medium bg-black bg-opacity-80 px-4 py-2 rounded-lg">
+          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-master-text-primary-dark text-lg font-medium bg-black bg-opacity-80 px-4 py-2 rounded-lg">
             {lightboxImageIndex + 1} / {galleryImages.length}
           </div>
           
@@ -470,7 +470,7 @@ const UV_Gallery: React.FC = () => {
                 e.stopPropagation();
                 navigateLightbox('prev');
               }}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 p-2 text-white hover:text-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-white rounded-lg"
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 p-2 text-master-text-primary-dark hover:text-master-text-secondary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-white rounded-lg"
               aria-label="Previous image"
             >
               <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -487,7 +487,7 @@ const UV_Gallery: React.FC = () => {
               className="max-w-full max-h-[80vh] object-contain"
             />
             {galleryImages[lightboxImageIndex].caption && (
-              <p className="text-white text-center mt-4 text-lg font-medium max-w-2xl">
+              <p className="text-master-text-primary-dark text-center mt-4 text-lg font-medium max-w-2xl">
                 {galleryImages[lightboxImageIndex].caption}
               </p>
             )}
@@ -500,7 +500,7 @@ const UV_Gallery: React.FC = () => {
                 e.stopPropagation();
                 navigateLightbox('next');
               }}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 text-white hover:text-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-white rounded-lg"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 text-master-text-primary-dark hover:text-master-text-secondary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-white rounded-lg"
               aria-label="Next image"
             >
               <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">

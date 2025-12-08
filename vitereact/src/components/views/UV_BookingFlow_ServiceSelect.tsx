@@ -123,10 +123,10 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
           
           {/* Header Section */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-master-text-primary-dark mb-3 leading-tight">
               What service do you need?
             </h1>
-            <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
+            <p className="text-lg md:text-xl text-master-text-secondary-dark leading-relaxed">
               Choose the service that best fits your needs
             </p>
           </div>
@@ -134,25 +134,25 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
           {/* Progress Indicator */}
           <div className="mb-8 flex items-center justify-center">
             <div className="flex items-center space-x-2 backdrop-blur-xl bg-white/10 border border-white/20 rounded-full px-6 py-3 shadow-lg">
-              <span className="bg-gradient-to-r from-red-600 to-red-700 text-white rounded-full w-10 h-10 flex items-center justify-center text-sm font-bold shadow-md">
+              <span className="bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark rounded-full w-10 h-10 flex items-center justify-center text-sm font-bold shadow-md">
                 1
               </span>
-              <span className="text-sm font-semibold text-white hidden sm:inline">Service</span>
-              <span className="text-gray-400 mx-1">→</span>
-              <span className="bg-white/10 text-gray-400 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center text-sm font-medium">
+              <span className="text-sm font-semibold text-master-text-primary-dark hidden sm:inline">Service</span>
+              <span className="text-master-text-muted-dark mx-1">→</span>
+              <span className="bg-white/10 text-master-text-muted-dark border border-white/10 rounded-full w-10 h-10 flex items-center justify-center text-sm font-medium">
                 2
               </span>
-              <span className="text-sm text-gray-300 hidden sm:inline">Date</span>
-              <span className="text-gray-400 mx-1">→</span>
-              <span className="bg-white/10 text-gray-400 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center text-sm font-medium">
+              <span className="text-sm text-master-text-secondary-dark hidden sm:inline">Date</span>
+              <span className="text-master-text-muted-dark mx-1">→</span>
+              <span className="bg-white/10 text-master-text-muted-dark border border-white/10 rounded-full w-10 h-10 flex items-center justify-center text-sm font-medium">
                 3
               </span>
-              <span className="text-sm text-gray-300 hidden sm:inline">Time</span>
-              <span className="text-gray-400 mx-1">→</span>
-              <span className="bg-white/10 text-gray-400 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center text-sm font-medium">
+              <span className="text-sm text-master-text-secondary-dark hidden sm:inline">Time</span>
+              <span className="text-master-text-muted-dark mx-1">→</span>
+              <span className="bg-white/10 text-master-text-muted-dark border border-white/10 rounded-full w-10 h-10 flex items-center justify-center text-sm font-medium">
                 4
               </span>
-              <span className="text-sm text-gray-300 hidden sm:inline">Details</span>
+              <span className="text-sm text-master-text-secondary-dark hidden sm:inline">Details</span>
             </div>
           </div>
 
@@ -171,7 +171,7 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
           {isLoading && (
             <div className="flex flex-col justify-center items-center py-20">
               <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600 mb-4"></div>
-              <p className="text-gray-300 text-lg">Loading services...</p>
+              <p className="text-master-text-secondary-dark text-lg">Loading services...</p>
             </div>
           )}
 
@@ -188,7 +188,7 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
                 </p>
                 <button
                   onClick={() => refetch()}
-                  className="bg-red-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition-colors duration-200 shadow-md hover:shadow-xl"
+                  className="bg-red-600 text-master-text-primary-dark px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition-colors duration-200 shadow-md hover:shadow-xl"
                 >
                   Try Again
                 </button>
@@ -209,7 +209,7 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
                 </p>
                 <button
                   onClick={handleSkip}
-                  className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors duration-200 shadow-md hover:shadow-xl"
+                  className="bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark px-6 py-3 rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors duration-200 shadow-md hover:shadow-xl"
                 >
                   Continue Anyway
                 </button>
@@ -242,7 +242,7 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
                 >
                   {/* Premium Call-Out Badge */}
                   {service.is_callout && (
-                    <div className="absolute top-3 left-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center z-10">
+                    <div className="absolute top-3 left-3 bg-gradient-to-r from-amber-500 to-orange-500 text-master-text-primary-dark px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center z-10">
                       <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                       </svg>
@@ -253,7 +253,7 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
                   {/* Checkmark Indicator */}
                   {selectedServiceId === service.service_id && (
                     <div className="absolute top-3 right-3 bg-gradient-to-r from-red-600 to-red-700 rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shadow-lg animate-in zoom-in duration-200 z-10">
-                      <svg className="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 md:w-6 md:h-6 text-master-text-primary-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
@@ -384,7 +384,7 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
             {/* Back Button */}
             <Link
               to="/"
-              className="px-6 py-3 rounded-lg font-medium text-gray-700 bg-[#2D0808] border-2 border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-gray-200"
+              className="px-6 py-3 rounded-lg font-medium text-master-text-secondary-dark bg-[#2D0808] border-2 border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-gray-200"
             >
               <span className="flex items-center">
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -399,7 +399,7 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
               onClick={handleContinue}
               disabled={!selectedServiceId}
               className={`
-                flex-1 max-w-xs px-8 py-3 rounded-lg font-medium text-white 
+                flex-1 max-w-xs px-8 py-3 rounded-lg font-medium text-master-text-primary-dark 
                 transition-all duration-200 shadow-lg focus:outline-none focus:ring-4
                 ${selectedServiceId
                   ? 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 hover:shadow-xl focus:ring-red-300 cursor-pointer'
@@ -420,7 +420,7 @@ const UV_BookingFlow_ServiceSelect: React.FC = () => {
           {/* Helper Text */}
           {!selectedServiceId && !isLoading && services.length > 0 && (
             <div className="text-center mt-6">
-              <p className="text-sm text-gray-300">
+              <p className="text-sm text-master-text-secondary-dark">
                 Select a service to continue or skip this step
               </p>
             </div>

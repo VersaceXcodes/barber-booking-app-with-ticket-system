@@ -97,7 +97,7 @@ const UV_UserProfile: React.FC = () => {
   if (!currentUser) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] flex items-center justify-center">
-        <p className="text-gray-300">Loading user profile...</p>
+        <p className="text-master-text-secondary-dark">Loading user profile...</p>
       </div>
     );
   }
@@ -106,8 +106,8 @@ const UV_UserProfile: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white">Profile Settings</h1>
-          <p className="mt-2 text-gray-300">Manage your account information and preferences</p>
+          <h1 className="text-3xl font-bold text-master-text-primary-dark">Profile Settings</h1>
+          <p className="mt-2 text-master-text-secondary-dark">Manage your account information and preferences</p>
         </div>
 
         <Card>
@@ -157,8 +157,8 @@ const UV_UserProfile: React.FC = () => {
                     <XCircle className="h-5 w-5 text-red-600" />
                   )}
                   <div>
-                    <p className="font-medium text-white">Account Status</p>
-                    <p className="text-sm text-gray-300">
+                    <p className="font-medium text-master-text-primary-dark">Account Status</p>
+                    <p className="text-sm text-master-text-secondary-dark">
                       {currentUser.is_verified ? 'Your account is verified' : 'Account not verified'}
                     </p>
                   </div>
@@ -183,7 +183,7 @@ const UV_UserProfile: React.FC = () => {
                   />
                 ) : (
                   <div className="p-3 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-md border border-white/10">
-                    <p className="text-white">{currentUser.name}</p>
+                    <p className="text-master-text-primary-dark">{currentUser.name}</p>
                   </div>
                 )}
               </div>
@@ -194,8 +194,8 @@ const UV_UserProfile: React.FC = () => {
                   Email Address
                 </Label>
                 <div className="p-3 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-md border border-white/10">
-                  <p className="text-white">{currentUser.email}</p>
-                  <p className="text-xs text-gray-400 mt-1">Email cannot be changed</p>
+                  <p className="text-master-text-primary-dark">{currentUser.email}</p>
+                  <p className="text-xs text-master-text-muted-dark mt-1">Email cannot be changed</p>
                 </div>
               </div>
 
@@ -214,13 +214,13 @@ const UV_UserProfile: React.FC = () => {
                   />
                 ) : (
                   <div className="p-3 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-md border border-white/10">
-                    <p className="text-white">{currentUser.phone}</p>
+                    <p className="text-master-text-primary-dark">{currentUser.phone}</p>
                   </div>
                 )}
               </div>
 
               <div className="pt-4 border-t border-white/10">
-                <p className="text-sm text-gray-300">
+                <p className="text-sm text-master-text-secondary-dark">
                   <span className="font-medium">Member since:</span>{' '}
                   {new Date(currentUser.created_at).toLocaleDateString('en-US', {
                     year: 'numeric',

@@ -215,12 +215,12 @@ const GV_LiveQueueStatus: React.FC<LiveQueueStatusProps> = ({ className = '' }) 
         </div>
         
         {/* Text - Hidden on very small mobile, shown on larger screens */}
-        <span className="hidden sm:inline text-xs md:text-sm font-medium text-white whitespace-nowrap">
+        <span className="hidden sm:inline text-xs md:text-sm font-medium text-master-text-primary-dark whitespace-nowrap">
           {getStatusText()}
         </span>
         
         {/* Mobile compact view - only shown on very small screens */}
-        <span className="sm:hidden text-xs font-medium text-white">
+        <span className="sm:hidden text-xs font-medium text-master-text-primary-dark">
           {queueData ? queueData.currentQueueLength : '—'}
         </span>
       </button>
@@ -231,11 +231,11 @@ const GV_LiveQueueStatus: React.FC<LiveQueueStatusProps> = ({ className = '' }) 
           {/* Header */}
           <div className="flex items-center gap-2 mb-3 pb-3 border-b border-gray-200">
             <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-red-700 rounded-full flex items-center justify-center">
-              <Clock size={16} className="text-white" />
+              <Clock size={16} className="text-master-text-primary-dark" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-gray-900">Queue Status</h3>
-              <p className="text-xs text-gray-500">Real-time updates</p>
+              <h3 className="text-sm font-bold text-master-text-primary-light">Queue Status</h3>
+              <p className="text-xs text-master-text-muted-dark">Real-time updates</p>
             </div>
           </div>
 
@@ -246,7 +246,7 @@ const GV_LiveQueueStatus: React.FC<LiveQueueStatusProps> = ({ className = '' }) 
               <div className="flex items-start gap-2">
                 <Scissors size={14} className="text-red-600 mt-0.5 flex-shrink-0" />
                 <div className="flex-1">
-                  <p className="text-xs font-medium text-gray-700">Currently serving</p>
+                  <p className="text-xs font-medium text-master-text-secondary-dark">Currently serving</p>
                   <p className="text-sm font-bold text-red-600">Ticket #{queueData.currentTicket}</p>
                 </div>
               </div>
@@ -257,8 +257,8 @@ const GV_LiveQueueStatus: React.FC<LiveQueueStatusProps> = ({ className = '' }) 
               <div className="flex items-start gap-2">
                 <Clock size={14} className="text-red-600 mt-0.5 flex-shrink-0" />
                 <div className="flex-1">
-                  <p className="text-xs font-medium text-gray-700">Next available slot</p>
-                  <p className="text-sm font-bold text-gray-900">{queueData.nextSlotTime}</p>
+                  <p className="text-xs font-medium text-master-text-secondary-dark">Next available slot</p>
+                  <p className="text-sm font-bold text-master-text-primary-light">{queueData.nextSlotTime}</p>
                 </div>
               </div>
             )}
@@ -267,8 +267,8 @@ const GV_LiveQueueStatus: React.FC<LiveQueueStatusProps> = ({ className = '' }) 
             <div className="flex items-start gap-2">
               <RefreshCw size={14} className="text-red-600 mt-0.5 flex-shrink-0" />
               <div className="flex-1">
-                <p className="text-xs font-medium text-gray-700">Average wait today</p>
-                <p className="text-sm font-bold text-gray-900">
+                <p className="text-xs font-medium text-master-text-secondary-dark">Average wait today</p>
+                <p className="text-sm font-bold text-master-text-primary-light">
                   {getMinWaitRange()}–{getMaxWaitRange()} min
                 </p>
               </div>
@@ -286,7 +286,7 @@ const GV_LiveQueueStatus: React.FC<LiveQueueStatusProps> = ({ className = '' }) 
           
           {queueData.currentQueueLength > 0 && (
             <div className="mt-4 pt-3 border-t border-gray-200">
-              <p className="text-xs text-center text-gray-500">
+              <p className="text-xs text-center text-master-text-muted-dark">
                 Auto-refreshes every 45 seconds
               </p>
             </div>
@@ -299,17 +299,17 @@ const GV_LiveQueueStatus: React.FC<LiveQueueStatusProps> = ({ className = '' }) 
         <div className="sm:hidden absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-2xl py-2 px-3 z-50 border border-gray-200">
           <div className="space-y-2 text-xs">
             <div>
-              <span className="font-medium text-gray-700">Queue: </span>
+              <span className="font-medium text-master-text-secondary-dark">Queue: </span>
               <span className="font-bold text-red-600">{queueData.currentQueueLength} in line</span>
             </div>
             <div>
-              <span className="font-medium text-gray-700">Wait: </span>
-              <span className="font-bold text-gray-900">~{queueData.estimatedWaitMinutes} min</span>
+              <span className="font-medium text-master-text-secondary-dark">Wait: </span>
+              <span className="font-bold text-master-text-primary-light">~{queueData.estimatedWaitMinutes} min</span>
             </div>
             {queueData.currentTicket && (
               <div>
-                <span className="font-medium text-gray-700">Serving: </span>
-                <span className="font-bold text-gray-900">#{queueData.currentTicket}</span>
+                <span className="font-medium text-master-text-secondary-dark">Serving: </span>
+                <span className="font-bold text-master-text-primary-light">#{queueData.currentTicket}</span>
               </div>
             )}
           </div>

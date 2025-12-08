@@ -444,10 +444,10 @@ const UV_BookingFlow_Details: React.FC = () => {
         <div className="max-w-3xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-master-text-primary-dark mb-2">
               Your Details
             </h1>
-            <p className="text-gray-300 text-lg">
+            <p className="text-master-text-secondary-dark text-lg">
               {isAuthenticated
                 ? "We've pre-filled your information. Update if needed."
                 : "We need your contact details to confirm your booking"}
@@ -456,7 +456,7 @@ const UV_BookingFlow_Details: React.FC = () => {
 
           {/* Progress Indicator */}
           <div className="mb-6">
-            <div className="flex items-center justify-center space-x-2 text-sm text-gray-300">
+            <div className="flex items-center justify-center space-x-2 text-sm text-master-text-secondary-dark">
               <span>Step {progressStep} of {totalSteps}</span>
             </div>
             <div className="mt-2 w-full bg-white/20 rounded-full h-2">
@@ -469,19 +469,19 @@ const UV_BookingFlow_Details: React.FC = () => {
 
           {/* Summary Section */}
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-2xl p-6 mb-6">
-            <h2 className="text-lg font-semibold text-white mb-4 flex items-center">
+            <h2 className="text-lg font-semibold text-master-text-primary-dark mb-4 flex items-center">
               <Check className="w-5 h-5 text-green-400 mr-2" />
               Booking Summary
             </h2>
             <div className="space-y-3">
               {bookingContext.service_name && (
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center text-gray-300">
-                    <Scissors className="w-5 h-5 mr-2 text-gray-400" />
+                  <div className="flex items-center text-master-text-secondary-dark">
+                    <Scissors className="w-5 h-5 mr-2 text-master-text-muted-dark" />
                     <span>Service:</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <span className="font-medium text-white">{bookingContext.service_name}</span>
+                    <span className="font-medium text-master-text-primary-dark">{bookingContext.service_name}</span>
                     <Link
                       to="/book/service"
                       className="text-red-400 hover:text-red-300 text-sm underline"
@@ -493,12 +493,12 @@ const UV_BookingFlow_Details: React.FC = () => {
               )}
               {bookingContext.selected_date && (
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center text-gray-300">
-                    <Calendar className="w-5 h-5 mr-2 text-gray-400" />
+                  <div className="flex items-center text-master-text-secondary-dark">
+                    <Calendar className="w-5 h-5 mr-2 text-master-text-muted-dark" />
                     <span>Date:</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <span className="font-medium text-white">
+                    <span className="font-medium text-master-text-primary-dark">
                       {new Date(bookingContext.selected_date).toLocaleDateString('en-US', {
                         weekday: 'long',
                         year: 'numeric',
@@ -517,12 +517,12 @@ const UV_BookingFlow_Details: React.FC = () => {
               )}
               {bookingContext.selected_time && (
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center text-gray-300">
-                    <Clock className="w-5 h-5 mr-2 text-gray-400" />
+                  <div className="flex items-center text-master-text-secondary-dark">
+                    <Clock className="w-5 h-5 mr-2 text-master-text-muted-dark" />
                     <span>Time:</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <span className="font-medium text-white">{bookingContext.selected_time}</span>
+                    <span className="font-medium text-master-text-primary-dark">{bookingContext.selected_time}</span>
                     <Link
                       to="/book/time"
                       className="text-red-400 hover:text-red-300 text-sm underline"
@@ -541,13 +541,13 @@ const UV_BookingFlow_Details: React.FC = () => {
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
                   <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
-                    <MapPin className="w-6 h-6 text-white" />
+                    <MapPin className="w-6 h-6 text-master-text-primary-dark" />
                   </div>
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-orange-900 mb-2 flex items-center">
                     <span className="mr-2">Premium Call-Out Service</span>
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-white">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-master-text-primary-dark">
                       €150
                     </span>
                   </h3>
@@ -591,7 +591,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                     onChange={(e) => setUseProfileDetails(e.target.checked)}
                     className="w-5 h-5 text-red-600 border-white/30 rounded focus:ring-red-500 bg-white/10"
                   />
-                  <span className="text-white font-medium">Use my profile details</span>
+                  <span className="text-master-text-primary-dark font-medium">Use my profile details</span>
                 </label>
               </div>
             )}
@@ -600,7 +600,7 @@ const UV_BookingFlow_Details: React.FC = () => {
             {isLoadingProfile && (
               <div className="text-center py-8">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-white mx-auto"></div>
-                <p className="mt-4 text-gray-300">Loading your profile...</p>
+                <p className="mt-4 text-master-text-secondary-dark">Loading your profile...</p>
               </div>
             )}
 
@@ -609,20 +609,20 @@ const UV_BookingFlow_Details: React.FC = () => {
               <div className="space-y-6">
                 {/* Required Fields Header */}
                 <div>
-                  <h3 className="text-lg font-semibold text-white mb-4">Contact Information</h3>
-                  <p className="text-sm text-gray-300 mb-4">
+                  <h3 className="text-lg font-semibold text-master-text-primary-dark mb-4">Contact Information</h3>
+                  <p className="text-sm text-master-text-secondary-dark mb-4">
                     Fields marked with <span className="text-red-400">*</span> are required
                   </p>
                 </div>
 
                 {/* Full Name */}
                 <div>
-                  <label htmlFor="customer_name" className="block text-sm font-medium text-white mb-2">
+                  <label htmlFor="customer_name" className="block text-sm font-medium text-master-text-primary-dark mb-2">
                     Full Name <span className="text-red-400">*</span>
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <User className="h-5 w-5 text-gray-400" />
+                      <User className="h-5 w-5 text-master-text-muted-dark" />
                     </div>
                      <input
                       id="customer_name"
@@ -637,7 +637,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                       aria-required="true"
                       aria-invalid={!!validationErrors.customer_name}
                       aria-describedby={validationErrors.customer_name ? "customer-name-error" : undefined}
-                      className={`block w-full pl-10 pr-3 py-3 bg-white/10 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 transition-all text-white placeholder-gray-500 ${
+                      className={`block w-full pl-10 pr-3 py-3 bg-white/10 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 transition-all text-master-text-primary-dark placeholder-master-text-muted-dark ${
                         validationErrors.customer_name
                           ? 'border-red-500 focus:border-red-500'
                           : 'border-white/30 focus:border-red-400'
@@ -650,17 +650,17 @@ const UV_BookingFlow_Details: React.FC = () => {
                       {validationErrors.customer_name}
                     </p>
                   )}
-                  <p className="mt-1 text-sm text-gray-300">First and last name</p>
+                  <p className="mt-1 text-sm text-master-text-secondary-dark">First and last name</p>
                 </div>
 
                 {/* Email Address */}
                 <div>
-                  <label htmlFor="customer_email" className="block text-sm font-medium text-white mb-2">
+                  <label htmlFor="customer_email" className="block text-sm font-medium text-master-text-primary-dark mb-2">
                     Email Address <span className="text-red-400">*</span>
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Mail className="h-5 w-5 text-gray-400" />
+                      <Mail className="h-5 w-5 text-master-text-muted-dark" />
                     </div>
                      <input
                       id="customer_email"
@@ -675,7 +675,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                       aria-required="true"
                       aria-invalid={!!validationErrors.customer_email}
                       aria-describedby={validationErrors.customer_email ? "customer-email-error" : undefined}
-                      className={`block w-full pl-10 pr-3 py-3 bg-white/10 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 transition-all text-white placeholder-gray-500 ${
+                      className={`block w-full pl-10 pr-3 py-3 bg-white/10 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 transition-all text-master-text-primary-dark placeholder-master-text-muted-dark ${
                         validationErrors.customer_email
                           ? 'border-red-500 focus:border-red-500'
                           : 'border-white/30 focus:border-red-400'
@@ -688,17 +688,17 @@ const UV_BookingFlow_Details: React.FC = () => {
                       {validationErrors.customer_email}
                     </p>
                   )}
-                  <p className="mt-1 text-sm text-gray-300">We'll send your confirmation here</p>
+                  <p className="mt-1 text-sm text-master-text-secondary-dark">We'll send your confirmation here</p>
                 </div>
 
                 {/* Phone Number */}
                 <div>
-                  <label htmlFor="customer_phone" className="block text-sm font-medium text-white mb-2">
+                  <label htmlFor="customer_phone" className="block text-sm font-medium text-master-text-primary-dark mb-2">
                     Phone Number (WhatsApp preferred) <span className="text-red-400">*</span>
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Phone className="h-5 w-5 text-gray-400" />
+                      <Phone className="h-5 w-5 text-master-text-muted-dark" />
                     </div>
                      <input
                       id="customer_phone"
@@ -713,7 +713,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                       aria-required="true"
                       aria-invalid={!!validationErrors.customer_phone}
                       aria-describedby={validationErrors.customer_phone ? "customer-phone-error" : undefined}
-                      className={`block w-full pl-10 pr-3 py-3 bg-white/10 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 transition-all text-white placeholder-gray-500 ${
+                      className={`block w-full pl-10 pr-3 py-3 bg-white/10 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 transition-all text-master-text-primary-dark placeholder-master-text-muted-dark ${
                         validationErrors.customer_phone
                           ? 'border-red-500 focus:border-red-500'
                           : 'border-white/30 focus:border-red-400'
@@ -726,13 +726,13 @@ const UV_BookingFlow_Details: React.FC = () => {
                       {validationErrors.customer_phone}
                     </p>
                   )}
-                  <p className="mt-1 text-sm text-gray-300">For confirmation and reminders</p>
+                  <p className="mt-1 text-sm text-master-text-secondary-dark">For confirmation and reminders</p>
                 </div>
 
                 {/* Address (Call-Out Service Only) */}
                 {bookingContext.is_callout && (
                   <div>
-                    <label htmlFor="customer_address" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="customer_address" className="block text-sm font-medium text-master-text-secondary-dark mb-2">
                       Service Address <span className="text-red-600">*</span>
                     </label>
                     <div className="relative">
@@ -765,7 +765,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                         {validationErrors.customer_address}
                       </p>
                     )}
-                    <p className="mt-1 text-sm text-gray-300">
+                    <p className="mt-1 text-sm text-master-text-secondary-dark">
                       <span className="flex items-center text-orange-600 font-medium">
                         <MapPin className="w-4 h-4 mr-1" />
                         A Master Fade barber will come to your location
@@ -776,14 +776,14 @@ const UV_BookingFlow_Details: React.FC = () => {
 
                 {/* Barber Selection */}
                 <div>
-                  <label className="block text-sm font-medium text-white mb-3 flex items-center">
+                  <label className="block text-sm font-medium text-master-text-primary-dark mb-3 flex items-center">
                     <Scissors className="w-5 h-5 mr-2 text-red-400" />
                     Choose Your Barber
                   </label>
                   {barbersLoading ? (
                     <div className="text-center py-4">
                       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
-                      <p className="mt-2 text-gray-300 text-sm">Loading barbers...</p>
+                      <p className="mt-2 text-master-text-secondary-dark text-sm">Loading barbers...</p>
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -799,11 +799,11 @@ const UV_BookingFlow_Details: React.FC = () => {
                       >
                         <div className="flex items-center gap-3">
                           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center flex-shrink-0">
-                            <UsersIcon className="w-6 h-6 text-white" />
+                            <UsersIcon className="w-6 h-6 text-master-text-primary-dark" />
                           </div>
                           <div className="text-left">
-                            <p className="font-semibold text-white">First Available</p>
-                            <p className="text-xs text-gray-300">Any barber</p>
+                            <p className="font-semibold text-master-text-primary-dark">First Available</p>
+                            <p className="text-xs text-master-text-secondary-dark">Any barber</p>
                           </div>
                         </div>
                       </button>
@@ -829,13 +829,13 @@ const UV_BookingFlow_Details: React.FC = () => {
                               />
                             ) : (
                               <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
-                                <User className="w-6 h-6 text-white" />
+                                <User className="w-6 h-6 text-master-text-primary-dark" />
                               </div>
                             )}
                             <div className="text-left flex-1 min-w-0">
-                              <p className="font-semibold text-white truncate">{barber.name}</p>
+                              <p className="font-semibold text-master-text-primary-dark truncate">{barber.name}</p>
                               {barber.specialties && barber.specialties.length > 0 && (
-                                <p className="text-xs text-gray-300 truncate">{barber.specialties.join(', ')}</p>
+                                <p className="text-xs text-master-text-secondary-dark truncate">{barber.specialties.join(', ')}</p>
                               )}
                             </div>
                           </div>
@@ -843,7 +843,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                       ))}
                     </div>
                   )}
-                  <p className="mt-2 text-sm text-gray-300">Select "First Available" for the next free barber</p>
+                  <p className="mt-2 text-sm text-master-text-secondary-dark">Select "First Available" for the next free barber</p>
                 </div>
 
                 {/* Divider */}
@@ -851,8 +851,8 @@ const UV_BookingFlow_Details: React.FC = () => {
 
                 {/* Optional Fields Header */}
                 <div>
-                  <h3 className="text-lg font-semibold text-white mb-2">Additional Information</h3>
-                  <p className="text-sm text-gray-300">Optional - help us serve you better</p>
+                  <h3 className="text-lg font-semibold text-master-text-primary-dark mb-2">Additional Information</h3>
+                  <p className="text-sm text-master-text-secondary-dark">Optional - help us serve you better</p>
                 </div>
 
                 {/* Special Request - Expandable */}
@@ -875,7 +875,7 @@ const UV_BookingFlow_Details: React.FC = () => {
 
                   {showSpecialRequest && (
                     <div className="mt-4 space-y-2">
-                      <label htmlFor="special_request" className="block text-sm font-medium text-gray-700">
+                      <label htmlFor="special_request" className="block text-sm font-medium text-master-text-secondary-dark">
                         Special Request
                       </label>
                       <textarea
@@ -893,8 +893,8 @@ const UV_BookingFlow_Details: React.FC = () => {
                         className="block w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-red-100 focus:border-blue-500 transition-all resize-none"
                       />
                       <div className="flex items-center justify-between text-sm">
-                        <p className="text-gray-400">Tell us your preferences or requirements</p>
-                        <span className={`font-medium ${characterCount > 450 ? 'text-red-600' : 'text-gray-300'}`}>
+                        <p className="text-master-text-muted-dark">Tell us your preferences or requirements</p>
+                        <span className={`font-medium ${characterCount > 450 ? 'text-red-600' : 'text-master-text-secondary-dark'}`}>
                           {characterCount}/500
                         </span>
                       </div>
@@ -922,12 +922,12 @@ const UV_BookingFlow_Details: React.FC = () => {
                       }}
                       className="w-5 h-5 text-amber-400 border-gray-300 rounded focus:ring-red-500"
                     />
-                    <span className="text-white font-medium">I'm booking this appointment for someone else</span>
+                    <span className="text-master-text-primary-dark font-medium">I'm booking this appointment for someone else</span>
                   </label>
 
                   {showBookingForField && (
                     <div className="mt-4">
-                      <label htmlFor="booking_for_name" className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="booking_for_name" className="block text-sm font-medium text-master-text-secondary-dark mb-2">
                         Person's Name
                       </label>
                       <input
@@ -939,7 +939,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                         placeholder="Child's name, family member, etc."
                         className="block w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-red-100 focus:border-blue-500 transition-all"
                       />
-                      <p className="mt-1 text-sm text-gray-300">We'll still use your contact for confirmations</p>
+                      <p className="mt-1 text-sm text-master-text-secondary-dark">We'll still use your contact for confirmations</p>
                       {validationErrors.booking_for_name && (
                         <p className="mt-1 text-sm text-red-600 flex items-center">
                           <AlertCircle className="w-4 h-4 mr-1" />
@@ -972,7 +972,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                     <div className="mt-4 space-y-4">
                       {/* URL Input Method */}
                       <div>
-                        <label htmlFor="photo_url" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="photo_url" className="block text-sm font-medium text-master-text-secondary-dark mb-2">
                           Paste Image URL
                         </label>
                         <div className="flex space-x-2">
@@ -997,7 +997,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                             type="button"
                             onClick={handlePhotoUrlAdd}
                             disabled={!photoUrlInput.trim() || (formData.inspiration_photos?.length || 0) >= 3}
-                            className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-4 focus:ring-red-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                            className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark rounded-lg font-medium hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-4 focus:ring-red-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                           >
                             Add
                           </button>
@@ -1008,7 +1008,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                             {photoUrlError}
                           </p>
                         )}
-                        <p className="mt-1 text-sm text-gray-300">Maximum 3 images</p>
+                        <p className="mt-1 text-sm text-master-text-secondary-dark">Maximum 3 images</p>
                       </div>
 
                       {/* Photo Thumbnails */}
@@ -1028,7 +1028,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                               <button
                                 type="button"
                                 onClick={() => handleRemovePhoto(index)}
-                                className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full p-1 hover:bg-red-700 transition-colors shadow-lg"
+                                className="absolute -top-2 -right-2 bg-red-600 text-master-text-primary-dark rounded-full p-1 hover:bg-red-700 transition-colors shadow-lg"
                               >
                                 <X className="w-4 h-4" />
                               </button>
@@ -1050,7 +1050,7 @@ const UV_BookingFlow_Details: React.FC = () => {
                         onChange={(e) => setUpdateProfileWithChanges(e.target.checked)}
                         className="w-5 h-5 text-amber-400 border-gray-300 rounded focus:ring-red-500"
                       />
-                      <span className="text-white">Update my profile with these changes</span>
+                      <span className="text-master-text-primary-dark">Update my profile with these changes</span>
                     </label>
                   </div>
                 )}
@@ -1067,7 +1067,7 @@ const UV_BookingFlow_Details: React.FC = () => {
               aria-label="Back to Time Selection"
               role="button"
               tabIndex={0}
-              className="flex-1 px-6 py-3 bg-white/10 text-white border-2 border-white/30 rounded-lg font-medium hover:bg-white/20 text-center transition-colors"
+              className="flex-1 px-6 py-3 bg-white/10 text-master-text-primary-dark border-2 border-white/30 rounded-lg font-medium hover:bg-white/20 text-center transition-colors"
             >
               Back
             </Link>
@@ -1082,11 +1082,11 @@ const UV_BookingFlow_Details: React.FC = () => {
               type="button"
               role="button"
               tabIndex={0}
-              className="flex-1 px-6 py-3 bg-white text-white rounded-lg font-medium hover:bg-gray-100 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all focus:outline-none focus:ring-2 focus:ring-white/50"
+              className="flex-1 px-6 py-3 bg-white text-master-text-primary-dark rounded-lg font-medium hover:bg-gray-100 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all focus:outline-none focus:ring-2 focus:ring-white/50"
             >
               {(updateProfileMutation.isPending || isNavigating) ? (
                 <span className="flex items-center justify-center">
-                  <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                  <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-master-text-primary-dark" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>

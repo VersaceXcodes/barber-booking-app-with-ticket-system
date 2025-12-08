@@ -97,7 +97,7 @@ const UV_Landing: React.FC = () => {
           >
             {/* Headline - Staggered Animation */}
             <motion.h1 
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
+              className="text-5xl sm:text-6xl lg:text-7xl font-bold text-master-text-primary-dark mb-6 leading-tight"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -107,7 +107,7 @@ const UV_Landing: React.FC = () => {
 
             {/* Subheadline - Staggered Animation */}
             <motion.p 
-              className="text-xl sm:text-2xl text-gray-300 mb-10 leading-relaxed"
+              className="text-xl sm:text-2xl text-master-text-secondary-dark mb-10 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -125,7 +125,7 @@ const UV_Landing: React.FC = () => {
               {/* Primary Button with Heartbeat Animation */}
               <motion.button
                 onClick={handleBookAppointment}
-                className="px-8 py-4 bg-white text-gray-900 rounded-lg font-bold text-lg shadow-2xl relative overflow-hidden"
+                className="px-8 py-4 bg-white text-master-text-primary-light rounded-lg font-bold text-lg shadow-2xl relative overflow-hidden"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
                 animate={{
@@ -146,7 +146,7 @@ const UV_Landing: React.FC = () => {
               {/* Secondary Button */}
               <motion.button
                 onClick={handleJoinQueue}
-                className="px-8 py-4 bg-transparent text-white border-2 border-white rounded-lg font-bold text-lg"
+                className="px-8 py-4 bg-transparent text-master-text-primary-dark border-2 border-white rounded-lg font-bold text-lg"
                 whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -156,7 +156,7 @@ const UV_Landing: React.FC = () => {
 
             {/* Trust Signal */}
             <motion.p 
-              className="text-gray-400 text-sm"
+              className="text-master-text-muted-dark text-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.8 }}
@@ -182,11 +182,11 @@ const UV_Landing: React.FC = () => {
                   transition={{ duration: 0.2 }}
                 >
                   <div className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center backdrop-blur-sm">
-                    <Users className="w-6 h-6 text-white" />
+                    <Users className="w-6 h-6 text-master-text-primary-dark" />
                   </div>
                   <div>
-                    <p className="text-3xl font-bold text-white">500+</p>
-                    <p className="text-gray-300 text-sm">Happy Clients</p>
+                    <p className="text-3xl font-bold text-master-text-primary-dark">500+</p>
+                    <p className="text-master-text-secondary-dark text-sm">Happy Clients</p>
                   </div>
                 </motion.div>
 
@@ -200,8 +200,8 @@ const UV_Landing: React.FC = () => {
                     <Star className="w-6 h-6 text-yellow-400 fill-yellow-400" />
                   </div>
                   <div>
-                    <p className="text-3xl font-bold text-white">4.9</p>
-                    <p className="text-gray-300 text-sm">Star Rating</p>
+                    <p className="text-3xl font-bold text-master-text-primary-dark">4.9</p>
+                    <p className="text-master-text-secondary-dark text-sm">Star Rating</p>
                   </div>
                 </motion.div>
 
@@ -212,13 +212,13 @@ const UV_Landing: React.FC = () => {
                   transition={{ duration: 0.2 }}
                 >
                   <div className={`w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center backdrop-blur-sm transition-opacity ${isUpdating ? 'opacity-50' : 'opacity-100'}`}>
-                    <Clock className="w-6 h-6 text-white" />
+                    <Clock className="w-6 h-6 text-master-text-primary-dark" />
                   </div>
                   <div>
                     {waitTimeLoading && !waitTimeData ? (
                       <div className="flex items-center gap-2">
                         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green-400"></div>
-                        <p className="text-xl font-bold text-gray-300">Loading...</p>
+                        <p className="text-xl font-bold text-master-text-secondary-dark">Loading...</p>
                       </div>
                     ) : (
                       <>
@@ -229,10 +229,10 @@ const UV_Landing: React.FC = () => {
                             <>{currentWaitTime} Mins</>
                           )}
                         </p>
-                        <p className="text-gray-300 text-sm flex items-center gap-1">
+                        <p className="text-master-text-secondary-dark text-sm flex items-center gap-1">
                           Current Wait
                           {waitTimeData && waitTimeData.queueLength > 0 && (
-                            <span className="text-xs text-gray-400">({waitTimeData.queueLength} in queue)</span>
+                            <span className="text-xs text-master-text-muted-dark">({waitTimeData.queueLength} in queue)</span>
                           )}
                         </p>
                       </>
@@ -266,7 +266,7 @@ const UV_Landing: React.FC = () => {
                 {/* Left Content */}
                 <div className="flex-1 text-center lg:text-left">
                   <motion.div 
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full text-white font-bold text-sm mb-4 shadow-lg"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full text-master-text-primary-dark font-bold text-sm mb-4 shadow-lg"
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                   >
@@ -274,25 +274,25 @@ const UV_Landing: React.FC = () => {
                     NEW PREMIUM SERVICE
                   </motion.div>
                   
-                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-master-text-primary-dark mb-4 leading-tight">
                     Call-Out Service
                     <span className="block text-amber-400">We Come To You</span>
                   </h2>
                   
-                  <p className="text-lg sm:text-xl text-gray-300 mb-6 leading-relaxed">
+                  <p className="text-lg sm:text-xl text-master-text-secondary-dark mb-6 leading-relaxed">
                     Premium barbering at your doorstep. Perfect for home appointments, special occasions, or when you simply can't make it to the shop.
                   </p>
                   
                   <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start mb-6">
-                    <div className="flex items-center gap-2 text-white">
+                    <div className="flex items-center gap-2 text-master-text-primary-dark">
                       <MapPin className="w-5 h-5 text-amber-400" />
                       <span className="font-medium">Your Location</span>
                     </div>
-                    <div className="flex items-center gap-2 text-white">
+                    <div className="flex items-center gap-2 text-master-text-primary-dark">
                       <Clock className="w-5 h-5 text-amber-400" />
                       <span className="font-medium">Flexible Timing</span>
                     </div>
-                    <div className="flex items-center gap-2 text-white">
+                    <div className="flex items-center gap-2 text-master-text-primary-dark">
                       <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
                       <span className="font-medium">Master Barbers</span>
                     </div>
@@ -302,14 +302,14 @@ const UV_Landing: React.FC = () => {
                     <span className="text-5xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
                       €150
                     </span>
-                    <span className="text-gray-400 text-sm">
+                    <span className="text-master-text-muted-dark text-sm">
                       All-inclusive<br />flat rate
                     </span>
                   </div>
                   
                   <motion.button
                     onClick={handleBookCallOut}
-                    className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg font-bold text-lg shadow-2xl hover:shadow-amber-500/50 transition-all duration-300"
+                    className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-master-text-primary-dark rounded-lg font-bold text-lg shadow-2xl hover:shadow-amber-500/50 transition-all duration-300"
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -325,31 +325,31 @@ const UV_Landing: React.FC = () => {
                       <div className="space-y-4">
                         <div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
                           <div className="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center">
-                            <MapPin className="w-5 h-5 text-white" />
+                            <MapPin className="w-5 h-5 text-master-text-primary-dark" />
                           </div>
                           <div>
-                            <p className="text-white font-semibold text-sm">Home Service</p>
-                            <p className="text-gray-300 text-xs">We travel to you</p>
+                            <p className="text-master-text-primary-dark font-semibold text-sm">Home Service</p>
+                            <p className="text-master-text-secondary-dark text-xs">We travel to you</p>
                           </div>
                         </div>
                         
                         <div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
                           <div className="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center">
-                            <Calendar className="w-5 h-5 text-white" />
+                            <Calendar className="w-5 h-5 text-master-text-primary-dark" />
                           </div>
                           <div>
-                            <p className="text-white font-semibold text-sm">Book Anytime</p>
-                            <p className="text-gray-300 text-xs">Flexible scheduling</p>
+                            <p className="text-master-text-primary-dark font-semibold text-sm">Book Anytime</p>
+                            <p className="text-master-text-secondary-dark text-xs">Flexible scheduling</p>
                           </div>
                         </div>
                         
                         <div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
                           <div className="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center">
-                            <Sparkles className="w-5 h-5 text-white" />
+                            <Sparkles className="w-5 h-5 text-master-text-primary-dark" />
                           </div>
                           <div>
-                            <p className="text-white font-semibold text-sm">Premium Quality</p>
-                            <p className="text-gray-300 text-xs">Same expert service</p>
+                            <p className="text-master-text-primary-dark font-semibold text-sm">Premium Quality</p>
+                            <p className="text-master-text-secondary-dark text-xs">Same expert service</p>
                           </div>
                         </div>
                       </div>
@@ -370,10 +370,10 @@ const UV_Landing: React.FC = () => {
           transition={{ duration: 0.8 }}
         >
           <div className="text-center mb-12">
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+            <h2 className="text-4xl sm:text-5xl font-bold text-master-text-primary-dark mb-4">
               Premium Services
             </h2>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-master-text-secondary-dark">
               Expert cuts crafted by master barbers
             </p>
           </div>
@@ -408,8 +408,8 @@ const UV_Landing: React.FC = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <div className="text-5xl mb-4">{service.icon}</div>
-                <h3 className="text-2xl font-bold text-white mb-2">{service.title}</h3>
-                <p className="text-gray-300">{service.description}</p>
+                <h3 className="text-2xl font-bold text-master-text-primary-dark mb-2">{service.title}</h3>
+                <p className="text-master-text-secondary-dark">{service.description}</p>
               </motion.div>
             ))}
           </div>
@@ -424,10 +424,10 @@ const UV_Landing: React.FC = () => {
           transition={{ duration: 0.8 }}
         >
           <div className="text-center mb-12">
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+            <h2 className="text-4xl sm:text-5xl font-bold text-master-text-primary-dark mb-4">
               Our Work Speaks
             </h2>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-master-text-secondary-dark">
               Real cuts, real confidence
             </p>
           </div>
@@ -446,7 +446,7 @@ const UV_Landing: React.FC = () => {
                 transition={{ duration: 0.5, delay: item * 0.05 }}
               >
                 <div className="w-full h-full bg-gradient-to-br from-white/20 to-white/5 flex items-center justify-center">
-                  <p className="text-white/50 text-sm">Gallery Image {item}</p>
+                  <p className="text-master-text-primary-dark/50 text-sm">Gallery Image {item}</p>
                 </div>
               </motion.div>
             ))}
@@ -461,7 +461,7 @@ const UV_Landing: React.FC = () => {
           >
             <motion.button
               onClick={() => navigate('/gallery')}
-              className="px-8 py-3 bg-white/10 text-white border border-white/30 rounded-lg font-semibold backdrop-blur-sm"
+              className="px-8 py-3 bg-white/10 text-master-text-primary-dark border border-white/30 rounded-lg font-semibold backdrop-blur-sm"
               whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
               whileTap={{ scale: 0.98 }}
             >
@@ -478,16 +478,16 @@ const UV_Landing: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+          <h2 className="text-4xl sm:text-5xl font-bold text-master-text-primary-dark mb-6">
             Ready to Look Sharp?
           </h2>
-          <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+          <p className="text-xl text-master-text-secondary-dark mb-10 max-w-2xl mx-auto">
             Join hundreds of satisfied clients. Book your appointment in seconds.
           </p>
           
           <motion.button
             onClick={handleBookAppointment}
-            className="px-10 py-5 bg-white text-gray-900 rounded-lg font-bold text-xl shadow-2xl inline-flex items-center gap-3"
+            className="px-10 py-5 bg-white text-master-text-primary-light rounded-lg font-bold text-xl shadow-2xl inline-flex items-center gap-3"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
             animate={{

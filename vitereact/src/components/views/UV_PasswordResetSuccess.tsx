@@ -58,7 +58,7 @@ const UV_PasswordResetSuccess: React.FC = () => {
                   {/* Checkmark Icon Container */}
                   <div className="relative bg-green-500 rounded-full p-4 shadow-lg">
                     <svg
-                      className="h-12 w-12 text-white animate-bounce"
+                      className="h-12 w-12 text-master-text-primary-dark animate-bounce"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -76,17 +76,17 @@ const UV_PasswordResetSuccess: React.FC = () => {
               </div>
 
               {/* Header */}
-              <h1 className="text-3xl font-bold text-white text-center mb-4 leading-tight">
+              <h1 className="text-3xl font-bold text-master-text-primary-dark text-center mb-4 leading-tight">
                 Password Reset Successfully
               </h1>
 
               {/* Message */}
-              <p className="text-lg text-gray-300 text-center mb-2">
+              <p className="text-lg text-master-text-secondary-dark text-center mb-2">
                 Your password has been updated
               </p>
 
               {/* Subtext */}
-              <p className="text-base text-gray-300 text-center mb-8">
+              <p className="text-base text-master-text-secondary-dark text-center mb-8">
                 You can now log in with your new password
               </p>
 
@@ -113,7 +113,7 @@ const UV_PasswordResetSuccess: React.FC = () => {
               {/* Primary CTA Button */}
               <button
                 onClick={handleLoginNow}
-                className="w-full flex justify-center items-center px-6 py-3 rounded-lg font-medium text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-red-100"
+                className="w-full flex justify-center items-center px-6 py-3 rounded-lg font-medium text-master-text-primary-dark bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-red-100"
               >
                 <svg
                   className="h-5 w-5 mr-2"
@@ -195,7 +195,7 @@ const UV_PasswordResetSuccess: React.FC = () => {
           <div className="mt-6 text-center">
             <Link
               to="/"
-              className="text-gray-300 hover:text-white text-sm font-medium transition-colors"
+              className="text-master-text-secondary-dark hover:text-master-text-primary-dark text-sm font-medium transition-colors"
             >
               ← Back to Home
             </Link>

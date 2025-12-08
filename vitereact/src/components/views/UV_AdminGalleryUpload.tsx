@@ -280,7 +280,7 @@ const UV_AdminGalleryUpload: React.FC = () => {
           {/* Header */}
           <div className="mb-8">
             <div className="flex items-center justify-between">
-              <h1 className="text-3xl font-bold text-white">Upload Gallery Images</h1>
+              <h1 className="text-3xl font-bold text-master-text-primary-dark">Upload Gallery Images</h1>
               <Link
                 to="/admin/gallery"
                 className="text-sm text-amber-400 hover:text-blue-700 font-medium transition-colors"
@@ -342,7 +342,7 @@ const UV_AdminGalleryUpload: React.FC = () => {
 
             {/* Upload Cloud Icon */}
             <svg
-              className="mx-auto h-16 w-16 text-gray-400 mb-4"
+              className="mx-auto h-16 w-16 text-master-text-muted-dark mb-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -355,22 +355,22 @@ const UV_AdminGalleryUpload: React.FC = () => {
               />
             </svg>
 
-            <p className="text-lg font-semibold text-white mb-2">
+            <p className="text-lg font-semibold text-master-text-primary-dark mb-2">
               Drag and drop images here or click to browse
             </p>
-            <p className="text-sm text-gray-400 mb-6">
+            <p className="text-sm text-master-text-muted-dark mb-6">
               JPG, PNG, WebP • Max 10MB per file
             </p>
 
             <button
               type="button"
-              className="inline-flex items-center px-6 py-3 border border-white/20 shadow-sm text-sm font-medium rounded-lg text-gray-300 bg-[#2D0808] hover:bg-[#3D0F0F] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all"
+              className="inline-flex items-center px-6 py-3 border border-white/20 shadow-sm text-sm font-medium rounded-lg text-master-text-secondary-dark bg-[#2D0808] hover:bg-[#3D0F0F] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all"
               onClick={(e) => {
                 e.stopPropagation();
                 fileInputRef.current?.click();
               }}
             >
-              <svg className="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-5 w-5 mr-2 text-master-text-muted-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
               </svg>
               Browse Files
@@ -380,7 +380,7 @@ const UV_AdminGalleryUpload: React.FC = () => {
           {/* Upload Queue */}
           {hasFilesInQueue && (
             <div className="mt-8">
-              <h2 className="text-xl font-semibold text-white mb-4">
+              <h2 className="text-xl font-semibold text-master-text-primary-dark mb-4">
                 Files to Upload ({uploadQueue.length})
               </h2>
 
@@ -402,14 +402,14 @@ const UV_AdminGalleryUpload: React.FC = () => {
 
                       {/* File Details */}
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-white truncate mb-2">
+                        <p className="text-sm font-medium text-master-text-primary-dark truncate mb-2">
                           {item.filename}
                         </p>
 
                         {/* Status Indicators */}
                         <div className="mb-3">
                           {item.upload_status === 'pending' && (
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-200">
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-master-text-secondary-dark">
                               Pending Upload
                             </span>
                           )}
@@ -428,7 +428,7 @@ const UV_AdminGalleryUpload: React.FC = () => {
                                   style={{ width: `${item.upload_progress}%` }}
                                 ></div>
                               </div>
-                              <p className="text-xs text-gray-400">{item.upload_progress}%</p>
+                              <p className="text-xs text-master-text-muted-dark">{item.upload_progress}%</p>
                             </div>
                           )}
                           {item.upload_status === 'success' && (
@@ -457,7 +457,7 @@ const UV_AdminGalleryUpload: React.FC = () => {
                         {/* Caption Input - Only for pending/error */}
                         {(item.upload_status === 'pending' || item.upload_status === 'error') && (
                           <div className="mb-3">
-                            <label htmlFor={`caption-${item.temp_id}`} className="block text-xs font-medium text-gray-300 mb-1">
+                            <label htmlFor={`caption-${item.temp_id}`} className="block text-xs font-medium text-master-text-secondary-dark mb-1">
                               Caption (optional)
                             </label>
                             <input
@@ -467,9 +467,9 @@ const UV_AdminGalleryUpload: React.FC = () => {
                               onChange={(e) => updateCaption(item.temp_id, e.target.value)}
                               placeholder="e.g., Skin Fade, Curly Cut"
                               maxLength={100}
-                              className="block w-full px-3 py-2 border border-white/20 rounded-md shadow-sm text-sm placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors"
+                              className="block w-full px-3 py-2 border border-white/20 rounded-md shadow-sm text-sm placeholder-master-text-muted-dark focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500 transition-colors"
                             />
-                            <p className="mt-1 text-xs text-gray-400">
+                            <p className="mt-1 text-xs text-master-text-muted-dark">
                               {item.caption?.length || 0}/100 characters
                             </p>
                           </div>
@@ -478,7 +478,7 @@ const UV_AdminGalleryUpload: React.FC = () => {
                         {/* Service Association - Only for pending/error */}
                         {(item.upload_status === 'pending' || item.upload_status === 'error') && (
                           <div>
-                            <label htmlFor={`service-${item.temp_id}`} className="block text-xs font-medium text-gray-300 mb-1">
+                            <label htmlFor={`service-${item.temp_id}`} className="block text-xs font-medium text-master-text-secondary-dark mb-1">
                               Service Association
                             </label>
                             <select
@@ -502,7 +502,7 @@ const UV_AdminGalleryUpload: React.FC = () => {
                       {(item.upload_status === 'pending' || item.upload_status === 'error') && (
                         <button
                           onClick={() => removeFileFromQueue(item.temp_id)}
-                          className="flex-shrink-0 p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-all"
+                          className="flex-shrink-0 p-2 text-master-text-muted-dark hover:text-red-600 hover:bg-red-50 rounded-md transition-all"
                           title="Remove file"
                         >
                           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -520,18 +520,18 @@ const UV_AdminGalleryUpload: React.FC = () => {
                 <button
                   onClick={handleCancel}
                   disabled={uploadingInProgress}
-                  className="px-6 py-3 border border-white/20 shadow-sm text-sm font-medium rounded-lg text-gray-300 bg-[#2D0808] hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  className="px-6 py-3 border border-white/20 shadow-sm text-sm font-medium rounded-lg text-master-text-secondary-dark bg-[#2D0808] hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSubmitAllUploads}
                   disabled={!canSubmit}
-                  className="px-6 py-3 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  className="px-6 py-3 border border-transparent shadow-sm text-sm font-medium rounded-lg text-master-text-primary-dark bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                 >
                   {uploadingInProgress ? (
                     <span className="flex items-center">
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-master-text-primary-dark" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
@@ -555,10 +555,10 @@ const UV_AdminGalleryUpload: React.FC = () => {
           {/* Empty State */}
           {!hasFilesInQueue && (
             <div className="mt-12 text-center py-8">
-              <svg className="mx-auto h-12 w-12 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="mx-auto h-12 w-12 text-master-text-muted-dark mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <p className="text-gray-400 text-sm">
+              <p className="text-master-text-muted-dark text-sm">
                 No files selected yet. Drag and drop images above or click to browse.
               </p>
             </div>

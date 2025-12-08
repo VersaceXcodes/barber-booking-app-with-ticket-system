@@ -200,19 +200,19 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
   // Get slot status styling
   const getSlotStatusClass = (slot: TimeSlot, isSelected: boolean): string => {
     if (isSelected) {
-      return 'bg-gradient-to-r from-red-600 to-red-700 border-red-600 text-white';
+      return 'bg-gradient-to-r from-red-600 to-red-700 border-red-600 text-master-text-primary-dark';
     }
     
     switch (slot.status) {
       case 'available':
-        return 'bg-[#2D0808] border-gray-300 text-white hover:border-blue-500 hover:shadow-md';
+        return 'bg-[#2D0808] border-gray-300 text-master-text-primary-dark hover:border-blue-500 hover:shadow-md';
       case 'limited':
-        return 'bg-amber-50 border-amber-400 text-white hover:border-amber-500 hover:shadow-md';
+        return 'bg-amber-50 border-amber-400 text-master-text-primary-dark hover:border-amber-500 hover:shadow-md';
       case 'full':
       case 'blocked':
-        return 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed';
+        return 'bg-gray-100 border-gray-300 text-master-text-muted-dark cursor-not-allowed';
       default:
-        return 'bg-[#2D0808] border-gray-300 text-white';
+        return 'bg-[#2D0808] border-gray-300 text-master-text-primary-dark';
     }
   };
 
@@ -255,14 +255,14 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
                 </svg>
                 Back
               </Link>
-              <span className="text-sm text-gray-300 font-medium">Step 3 of 4</span>
+              <span className="text-sm text-master-text-secondary-dark font-medium">Step 3 of 4</span>
             </div>
             
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 leading-tight">
+            <h1 className="text-3xl md:text-4xl font-bold text-master-text-primary-dark mb-2 leading-tight">
               What time works for you?
             </h1>
-            <p className="text-xl text-gray-700 mb-1">{formattedDate}</p>
-            <p className="text-sm text-gray-300">Each appointment is 40 minutes</p>
+            <p className="text-xl text-master-text-secondary-dark mb-1">{formattedDate}</p>
+            <p className="text-sm text-master-text-secondary-dark">Each appointment is 40 minutes</p>
             
             <Link
               to="/book/date"
@@ -293,7 +293,7 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
               <p className="text-red-600 text-sm mb-4">Please try again</p>
               <button
                 onClick={() => refetch()}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors"
+                className="px-4 py-2 bg-red-600 text-master-text-primary-dark rounded-lg font-medium hover:bg-red-700 transition-colors"
               >
                 Retry
               </button>
@@ -303,18 +303,18 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
           {/* No Slots Available */}
           {!isLoading && !error && timeSlots && timeSlots.length === 0 && (
             <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8 text-center">
-              <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-16 h-16 text-master-text-muted-dark mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <h2 className="text-xl font-bold text-white mb-2">
+              <h2 className="text-xl font-bold text-master-text-primary-dark mb-2">
                 No slots available for this date
               </h2>
-              <p className="text-gray-300 mb-6">
+              <p className="text-master-text-secondary-dark mb-6">
                 Please choose another day
               </p>
               <Link
                 to="/book/date"
-                className="inline-block px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors shadow-lg"
+                className="inline-block px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors shadow-lg"
               >
                 Change Date
               </Link>
@@ -340,16 +340,16 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
                           <div className="flex items-center">
-                            <p className={`text-2xl font-bold ${isSelected ? 'text-white' : 'text-white'}`}>
+                            <p className={`text-2xl font-bold ${isSelected ? 'text-master-text-primary-dark' : 'text-master-text-primary-dark'}`}>
                               {formatTime(slot.time)}
                             </p>
                             {isSelected && (
-                              <svg className="w-6 h-6 text-white ml-3" fill="currentColor" viewBox="0 0 20 20">
+                              <svg className="w-6 h-6 text-master-text-primary-dark ml-3" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                               </svg>
                             )}
                           </div>
-                          <p className={`text-sm mt-1 ${isSelected ? 'text-blue-100' : slot.status === 'limited' ? 'text-amber-700 font-semibold' : 'text-gray-300'}`}>
+                          <p className={`text-sm mt-1 ${isSelected ? 'text-blue-100' : slot.status === 'limited' ? 'text-amber-700 font-semibold' : 'text-master-text-secondary-dark'}`}>
                             {getCapacityText(slot)}
                           </p>
                         </div>
@@ -358,8 +358,8 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
                           <div className="ml-4">
                             <span className={`inline-block px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
                               slot.status === 'limited' 
-                                ? 'bg-amber-600 text-white hover:bg-amber-700'
-                                : 'bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800'
+                                ? 'bg-amber-600 text-master-text-primary-dark hover:bg-amber-700'
+                                : 'bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark hover:from-red-700 hover:to-red-800'
                             }`}>
                               Select
                             </span>
@@ -376,7 +376,7 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
                         
                         {isDisabled && (
                           <div className="ml-4">
-                            <span className="inline-block px-4 py-2 rounded-lg font-medium text-sm bg-gray-300 text-gray-300">
+                            <span className="inline-block px-4 py-2 rounded-lg font-medium text-sm bg-gray-300 text-master-text-secondary-dark">
                               {!slot.is_available ? 'Blocked' : 'Fully Booked'}
                             </span>
                           </div>
@@ -394,13 +394,13 @@ const UV_BookingFlow_TimeSelect: React.FC = () => {
                   disabled={!hasValidSelection || isNavigating}
                   className={`w-full py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-200 shadow-lg flex items-center justify-center ${
                     hasValidSelection && !isNavigating
-                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 hover:shadow-xl transform hover:scale-105'
-                      : 'bg-gray-300 text-gray-400 cursor-not-allowed'
+                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark hover:from-red-700 hover:to-red-800 hover:shadow-xl transform hover:scale-105'
+                      : 'bg-gray-300 text-master-text-muted-dark cursor-not-allowed'
                   }`}
                 >
                   {isNavigating ? (
                     <>
-                      <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-master-text-primary-dark" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>

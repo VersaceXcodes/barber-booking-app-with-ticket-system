@@ -117,7 +117,7 @@ const getStatusBadgeClass = (status: string): string => {
     case 'pending':
       return 'bg-yellow-900/30 text-yellow-400';
     default:
-      return 'bg-gray-100 text-gray-200';
+      return 'bg-gray-100 text-master-text-secondary-dark';
   }
 };
 
@@ -436,18 +436,18 @@ const UV_AdminCustomerDetail: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
           <nav className="mb-6" aria-label="Breadcrumb">
-            <ol className="flex items-center space-x-2 text-sm text-gray-300">
+            <ol className="flex items-center space-x-2 text-sm text-master-text-secondary-dark">
               <li>
                 <Link to="/admin/customers" className="hover:text-amber-400 transition-colors">
                   Customers
                 </Link>
               </li>
               <li>
-                <svg className="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-master-text-muted-dark" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                 </svg>
               </li>
-              <li className="text-white font-medium">
+              <li className="text-master-text-primary-dark font-medium">
                 {loadingProfile ? 'Loading...' : customerProfile?.name || 'Customer Detail'}
               </li>
             </ol>
@@ -455,7 +455,7 @@ const UV_AdminCustomerDetail: React.FC = () => {
 
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-white">
+            <h1 className="text-3xl font-bold text-master-text-primary-dark">
               {loadingProfile ? 'Loading...' : customerProfile?.name || 'Customer Detail'}
             </h1>
           </div>
@@ -476,7 +476,7 @@ const UV_AdminCustomerDetail: React.FC = () => {
                 className={`${
                   activeTab === 'overview'
                     ? 'border-red-600 text-amber-400'
-                    : 'border-transparent text-gray-300 hover:text-white hover:border-white/20'
+                    : 'border-transparent text-master-text-secondary-dark hover:text-master-text-primary-dark hover:border-white/20'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors`}
               >
                 Overview
@@ -486,7 +486,7 @@ const UV_AdminCustomerDetail: React.FC = () => {
                 className={`${
                   activeTab === 'bookings'
                     ? 'border-red-600 text-amber-400'
-                    : 'border-transparent text-gray-300 hover:text-white hover:border-white/20'
+                    : 'border-transparent text-master-text-secondary-dark hover:text-master-text-primary-dark hover:border-white/20'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors`}
               >
                 Booking History
@@ -496,7 +496,7 @@ const UV_AdminCustomerDetail: React.FC = () => {
                 className={`${
                   activeTab === 'notes'
                     ? 'border-red-600 text-amber-400'
-                    : 'border-transparent text-gray-300 hover:text-white hover:border-white/20'
+                    : 'border-transparent text-master-text-secondary-dark hover:text-master-text-primary-dark hover:border-white/20'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors`}
               >
                 Notes
@@ -517,16 +517,16 @@ const UV_AdminCustomerDetail: React.FC = () => {
                   {/* Customer Information Card */}
                   <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 overflow-hidden">
                     <div className="px-6 py-5 border-b border-white/10">
-                      <h2 className="text-xl font-semibold text-white">Customer Information</h2>
+                      <h2 className="text-xl font-semibold text-master-text-primary-dark">Customer Information</h2>
                     </div>
                     <div className="px-6 py-5 space-y-4">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <p className="text-sm text-gray-300 mb-1">Name</p>
-                          <p className="text-base font-medium text-white">{customerProfile.name}</p>
+                          <p className="text-sm text-master-text-secondary-dark mb-1">Name</p>
+                          <p className="text-base font-medium text-master-text-primary-dark">{customerProfile.name}</p>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-300 mb-1">Email</p>
+                          <p className="text-sm text-master-text-secondary-dark mb-1">Email</p>
                           <a
                             href={`mailto:${customerProfile.email}`}
                             className="text-base font-medium text-amber-400 hover:text-blue-700 transition-colors"
@@ -535,7 +535,7 @@ const UV_AdminCustomerDetail: React.FC = () => {
                           </a>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-300 mb-1">Phone</p>
+                          <p className="text-sm text-master-text-secondary-dark mb-1">Phone</p>
                           <a
                             href={`tel:${customerProfile.phone}`}
                             className="text-base font-medium text-amber-400 hover:text-blue-700 transition-colors"
@@ -544,22 +544,22 @@ const UV_AdminCustomerDetail: React.FC = () => {
                           </a>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-300 mb-1">Type</p>
+                          <p className="text-sm text-master-text-secondary-dark mb-1">Type</p>
                           <span
                             className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
                               customerProfile.is_registered
                                 ? 'bg-green-900/30 text-green-400'
-                                : 'bg-gray-100 text-gray-200'
+                                : 'bg-gray-100 text-master-text-secondary-dark'
                             }`}
                           >
                             {customerProfile.is_registered ? 'Registered' : 'Guest'}
                           </span>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-300 mb-1">
+                          <p className="text-sm text-master-text-secondary-dark mb-1">
                             {customerProfile.is_registered ? 'Member Since' : 'First Booking'}
                           </p>
-                          <p className="text-base font-medium text-white">
+                          <p className="text-base font-medium text-master-text-primary-dark">
                             {formatDate(customerProfile.created_at)}
                           </p>
                         </div>
@@ -570,43 +570,43 @@ const UV_AdminCustomerDetail: React.FC = () => {
                   {/* Statistics Card */}
                   <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 overflow-hidden">
                     <div className="px-6 py-5 border-b border-white/10">
-                      <h2 className="text-xl font-semibold text-white">Statistics</h2>
+                      <h2 className="text-xl font-semibold text-master-text-primary-dark">Statistics</h2>
                     </div>
                     <div className="px-6 py-5">
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                         <div className="text-center">
-                          <p className="text-3xl font-bold text-white">{customerProfile.total_bookings}</p>
-                          <p className="text-sm text-gray-300 mt-1">Total Bookings</p>
+                          <p className="text-3xl font-bold text-master-text-primary-dark">{customerProfile.total_bookings}</p>
+                          <p className="text-sm text-master-text-secondary-dark mt-1">Total Bookings</p>
                         </div>
                         <div className="text-center">
                           <p className="text-3xl font-bold text-green-600">{customerProfile.completed_bookings}</p>
-                          <p className="text-sm text-gray-300 mt-1">Completed</p>
+                          <p className="text-sm text-master-text-secondary-dark mt-1">Completed</p>
                         </div>
                         <div className="text-center">
                           <p className="text-3xl font-bold text-red-600">{customerProfile.cancelled_bookings}</p>
-                          <p className="text-sm text-gray-300 mt-1">Cancelled</p>
+                          <p className="text-sm text-master-text-secondary-dark mt-1">Cancelled</p>
                         </div>
                         <div className="text-center">
                           <p className="text-3xl font-bold text-orange-600">{customerProfile.no_shows}</p>
-                          <p className="text-sm text-gray-300 mt-1">No-shows</p>
+                          <p className="text-sm text-master-text-secondary-dark mt-1">No-shows</p>
                         </div>
                       </div>
                       <div className="mt-6 pt-6 border-t border-white/10 grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
-                          <p className="text-sm text-gray-300 mb-1">Favorite Service</p>
-                          <p className="text-base font-medium text-white">
+                          <p className="text-sm text-master-text-secondary-dark mb-1">Favorite Service</p>
+                          <p className="text-base font-medium text-master-text-primary-dark">
                             {statistics?.favoriteService || 'N/A'}
                           </p>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-300 mb-1">Average Frequency</p>
-                          <p className="text-base font-medium text-white">
+                          <p className="text-sm text-master-text-secondary-dark mb-1">Average Frequency</p>
+                          <p className="text-base font-medium text-master-text-primary-dark">
                             {statistics?.averageFrequency || 'N/A'}
                           </p>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-300 mb-1">Last Visit</p>
-                          <p className="text-base font-medium text-white">
+                          <p className="text-sm text-master-text-secondary-dark mb-1">Last Visit</p>
+                          <p className="text-base font-medium text-master-text-primary-dark">
                             {formatDate(customerProfile.last_booking_date)}
                           </p>
                         </div>
@@ -617,13 +617,13 @@ const UV_AdminCustomerDetail: React.FC = () => {
                   {/* Quick Actions */}
                   <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 overflow-hidden">
                     <div className="px-6 py-5 border-b border-white/10">
-                      <h2 className="text-xl font-semibold text-white">Quick Actions</h2>
+                      <h2 className="text-xl font-semibold text-master-text-primary-dark">Quick Actions</h2>
                     </div>
                     <div className="px-6 py-5">
                       <div className="flex flex-col sm:flex-row gap-4">
                         <button
                           onClick={handleCreateBooking}
-                          className="flex items-center justify-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"
+                          className="flex items-center justify-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors"
                         >
                           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -632,7 +632,7 @@ const UV_AdminCustomerDetail: React.FC = () => {
                         </button>
                         <a
                           href={`mailto:${customerProfile.email}`}
-                          className="flex items-center justify-center px-6 py-3 bg-gray-100 text-white rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                          className="flex items-center justify-center px-6 py-3 bg-gray-100 text-master-text-primary-dark rounded-lg font-medium hover:bg-gray-200 transition-colors"
                         >
                           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -641,7 +641,7 @@ const UV_AdminCustomerDetail: React.FC = () => {
                         </a>
                         <a
                           href={`tel:${customerProfile.phone}`}
-                          className="flex items-center justify-center px-6 py-3 bg-gray-100 text-white rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                          className="flex items-center justify-center px-6 py-3 bg-gray-100 text-master-text-primary-dark rounded-lg font-medium hover:bg-gray-200 transition-colors"
                         >
                           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -659,14 +659,14 @@ const UV_AdminCustomerDetail: React.FC = () => {
           {activeTab === 'bookings' && (
             <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 overflow-hidden">
               <div className="px-6 py-5 border-b border-white/10">
-                <h2 className="text-xl font-semibold text-white">Booking History</h2>
+                <h2 className="text-xl font-semibold text-master-text-primary-dark">Booking History</h2>
               </div>
 
               {/* Filters */}
               <div className="px-6 py-4 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] border-b border-white/10">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label htmlFor="status-filter" className="block text-sm font-medium text-gray-300 mb-1">
+                    <label htmlFor="status-filter" className="block text-sm font-medium text-master-text-secondary-dark mb-1">
                       Status
                     </label>
                     <select
@@ -683,7 +683,7 @@ const UV_AdminCustomerDetail: React.FC = () => {
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="start-date" className="block text-sm font-medium text-gray-300 mb-1">
+                    <label htmlFor="start-date" className="block text-sm font-medium text-master-text-secondary-dark mb-1">
                       Start Date
                     </label>
                     <input
@@ -695,7 +695,7 @@ const UV_AdminCustomerDetail: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="end-date" className="block text-sm font-medium text-gray-300 mb-1">
+                    <label htmlFor="end-date" className="block text-sm font-medium text-master-text-secondary-dark mb-1">
                       End Date
                     </label>
                     <input
@@ -714,30 +714,30 @@ const UV_AdminCustomerDetail: React.FC = () => {
                 {loadingBookings ? (
                   <div className="px-6 py-12 text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-red-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-300">Loading bookings...</p>
+                    <p className="mt-4 text-master-text-secondary-dark">Loading bookings...</p>
                   </div>
                 ) : bookingsError ? (
                   <div className="px-6 py-12 text-center">
                     <p className="text-red-600 font-medium">Failed to load bookings</p>
-                    <p className="text-sm text-gray-300 mt-1">{(bookingsError as any)?.message || 'Please try again'}</p>
+                    <p className="text-sm text-master-text-secondary-dark mt-1">{(bookingsError as any)?.message || 'Please try again'}</p>
                   </div>
                 ) : customerBookings && customerBookings.length > 0 ? (
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
                       <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-master-text-muted-dark uppercase tracking-wider">
                           Ticket
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-master-text-muted-dark uppercase tracking-wider">
                           Date & Time
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-master-text-muted-dark uppercase tracking-wider">
                           Service
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-master-text-muted-dark uppercase tracking-wider">
                           Status
                         </th>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-right text-xs font-medium text-master-text-muted-dark uppercase tracking-wider">
                           Actions
                         </th>
                       </tr>
@@ -753,10 +753,10 @@ const UV_AdminCustomerDetail: React.FC = () => {
                               {booking.ticket_number}
                             </Link>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-white">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-master-text-primary-dark">
                             {formatDate(booking.appointment_date)} at {booking.appointment_time}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-white">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-master-text-primary-dark">
                             {booking.service_name}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
@@ -778,11 +778,11 @@ const UV_AdminCustomerDetail: React.FC = () => {
                   </table>
                 ) : (
                   <div className="px-6 py-12 text-center">
-                    <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-16 h-16 text-master-text-muted-dark mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <p className="text-gray-300 font-medium">No bookings found</p>
-                    <p className="text-sm text-gray-400 mt-1">This customer hasn't made any bookings yet</p>
+                    <p className="text-master-text-secondary-dark font-medium">No bookings found</p>
+                    <p className="text-sm text-master-text-muted-dark mt-1">This customer hasn't made any bookings yet</p>
                   </div>
                 )}
               </div>
@@ -794,8 +794,8 @@ const UV_AdminCustomerDetail: React.FC = () => {
               {/* Add Note Card */}
               <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 overflow-hidden">
                 <div className="px-6 py-5 border-b border-white/10">
-                  <h2 className="text-xl font-semibold text-white">Private Notes About This Customer</h2>
-                  <p className="text-sm text-gray-300 mt-1">Notes are shared with all admins for institutional knowledge</p>
+                  <h2 className="text-xl font-semibold text-master-text-primary-dark">Private Notes About This Customer</h2>
+                  <p className="text-sm text-master-text-secondary-dark mt-1">Notes are shared with all admins for institutional knowledge</p>
                 </div>
                 <div className="px-6 py-5">
                   <textarea
@@ -807,17 +807,17 @@ const UV_AdminCustomerDetail: React.FC = () => {
                     className="w-full px-4 py-3 border-2 border-white/20 rounded-lg focus:outline-none focus:ring-4 focus:ring-red-100 focus:border-blue-500 resize-none"
                   />
                   <div className="flex items-center justify-between mt-3">
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-master-text-muted-dark">
                       {newNoteText.length} / 2000 characters
                     </p>
                     <button
                       onClick={handleAddNote}
                       disabled={newNoteText.trim().length === 0 || addNoteMutation.isPending}
-                      className="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {addNoteMutation.isPending ? (
                         <span className="flex items-center">
-                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-master-text-primary-dark" fill="none" viewBox="0 0 24 24">
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                           </svg>
@@ -834,18 +834,18 @@ const UV_AdminCustomerDetail: React.FC = () => {
               {/* Previous Notes List */}
               <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 overflow-hidden">
                 <div className="px-6 py-5 border-b border-white/10">
-                  <h2 className="text-xl font-semibold text-white">Previous Notes</h2>
+                  <h2 className="text-xl font-semibold text-master-text-primary-dark">Previous Notes</h2>
                 </div>
                 <div className="divide-y divide-gray-200">
                   {loadingNotes ? (
                     <div className="px-6 py-12 text-center">
                       <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-red-600 mx-auto"></div>
-                      <p className="mt-4 text-gray-300">Loading notes...</p>
+                      <p className="mt-4 text-master-text-secondary-dark">Loading notes...</p>
                     </div>
                   ) : notesError ? (
                     <div className="px-6 py-12 text-center">
                       <p className="text-red-600 font-medium">Failed to load notes</p>
-                      <p className="text-sm text-gray-300 mt-1">{(notesError as any)?.message || 'Please try again'}</p>
+                      <p className="text-sm text-master-text-secondary-dark mt-1">{(notesError as any)?.message || 'Please try again'}</p>
                     </div>
                   ) : customerNotes && customerNotes.length > 0 ? (
                     customerNotes.map((note) => (
@@ -860,18 +860,18 @@ const UV_AdminCustomerDetail: React.FC = () => {
                               className="w-full px-4 py-3 border-2 border-white/20 rounded-lg focus:outline-none focus:ring-4 focus:ring-red-100 focus:border-blue-500 resize-none"
                             />
                             <div className="flex items-center justify-between">
-                              <p className="text-sm text-gray-400">{editNoteText.length} / 2000 characters</p>
+                              <p className="text-sm text-master-text-muted-dark">{editNoteText.length} / 2000 characters</p>
                               <div className="flex gap-2">
                                 <button
                                   onClick={cancelEditingNote}
-                                  className="px-4 py-2 bg-gray-100 text-gray-300 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                                  className="px-4 py-2 bg-gray-100 text-master-text-secondary-dark rounded-lg font-medium hover:bg-gray-200 transition-colors"
                                 >
                                   Cancel
                                 </button>
                                 <button
                                   onClick={() => handleEditNote(note.note_id)}
                                   disabled={editNoteText.trim().length === 0 || editNoteMutation.isPending}
-                                  className="px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                  className="px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                   {editNoteMutation.isPending ? 'Saving...' : 'Save'}
                                 </button>
@@ -880,9 +880,9 @@ const UV_AdminCustomerDetail: React.FC = () => {
                           </div>
                         ) : (
                           <>
-                            <p className="text-white whitespace-pre-wrap mb-3">{note.note_text}</p>
+                            <p className="text-master-text-primary-dark whitespace-pre-wrap mb-3">{note.note_text}</p>
                             <div className="flex items-center justify-between text-sm">
-                              <div className="text-gray-300">
+                              <div className="text-master-text-secondary-dark">
                                 <span className="font-medium">Created by:</span> {note.created_by}
                                 <span className="mx-2">•</span>
                                 <span>{formatDate(note.created_at)}</span>
@@ -908,11 +908,11 @@ const UV_AdminCustomerDetail: React.FC = () => {
                     ))
                   ) : (
                     <div className="px-6 py-12 text-center">
-                      <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-16 h-16 text-master-text-muted-dark mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
-                      <p className="text-gray-300 font-medium">No notes yet</p>
-                      <p className="text-sm text-gray-400 mt-1">Add the first note about this customer</p>
+                      <p className="text-master-text-secondary-dark font-medium">No notes yet</p>
+                      <p className="text-sm text-master-text-muted-dark mt-1">Add the first note about this customer</p>
                     </div>
                   )}
                 </div>
@@ -927,10 +927,10 @@ const UV_AdminCustomerDetail: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-2xl max-w-md w-full">
             <div className="px-6 py-5 border-b border-white/10">
-              <h3 className="text-xl font-semibold text-white">Delete Note?</h3>
+              <h3 className="text-xl font-semibold text-master-text-primary-dark">Delete Note?</h3>
             </div>
             <div className="px-6 py-5">
-              <p className="text-gray-300">
+              <p className="text-master-text-secondary-dark">
                 Are you sure you want to delete this note? This action cannot be undone.
               </p>
             </div>
@@ -938,14 +938,14 @@ const UV_AdminCustomerDetail: React.FC = () => {
               <button
                 onClick={cancelDeleteNote}
                 disabled={deleteNoteMutation.isPending}
-                className="px-4 py-2 bg-gray-100 text-gray-300 rounded-lg font-medium hover:bg-gray-200 transition-colors disabled:opacity-50"
+                className="px-4 py-2 bg-gray-100 text-master-text-secondary-dark rounded-lg font-medium hover:bg-gray-200 transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDeleteNote}
                 disabled={deleteNoteMutation.isPending}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors disabled:opacity-50"
+                className="px-4 py-2 bg-red-600 text-master-text-primary-dark rounded-lg font-medium hover:bg-red-700 transition-colors disabled:opacity-50"
               >
                 {deleteNoteMutation.isPending ? 'Deleting...' : 'Delete Note'}
               </button>

@@ -164,14 +164,14 @@ const GV_LoadingOverlay: React.FC = () => {
             
             {/* Loading Message */}
             {message && (
-              <p className="text-white text-lg font-medium text-center max-w-md leading-relaxed">
+              <p className="text-master-text-primary-dark text-lg font-medium text-center max-w-md leading-relaxed">
                 {message}
               </p>
             )}
             
             {/* Subtle hint for cancellable operations */}
             {contextState && !isAuthLoading && (
-              <p className="text-gray-300 text-xs text-center mt-2">
+              <p className="text-master-text-secondary-dark text-xs text-center mt-2">
                 Press ESC to cancel
               </p>
             )}
@@ -200,7 +200,7 @@ const GV_LoadingOverlay: React.FC = () => {
             
             {/* Loading Message */}
             {message && (
-              <p className="text-gray-700 text-sm font-medium text-center max-w-sm">
+              <p className="text-master-text-secondary-dark text-sm font-medium text-center max-w-sm">
                 {message}
               </p>
             )}

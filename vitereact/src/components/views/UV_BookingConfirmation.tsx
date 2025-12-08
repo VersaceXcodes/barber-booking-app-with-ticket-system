@@ -298,11 +298,11 @@ const UV_BookingConfirmation: React.FC = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-white mb-2">No Ticket Number</h2>
-            <p className="text-gray-300 mb-6">Please provide a valid ticket number.</p>
+            <h2 className="text-2xl font-bold text-master-text-primary-dark mb-2">No Ticket Number</h2>
+            <p className="text-master-text-secondary-dark mb-6">Please provide a valid ticket number.</p>
             <Link 
               to="/search"
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-medium rounded-lg hover:from-red-700 hover:to-red-800 transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark font-medium rounded-lg hover:from-red-700 hover:to-red-800 transition-colors"
             >
               Search Your Bookings
             </Link>
@@ -318,7 +318,7 @@ const UV_BookingConfirmation: React.FC = () => {
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B]">
           <div className="text-center">
             <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-red-600 mx-auto"></div>
-            <p className="mt-4 text-gray-300 text-lg">Loading confirmation...</p>
+            <p className="mt-4 text-master-text-secondary-dark text-lg">Loading confirmation...</p>
           </div>
         </div>
       </>
@@ -335,11 +335,11 @@ const UV_BookingConfirmation: React.FC = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-white mb-2">Booking Not Found</h2>
-            <p className="text-gray-300 mb-6">We couldn't find your booking confirmation.</p>
+            <h2 className="text-2xl font-bold text-master-text-primary-dark mb-2">Booking Not Found</h2>
+            <p className="text-master-text-secondary-dark mb-6">We couldn't find your booking confirmation.</p>
             <Link 
               to="/search"
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-medium rounded-lg hover:from-red-700 hover:to-red-800 transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark font-medium rounded-lg hover:from-red-700 hover:to-red-800 transition-colors"
             >
               Search Your Bookings
             </Link>
@@ -368,10 +368,10 @@ const UV_BookingConfirmation: React.FC = () => {
                 <Check className="w-12 h-12 text-green-600" strokeWidth={3} />
               )}
             </div>
-            <h1 className="text-4xl font-bold text-white mb-2">
+            <h1 className="text-4xl font-bold text-master-text-primary-dark mb-2">
               {serviceDetails?.name.toLowerCase().includes('call') ? 'Call-Out Confirmed!' : 'Booking Confirmed!'}
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-master-text-secondary-dark">
               {serviceDetails?.name.toLowerCase().includes('call') 
                 ? 'A Master Fade barber will arrive at your location' 
                 : 'Your appointment is all set'}
@@ -386,11 +386,11 @@ const UV_BookingConfirmation: React.FC = () => {
                   <p className={`text-sm font-medium mb-1 ${serviceDetails?.name.toLowerCase().includes('call') ? 'text-orange-100' : 'text-blue-100'}`}>
                     {serviceDetails?.name.toLowerCase().includes('call') ? 'Call-Out Booking Number' : 'Ticket Number'}
                   </p>
-                  <p className="text-white text-3xl font-bold tracking-wide">{booking.ticket_number}</p>
+                  <p className="text-master-text-primary-dark text-3xl font-bold tracking-wide">{booking.ticket_number}</p>
                 </div>
                 <button
                   onClick={handleCopyTicketNumber}
-                  className="flex items-center gap-2 px-4 py-2 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-all duration-200 backdrop-blur-sm"
+                  className="flex items-center gap-2 px-4 py-2 bg-white/20 text-master-text-primary-dark rounded-lg hover:bg-white/30 transition-all duration-200 backdrop-blur-sm"
                   aria-label="Copy ticket number to clipboard"
                 >
                   {copied ? (
@@ -431,7 +431,7 @@ const UV_BookingConfirmation: React.FC = () => {
                     <span className="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
                     Upcoming
                   </div>
-                  <p className="text-gray-300 text-sm leading-relaxed">
+                  <p className="text-master-text-secondary-dark text-sm leading-relaxed">
                     Save this ticket number or scan the QR code when you arrive for your appointment.
                   </p>
                 </div>
@@ -441,40 +441,40 @@ const UV_BookingConfirmation: React.FC = () => {
           
           {/* Booking Summary */}
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6 lg:p-8 mb-8">
-            <h2 className="text-2xl font-bold text-white mb-6">Booking Summary</h2>
+            <h2 className="text-2xl font-bold text-master-text-primary-dark mb-6">Booking Summary</h2>
             
             <div className="space-y-6">
               {/* Appointment Details */}
               <div className="border-l-4 border-red-600 pl-4">
-                <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Appointment Details</h3>
+                <h3 className="text-sm font-semibold text-master-text-muted-dark uppercase tracking-wide mb-2">Appointment Details</h3>
                 {serviceDetails && (
-                  <p className="text-lg font-semibold text-white mb-1">{serviceDetails.name}</p>
+                  <p className="text-lg font-semibold text-master-text-primary-dark mb-1">{serviceDetails.name}</p>
                 )}
-                <p className="text-white font-medium mb-1">
+                <p className="text-master-text-primary-dark font-medium mb-1">
                   {formatDate(booking.appointment_date)} at {formatTime(booking.appointment_time)}
                 </p>
-                <p className="text-gray-300 text-sm">
+                <p className="text-master-text-secondary-dark text-sm">
                   Duration: {booking.slot_duration} minutes (ending at {calculateEndTime(booking.appointment_time, booking.slot_duration)})
                 </p>
               </div>
               
               {/* Contact Information */}
               <div className="border-l-4 border-indigo-600 pl-4">
-                <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Contact Information</h3>
-                <p className="text-white font-medium mb-1">{booking.customer_name}</p>
-                <p className="text-gray-300 text-sm mb-1">
+                <h3 className="text-sm font-semibold text-master-text-muted-dark uppercase tracking-wide mb-2">Contact Information</h3>
+                <p className="text-master-text-primary-dark font-medium mb-1">{booking.customer_name}</p>
+                <p className="text-master-text-secondary-dark text-sm mb-1">
                   <a href={`tel:${booking.customer_phone}`} className="hover:text-amber-400 transition-colors">
                     {booking.customer_phone}
                   </a>
                 </p>
-                <p className="text-gray-300 text-sm">
+                <p className="text-master-text-secondary-dark text-sm">
                   <a href={`mailto:${booking.customer_email}`} className="hover:text-amber-400 transition-colors">
                     {booking.customer_email}
                   </a>
                 </p>
                 {booking.booking_for_name && (
-                  <p className="text-gray-300 text-sm mt-2">
-                    Booking for: <span className="font-medium text-white">{booking.booking_for_name}</span>
+                  <p className="text-master-text-secondary-dark text-sm mt-2">
+                    Booking for: <span className="font-medium text-master-text-primary-dark">{booking.booking_for_name}</span>
                   </p>
                 )}
               </div>
@@ -482,11 +482,11 @@ const UV_BookingConfirmation: React.FC = () => {
               {/* Service Location (Call-Out Only) */}
               {serviceDetails?.name.toLowerCase().includes('call') && (
                 <div className="border-l-4 border-orange-600 pl-4">
-                  <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2 flex items-center">
+                  <h3 className="text-sm font-semibold text-master-text-muted-dark uppercase tracking-wide mb-2 flex items-center">
                     <MapPin className="w-4 h-4 mr-1 text-orange-600" />
                     Service Location
                   </h3>
-                  <p className="text-white font-medium mb-1">Address provided in booking details</p>
+                  <p className="text-master-text-primary-dark font-medium mb-1">Address provided in booking details</p>
                   <div className="mt-3 p-4 bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 rounded-lg">
                     <p className="text-orange-900 text-sm font-medium mb-2 flex items-center">
                       <Clock className="w-4 h-4 mr-1" />
@@ -505,15 +505,15 @@ const UV_BookingConfirmation: React.FC = () => {
               {/* Special Requests */}
               {booking.special_request && (
                 <div className="border-l-4 border-purple-600 pl-4">
-                  <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Special Request</h3>
-                  <p className="text-white">{booking.special_request}</p>
+                  <h3 className="text-sm font-semibold text-master-text-muted-dark uppercase tracking-wide mb-2">Special Request</h3>
+                  <p className="text-master-text-primary-dark">{booking.special_request}</p>
                 </div>
               )}
               
               {/* Inspiration Photos */}
               {booking.inspiration_photos && booking.inspiration_photos.length > 0 && (
                 <div className="border-l-4 border-pink-600 pl-4">
-                  <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Inspiration Photos</h3>
+                  <h3 className="text-sm font-semibold text-master-text-muted-dark uppercase tracking-wide mb-2">Inspiration Photos</h3>
                   <div className="flex gap-2 flex-wrap">
                     {booking.inspiration_photos.map((photo, index) => (
                       <img 
@@ -531,7 +531,7 @@ const UV_BookingConfirmation: React.FC = () => {
           
           {/* What Happens Next */}
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6 lg:p-8 mb-8">
-            <h2 className="text-2xl font-bold text-white mb-6">What happens next?</h2>
+            <h2 className="text-2xl font-bold text-master-text-primary-dark mb-6">What happens next?</h2>
             
             <div className="space-y-4">
               <div className="flex items-start gap-4">
@@ -541,8 +541,8 @@ const UV_BookingConfirmation: React.FC = () => {
                   </div>
                 </div>
                 <div>
-                  <p className="text-white font-medium">Confirmation sent to your email and phone</p>
-                  <p className="text-gray-300 text-sm">Check your inbox and messages</p>
+                  <p className="text-master-text-primary-dark font-medium">Confirmation sent to your email and phone</p>
+                  <p className="text-master-text-secondary-dark text-sm">Check your inbox and messages</p>
                 </div>
               </div>
               
@@ -554,8 +554,8 @@ const UV_BookingConfirmation: React.FC = () => {
                     </div>
                   </div>
                   <div>
-                    <p className="text-white font-medium">Barber assigned and en route notification</p>
-                    <p className="text-gray-300 text-sm">You'll be notified when your barber is on the way</p>
+                    <p className="text-master-text-primary-dark font-medium">Barber assigned and en route notification</p>
+                    <p className="text-master-text-secondary-dark text-sm">You'll be notified when your barber is on the way</p>
                   </div>
                 </div>
               )}
@@ -567,8 +567,8 @@ const UV_BookingConfirmation: React.FC = () => {
                   </div>
                 </div>
                 <div>
-                  <p className="text-white font-medium">Reminder will be sent {shopInfo.reminder_hours_before} hours before appointment</p>
-                  <p className="text-gray-300 text-sm">So you don't forget!</p>
+                  <p className="text-master-text-primary-dark font-medium">Reminder will be sent {shopInfo.reminder_hours_before} hours before appointment</p>
+                  <p className="text-master-text-secondary-dark text-sm">So you don't forget!</p>
                 </div>
               </div>
               
@@ -580,8 +580,8 @@ const UV_BookingConfirmation: React.FC = () => {
                     </div>
                   </div>
                   <div>
-                    <p className="text-white font-medium">Arrival within 15-minute window</p>
-                    <p className="text-gray-300 text-sm">Our barber will arrive close to your scheduled time</p>
+                    <p className="text-master-text-primary-dark font-medium">Arrival within 15-minute window</p>
+                    <p className="text-master-text-secondary-dark text-sm">Our barber will arrive close to your scheduled time</p>
                   </div>
                 </div>
               )}
@@ -593,8 +593,8 @@ const UV_BookingConfirmation: React.FC = () => {
                   </div>
                 </div>
                 <div>
-                  <p className="text-white font-medium">You can cancel up to {shopInfo.same_day_cutoff_hours} hours before</p>
-                  <p className="text-gray-300 text-sm">Free cancellation policy</p>
+                  <p className="text-master-text-primary-dark font-medium">You can cancel up to {shopInfo.same_day_cutoff_hours} hours before</p>
+                  <p className="text-master-text-secondary-dark text-sm">Free cancellation policy</p>
                 </div>
               </div>
             </div>
@@ -602,7 +602,7 @@ const UV_BookingConfirmation: React.FC = () => {
           
           {/* Action Buttons */}
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6 lg:p-8 mb-8">
-            <h2 className="text-2xl font-bold text-white mb-6">Quick Actions</h2>
+            <h2 className="text-2xl font-bold text-master-text-primary-dark mb-6">Quick Actions</h2>
             
             {resendSuccess && (
               <div className={`mb-4 p-4 rounded-lg ${resendSuccess.includes('Failed') ? 'bg-red-50 text-red-300' : 'bg-green-50 text-green-300'}`}>
@@ -613,7 +613,7 @@ const UV_BookingConfirmation: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <button
                 onClick={handleAddToCalendar}
-                className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-medium rounded-lg hover:from-red-700 hover:to-red-800 hover:shadow-lg transition-all duration-200"
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark font-medium rounded-lg hover:from-red-700 hover:to-red-800 hover:shadow-lg transition-all duration-200"
               >
                 <Calendar className="w-5 h-5" />
                 Add to Calendar
@@ -622,7 +622,7 @@ const UV_BookingConfirmation: React.FC = () => {
               <button
                 onClick={handleResendConfirmation}
                 disabled={resendMutation.isPending}
-                className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 text-white font-medium rounded-lg hover:bg-gray-200 transition-colors border border-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 text-master-text-primary-dark font-medium rounded-lg hover:bg-gray-200 transition-colors border border-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <RefreshCw className={`w-5 h-5 ${resendMutation.isPending ? 'animate-spin' : ''}`} />
                 {resendMutation.isPending ? 'Sending...' : 'Resend Confirmation'}
@@ -630,7 +630,7 @@ const UV_BookingConfirmation: React.FC = () => {
               
               <button
                 onClick={handlePrintTicket}
-                className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 text-white font-medium rounded-lg hover:bg-gray-200 transition-colors border border-white/20"
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 text-master-text-primary-dark font-medium rounded-lg hover:bg-gray-200 transition-colors border border-white/20"
               >
                 <Printer className="w-5 h-5" />
                 Print Ticket
@@ -638,7 +638,7 @@ const UV_BookingConfirmation: React.FC = () => {
               
               <button
                 onClick={handleBookAnother}
-                className="flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 hover:shadow-lg transition-all duration-200"
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 text-master-text-primary-dark font-medium rounded-lg hover:bg-indigo-700 hover:shadow-lg transition-all duration-200"
               >
                 <ChevronRight className="w-5 h-5" />
                 Book Another Appointment
@@ -647,7 +647,7 @@ const UV_BookingConfirmation: React.FC = () => {
               {isAuthenticated ? (
                 <Link
                   to="/dashboard"
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 hover:shadow-lg transition-all duration-200 sm:col-span-2"
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-master-text-primary-dark font-medium rounded-lg hover:bg-green-700 hover:shadow-lg transition-all duration-200 sm:col-span-2"
                 >
                   Go to My Dashboard
                   <ChevronRight className="w-5 h-5" />
@@ -655,7 +655,7 @@ const UV_BookingConfirmation: React.FC = () => {
               ) : (
                 <Link
                   to="/search"
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 text-white font-medium rounded-lg hover:bg-gray-200 transition-colors border border-white/20 sm:col-span-2"
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 text-master-text-primary-dark font-medium rounded-lg hover:bg-gray-200 transition-colors border border-white/20 sm:col-span-2"
                 >
                   Search Your Bookings
                   <ChevronRight className="w-5 h-5" />
@@ -666,17 +666,17 @@ const UV_BookingConfirmation: React.FC = () => {
           
           {/* Shop Information */}
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl shadow-lg border border-gray-100 p-6 lg:p-8 mb-8">
-            <h2 className="text-2xl font-bold text-white mb-6">Shop Information</h2>
+            <h2 className="text-2xl font-bold text-master-text-primary-dark mb-6">Shop Information</h2>
             
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-semibold text-white mb-2">{shopInfo.shop_name}</h3>
+                <h3 className="text-lg font-semibold text-master-text-primary-dark mb-2">{shopInfo.shop_name}</h3>
               </div>
               
               <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-gray-400 flex-shrink-0 mt-1" />
+                <MapPin className="w-5 h-5 text-master-text-muted-dark flex-shrink-0 mt-1" />
                 <div className="flex-1">
-                  <p className="text-white">{shopInfo.shop_address}</p>
+                  <p className="text-master-text-primary-dark">{shopInfo.shop_address}</p>
                   <a 
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(shopInfo.shop_address)}`}
                     target="_blank"
@@ -690,22 +690,22 @@ const UV_BookingConfirmation: React.FC = () => {
               </div>
               
               <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-gray-400" />
-                <a href={`tel:${shopInfo.shop_phone}`} className="text-white hover:text-amber-400 transition-colors">
+                <Phone className="w-5 h-5 text-master-text-muted-dark" />
+                <a href={`tel:${shopInfo.shop_phone}`} className="text-master-text-primary-dark hover:text-amber-400 transition-colors">
                   {shopInfo.shop_phone}
                 </a>
               </div>
               
               <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-gray-400" />
-                <a href={`mailto:${shopInfo.shop_email}`} className="text-white hover:text-amber-400 transition-colors">
+                <Mail className="w-5 h-5 text-master-text-muted-dark" />
+                <a href={`mailto:${shopInfo.shop_email}`} className="text-master-text-primary-dark hover:text-amber-400 transition-colors">
                   {shopInfo.shop_email}
                 </a>
               </div>
               
               <div className="flex items-start gap-3">
-                <Clock className="w-5 h-5 text-gray-400 flex-shrink-0 mt-1" />
-                <p className="text-white">{shopInfo.operating_hours}</p>
+                <Clock className="w-5 h-5 text-master-text-muted-dark flex-shrink-0 mt-1" />
+                <p className="text-master-text-primary-dark">{shopInfo.operating_hours}</p>
               </div>
             </div>
           </div>
@@ -721,7 +721,7 @@ const UV_BookingConfirmation: React.FC = () => {
                   Cancel This Booking
                 </Link>
               )}
-              <div className="flex items-center gap-2 text-gray-300">
+              <div className="flex items-center gap-2 text-master-text-secondary-dark">
                 <span className="text-sm">Need help?</span>
                 <a href={`tel:${shopInfo.shop_phone}`} className="text-amber-400 hover:text-blue-700 font-medium">
                   Contact Us

@@ -440,16 +440,16 @@ const UV_UserDashboard: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <h1 className="text-3xl font-bold text-white">
+                <h1 className="text-3xl font-bold text-master-text-primary-dark">
                   Welcome back, {firstName}!
                 </h1>
-                <p className="mt-1 text-sm text-gray-300">
+                <p className="mt-1 text-sm text-master-text-secondary-dark">
                   Member since {userStats.member_since}
                 </p>
               </div>
               <button
                 onClick={() => transitionTo('/book/service')}
-                className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-medium rounded-lg hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark font-medium rounded-lg hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-4 focus:ring-red-100 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 <Calendar className="w-5 h-5 mr-2" />
                 Book Appointment
@@ -505,7 +505,7 @@ const UV_UserDashboard: React.FC = () => {
                 className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                   selectedTab === 'upcoming'
                     ? 'border-blue-500 text-amber-400'
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-white/20'
+                    : 'border-transparent text-master-text-muted-dark hover:text-master-text-secondary-dark hover:border-white/20'
                 }`}
               >
                 Upcoming Bookings
@@ -515,7 +515,7 @@ const UV_UserDashboard: React.FC = () => {
                 className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                   selectedTab === 'past'
                     ? 'border-blue-500 text-amber-400'
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-white/20'
+                    : 'border-transparent text-master-text-muted-dark hover:text-master-text-secondary-dark hover:border-white/20'
                 }`}
               >
                 Past Bookings
@@ -525,7 +525,7 @@ const UV_UserDashboard: React.FC = () => {
                 className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                   selectedTab === 'cancelled'
                     ? 'border-blue-500 text-amber-400'
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-white/20'
+                    : 'border-transparent text-master-text-muted-dark hover:text-master-text-secondary-dark hover:border-white/20'
                 }`}
               >
                 Cancelled
@@ -559,7 +559,7 @@ const UV_UserDashboard: React.FC = () => {
               </p>
               <button
                 onClick={() => refetch()}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                className="px-4 py-2 bg-red-600 text-master-text-primary-dark rounded-lg hover:bg-red-700 transition-colors"
               >
                 Try Again
               </button>
@@ -574,12 +574,12 @@ const UV_UserDashboard: React.FC = () => {
                 <div className="text-center py-12">
                   {selectedTab === 'upcoming' && (
                     <>
-                      <Calendar className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                      <h3 className="text-xl font-semibold text-white mb-2">No upcoming appointments</h3>
-                      <p className="text-gray-300 mb-6">You don't have any bookings scheduled yet.</p>
+                      <Calendar className="w-16 h-16 text-master-text-muted-dark mx-auto mb-4" />
+                      <h3 className="text-xl font-semibold text-master-text-primary-dark mb-2">No upcoming appointments</h3>
+                      <p className="text-master-text-secondary-dark mb-6">You don't have any bookings scheduled yet.</p>
                       <Link
                         to="/book/service"
-                        className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-medium rounded-lg hover:from-red-700 hover:to-red-800 transition-colors"
+                        className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark font-medium rounded-lg hover:from-red-700 hover:to-red-800 transition-colors"
                       >
                         Book Now
                       </Link>
@@ -587,16 +587,16 @@ const UV_UserDashboard: React.FC = () => {
                   )}
                   {selectedTab === 'past' && (
                     <>
-                      <CheckCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                      <h3 className="text-xl font-semibold text-white mb-2">No past bookings yet</h3>
-                      <p className="text-gray-300">Your completed appointments will appear here.</p>
+                      <CheckCircle className="w-16 h-16 text-master-text-muted-dark mx-auto mb-4" />
+                      <h3 className="text-xl font-semibold text-master-text-primary-dark mb-2">No past bookings yet</h3>
+                      <p className="text-master-text-secondary-dark">Your completed appointments will appear here.</p>
                     </>
                   )}
                   {selectedTab === 'cancelled' && (
                     <>
-                      <XCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                      <h3 className="text-xl font-semibold text-white mb-2">No cancelled bookings</h3>
-                      <p className="text-gray-300">You haven't cancelled any appointments.</p>
+                      <XCircle className="w-16 h-16 text-master-text-muted-dark mx-auto mb-4" />
+                      <h3 className="text-xl font-semibold text-master-text-primary-dark mb-2">No cancelled bookings</h3>
+                      <p className="text-master-text-secondary-dark">You haven't cancelled any appointments.</p>
                     </>
                   )}
                 </div>
@@ -631,7 +631,7 @@ const UV_UserDashboard: React.FC = () => {
                                 </span>
                               )}
                               {selectedTab === 'past' && (
-                                <span className="px-3 py-1 bg-gray-100 text-gray-200 text-xs font-semibold rounded-full">
+                                <span className="px-3 py-1 bg-gray-100 text-master-text-secondary-dark text-xs font-semibold rounded-full">
                                   Completed
                                 </span>
                               )}
@@ -643,13 +643,13 @@ const UV_UserDashboard: React.FC = () => {
                             </div>
                             
                             <h3 className={`text-2xl font-bold mb-1 ${
-                              selectedTab === 'cancelled' ? 'text-gray-400 line-through' : 'text-white'
+                              selectedTab === 'cancelled' ? 'text-master-text-muted-dark line-through' : 'text-master-text-primary-dark'
                             }`}>
                               {formatDisplayDate(booking.appointment_date, booking.appointment_time)}
                             </h3>
                             
                             {booking.service_name && (
-                              <p className="text-gray-300">{booking.service_name}</p>
+                              <p className="text-master-text-secondary-dark">{booking.service_name}</p>
                             )}
                             
                             {selectedTab === 'upcoming' && booking.time_until_appointment && (
@@ -660,7 +660,7 @@ const UV_UserDashboard: React.FC = () => {
                             )}
                             
                             {selectedTab === 'cancelled' && booking.cancelled_at && (
-                              <p className="text-sm text-gray-400 mt-2">
+                              <p className="text-sm text-master-text-muted-dark mt-2">
                                 Cancelled on {new Date(booking.cancelled_at).toLocaleDateString('en-US', { 
                                   month: 'long', 
                                   day: 'numeric', 
@@ -674,7 +674,7 @@ const UV_UserDashboard: React.FC = () => {
                         {/* Special Request */}
                         {booking.special_request && (
                           <div className="mb-4 p-3 bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] rounded-lg border border-white/10">
-                            <p className="text-sm text-gray-300">
+                            <p className="text-sm text-master-text-secondary-dark">
                               <span className="font-medium">Special Request: </span>
                               {truncateText(booking.special_request, 100)}
                               {booking.special_request.length > 100 && (
@@ -703,7 +703,7 @@ const UV_UserDashboard: React.FC = () => {
                         <div className="flex flex-wrap gap-3">
                           <Link
                             to={`/booking/${booking.ticket_number}`}
-                            className="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-300 font-medium rounded-lg hover:bg-gray-200 transition-colors"
+                            className="inline-flex items-center px-4 py-2 bg-gray-100 text-master-text-secondary-dark font-medium rounded-lg hover:bg-gray-200 transition-colors"
                           >
                             View Details
                             <ChevronRight className="w-4 h-4 ml-1" />
@@ -730,7 +730,7 @@ const UV_UserDashboard: React.FC = () => {
                           {(selectedTab === 'past' || selectedTab === 'cancelled') && (
                             <button
                               onClick={() => handleQuickRebook(booking)}
-                              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white font-medium rounded-lg hover:from-red-700 hover:to-red-800 transition-colors shadow-md hover:shadow-lg"
+                              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-master-text-primary-dark font-medium rounded-lg hover:from-red-700 hover:to-red-800 transition-colors shadow-md hover:shadow-lg"
                             >
                               Book Again
                             </button>
@@ -764,16 +764,16 @@ const UV_UserDashboard: React.FC = () => {
                       <AlertCircle className="h-6 w-6 text-red-600" aria-hidden="true" />
                     </div>
                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left flex-1">
-                      <h3 className="text-lg leading-6 font-medium text-white" id="modal-title">
+                      <h3 className="text-lg leading-6 font-medium text-master-text-primary-dark" id="modal-title">
                         Cancel This Booking?
                       </h3>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-400 mb-4">
+                        <p className="text-sm text-master-text-muted-dark mb-4">
                           Are you sure you want to cancel this booking? This action cannot be undone.
                         </p>
                         
                         <div className="mb-4">
-                          <label htmlFor="cancellation-reason" className="block text-sm font-medium text-gray-300 mb-2">
+                          <label htmlFor="cancellation-reason" className="block text-sm font-medium text-master-text-secondary-dark mb-2">
                             Reason for cancellation (optional)
                           </label>
                           <textarea
@@ -786,7 +786,7 @@ const UV_UserDashboard: React.FC = () => {
                             className="w-full px-3 py-2 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-blue-500"
                             disabled={cancelModalState.isSubmitting}
                           />
-                          <p className="mt-1 text-xs text-gray-400 text-right">
+                          <p className="mt-1 text-xs text-master-text-muted-dark text-right">
                             {cancelModalState.reason.length}/200
                           </p>
                         </div>
@@ -799,11 +799,11 @@ const UV_UserDashboard: React.FC = () => {
                     type="button"
                     onClick={handleConfirmCancel}
                     disabled={cancelModalState.isSubmitting}
-                    className="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-master-text-primary-dark hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {cancelModalState.isSubmitting ? (
                       <span className="flex items-center">
-                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-master-text-primary-dark" fill="none" viewBox="0 0 24 24">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
@@ -817,7 +817,7 @@ const UV_UserDashboard: React.FC = () => {
                     type="button"
                     onClick={handleCloseCancelModal}
                     disabled={cancelModalState.isSubmitting}
-                    className="mt-3 w-full inline-flex justify-center rounded-lg border border-white/20 shadow-sm px-4 py-2 bg-[#2D0808] text-base font-medium text-gray-300 hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="mt-3 w-full inline-flex justify-center rounded-lg border border-white/20 shadow-sm px-4 py-2 bg-[#2D0808] text-base font-medium text-master-text-secondary-dark hover:bg-gradient-to-br from-[#2A0A0A] via-[#3D0F0F] to-[#5C1B1B] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     No, Keep Booking
                   </button>

@@ -255,14 +255,14 @@ const UV_EmailVerificationPending: React.FC = () => {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-[#2D0808] rounded-full mb-4">
                 <Mail className="w-8 h-8 text-amber-400" />
               </div>
-              <h1 className="text-2xl font-bold text-white">Verify Your Email</h1>
+              <h1 className="text-2xl font-bold text-master-text-primary-dark">Verify Your Email</h1>
             </div>
 
             {/* Content */}
             <div className="px-6 py-8">
               {/* Main Message */}
               <div className="text-center mb-6">
-                <p className="text-white text-lg font-medium mb-2">
+                <p className="text-master-text-primary-dark text-lg font-medium mb-2">
                   We sent a verification link to
                 </p>
                 <p className="text-amber-400 font-semibold text-lg break-all">
@@ -320,11 +320,11 @@ const UV_EmailVerificationPending: React.FC = () => {
 
               {/* Support Section */}
               <div className="border-t border-white/10 pt-6">
-                <p className="text-gray-300 font-medium mb-4">Didn't receive the email?</p>
+                <p className="text-master-text-secondary-dark font-medium mb-4">Didn't receive the email?</p>
                 
                 <div className="space-y-3">
                   {/* Check Spam Suggestion */}
-                  <p className="text-gray-300 text-sm flex items-start">
+                  <p className="text-master-text-secondary-dark text-sm flex items-start">
                     <span className="text-amber-400 mr-2">•</span>
                     Check your spam or junk folder
                   </p>
@@ -335,8 +335,8 @@ const UV_EmailVerificationPending: React.FC = () => {
                     disabled={!canResend || resendVerificationMutation.isPending}
                     className={`w-full flex items-center justify-center px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
                       canResend && !resendVerificationMutation.isPending
-                        ? 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white shadow-lg hover:shadow-xl'
-                        : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                        ? 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-master-text-primary-dark shadow-lg hover:shadow-xl'
+                        : 'bg-gray-100 text-master-text-muted-dark cursor-not-allowed'
                     }`}
                   >
                     {resendVerificationMutation.isPending ? (
@@ -380,7 +380,7 @@ const UV_EmailVerificationPending: React.FC = () => {
           </div>
 
           {/* Additional Note */}
-          <p className="text-center text-gray-300 text-sm mt-6 px-4">
+          <p className="text-center text-master-text-secondary-dark text-sm mt-6 px-4">
             For security reasons, please keep this page open while you check your email.
           </p>
         </div>
@@ -401,21 +401,21 @@ const UV_EmailVerificationPending: React.FC = () => {
               {/* Close Button */}
               <button
                 onClick={handleCloseChangeEmailModal}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-300 transition-colors"
+                className="absolute top-4 right-4 text-master-text-muted-dark hover:text-master-text-secondary-dark transition-colors"
                 aria-label="Close modal"
               >
                 <X className="w-6 h-6" />
               </button>
 
               {/* Modal Header */}
-              <h2 className="text-2xl font-bold text-white mb-6">
+              <h2 className="text-2xl font-bold text-master-text-primary-dark mb-6">
                 Change Email Address
               </h2>
 
               {/* Form */}
               <form onSubmit={handleChangeEmail} className="space-y-4">
                 <div>
-                  <label htmlFor="new-email" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label htmlFor="new-email" className="block text-sm font-medium text-master-text-secondary-dark mb-2">
                     New Email Address
                   </label>
                   <input
@@ -428,7 +428,7 @@ const UV_EmailVerificationPending: React.FC = () => {
                     placeholder="your.email@example.com"
                     className="w-full px-4 py-3 border-2 border-white/10 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-red-100 transition-all outline-none"
                   />
-                  <p className="text-gray-400 text-sm mt-2">
+                  <p className="text-master-text-muted-dark text-sm mt-2">
                     A new verification email will be sent to this address.
                   </p>
                 </div>
@@ -438,14 +438,14 @@ const UV_EmailVerificationPending: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleCloseChangeEmailModal}
-                    className="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-white rounded-lg font-medium transition-colors"
+                    className="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-master-text-primary-dark rounded-lg font-medium transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={changeEmailMutation.isPending || !newEmail.trim()}
-                    className="flex-1 px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+                    className="flex-1 px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-master-text-primary-dark rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
                   >
                     {changeEmailMutation.isPending ? (
                       <span className="flex items-center justify-center">

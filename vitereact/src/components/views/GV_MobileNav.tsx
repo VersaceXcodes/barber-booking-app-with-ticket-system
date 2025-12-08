@@ -232,22 +232,22 @@ const GV_MobileNav: React.FC = () => {
       >
         {/* Header with Close Button - Sticky */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white sticky top-0 z-10">
-          <h2 className="text-lg font-semibold text-gray-900">Menu</h2>
+          <h2 className="text-lg font-semibold text-master-text-primary-light">Menu</h2>
           <button
             ref={closeButtonRef}
             onClick={handleClose}
             className="p-2 rounded-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
             aria-label="Close menu"
           >
-            <X className="h-6 w-6 text-gray-700" />
+            <X className="h-6 w-6 text-master-text-secondary-dark" />
           </button>
         </div>
         
         {/* User Info Card - Only for authenticated users */}
         {isAuthenticated && currentUser && (
           <div className="p-4 bg-blue-50 border-b border-blue-100">
-            <p className="text-sm font-medium text-gray-900">{currentUser.name}</p>
-            <p className="text-xs text-gray-600 mt-1">{currentUser.email}</p>
+            <p className="text-sm font-medium text-master-text-primary-light">{currentUser.name}</p>
+            <p className="text-xs text-master-text-muted-dark mt-1">{currentUser.email}</p>
           </div>
         )}
         
@@ -263,7 +263,7 @@ const GV_MobileNav: React.FC = () => {
                 className={`block px-6 py-3 text-base font-medium transition-colors ${
                   isCurrentPage('/') 
                     ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-master-text-secondary-dark hover:bg-gray-50'
                 }`}
                 aria-current={isCurrentPage('/') ? 'page' : undefined}
               >
@@ -272,7 +272,7 @@ const GV_MobileNav: React.FC = () => {
               
               <Link
                 to="/book/service"
-                className="block px-6 py-3 text-base font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors mx-4 my-2 rounded-lg text-center shadow-md"
+                className="block px-6 py-3 text-base font-semibold bg-blue-600 text-master-text-primary-dark hover:bg-blue-700 transition-colors mx-4 my-2 rounded-lg text-center shadow-md"
               >
                 Book Appointment
               </Link>
@@ -282,7 +282,7 @@ const GV_MobileNav: React.FC = () => {
                 className={`block px-6 py-3 text-base font-medium transition-colors ${
                   isCurrentPage('/gallery') 
                     ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-master-text-secondary-dark hover:bg-gray-50'
                 }`}
                 aria-current={isCurrentPage('/gallery') ? 'page' : undefined}
               >
@@ -294,7 +294,7 @@ const GV_MobileNav: React.FC = () => {
                 className={`block px-6 py-3 text-base font-medium transition-colors ${
                   isCurrentPage('/search') 
                     ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-master-text-secondary-dark hover:bg-gray-50'
                 }`}
                 aria-current={isCurrentPage('/search') ? 'page' : undefined}
               >
@@ -308,7 +308,7 @@ const GV_MobileNav: React.FC = () => {
                 className={`block px-6 py-3 text-base font-medium transition-colors ${
                   isCurrentPage('/register') 
                     ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-master-text-secondary-dark hover:bg-gray-50'
                 }`}
                 aria-current={isCurrentPage('/register') ? 'page' : undefined}
               >
@@ -320,7 +320,7 @@ const GV_MobileNav: React.FC = () => {
                 className={`block px-6 py-3 text-base font-medium transition-colors ${
                   isCurrentPage('/login') 
                     ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-master-text-secondary-dark hover:bg-gray-50'
                 }`}
                 aria-current={isCurrentPage('/login') ? 'page' : undefined}
               >
@@ -339,7 +339,7 @@ const GV_MobileNav: React.FC = () => {
                 className={`block px-6 py-3 text-base font-medium transition-colors ${
                   isCurrentPage('/dashboard') 
                     ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-master-text-secondary-dark hover:bg-gray-50'
                 }`}
                 aria-current={isCurrentPage('/dashboard') ? 'page' : undefined}
               >
@@ -348,7 +348,7 @@ const GV_MobileNav: React.FC = () => {
               
               <Link
                 to="/book/service"
-                className="block px-6 py-3 text-base font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors mx-4 my-2 rounded-lg text-center shadow-md"
+                className="block px-6 py-3 text-base font-semibold bg-blue-600 text-master-text-primary-dark hover:bg-blue-700 transition-colors mx-4 my-2 rounded-lg text-center shadow-md"
               >
                 Book Appointment
               </Link>
@@ -358,7 +358,7 @@ const GV_MobileNav: React.FC = () => {
                 className={`block px-6 py-3 text-base font-medium transition-colors ${
                   location.pathname === '/dashboard' 
                     ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-master-text-secondary-dark hover:bg-gray-50'
                 }`}
               >
                 My Bookings
@@ -369,7 +369,7 @@ const GV_MobileNav: React.FC = () => {
                 className={`block px-6 py-3 text-base font-medium transition-colors ${
                   isCurrentPage('/gallery') 
                     ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-master-text-secondary-dark hover:bg-gray-50'
                 }`}
                 aria-current={isCurrentPage('/gallery') ? 'page' : undefined}
               >
@@ -381,7 +381,7 @@ const GV_MobileNav: React.FC = () => {
                 className={`block px-6 py-3 text-base font-medium transition-colors ${
                   isCurrentPage('/profile') 
                     ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-master-text-secondary-dark hover:bg-gray-50'
                 }`}
                 aria-current={isCurrentPage('/profile') ? 'page' : undefined}
               >
@@ -409,7 +409,7 @@ const GV_MobileNav: React.FC = () => {
                 className={`block px-6 py-3 text-base font-medium transition-colors ${
                   isCurrentPage('/admin') 
                     ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-master-text-secondary-dark hover:bg-gray-50'
                 }`}
                 aria-current={isCurrentPage('/admin') ? 'page' : undefined}
               >
@@ -420,15 +420,15 @@ const GV_MobileNav: React.FC = () => {
               <div>
                 <button
                   onClick={() => toggleSection('bookings')}
-                  className="flex items-center justify-between w-full px-6 py-3 text-base font-medium text-gray-700 hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="flex items-center justify-between w-full px-6 py-3 text-base font-medium text-master-text-secondary-dark hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
                   aria-expanded={expandedSections.has('bookings')}
                   aria-controls="bookings-submenu"
                 >
                   <span>Bookings</span>
                   {expandedSections.has('bookings') ? (
-                    <ChevronDown className="h-5 w-5 text-gray-500" aria-hidden="true" />
+                    <ChevronDown className="h-5 w-5 text-master-text-muted-dark" aria-hidden="true" />
                   ) : (
-                    <ChevronRight className="h-5 w-5 text-gray-500" aria-hidden="true" />
+                    <ChevronRight className="h-5 w-5 text-master-text-muted-dark" aria-hidden="true" />
                   )}
                 </button>
                 
@@ -439,7 +439,7 @@ const GV_MobileNav: React.FC = () => {
                       className={`block pl-12 pr-6 py-3 text-sm font-medium transition-colors ${
                         isCurrentPage('/admin/bookings/calendar') 
                           ? 'text-blue-600 bg-blue-50' 
-                          : 'text-gray-600 hover:bg-gray-100'
+                          : 'text-master-text-muted-dark hover:bg-gray-100'
                       }`}
                       aria-current={isCurrentPage('/admin/bookings/calendar') ? 'page' : undefined}
                     >
@@ -451,7 +451,7 @@ const GV_MobileNav: React.FC = () => {
                       className={`block pl-12 pr-6 py-3 text-sm font-medium transition-colors ${
                         isCurrentPage('/admin/bookings') 
                           ? 'text-blue-600 bg-blue-50' 
-                          : 'text-gray-600 hover:bg-gray-100'
+                          : 'text-master-text-muted-dark hover:bg-gray-100'
                       }`}
                       aria-current={isCurrentPage('/admin/bookings') ? 'page' : undefined}
                     >
@@ -466,7 +466,7 @@ const GV_MobileNav: React.FC = () => {
                 className={`block px-6 py-3 text-base font-medium transition-colors ${
                   isCurrentPage('/admin/customers') 
                     ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-master-text-secondary-dark hover:bg-gray-50'
                 }`}
                 aria-current={isCurrentPage('/admin/customers') ? 'page' : undefined}
               >
@@ -478,7 +478,7 @@ const GV_MobileNav: React.FC = () => {
                 className={`block px-6 py-3 text-base font-medium transition-colors ${
                   isCurrentPage('/admin/gallery') 
                     ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-master-text-secondary-dark hover:bg-gray-50'
                 }`}
                 aria-current={isCurrentPage('/admin/gallery') ? 'page' : undefined}
               >
@@ -490,7 +490,7 @@ const GV_MobileNav: React.FC = () => {
                 className={`block px-6 py-3 text-base font-medium transition-colors ${
                   isCurrentPage('/admin/reports') 
                     ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-master-text-secondary-dark hover:bg-gray-50'
                 }`}
                 aria-current={isCurrentPage('/admin/reports') ? 'page' : undefined}
               >
@@ -502,7 +502,7 @@ const GV_MobileNav: React.FC = () => {
                 className={`block px-6 py-3 text-base font-medium transition-colors ${
                   isCurrentPage('/admin/settings') 
                     ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    : 'text-master-text-secondary-dark hover:bg-gray-50'
                 }`}
                 aria-current={isCurrentPage('/admin/settings') ? 'page' : undefined}
               >
@@ -515,7 +515,7 @@ const GV_MobileNav: React.FC = () => {
                 href="/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block px-6 py-3 text-base font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                className="block px-6 py-3 text-base font-medium text-master-text-secondary-dark hover:bg-gray-50 transition-colors"
               >
                 View Public Site
               </a>

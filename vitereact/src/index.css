@@ -233,6 +233,38 @@
 		line-height: 1.4 !important;
 		opacity: 1 !important;
 	}
+	
+	/* ============================================================================
+	   FORCE HIGH-CONTRAST ERROR TEXT EVERYWHERE
+	   High-specificity overrides for ALL error/helper text in form groups
+	   ============================================================================ */
+	
+	/* Target all common error text patterns with maximum specificity */
+	.form-error-text,
+	input + p,
+	label + p,
+	[data-error="true"],
+	p.text-destructive,
+	p.text-muted-foreground.error,
+	.form-item-error,
+	.shadcn-error,
+	.input-error-message {
+		color: #ffb3b3 !important;     /* Light red contrast */
+		opacity: 1 !important;         /* No transparency */
+		font-weight: 500 !important;
+	}
+	
+	/* Override shadcn/ui and Tailwind destructive text class */
+	.text-destructive {
+		color: #ffb3b3 !important;
+		opacity: 1 !important;
+	}
+	
+	/* Target invalid input error messages */
+	input:invalid ~ .error-message {
+		color: #ffb3b3 !important;
+		opacity: 1 !important;
+	}
 }
 
 /* ============================================================================

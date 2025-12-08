@@ -359,11 +359,11 @@ const UV_Login: React.FC = () => {
                       }}
                       onBlur={handleNameBlur}
                       placeholder="Full Name"
-                      className={`block w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
+                      className={`block w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 bg-white/90 ${
                         validation_errors.name
                           ? 'border-red-500 focus:border-red-500 focus:ring-4 focus:ring-red-100'
                           : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
-                      } text-master-text-primary-dark placeholder-master-text-muted-dark focus:outline-none`}
+                      } text-gray-900 placeholder-gray-500 focus:outline-none`}
                       aria-invalid={validation_errors.name ? 'true' : 'false'}
                       aria-describedby={validation_errors.name ? 'name-error' : undefined}
                     />
@@ -394,11 +394,11 @@ const UV_Login: React.FC = () => {
                       }}
                       onBlur={handlePhoneBlur}
                       placeholder="Phone Number"
-                      className={`block w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
+                      className={`block w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 bg-white/90 ${
                         validation_errors.phone
                           ? 'border-red-500 focus:border-red-500 focus:ring-4 focus:ring-red-100'
                           : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
-                      } text-master-text-primary-dark placeholder-master-text-muted-dark focus:outline-none`}
+                      } text-gray-900 placeholder-gray-500 focus:outline-none`}
                       aria-invalid={validation_errors.phone ? 'true' : 'false'}
                       aria-describedby={validation_errors.phone ? 'phone-error' : undefined}
                     />
@@ -417,7 +417,7 @@ const UV_Login: React.FC = () => {
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Mail className="size-5 text-master-text-muted-dark" />
+                      <Mail className="size-5 text-gray-500" />
                     </div>
                     <input
                       id="email"
@@ -435,11 +435,11 @@ const UV_Login: React.FC = () => {
                       }}
                       onBlur={handleEmailBlur}
                       placeholder="Email Address"
-                      className={`block w-full pl-10 pr-4 py-3 rounded-lg border-2 transition-all duration-200 ${
+                      className={`block w-full pl-10 pr-4 py-3 rounded-lg border-2 transition-all duration-200 bg-white/90 ${
                         validation_errors.email
                           ? 'border-red-500 focus:border-red-500 focus:ring-4 focus:ring-red-100'
                           : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
-                      } text-master-text-primary-dark placeholder-master-text-muted-dark focus:outline-none`}
+                      } text-gray-900 placeholder-gray-500 focus:outline-none`}
                       aria-invalid={validation_errors.email ? 'true' : 'false'}
                       aria-describedby={validation_errors.email ? 'email-error' : undefined}
                     />
@@ -468,7 +468,7 @@ const UV_Login: React.FC = () => {
                   </div>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Lock className="size-5 text-master-text-muted-dark" />
+                      <Lock className="size-5 text-gray-500" />
                     </div>
                     <input
                       id="password"
@@ -486,18 +486,18 @@ const UV_Login: React.FC = () => {
                       }}
                       onBlur={handlePasswordBlur}
                       placeholder="Password"
-                      className={`block w-full pl-10 pr-12 py-3 rounded-lg border-2 transition-all duration-200 ${
+                      className={`block w-full pl-10 pr-12 py-3 rounded-lg border-2 transition-all duration-200 bg-white/90 ${
                         validation_errors.password
                           ? 'border-red-500 focus:border-red-500 focus:ring-4 focus:ring-red-100'
                           : 'border-white/20 focus:border-blue-500 focus:ring-4 focus:ring-red-100'
-                      } text-master-text-primary-dark placeholder-master-text-muted-dark focus:outline-none`}
+                      } text-gray-900 placeholder-gray-500 focus:outline-none`}
                       aria-invalid={validation_errors.password ? 'true' : 'false'}
                       aria-describedby={validation_errors.password ? 'password-error' : undefined}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!show_password)}
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-master-text-muted-dark hover:text-master-text-secondary-dark transition-colors"
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700 transition-colors"
                       aria-label={show_password ? 'Hide password' : 'Show password'}
                     >
                       {show_password ? (

@@ -1,209 +1,35 @@
-1. Improve text readability everywhere
+## BUILD FAILURE - Fix Required (Attempt 1/3)
 
-Increase contrast between text and background — especially on:
+The Vite build process failed. Analyze the error output below and fix the issue.
 
-The dark red gradient sections
+## Build Error Output:
+```
 
-Calendar cells
+> conductor@0.0.0 build
+> vite build
 
-Cards with semi-transparent backgrounds
+vite v5.4.21 building for production...
+transforming...
 
-Admin table rows
+```
 
-Ensure all headings, labels, buttons, and body text meet WCAG AA contrast minimums.
+## Build Directory: /app/vitereact
 
-Lighten page backgrounds slightly where needed to avoid low-contrast grey text.
+## Your Task:
+1. **Analyze the Error**: Read the error output carefully to understand what went wrong
+2. **Locate the Problem**: Find the file(s) mentioned in the error
+3. **Apply the Fix**: 
+   - Missing file/component? CREATE it with correct exports
+   - Wrong import path? FIX the import statement  
+   - Syntax error? FIX the syntax in the affected file
+   - Type error? FIX the TypeScript types
+   - Missing dependency? Check if it needs to be installed or if it's a local import issue
+4. **Verify**: After fixing, ensure all imports resolve correctly
 
-Do not change the brand colors — only adjust shades for visibility.
+## IMPORTANT:
+- The build CANNOT succeed until this error is fixed
+- If creating a missing component, ensure exports match what's being imported (default vs named)
+- If the error mentions a specific line number, check that line in the source file
+- Run `npx tsc --noEmit` after fixing to verify no TypeScript errors remain
 
-2. Make the color system consistent across ALL pages
-
-Apply a unified theme derived from the landing page:
-
-Primary: deep barbershop red (#600000 to #8b0000 gradient)
-Secondary: warm dark brown / burgundy
-Accent: bright red/orange for highlights
-Success / Good: barbershop green
-Surface cards: slightly lighter or blurred burgundy—not pure black
-
-Pages that must use this updated palette consistently:
-
-Barber Management
-
-Bookings Calendar
-
-Daily Booking View
-
-Services Setup
-
-Call-Outs
-
-Settings
-
-Customers
-
-Dashboard
-
-These should feel like they belong to the same brand as the landing page.
-
-3. Update surfaces for better readability
-
-For cards, tables, modals, and calendars:
-
-Use lighter burgundy or blurred glass panels rather than near-black backgrounds.
-
-Avoid pure dark red backgrounds under small text; instead use tinted surfaces.
-
-Add subtle shadows to separate cards from backgrounds.
-
-4. Improve calendar readability
-
-Fix:
-
-Light grey text that turns invisible on pale backgrounds
-
-Days and numbers that blend into the gradient
-Apply:
-
-Stronger day labels
-
-Clearer appointment availability text
-
-Hover states with defined outlines
-
-5. Improve toggles, tags, badges, and labels
-
-Ensure toggle labels “Working Today” / “Active Status” are readable.
-
-Increase contrast of specialty tags.
-
-Ensure green “Available” text is readable on light backgrounds.
-
-6. Keep layouts EXACTLY the same — only improve styling
-
-Do not change structure, spacing, card layout, or feature placement.
-Only improve:
-
-Colors
-
-Opacity
-
-Contrast
-
-Readability
-
-Consistency
-
-Goal Summary
-
-Make the entire UI visually consistent, easier on the eyes, more accessible, and fully aligned with the premium red theme from the landing page, without losing any functionality or layout.
-
-When the user mentions generic pages, map them to concrete files/components by scanning for headings and routes. Examples you MUST follow:
-- If the user says "login" or "sign in", search for components containing the literal heading "Sign in to your account" and edit that file.
-- If the user says "sign up" or "register", search for "Create your account" or equivalent.
-- Always return an explicit list of changed file paths. If your first attempt doesn't change the UI, re-search by heading text and update the correct file.
-
-⚠️ PRIORITY INSTRUCTIONS:
-- The user's request above is the PRIMARY task. Complete it first.
-- Ignore any existing errors, warnings, or issues you detect in the project unless they directly prevent you from completing the user's requested task.
-- Do NOT automatically fix unrelated errors or refactor code unless explicitly requested.
-- Focus solely on implementing the user's request: "1. Improve text readability everywhere
-
-Increase contrast between text and background — especially on:
-
-The dark red gradient sections
-
-Calendar cells
-
-Cards with semi-transparent backgrounds
-
-Admin table rows
-
-Ensure all headings, labels, buttons, and body text meet WCAG AA contrast minimums.
-
-Lighten page backgrounds slightly where needed to avoid low-contrast grey text.
-
-Do not change the brand colors — only adjust shades for visibility.
-
-2. Make the color system consistent across ALL pages
-
-Apply a unified theme derived from the landing page:
-
-Primary: deep barbershop red (#600000 to #8b0000 gradient)
-Secondary: warm dark brown / burgundy
-Accent: bright red/orange for highlights
-Success / Good: barbershop green
-Surface cards: slightly lighter or blurred burgundy—not pure black
-
-Pages that must use this updated palette consistently:
-
-Barber Management
-
-Bookings Calendar
-
-Daily Booking View
-
-Services Setup
-
-Call-Outs
-
-Settings
-
-Customers
-
-Dashboard
-
-These should feel like they belong to the same brand as the landing page.
-
-3. Update surfaces for better readability
-
-For cards, tables, modals, and calendars:
-
-Use lighter burgundy or blurred glass panels rather than near-black backgrounds.
-
-Avoid pure dark red backgrounds under small text; instead use tinted surfaces.
-
-Add subtle shadows to separate cards from backgrounds.
-
-4. Improve calendar readability
-
-Fix:
-
-Light grey text that turns invisible on pale backgrounds
-
-Days and numbers that blend into the gradient
-Apply:
-
-Stronger day labels
-
-Clearer appointment availability text
-
-Hover states with defined outlines
-
-5. Improve toggles, tags, badges, and labels
-
-Ensure toggle labels “Working Today” / “Active Status” are readable.
-
-Increase contrast of specialty tags.
-
-Ensure green “Available” text is readable on light backgrounds.
-
-6. Keep layouts EXACTLY the same — only improve styling
-
-Do not change structure, spacing, card layout, or feature placement.
-Only improve:
-
-Colors
-
-Opacity
-
-Contrast
-
-Readability
-
-Consistency
-
-Goal Summary
-
-Make the entire UI visually consistent, easier on the eyes, more accessible, and fully aligned with the premium red theme from the landing page, without losing any functionality or layout."
-- Only address errors if they block the specific functionality requested by the user.
+Fix this error so the build can succeed on retry.

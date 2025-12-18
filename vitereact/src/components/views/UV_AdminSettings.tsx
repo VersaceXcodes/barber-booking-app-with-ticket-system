@@ -117,7 +117,7 @@ const UV_AdminSettings: React.FC = () => {
   const [showServiceModal, setShowServiceModal] = useState(false);
   const [serviceModalMode, setServiceModalMode] = useState<'add' | 'edit'>('add');
   const [draggedServiceId, setDraggedServiceId] = useState<string | null>(null);
-  const [uploadedImageFile, setUploadedImageFile] = useState<File | null>(null);
+  const [_, setUploadedImageFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [imageInputMode, setImageInputMode] = useState<'upload' | 'url'>('upload');

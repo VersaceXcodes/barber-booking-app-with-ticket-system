@@ -12,11 +12,9 @@ import {
   RefreshCw,
   CheckCircle,
   XCircle,
-  AlertCircle,
   PlayCircle,
   Car,
-  DollarSign,
-  Filter
+  DollarSign
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -64,8 +62,8 @@ const UV_AdminQueueDashboard: React.FC = () => {
 
   // Local state
   const [calloutFilter, setCalloutFilter] = useState<'all' | 'today' | 'upcoming'>('all');
-  const [selectedQueueEntry, setSelectedQueueEntry] = useState<string | null>(null);
-  const [selectedCallout, setSelectedCallout] = useState<string | null>(null);
+  const [_, setSelectedQueueEntry] = useState<string | null>(null);
+  const [__, setSelectedCallout] = useState<string | null>(null);
 
   // ============================================================================
   // API BASE URL

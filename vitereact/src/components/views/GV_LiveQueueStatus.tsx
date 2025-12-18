@@ -61,15 +61,6 @@ const GV_LiveQueueStatus: React.FC<LiveQueueStatusProps> = ({ className = '' }) 
     } catch (err) {
       console.error('Error fetching queue data:', err);
       setError(true);
-      
-      // Set mock data on error for development
-      setQueueData({
-        currentQueueLength: 4,
-        estimatedWaitMinutes: 12,
-        currentTicket: 'B23',
-        nextSlotTime: '14:30',
-        averageWaitMinutes: 12,
-      });
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);

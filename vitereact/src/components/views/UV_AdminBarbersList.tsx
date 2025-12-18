@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppStore } from '@/store/main';
-import { Plus, Edit2, Trash2, User, Check, X, Upload, Loader2 } from 'lucide-react';
+import { Plus, Edit2, Trash2, User, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
@@ -313,7 +313,7 @@ const UV_AdminBarbersList: React.FC = () => {
         barber_id: barber.barber_id,
         updates: { is_working_today: !barber.is_working_today },
       });
-    } catch (error) {
+    } catch (_error) {
       // Error handled by mutation
     }
   };
@@ -324,7 +324,7 @@ const UV_AdminBarbersList: React.FC = () => {
         barber_id: barber.barber_id,
         updates: { is_active: !barber.is_active },
       });
-    } catch (error) {
+    } catch (_error) {
       // Error handled by mutation
     }
   };
